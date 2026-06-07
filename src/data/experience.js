@@ -4,7 +4,7 @@ export const experience = [
     isActual: true,
     roleKey: 'j1_role',
     companyKey: 'j1_co',
-    company: '', // Handled by key if key exists
+    company: '',
     date: '2024–hoy',
     descKey: 'j1_desc',
     tags: ['Product Design', 'Design Systems', 'AI Agents', 'Make', 'React'],
@@ -14,11 +14,11 @@ export const experience = [
     id: 'exp2',
     isActual: true,
     roleKey: 'j2_role',
-    company: 'Atento · Barcelona',
+    company: 'Abai · Cliente Orange Empresas · Barcelona',
     companyKey: '',
     date: '2024–hoy',
     descKey: 'j2_desc',
-    tags: ['Power Automate', 'Excel VBA', 'B2B Ops'],
+    tags: ['Cobros B2B', 'Orange Empresas', 'Excel', 'Operaciones'],
     delay: '2'
   },
   {

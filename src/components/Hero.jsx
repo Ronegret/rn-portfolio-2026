@@ -81,7 +81,7 @@ export default function Hero({ lang, theme, onOpenCv }) {
             <span className="tag">{t.tag_mode}</span>
           </div>
           
-          <span className="hero-eyebrow rv">UX/UI Designer · AI Automation Architect</span>
+          <span className="hero-eyebrow rv">PRODUCT DESIGNER UX/UI · IA APLICADA · AUTOMATIZACIÓN</span>
           
           <h1 className="hero-h rv" data-d="1" id="hero-title">
             <span dangerouslySetInnerHTML={{ __html: t.hero_h1 }}></span><br />
@@ -151,7 +151,7 @@ export default function Hero({ lang, theme, onOpenCv }) {
               />
             </div>
             <p className="cname">{t.card_name}</p>
-            <p className="crole">AI Automation Architect · Barcelona</p>
+            <p className="crole">IA aplicada · Automatización · Founder</p>
             <div className="cloc">📍 Barcelona, España</div>
             <div className="cstats">
               <div className="cstat">

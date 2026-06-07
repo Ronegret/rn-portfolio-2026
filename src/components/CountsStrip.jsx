@@ -17,7 +17,7 @@ export default function CountsStrip({ lang }) {
           </div>
           <div className="ci rv" data-d="1">
             <div className="ci-n">
-              <AnimatedCounter target={9} />
+              <AnimatedCounter target={11} />
             </div>
             <div className="ci-l">{t.count2}</div>
           </div>
