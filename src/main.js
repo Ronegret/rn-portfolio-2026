@@ -241,22 +241,91 @@ void main(){
 })();
 
 /* ═══════════════════════════════════════
-   CURSOR Y FLASH (EVENTOS)
+   CURSOR MULTI-ESTADO
 ═══════════════════════════════════════ */
-const cur=document.getElementById('cur');
-const curR=document.getElementById('cur-r');
-let cx=0,cy=0,rx=0,ry=0;
-const customCursorEnabled = false;
-if(customCursorEnabled&&cur&&curR){
-  document.addEventListener('mousemove',e=>{ cx=e.clientX; cy=e.clientY; cur.style.left=cx+'px'; cur.style.top=cy+'px'; });
-  (function animR(){ rx+=(cx-rx)*.11; ry+=(cy-ry)*.11; curR.style.left=rx+'px'; curR.style.top=ry+'px'; requestAnimationFrame(animR); })();
-  document.querySelectorAll('a,button,.dk,.tc,.sc-hd,.tl-hd,.edu-hd,.bc,.fb,.vp,.trow,.nlb').forEach(el=>{
-    el.addEventListener('mouseenter',()=>document.body.classList.add('c-hover'));
-    el.addEventListener('mouseleave',()=>document.body.classList.remove('c-hover'));
+(()=>{
+  if(window.innerWidth<=1024||matchMedia('(pointer:coarse)').matches) return;
+  const cur=document.getElementById('cur');
+  const curR=document.getElementById('cur-r');
+  if(!cur||!curR) return;
+
+  // Label dinámico dentro del anillo
+  const lbl=document.createElement('span');
+  lbl.id='cur-label';
+  curR.appendChild(lbl);
+
+  document.body.classList.add('has-custom-cursor');
+
+  let cx=0,cy=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    cx=e.clientX; cy=e.clientY;
+    cur.style.left=cx+'px'; cur.style.top=cy+'px';
+  },{passive:true});
+  document.addEventListener('mouseleave',()=>{ cur.style.opacity='0'; curR.style.opacity='0'; });
+  document.addEventListener('mouseenter',()=>{ cur.style.opacity=''; curR.style.opacity=''; });
+
+  // Anillo con lerp suave
+  (function animR(){
+    rx+=(cx-rx)*.1; ry+=(cy-ry)*.1;
+    curR.style.left=rx+'px'; curR.style.top=ry+'px';
+    requestAnimationFrame(animR);
+  })();
+
+  // Gestión de estados
+  const CUR_STATES=['cur-btn','cur-card'];
+  function setState(s,label=''){
+    CUR_STATES.forEach(c=>document.body.classList.remove(c));
+    if(s) document.body.classList.add(s);
+    lbl.textContent=label;
+  }
+
+  // Interactivos: nav links, botones, filtros, acordeones, dock
+  document.querySelectorAll([
+    'button:not(.bc):not(.lab-card)','.nav-cta','.btn-p','.btn-s',
+    '.dk','.tc','.fb','.nlb','.mlb','.sc-hd','.tl-hd','.edu-hd',
+    '.bc-link','.tli','#fcta','#mob-x','#ham','.nav-links a'
+  ].join(',')).forEach(el=>{
+    el.addEventListener('mouseenter',()=>setState('cur-btn'));
+    el.addEventListener('mouseleave',()=>setState(''));
   });
+
+  // Tarjetas: anillo grande + etiqueta contextual
+  document.querySelectorAll('.bc,.lab-card,.lab-feat,.pcard').forEach(el=>{
+    const isSite=el.classList.contains('lab-feat');
+    el.addEventListener('mouseenter',()=>setState('cur-card', isSite?'Visitar →':'Ver →'));
+    el.addEventListener('mouseleave',()=>setState(''));
+  });
+
+  // Click feedback
   document.addEventListener('mousedown',()=>document.body.classList.add('c-click'));
   document.addEventListener('mouseup',()=>document.body.classList.remove('c-click'));
-}
+
+  // Efecto magnético en botones primarios
+  document.querySelectorAll('.btn-p,.nav-cta,#fcta').forEach(btn=>{
+    const R=72, S=0.3;
+    btn.addEventListener('mousemove',e=>{
+      const rect=btn.getBoundingClientRect();
+      const dx=e.clientX-(rect.left+rect.width/2);
+      const dy=e.clientY-(rect.top+rect.height/2);
+      const d=Math.sqrt(dx*dx+dy*dy);
+      if(d<R){ const p=(R-d)/R; btn.style.transform=`translate(${dx*S*p}px,${dy*S*p}px)`; btn.style.transition='transform 0.1s'; }
+    });
+    btn.addEventListener('mouseleave',()=>{ btn.style.transform=''; btn.style.transition='transform 0.5s var(--ease)'; });
+  });
+
+  // Ripple en clicks de botones
+  document.querySelectorAll('.btn-p,.btn-s,.nav-cta,#fcta').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      const rect=btn.getBoundingClientRect();
+      const rp=document.createElement('span');
+      rp.className='rn-ripple';
+      rp.style.left=(e.clientX-rect.left)+'px';
+      rp.style.top=(e.clientY-rect.top)+'px';
+      btn.appendChild(rp);
+      setTimeout(()=>rp.remove(),700);
+    });
+  });
+})();
 
 document.querySelectorAll('.trigger-flash, .bc, .lab-card').forEach(el => {
   el.addEventListener('click', () => { document.body.classList.add('flashing'); setTimeout(() => document.body.classList.remove('flashing'), 100); });
