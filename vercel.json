@@ -1,6 +1,53 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/Zodi", "destination": "/Zodi/index.html" },
+    { "source": "/Zodi/", "destination": "/Zodi/index.html" },
+    { "source": "/zodi", "destination": "/Zodi/index.html" },
+    { "source": "/zodi/", "destination": "/Zodi/index.html" },
+
+    { "source": "/ZodiBTO", "destination": "/ZodiBTO/index.html" },
+    { "source": "/ZodiBTO/", "destination": "/ZodiBTO/index.html" },
+    { "source": "/zodi-bto", "destination": "/ZodiBTO/index.html" },
+    { "source": "/zodi-bto/", "destination": "/ZodiBTO/index.html" },
+
+    { "source": "/Invitoo", "destination": "/Invitoo/index.html" },
+    { "source": "/Invitoo/", "destination": "/Invitoo/index.html" },
+    { "source": "/invitoo", "destination": "/Invitoo/index.html" },
+    { "source": "/invitoo/", "destination": "/Invitoo/index.html" },
+
+    { "source": "/pdf-editor.html", "destination": "/pdf-editor.html" },
+
+    { "source": "/CCSE", "destination": "/CCSE/index.html" },
+    { "source": "/CCSE/", "destination": "/CCSE/index.html" },
+    { "source": "/ccse", "destination": "/CCSE/index.html" },
+    { "source": "/ccse/", "destination": "/CCSE/index.html" },
+
+    { "source": "/dedicalo", "destination": "/dedicalo/index.html" },
+    { "source": "/dedicalo/", "destination": "/dedicalo/index.html" },
+
+    { "source": "/paratumundo", "destination": "/paratumundo/index.html" },
+    { "source": "/paratumundo/", "destination": "/paratumundo/index.html" },
+
+    { "source": "/TeAtiendo", "destination": "/TeAtiendo/index.html" },
+    { "source": "/TeAtiendo/", "destination": "/TeAtiendo/index.html" },
+    { "source": "/teatiendo", "destination": "/TeAtiendo/index.html" },
+    { "source": "/teatiendo/", "destination": "/TeAtiendo/index.html" },
+
+    { "source": "/Aquae", "destination": "/Aquae/index.html" },
+    { "source": "/Aquae/", "destination": "/Aquae/index.html" },
+    { "source": "/aquae", "destination": "/Aquae/index.html" },
+    { "source": "/aquae/", "destination": "/Aquae/index.html" },
+
+    { "source": "/TravelOfVapers", "destination": "/TravelOfVapers/index.html" },
+    { "source": "/TravelOfVapers/", "destination": "/TravelOfVapers/index.html" },
+    { "source": "/travel-of-vapers", "destination": "/TravelOfVapers/index.html" },
+    { "source": "/travel-of-vapers/", "destination": "/TravelOfVapers/index.html" },
+
+    { "source": "/tomapoly.html", "destination": "/tomapoly.html" },
+    { "source": "/tomapoly", "destination": "/tomapoly/index.html" },
+    { "source": "/tomapoly/", "destination": "/tomapoly/index.html" },
+
+    { "source": "(/.*)", "destination": "/index.html" }
   ],
   "headers": [
     {
