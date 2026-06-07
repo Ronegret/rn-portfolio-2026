@@ -107,6 +107,7 @@
       <button type="button" id="tool-cursor" class="tool-btn active w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Seleccionar, mover y editar"><i class="ph ph-cursor-click text-xl"></i></button>
       <div class="w-px h-6 bg-slate-200 md:w-6 md:h-px"></div>
       <button type="button" id="tool-text" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Añadir texto nuevo"><i class="ph ph-text-t text-xl"></i></button>
+      <button type="button" id="tool-ocr" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Reconocer texto escaneado con OCR"><i class="ph ph-scan-text text-xl"></i></button>
       <button type="button" id="tool-highlight" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Resaltar"><i class="ph ph-highlighter text-xl"></i></button>
       <button type="button" id="tool-erase" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Borrador mágico"><i class="ph ph-eraser text-xl"></i></button>
       <button type="button" id="tool-draw" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Firma / dibujo"><i class="ph ph-pen-nib text-xl"></i></button>
@@ -128,7 +129,7 @@
     </div>
   </div>
   <div id="context-toolbar" class="hidden absolute top-20 left-1/2 transform -translate-x-1/2 bg-slate-800 text-white shadow-lg rounded-2xl p-1.5 flex items-center gap-2 z-[60] fade-in">
-    <div class="flex items-center bg-slate-700 rounded-md px-2 py-0.5"><select id="prop-font" onchange="updateTextProp('fontFamily', this.value)" class="bg-transparent text-xs font-medium outline-none cursor-pointer text-white"><option value="Helvetica" class="text-black">Arial / Sans</option><option value="Times New Roman" class="text-black">Times / Serif</option><option value="Courier New" class="text-black">Courier / Mono</option></select></div>
+    <div class="flex items-center bg-slate-700 rounded-md px-2 py-0.5"><select id="prop-font" onchange="updateTextProp('fontFamily', this.value)" class="bg-transparent text-xs font-medium outline-none cursor-pointer text-white"><option value="Helvetica" class="text-black">Helvetica / Arial</option><option value="Times New Roman" class="text-black">Times / Serif</option><option value="Courier New" class="text-black">Courier / Mono</option><option value="Inter" class="text-black">Inter</option><option value="Verdana" class="text-black">Verdana</option><option value="Georgia" class="text-black">Georgia</option></select></div>
     <div class="flex items-center bg-slate-700 rounded-md px-1.5 py-0.5" title="Tamaño de letra"><input type="number" id="prop-size" onchange="updateTextProp('fontSize', this.value)" class="w-10 bg-transparent text-xs font-medium outline-none text-white text-center" min="1" max="200" value="12"><span class="text-[10px] text-slate-400 ml-0.5">pt</span></div>
     <div class="flex items-center bg-slate-700 rounded-md p-1 relative" title="Color"><input type="color" id="prop-color" onchange="updateTextProp('fill', this.value)" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer"><i class="ph ph-palette text-lg mx-1 pointer-events-none"></i></div>
   </div>
@@ -203,6 +204,8 @@
       originalFileName: 'documento.pdf',
       bgCtx: null,
       outputScale: 1,
+      isOcrRunning: false,
+      erasePreview: null,
       toolSettings: { draw: { color: '#1e293b', width: 3 }, highlight: { color: '#facc15', width: 18 }, erase: { size: 15 } }
     };
     const ui = {
@@ -251,7 +254,12 @@
       if (!isDocOpen) { ui.contextToolbar.classList.add('hidden'); ui.settingsPanel.classList.add('hidden'); }
     };
     function initHistoryForPage() { if (!state.pageHistory[state.currentPage]) state.pageHistory[state.currentPage] = { states: [], index: -1 }; updateHistoryButtons(); }
-    function saveHistory() { if (state.isHistoryProcessing || !state.canvas) return; const pageHist = state.pageHistory[state.currentPage]; const json = JSON.stringify(state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight'])); if (pageHist.index < pageHist.states.length - 1) pageHist.states.length = pageHist.index + 1; pageHist.states.push(json); pageHist.index++; updateHistoryButtons(); }
+    const customProps = ['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight', 'isOcrText'];
+    const capturePageState = () => {
+      removeErasePreview();
+      return state.canvas?.toJSON(customProps);
+    };
+    function saveHistory() { if (state.isHistoryProcessing || !state.canvas) return; const pageHist = state.pageHistory[state.currentPage]; const json = JSON.stringify(capturePageState()); if (pageHist.index < pageHist.states.length - 1) pageHist.states.length = pageHist.index + 1; pageHist.states.push(json); pageHist.index++; updateHistoryButtons(); }
     function updateHistoryButtons() { const pageHist = state.pageHistory[state.currentPage]; if (!pageHist) return; ui.btnUndo.disabled = pageHist.index <= 0; ui.btnRedo.disabled = pageHist.index >= pageHist.states.length - 1; }
     const undo = () => { const pageHist = state.pageHistory[state.currentPage]; if (pageHist.index > 0) { state.isHistoryProcessing = true; pageHist.index--; state.canvas.loadFromJSON(pageHist.states[pageHist.index], () => { state.canvas.renderAll(); state.isHistoryProcessing = false; updateHistoryButtons(); ui.contextToolbar.classList.add('hidden'); }); } };
     const redo = () => { const pageHist = state.pageHistory[state.currentPage]; if (pageHist.index < pageHist.states.length - 1) { state.isHistoryProcessing = true; pageHist.index++; state.canvas.loadFromJSON(pageHist.states[pageHist.index], () => { state.canvas.renderAll(); state.isHistoryProcessing = false; updateHistoryButtons(); ui.contextToolbar.classList.add('hidden'); }); } };
@@ -259,6 +267,7 @@
       state.activeTool = toolName;
       ui.toolBtns.forEach(btn => { if (toolName === null && btn.id === 'tool-cursor') btn.classList.add('active'); else if (btn.id === `tool-${toolName}`) btn.classList.add('active'); else btn.classList.remove('active'); });
       ui.settingsPanel.classList.add('hidden'); document.getElementById('setting-color').classList.add('hidden'); document.getElementById('setting-width').classList.add('hidden');
+      if (toolName !== 'erase') removeErasePreview();
       if (!state.canvas) return;
       state.canvas.isDrawingMode = (toolName === 'draw' || toolName === 'highlight');
       if (toolName === 'draw' || toolName === 'highlight' || toolName === 'erase') {
@@ -271,6 +280,7 @@
       }
       state.canvas.discardActiveObject(); ui.contextToolbar.classList.add('hidden');
       state.canvas.forEachObject(obj => { const interactable = state.activeTool === null; if (obj.isAutoText) obj.evented = interactable; else { obj.selectable = interactable; obj.evented = interactable; }});
+      if (toolName === 'ocr') { runOcrOnCurrentPage(); state.activeTool = null; }
       state.canvas.allowTouchScrolling = (state.activeTool === null); state.canvas.requestRenderAll();
     };
     const setToolColor = (value) => { document.getElementById('setting-color-input').value = value; updateToolSettings(); };
@@ -281,7 +291,59 @@
     };
     const updateTextProp = (property, value) => { const activeObjs = state.canvas?.getActiveObjects() || []; activeObjs.forEach(obj => { if (obj.type === 'i-text') { if (property === 'fontSize') obj.set(property, parseInt(value, 10) * state.scale); else obj.set(property, value); }}); state.canvas?.renderAll(); saveHistory(); };
     const getBackgroundColor = (x, y) => { if (!state.bgCtx) return { r: 1, g: 1, b: 1, hex: '#ffffff' }; try { const px = Math.floor(x * state.outputScale); const py = Math.floor(y * state.outputScale); const safeX = Math.min(Math.max(0, px), state.bgCtx.canvas.width - 1); const safeY = Math.min(Math.max(0, py), state.bgCtx.canvas.height - 1); const data = state.bgCtx.getImageData(safeX, safeY, 1, 1).data; if (data[3] === 0) return { r: 1, g: 1, b: 1, hex: '#ffffff' }; const hex = '#' + [data[0], data[1], data[2]].map(c => c.toString(16).padStart(2, '0')).join(''); return { r: data[0]/255, g: data[1]/255, b: data[2]/255, hex }; } catch (e) { return { r: 1, g: 1, b: 1, hex: '#ffffff' }; } };
+    const loadTesseract = () => new Promise((resolve, reject) => {
+      if (window.Tesseract) return resolve(window.Tesseract);
+      const existing = document.querySelector('script[data-ocr-loader]');
+      if (existing) {
+        existing.addEventListener('load', () => resolve(window.Tesseract));
+        existing.addEventListener('error', reject);
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
+      script.async = true;
+      script.dataset.ocrLoader = 'true';
+      script.onload = () => window.Tesseract ? resolve(window.Tesseract) : reject(new Error('OCR no disponible tras cargar la librería.'));
+      script.onerror = () => reject(new Error('No se pudo cargar la librería OCR.'));
+      document.head.appendChild(script);
+    });
+    const removeErasePreview = () => {
+      if (state.canvas && state.erasePreview) {
+        state.isHistoryProcessing = true;
+        state.canvas.remove(state.erasePreview);
+        state.erasePreview = null;
+        state.isHistoryProcessing = false;
+        state.canvas.requestRenderAll();
+      }
+    };
+    const updateErasePreview = (pointer) => {
+      if (!state.canvas || state.activeTool !== 'erase') return;
+      const rSize = state.toolSettings.erase.size * state.scale;
+      state.isHistoryProcessing = true;
+      if (!state.erasePreview) {
+        state.erasePreview = new fabric.Circle({
+          left: pointer.x - rSize,
+          top: pointer.y - rSize,
+          radius: rSize,
+          fill: 'rgba(220, 38, 38, 0.08)',
+          stroke: '#dc2626',
+          strokeWidth: 1.5,
+          strokeDashArray: [5, 4],
+          selectable: false,
+          evented: false,
+          excludeFromExport: true,
+          isPreview: true
+        });
+        state.canvas.add(state.erasePreview);
+      } else {
+        state.erasePreview.set({ left: pointer.x - rSize, top: pointer.y - rSize, radius: rSize });
+      }
+      state.erasePreview.bringToFront();
+      state.isHistoryProcessing = false;
+      state.canvas.requestRenderAll();
+    };
     const onCanvasMouseDown = (o) => { if (!state.canvas) return; if (state.activeTool === null || state.activeTool === 'draw' || state.activeTool === 'highlight' || o.target) return; const pointer = state.canvas.getPointer(o.e); if (state.activeTool === 'text') { const text = new fabric.IText('Nuevo texto', { left: pointer.x, top: pointer.y, fontFamily: 'Helvetica', fill: '#1e293b', fontSize: 16 * state.scale, transparentCorners: false, cornerColor: '#dc2626', borderColor: '#dc2626', cornerSize: 8 }); state.canvas.add(text); state.canvas.setActiveObject(text); text.enterEditing(); text.selectAll(); toggleTool(null); } else if (state.activeTool === 'erase') { const bgColor = getBackgroundColor(pointer.x, pointer.y); const rSize = state.toolSettings.erase.size * state.scale; const circle = new fabric.Circle({ left: pointer.x - rSize, top: pointer.y - rSize, fill: bgColor.hex, radius: rSize, isMask: true, strokeWidth: 0, stroke: 'transparent', shadow: new fabric.Shadow({ color: bgColor.hex, blur: rSize, offsetX: 0, offsetY: 0 }) }); state.canvas.add(circle); }};
+    const onCanvasMouseMove = (o) => { if (!state.canvas || state.activeTool !== 'erase') return; updateErasePreview(state.canvas.getPointer(o.e)); };
     const onObjectSelected = () => { const activeObjs = state.canvas.getActiveObjects(); if (activeObjs.length === 1 && activeObjs[0].type === 'i-text') { ui.contextToolbar.classList.remove('hidden'); ui.propFont.value = activeObjs[0].fontFamily || 'Helvetica'; let color = activeObjs[0].fill || '#000000'; if (color.length > 7) color = color.substring(0, 7); ui.propColor.value = color; ui.propSize.value = Math.round(activeObjs[0].fontSize / state.scale); } else ui.contextToolbar.classList.add('hidden'); };
     const onSelectionCleared = () => ui.contextToolbar.classList.add('hidden');
     const convertToEditableText = (placeholder) => {
@@ -317,6 +379,80 @@
       });
       state.canvas.add(...interactiveBoxes); state.isHistoryProcessing = false;
     };
+    const runOcrOnCurrentPage = async () => {
+      if (!state.canvas || !state.bgCtx || state.isOcrRunning) return;
+      state.isOcrRunning = true;
+      setStatus('OCR: leyendo texto escaneado...', true);
+      try {
+        const TesseractApi = await loadTesseract();
+        const result = await TesseractApi.recognize(state.bgCtx.canvas, 'spa+eng', {
+          logger: (m) => {
+            if (m.status === 'recognizing text') setStatus(`OCR: ${Math.round((m.progress || 0) * 100)}%`, true);
+          }
+        });
+        const lines = (result.data.lines?.length ? result.data.lines : result.data.words) || [];
+        const added = [];
+        state.isHistoryProcessing = true;
+        lines.forEach((item) => {
+          const text = (item.text || '').trim();
+          const confidence = typeof item.confidence === 'number' ? item.confidence : 100;
+          const box = item.bbox || {};
+          if (!text || confidence < 40 || box.x1 == null || box.y1 == null) return;
+          const left = box.x0 / state.outputScale;
+          const top = box.y0 / state.outputScale;
+          const width = Math.max(10, (box.x1 - box.x0) / state.outputScale);
+          const height = Math.max(10, (box.y1 - box.y0) / state.outputScale);
+          const bgColor = getBackgroundColor(left + 2, top + height / 2);
+          const fontSize = Math.max(9, Math.min(48, height * 0.78));
+          const mask = new fabric.Rect({
+            left: left - 1,
+            top: top - 1,
+            width: width + 2,
+            height: height + 2,
+            fill: bgColor.hex,
+            rx: 2,
+            ry: 2,
+            selectable: true,
+            isMask: true,
+            strokeWidth: 0,
+            stroke: 'transparent',
+            shadow: new fabric.Shadow({ color: bgColor.hex, blur: 2, offsetX: 0, offsetY: 0 })
+          });
+          const textObj = new fabric.IText(text, {
+            left,
+            top,
+            width,
+            fontFamily: 'Helvetica',
+            fill: '#111827',
+            fontSize,
+            lineHeight: 1.05,
+            transparentCorners: false,
+            cornerColor: '#dc2626',
+            borderColor: '#dc2626',
+            cornerSize: 8,
+            isOcrText: true
+          });
+          state.canvas.add(mask);
+          state.canvas.add(textObj);
+          added.push(textObj);
+        });
+        state.isHistoryProcessing = false;
+        if (!added.length) {
+          setStatus('OCR no encontró texto claro en esta página');
+          return;
+        }
+        saveHistory();
+        state.canvas.setActiveObject(added[0]);
+        onObjectSelected();
+        state.canvas.requestRenderAll();
+        setStatus(`OCR listo: ${added.length} bloque${added.length === 1 ? '' : 's'} editable${added.length === 1 ? '' : 's'}`);
+      } catch (error) {
+        console.error(error);
+        setStatus('OCR falló. Prueba con un PDF más nítido.');
+      } finally {
+        state.isOcrRunning = false;
+      }
+    };
     const handleFileUpload = async (file) => {
       if (!file || file.type !== 'application/pdf') return alert('Por favor sube un archivo PDF válido.');
       state.originalFileName = file.name; setStatus('Abriendo documento...', true);
@@ -338,7 +474,7 @@
         const textContent = await page.getTextContent(); ui.canvasWrapper.style.width = `${viewport.width}px`; ui.canvasWrapper.style.height = `${viewport.height}px`;
         if (!state.canvas) {
           state.canvas = new fabric.Canvas('pdf-canvas', { width: viewport.width, height: viewport.height, selection: false, preserveObjectStacking: true, allowTouchScrolling: true });
-          state.canvas.on('selection:created', onObjectSelected); state.canvas.on('selection:updated', onObjectSelected); state.canvas.on('selection:cleared', onSelectionCleared); state.canvas.on('mouse:down', onCanvasMouseDown); state.canvas.on('object:added', saveHistory); state.canvas.on('object:modified', saveHistory); state.canvas.on('object:removed', saveHistory);
+          state.canvas.on('selection:created', onObjectSelected); state.canvas.on('selection:updated', onObjectSelected); state.canvas.on('selection:cleared', onSelectionCleared); state.canvas.on('mouse:down', onCanvasMouseDown); state.canvas.on('mouse:move', onCanvasMouseMove); state.canvas.on('mouse:out', removeErasePreview); state.canvas.on('object:added', saveHistory); state.canvas.on('object:modified', saveHistory); state.canvas.on('object:removed', saveHistory);
           state.canvas.on('path:created', (opt) => { const path = opt.path; if (state.activeTool === 'highlight') { path.set({ opacity: 0.4, globalCompositeOperation: 'multiply', isHighlight: true }); } else { path.set({ isDrawing: true }); } state.canvas.requestRenderAll(); });
         } else {
           state.isHistoryProcessing = true; state.canvas.setWidth(viewport.width); state.canvas.setHeight(viewport.height); state.canvas.clear();
@@ -357,8 +493,8 @@
     const closeDocument = () => { if (!confirm('¿Seguro que quieres cerrar? Los cambios no guardados se perderán.')) return; state.pdfBuffer = null; state.pdfDoc = null; state.pageData = {}; state.pageHistory = {}; state.bgCtx = null; if (state.canvas) { state.canvas.dispose(); state.canvas = null; } ui.uploadInput.value = ''; toggleAppUI(false); };
     const changeModalPage = (offset) => { let val = parseInt(ui.modalInput.value, 10) + offset; if (val >= 1 && val <= state.totalPages) ui.modalInput.value = val; };
     const confirmPageSelection = async () => { state.currentPage = parseInt(ui.modalInput.value, 10); ui.modal.classList.add('hidden'); await renderPage(); };
-    const navigatePage = async (offset) => { if (state.canvas && !state.isHistoryProcessing) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']); const next = state.currentPage + offset; if (next >= 1 && next <= state.totalPages) { state.currentPage = next; await renderPage(); } };
-    const changeZoom = async (delta) => { const newScale = Math.max(0.75, Math.min(2.5, state.scale + delta)); if (newScale !== state.scale) { if (state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']); state.scale = newScale; await renderPage(); } };
+    const navigatePage = async (offset) => { if (state.canvas && !state.isHistoryProcessing) state.pageData[state.currentPage] = capturePageState(); const next = state.currentPage + offset; if (next >= 1 && next <= state.totalPages) { state.currentPage = next; await renderPage(); } };
+    const changeZoom = async (delta) => { const newScale = Math.max(0.75, Math.min(2.5, state.scale + delta)); if (newScale !== state.scale) { if (state.canvas) state.pageData[state.currentPage] = capturePageState(); state.scale = newScale; await renderPage(); } };
     const deleteSelected = () => { const activeObjs = state.canvas.getActiveObjects(); if (activeObjs.length) { activeObjs.forEach(obj => state.canvas.remove(obj)); state.canvas.discardActiveObject(); state.canvas.requestRenderAll(); ui.contextToolbar.classList.add('hidden'); } };
     const openExportModal = () => { ui.exportModal.classList.remove('hidden'); };
     const closeExportModal = () => { ui.exportModal.classList.add('hidden'); };
@@ -368,7 +504,7 @@
       const modalContent = document.querySelector('#export-modal > div'); modalContent.innerHTML = `<div class="flex flex-col items-center justify-center py-6 text-center"><i class="ph ph-spinner animate-spin text-5xl text-brand-600 mb-4"></i><h3 class="text-xl font-bold text-slate-800">Procesando Documento</h3><p class="text-sm text-slate-500 mt-2">Aplicando calidad profesional. Por favor, no cierres esta ventana.</p></div>`;
       await new Promise(resolve => setTimeout(resolve, 50));
       try {
-        if (state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
+        if (state.canvas) state.pageData[state.currentPage] = capturePageState();
         let pdfBytes;
         if (mode === 'flat') {
           const newPdf = await PDFLib.PDFDocument.create();
@@ -423,7 +559,7 @@
         modalContent.innerHTML = `<div class="flex flex-col items-center justify-center py-4 text-center"><i class="ph ph-check-circle text-5xl text-green-500 mb-4"></i><h3 class="text-xl font-bold text-slate-800">¡PDF Generado!</h3><p class="text-sm text-slate-500 mt-2 mb-6">Si la descarga no inició automáticamente, usa el botón de abajo.</p><a href="${url}" download="${downloadName}" class="w-full bg-brand-600 text-white py-3 rounded-2xl font-bold text-sm shadow-md hover:bg-brand-700 transition-colors mb-3 flex items-center justify-center"><i class="ph ph-download-simple mr-2 text-lg"></i> Descargar archivo</a><button type="button" onclick="closeExportModal()" class="text-sm text-slate-500 hover:text-slate-700 font-medium underline">Volver al editor</button></div>`;
       } catch (error) { console.error(error); const modalContent = document.querySelector('#export-modal > div'); modalContent.innerHTML = `<div class="flex flex-col items-center justify-center py-4 text-center"><i class="ph ph-warning-circle text-5xl text-red-500 mb-4"></i><h3 class="text-xl font-bold text-slate-800">Error de exportación</h3><p class="text-sm text-slate-500 mt-2 mb-6">El documento original parece estar dañado o bloqueado contra modificaciones.</p><button type="button" onclick="closeExportModal()" class="w-full bg-slate-200 text-slate-700 py-3 rounded-2xl font-bold text-sm shadow-sm hover:bg-slate-300 transition-colors">Cerrar y volver</button></div>`; }
     };
-    const saveCurrentPageState = () => { if (state.canvas && !state.isHistoryProcessing) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']); };
+    const saveCurrentPageState = () => { if (state.canvas && !state.isHistoryProcessing) state.pageData[state.currentPage] = capturePageState(); };
     ui.uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); ui.uploadZone.classList.add('border-brand-500', 'bg-brand-50', 'scale-[1.02]'); });
     ui.uploadZone.addEventListener('dragleave', (e) => { e.preventDefault(); ui.uploadZone.classList.remove('border-brand-500', 'bg-brand-50', 'scale-[1.02]'); });
     ui.uploadZone.addEventListener('drop', (e) => { e.preventDefault(); ui.uploadZone.classList.remove('border-brand-500', 'bg-brand-50', 'scale-[1.02]'); const files = e.dataTransfer.files; if (files.length && files[0].type === 'application/pdf') handleFileUpload(files[0]); else alert('Por favor, arrastra un archivo PDF válido.'); });
@@ -431,6 +567,8 @@
     ui.uploadZone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ui.uploadInput.click(); } });
     ui.uploadInput.addEventListener('change', (e) => { if (e.target.files.length) handleFileUpload(e.target.files[0]); });
     ui.btnClose.addEventListener('click', closeDocument); ui.btnPrev.addEventListener('click', () => navigatePage(-1)); ui.btnNext.addEventListener('click', () => navigatePage(1)); ui.modalPrev.addEventListener('click', () => changeModalPage(-1)); ui.modalNext.addEventListener('click', () => changeModalPage(1)); ui.modalConfirm.addEventListener('click', confirmPageSelection); ui.btnExportCancel.addEventListener('click', closeExportModal); ui.btnExportConfirm.addEventListener('click', executeExport); document.getElementById('btn-undo').addEventListener('click', undo); document.getElementById('btn-redo').addEventListener('click', redo);
+    document.getElementById('btn-zoom-out').addEventListener('click', () => changeZoom(-0.25)); document.getElementById('btn-zoom-in').addEventListener('click', () => changeZoom(0.25));
+    document.getElementById('tool-cursor').addEventListener('click', () => toggleTool(null)); document.getElementById('tool-text').addEventListener('click', () => toggleTool('text')); document.getElementById('tool-ocr').addEventListener('click', runOcrOnCurrentPage); document.getElementById('tool-highlight').addEventListener('click', () => toggleTool('highlight')); document.getElementById('tool-erase').addEventListener('click', () => toggleTool('erase')); document.getElementById('tool-draw').addEventListener('click', () => toggleTool('draw'));
     document.addEventListener('keydown', (e) => {
       if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); return; }
