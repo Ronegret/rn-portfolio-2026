@@ -1,7 +1,7 @@
 ﻿export const T = {
   es:{
     nav_about:'Sobre mí',nav_stack:'Stack',nav_projects:'Proyectos',nav_lab:'Lab',nav_career:'Trayectoria',nav_contact:'Contacto',
-    nav_cta:'Hablemos →',fcta:'âœ‰ Hablemos',
+    nav_cta:'Hablemos →',fcta:'✉ Hablemos',
     avail_tag:'Disponible ahora',tag_remote:'Barcelona · Remoto',tag_mode:'Full-time · Freelance',
     hero_h1:'Diseño<br>sistemas que', hero_h2:'generan impacto.',
     hero_sub:'Diseñador UX/UI y builder de productos digitales con IA. Convierto investigación, estrategia, interfaces y automatización en <strong>experiencias lanzadas, medibles y listas para negocio</strong>.',
@@ -73,12 +73,12 @@
     style_note:'<strong>¿Por qué importa?</strong> Un design system basado en tokens permite escalar identidades de marca de forma sistemática — sin código duplicado, sin inconsistencias. Esto es lo que diferencia un diseñador senior de uno que simplemente entrega pantallas.',
     contact_ey:'Contacto',contact_h:'¿Construimos algo<br><em>que marque la diferencia?</em>',
     contact_sub:'Disponible para roles de Product Designer UX/UI, AI Product Designer o perfiles híbridos de diseño, IA aplicada y automatización. También asumo proyectos freelance con impacto real.',
-    cta_email:'âœ‰ Enviar email',phone_l:'Teléfono',
+    cta_email:'✉ Enviar email',phone_l:'Teléfono',
     foot_made:'Construido con HTML/CSS/JS vanilla. Sin frameworks. Sin plantillas.'
   },
   ca:{
     nav_about:'Sobre mi',nav_stack:'Stack',nav_projects:'Projectes',nav_lab:'Lab',nav_career:'Trajectòria',nav_contact:'Contacte',
-    nav_cta:'Parlem →',fcta:'âœ‰ Parlem',
+    nav_cta:'Parlem →',fcta:'✉ Parlem',
     avail_tag:'Disponible ara',tag_remote:'Barcelona · Remot',tag_mode:'Full-time · Freelance',
     hero_h1:'Dissenyo<br>sistemes que', hero_h2:'generen impacte.',
     hero_sub:'Dissenyador UX/UI i builder de productes digitals amb IA. Converteixo investigació, estratègia, interfícies i automatització en <strong>experiències llançades, mesurables i preparades per negoci</strong>.',
@@ -150,12 +150,12 @@
     style_note:'<strong>Per què importa?</strong> Un design system basat en tokens permet escalar identitats de marca de forma sistemàtica — sense codi duplicat, sense inconsistències.',
     contact_ey:'Contacte',contact_h:'Construïm alguna cosa<br><em>que marqui la diferència?</em>',
     contact_sub:'Disponible per a rols de Product Designer UX/UI, AI Product Designer o perfils híbrids de disseny, IA aplicada i automatització.',
-    cta_email:'âœ‰ Enviar email',phone_l:'Telèfon',
+    cta_email:'✉ Enviar email',phone_l:'Telèfon',
     foot_made:'Construït amb HTML/CSS/JS vanilla. Sense frameworks. Sense plantilles.'
   },
   en:{
     nav_about:'About',nav_stack:'Stack',nav_projects:'Projects',nav_lab:'Lab',nav_career:'Career',nav_contact:'Contact',
-    nav_cta:'Let\'s talk →',fcta:'âœ‰ Let\'s talk',
+    nav_cta:'Let\'s talk →',fcta:'✉ Let\'s talk',
     avail_tag:'Available now',tag_remote:'Barcelona · Remote',tag_mode:'Full-time · Freelance',
     hero_h1:'I design<br>systems that', hero_h2:'drive impact.',
     hero_sub:'UX/UI Designer and AI product builder. I turn research, strategy, interfaces and automation into <strong>launched, measurable experiences ready for business impact</strong>.',
@@ -227,7 +227,7 @@
     style_note:'<strong>Why does this matter?</strong> A token-based design system allows scaling brand identities systematically — no duplicated code, no inconsistencies. This is what separates a senior designer from one who just delivers screens.',
     contact_ey:'Contact',contact_h:'Shall we build something<br><em>that makes a difference?</em>',
     contact_sub:'Available for Product Designer UX/UI, AI Product Designer or hybrid roles across design, applied AI and automation. Also taking on freelance projects with real impact.',
-    cta_email:'âœ‰ Send email',phone_l:'Phone',
+    cta_email:'✉ Send email',phone_l:'Phone',
     foot_made:'Built with vanilla HTML/CSS/JS. No frameworks. No templates.'
   }
 };
