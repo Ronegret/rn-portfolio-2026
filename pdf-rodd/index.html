@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caso de estudio PDF Rodd: editor PDF online gratuito, minimalista y funcional para editar, firmar, resaltar y reducir el peso de documentos desde el navegador.">
+  <title>PDF Rodd | Editor PDF UX Case Study</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/pdf-rodd.css">
+</head>
+<body>
+  <header class="nav">
+    <a href="/#proyectos" class="back">Volver a proyectos</a>
+    <a href="/PDF/" class="nav-cta">Probar editor</a>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy reveal">
+        <p class="eyebrow">UX/UI · Herramienta gratuita · PDF workflow</p>
+        <h1>PDF Rodd: editar documentos sin instalar nada ni perder tiempo.</h1>
+        <p class="lead">Diseñé y desarrollé un editor PDF online para resolver una necesidad muy cotidiana: modificar, firmar, resaltar, corregir o comprimir documentos de forma rápida, gratuita e intuitiva desde el navegador.</p>
+        <div class="hero-actions">
+          <a href="/PDF/" class="btn btn-primary">Abrir herramienta</a>
+          <a href="#proceso" class="btn btn-secondary">Ver proceso UX</a>
+        </div>
+      </div>
+      <figure class="product-shot reveal">
+        <img src="/assets/pdf-rodd/roodpdf.png" alt="Interfaz de PDF Rodd, editor PDF online">
+      </figure>
+    </section>
+
+    <section class="metrics reveal" aria-label="Resumen del proyecto">
+      <article><strong>100%</strong><span>uso en navegador</span></article>
+      <article><strong>3</strong><span>modos de exportación</span></article>
+      <article><strong>0</strong><span>instalaciones</span></article>
+      <article><strong>Local</strong><span>edición en dispositivo</span></article>
+    </section>
+
+    <section class="section split" id="problema">
+      <div class="reveal">
+        <p class="eyebrow">Problema detectado</p>
+        <h2>Editar un PDF suele ser más difícil de lo que debería.</h2>
+      </div>
+      <div class="copy reveal">
+        <p>Muchos usuarios solo necesitan acciones simples: añadir texto, firmar, corregir una zona, resaltar un dato, cambiar una página concreta o bajar el peso del archivo para enviarlo. Sin embargo, la mayoría de editores mezclan fricción, pago, instalación o interfaces cargadas.</p>
+        <p>La propuesta de PDF Rodd es directa: una herramienta ligera, visual y entendible, donde el usuario sube un PDF, edita encima del documento y descarga una versión final sin recorrer un flujo complejo.</p>
+      </div>
+    </section>
+
+    <section class="section" id="proceso">
+      <div class="section-head reveal">
+        <p class="eyebrow">Proceso UX/UI</p>
+        <h2>Minimalista por fuera, potente por dentro.</h2>
+        <p>El objetivo no era competir por cantidad de funciones, sino por claridad operativa: menos pasos, controles visibles y exportación confiable.</p>
+      </div>
+      <div class="process-grid">
+        <article class="reveal">
+          <span>01</span>
+          <h3>Flujo principal</h3>
+          <p>Subir PDF, visualizar página, editar, revisar y descargar. La interfaz prioriza una única tarea por pantalla y evita menús innecesarios.</p>
+        </article>
+        <article class="reveal">
+          <span>02</span>
+          <h3>Herramientas claras</h3>
+          <p>Texto, resaltado, borrador, firma/dibujo, mover elementos, deshacer/rehacer, zoom, navegación por páginas y barra contextual.</p>
+        </article>
+        <article class="reveal">
+          <span>03</span>
+          <h3>Exportación flexible</h3>
+          <p>Alta calidad híbrida, comprimido ligero y aplanado para máxima compresión. El usuario elige según su necesidad real.</p>
+        </article>
+        <article class="reveal">
+          <span>04</span>
+          <h3>Diseño responsive</h3>
+          <p>Toolbar lateral en escritorio e inferior en móvil, controles táctiles y zona de trabajo con scroll interno para mantener precisión.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="section-head reveal">
+        <p class="eyebrow">Stack técnico</p>
+        <h2>Un editor funcional construido con librerías probadas.</h2>
+      </div>
+      <div class="stack-row reveal">
+        <span>PDF.js</span>
+        <span>Fabric.js</span>
+        <span>PDF-lib</span>
+        <span>Tailwind</span>
+        <span>Phosphor Icons</span>
+        <span>JavaScript</span>
+      </div>
+      <div class="tech-grid">
+        <article class="reveal">
+          <h3>Renderizado</h3>
+          <p>PDF.js permite visualizar el documento en canvas y trabajar página por página con una experiencia fluida.</p>
+        </article>
+        <article class="reveal">
+          <h3>Edición visual</h3>
+          <p>Fabric.js gestiona objetos editables, selección, texto, dibujo, resaltado, máscaras y transformaciones sobre el PDF.</p>
+        </article>
+        <article class="reveal">
+          <h3>Descarga</h3>
+          <p>PDF-lib recompone el documento final, mantiene textos vectoriales cuando corresponde y permite exportar con distintos niveles de peso/calidad.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section split">
+      <div class="reveal">
+        <p class="eyebrow">Valor para reclutadores</p>
+        <h2>Demuestra diseño, criterio técnico y producto útil.</h2>
+      </div>
+      <ul class="value-list reveal">
+        <li>Traducir una necesidad común en una herramienta concreta y usable.</li>
+        <li>Diseñar una interfaz mínima sin perder controles profesionales.</li>
+        <li>Elegir librerías adecuadas en lugar de reinventar el motor PDF.</li>
+        <li>Entender responsive, accesibilidad, estados deshabilitados, feedback y exportación.</li>
+        <li>Conectar producto gratuito con marca personal y ecosistema Rodd.</li>
+      </ul>
+    </section>
+
+    <section class="section roadmap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Roadmap razonable</p>
+        <h2>Qué mejoraría para llevarlo a un nivel más profesional.</h2>
+      </div>
+      <div class="roadmap-grid">
+        <article class="reveal"><strong>Compresión visible</strong><span>Mostrar peso antes/después y porcentaje reducido.</span></article>
+        <article class="reveal"><strong>Plantillas rápidas</strong><span>Firma, fecha, check, sello, bloque de texto y campos frecuentes.</span></article>
+        <article class="reveal"><strong>Accesibilidad</strong><span>Mejorar navegación por teclado, foco visible y etiquetas ARIA en controles.</span></article>
+        <article class="reveal"><strong>Historial por página</strong><span>Guardar estados por página y avisar cambios sin descargar.</span></article>
+        <article class="reveal"><strong>Microcopy</strong><span>Explicar exportación HD, comprimida y aplanada con ejemplos simples.</span></article>
+        <article class="reveal"><strong>Testing real</strong><span>Validar con facturas, formularios, contratos, PDFs escaneados y multipágina.</span></article>
+      </div>
+    </section>
+
+    <section class="final reveal">
+      <p class="eyebrow">Demo funcional</p>
+      <h2>Antes de ver la herramienta, entiende la intención: PDF Rodd busca ahorrar pasos.</h2>
+      <p>La experiencia está pensada para personas que necesitan resolver algo rápido: editar un documento, firmarlo, ocultar una zona, resaltar información o bajar el peso para enviarlo sin depender de software de pago.</p>
+      <a href="/PDF/" class="btn btn-primary">Probar PDF Rodd</a>
+    </section>
+  </main>
+
+  <script type="module">
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

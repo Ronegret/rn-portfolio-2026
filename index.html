@@ -1,19 +1,822 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es" data-theme="saas">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5" />
-    <meta name="description" content="Product Designer UX/UI · IA aplicada · Automatización — Barcelona. Diseño de producto, sistemas de diseño, agentes IA y automatización de procesos en producción.">
-    <title>Rodrigo Negrete — UX/UI Designer · IA aplicada · Automatización</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
+  <meta name="description" content="UX/UI Designer con IA aplicada y automatización — Barcelona. Diseño de producto, sistemas de diseño, agentes IA y procesos digitales en producción.">
+  <title>Rodrigo Negrete — UX/UI Designer · IA aplicada · Automatización</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./src/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/ogl@1.0.10/dist/ogl.umd.js"></script>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur-r"></div>
+<div id="prog"></div>
+<div id="camera-flash"></div>
+<canvas id="bg-cv"></canvas>
+
+<!-- DOCK TEMAS -->
+<aside id="dock" aria-label="Cambiar tema visual">
+  <button class="dk on" data-t="saas" data-label="Dual Core AI">
+    <div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div>
+  </button>
+  <button class="dk" data-t="editorial" data-label="El Diario Digital">
+    <div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div>
+  </button>
+  <button class="dk" data-t="cyber" data-label="Abstract Cyber">
+    <div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div>
+  </button>
+  <button class="dk" data-t="diario" data-label="Minimal Journal">
+    <div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div>
+  </button>
+  <button class="dk" data-t="hud" data-label="Fine Art">
+    <div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div>
+  </button>
+</aside>
+
+<!-- CTA FLOTANTE -->
+<a href="#contacto" id="fcta" data-i="fcta" class="trigger-flash">✉ Hablemos</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo trigger-flash">
+    Rodrigo Negrete
+    <span class="rec-badge"><span class="logo-dot"></span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre-mi" data-i="nav_about">Sobre mí</a></li>
+    <li><a href="#stack" data-i="nav_stack">Stack</a></li>
+    <li><a href="#proyectos" data-i="nav_projects">Proyectos</a></li>
+    <li><a href="#laboratorio" data-i="nav_lab">Lab</a></li>
+    <li><a href="#trayectoria" data-i="nav_career">Trayectoria</a></li>
+    <li><a href="#contacto" data-i="nav_contact">Contacto</a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="nav-lang">
+      <button class="nlb on" data-lang="es">ES</button>
+      <button class="nlb" data-lang="ca">CA</button>
+      <button class="nlb" data-lang="en">EN</button>
+    </div>
+    <a href="mailto:rodrigo.negrete.aros@gmail.com" class="nav-cta trigger-flash" data-i="nav_cta">Hablemos →</a>
+  </div>
+  <button id="ham" aria-label="Abrir menú" aria-expanded="false">
+    <span class="hl"></span><span class="hl"></span><span class="hl"></span>
+  </button>
+</nav>
+
+<!-- MENÚ MÓVIL -->
+<div id="mob" role="dialog" aria-modal="true">
+  <button id="mob-x" aria-label="Cerrar">✕</button>
+  <a href="#sobre-mi" data-i="nav_about">Sobre mí</a>
+  <a href="#stack" data-i="nav_stack">Stack</a>
+  <a href="#proyectos" data-i="nav_projects">Proyectos</a>
+  <a href="#laboratorio" data-i="nav_lab">Lab</a>
+  <a href="#trayectoria" data-i="nav_career">Trayectoria</a>
+  <a href="#contacto" data-i="nav_contact">Contacto</a>
+  <div class="mob-lang">
+    <button class="mlb on" data-lang="es">ES</button>
+    <button class="mlb" data-lang="ca">CA</button>
+    <button class="mlb" data-lang="en">EN</button>
+  </div>
+  <div class="mob-themes">
+    <button class="dk on" data-t="saas"><div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div></button>
+    <button class="dk" data-t="editorial"><div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div></button>
+    <button class="dk" data-t="cyber"><div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div></button>
+    <button class="dk" data-t="diario"><div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div></button>
+    <button class="dk" data-t="hud"><div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div></button>
+  </div>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="lr-canvas"></canvas>
+  <div class="hero-inner">
+
+    <!-- LEFT: copy -->
+    <div class="hero-copy">
+      <div class="tag-row rv">
+        <a href="mailto:rodrigo.negrete.aros@gmail.com" class="tag tag-green status-available trigger-flash"><span class="logo-dot" style="margin:0; margin-right:4px;"></span> <span data-i="avail_tag">Disponible ahora</span></a>
+        <span class="tag" data-i="tag_remote">Barcelona · Remoto</span>
+        <span class="tag" data-i="tag_mode">Full-time · Freelance</span>
+      </div>
+      <span class="hero-eyebrow rv">Product Designer UX/UI · IA aplicada · Automatización</span>
+      <h1 class="hero-h rv" data-d="1" id="hero-title">
+        <span data-i="hero_h1">Diseño<br>sistemas que</span><br>
+        <em data-i="hero_h2">generan impacto.</em>
+      </h1>
+      <p class="hero-sub rv" data-d="2" data-i="hero_sub">Diseñador UX/UI y builder de productos digitales con IA. Convierto investigación, estrategia, interfaces y automatización en <strong>experiencias lanzadas, medibles y listas para negocio</strong>.</p>
+      <ul class="vp-list rv" data-d="3">
+        <li class="vp"><span class="vp-ic">◆</span><span data-i="vp1"><strong>UX/UI con criterio de producto</strong> — discovery, arquitectura de información, prototipos y sistemas visuales listos para desarrollo</span></li>
+        <li class="vp"><span class="vp-ic">⚡</span><span data-i="vp2"><strong>IA aplicada a experiencias reales</strong> — agentes, automatizaciones, personalización y flujos generativos en producción</span></li>
+        <li class="vp"><span class="vp-ic">◈</span><span data-i="vp3"><strong>Negocio + medición</strong> — sé leer KPIs, priorizar por impacto y diseñar para conversión, retención y eficiencia</span></li>
+      </ul>
+      <div class="cta-row rv" data-d="4">
+        <a href="#proyectos" class="btn-p trigger-flash" data-i="cta_p">Ver proyectos →</a>
+        <a href="https://wa.me/34653567610" class="btn-s trigger-flash" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <a href="/cv/" class="btn-s trigger-flash">📄 CV</a>
+      </div>
+      <p class="trust rv" data-d="5">
+        <span data-i="trust1">17+ años de experiencia</span><span class="tdot"></span>
+        <span data-i="trust2">11 casos de estudio</span><span class="tdot"></span>
+        <span data-i="trust3">Fundador de agencia digital</span>
+      </p>
+    </div>
+
+    <!-- RIGHT: profile card -->
+    <div class="pcard-wrap">
+      <div class="pcard rv-s" data-d="2">
+        <div class="av-wrap">
+          <img class="av" id="av" src="/assets/profile/perfilrod.png" alt="Foto de perfil de Rodrigo Negrete">
+        </div>
+        <p class="cname" data-i="card_name">Product Designer UX/UI</p>
+        <p class="crole">IA aplicada · Automatización · Founder</p>
+        <div class="cloc">📍 Barcelona, España</div>
+        <div class="cstats">
+          <div class="cstat"><div class="cstat-n" data-target="17" data-suffix="+">0</div><div class="cstat-l" data-i="stat1">Años</div></div>
+          <div class="cstat"><div class="cstat-n" data-target="11">0</div><div class="cstat-l" data-i="stat2">Casos</div></div>
+          <div class="cstat"><div class="cstat-n" data-target="50" data-suffix="+">0</div><div class="cstat-l" data-i="stat3">Tools</div></div>
+        </div>
+        <div class="cdiv"></div>
+        <div class="cbadges">
+          <span class="cb cb2">Make</span><span class="cb cb2">n8n</span><span class="cb cb2">Botpress</span>
+          <span class="cb cb1">Figma</span><span class="cb cb1">React</span><span class="cb cb1">Tailwind</span>
+          <span class="cb cb2">Vapi</span><span class="cb cbn">Claude</span><span class="cb cbn">ChatGPT</span>
+          <span class="cb cbn">Gemini</span><span class="cb cbn">Google AI Studio</span><span class="cb cbn">Copilot</span>
+          <span class="cb cbn">Cloud</span><span class="cb cbn">WordPress</span><span class="cb cbn">Elementor</span>
+          <span class="cb cb1">Canva</span><span class="cb cb1">Photoshop</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COUNTERS -->
+<div class="counts-strip">
+  <div class="wrap">
+    <div class="counts-g">
+      <div class="ci rv"><div class="ci-n" data-target="17" data-suffix="+">0</div><div class="ci-l" data-i="count1">Años de experiencia</div></div>
+      <div class="ci rv" data-d="1"><div class="ci-n" data-target="11">0</div><div class="ci-l" data-i="count2">Casos de estudio</div></div>
+      <div class="ci rv" data-d="2"><div class="ci-n" data-target="50" data-suffix="+">0</div><div class="ci-l" data-i="count3">Herramientas dominadas</div></div>
+      <div class="ci rv" data-d="3"><div class="ci-n" data-target="95" data-suffix="%">0</div><div class="ci-l" data-i="count4">Tasa de retención clientes</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RECRUITER SIGNAL -->
+<section class="proof-strip" aria-label="Resumen para recruiters">
+  <div class="wrap proof-grid">
+    <div class="proof-item rv">
+      <span class="proof-k" data-i="proof1_k">Busco rol</span>
+      <strong data-i="proof1_v">Product / UX UI Designer</strong>
+      <p data-i="proof1_d">Remoto o híbrido en Barcelona. Incorporación inmediata.</p>
+    </div>
+    <div class="proof-item rv" data-d="1">
+      <span class="proof-k" data-i="proof2_k">Diferencial</span>
+      <strong data-i="proof2_v">Diseño + IA + negocio</strong>
+      <p data-i="proof2_d">No solo diseño pantallas: conecto experiencia, automatización y métricas.</p>
+    </div>
+    <div class="proof-item rv" data-d="2">
+      <span class="proof-k" data-i="proof3_k">Caso clave</span>
+      <strong>ZODI</strong>
+      <p data-i="proof3_d">Producto IA con PWA, comunidad, monetización y una identidad visual reconocible.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE MÍ -->
+<section class="sec" id="sobre-mi">
+  <div class="wrap">
+    <span class="sec-n" aria-hidden="true">01</span>
+    <p class="eyebrow rv" data-i="about_ey">Perfil profesional</p>
+    <h2 class="sh rv" data-i="about_h">UX/UI Designer<br><em>con mentalidad de negocio.</em></h2>
+    <div id="about-grid" style="display:grid;gap:2rem">
+      <div class="rv">
+        <p style="font-size:clamp(14px,.97rem,16px);color:var(--t2);line-height:1.85;margin-bottom:1.1rem" data-i="about_p1">Diseñador UX/UI con base en Barcelona, especializado en <strong style="color:var(--t1)">producto digital, design systems, user research, IA aplicada y automatización</strong>. Fundé una agencia digital donde opero 10 ecosistemas en producción, combinando diseño de alto impacto con inteligencia artificial generativa y CRO.</p>
+        <p style="font-size:clamp(14px,.97rem,16px);color:var(--t2);line-height:1.85;margin-bottom:1.4rem" data-i="about_p2">Mi diferencial: <strong style="color:var(--t1)">6 años de formación tech intensiva</strong> (UX/UI, front-end, hiperautomatización e IA) sobre una base sólida de <strong style="color:var(--t1)">más de una década gestionando cuentas enterprise</strong>. Cuando diseño un producto digital, pienso en CAC, LTV, tasa de conversión y margen operativo simultáneamente.</p>
+        <blockquote style="border-left:3px solid var(--a1);padding-left:1.2rem;font-family:var(--fd);font-style:italic;font-size:clamp(1.1rem,1.5rem,1.5rem);color:var(--t1);line-height:1.5;transition:font-family .5s,border-color .4s" data-i="about_quote">"El diseño sin negocio es arte. El negocio sin diseño es ineficiencia. Mi trabajo es el espacio donde ambos se convierten en resultados medibles."</blockquote>
+      </div>
+      <div id="about-cards" style="display:flex;flex-direction:column;gap:.9rem">
+        <div style="background:var(--surf);border:1px solid var(--bord2);border-radius:var(--rs);padding:1.3rem;transition:all .35s var(--ease)">
+          <p style="font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--a1);margin-bottom:.85rem" data-i="info_head">Datos de contacto</p>
+          <div style="display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)" data-i="loc_l">Ubicación</span><span style="color:var(--t1);font-weight:600">Barcelona, España</span></div>
+          <div style="display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)" data-i="mod_l">Modalidad</span><span style="color:var(--t1);font-weight:600" data-i="mod_v">Remoto · Híbrido BCN</span></div>
+          <div style="display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)" data-i="avail_l">Disponibilidad</span><span style="color:var(--a2);font-weight:700" data-i="avail_v">Inmediata</span></div>
+          <div style="display:flex;justify-content:space-between;padding:.55rem 0;font-size:13px"><span style="color:var(--t2)" data-i="obj_l">Objetivo</span><span style="color:var(--t1);font-weight:600" data-i="obj_v">Empleo + Freelance</span></div>
+        </div>
+        <div style="background:var(--surf);border:1px solid var(--bord2);border-radius:var(--rs);padding:1.3rem">
+          <p style="font-size:10px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--a1);margin-bottom:.85rem" data-i="lang_head">Idiomas</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)">Español</span><div style="display:flex;align-items:center;gap:.6rem"><div style="width:65px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:var(--a1);border-radius:3px"></div></div><span style="color:var(--t1);font-weight:600;font-size:11px" data-i="native">Nativo</span></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)">Inglés</span><div style="display:flex;align-items:center;gap:.6rem"><div style="width:65px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="width:72%;height:100%;background:var(--a1);border-radius:3px"></div></div><span style="color:var(--t1);font-weight:600;font-size:11px">B2</span></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-size:13px"><span style="color:var(--t2)">Catalán</span><div style="display:flex;align-items:center;gap:.6rem"><div style="width:65px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="width:40%;height:100%;background:var(--a1);border-radius:3px"></div></div><span style="color:var(--t1);font-weight:600;font-size:11px">A2</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STACK -->
+<section class="sec" id="stack">
+  <div class="wrap">
+    <span class="sec-n" aria-hidden="true">02</span>
+    <p class="eyebrow rv" data-i="stack_ey">Tecnología</p>
+    <h2 class="sh rv" data-i="stack_h">Stack 2026 — <em>dominio real.</em></h2>
+    <p class="sb rv" data-i="stack_sub">Herramientas que uso <strong>cada semana</strong> en proyectos activos. Nivel certificado y demostrable con casos de uso reales.</p>
+    <div class="mq rv"><div class="mq-i" id="mq-i"></div></div>
+    
+    <div class="sg">
+      <div class="sc">
+        <div class="sc-hd">
+          <span class="sc-ic">⚡</span>
+          <span class="sc-ttl" data-i="scat1">IA & Automatización</span>
+          <span class="sc-ct">15+ tools</span>
+          <div class="sc-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="sc-bd">
+          <div class="trow"><span class="tn">Make (Integromat)</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">n8n</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">Botpress</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">OpenAI / ChatGPT-4o</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">Claude 3.5</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Vapi (Voice AI)</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Gemini AI</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Google AI Studio</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Google Flow / Vertex</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Nano Banana</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Claude Code</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Open Claw</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">ElevenLabs</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Midjourney / Firefly</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">UiPath</span><span class="tlv lv-w">Working</span></div>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-hd">
+          <span class="sc-ic">🎨</span>
+          <span class="sc-ttl" data-i="scat2">Design & Frontend</span>
+          <span class="sc-ct">14+ tools</span>
+          <div class="sc-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="sc-bd">
+          <div class="trow"><span class="tn">Figma</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">HTML5 / CSS3 / JS</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">WordPress</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">Tailwind CSS</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">React</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Node.js / Firebase</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Framer</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Shopify / Liquid</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Whisk</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Stitch</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Pomelli</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Mixboard</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">GitHub Copilot</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Angular / Vue</span><span class="tlv lv-w">Working</span></div>
+        </div>
+      </div>
+      <div class="sc">
+        <div class="sc-hd">
+          <span class="sc-ic">📊</span>
+          <span class="sc-ttl" data-i="scat3">CRO & Operations</span>
+          <span class="sc-ct">7 tools</span>
+          <div class="sc-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="sc-bd">
+          <div class="trow"><span class="tn">Google Analytics 4</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">Excel Avanzado / Power BI</span><span class="tlv lv-e">Expert</span></div>
+          <div class="trow"><span class="tn">Hotjar / FullStory</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Google Workspace</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Notion / Linear / Jira</span><span class="tlv lv-a">Advanced</span></div>
+          <div class="trow"><span class="tn">Salesforce / HubSpot</span><span class="tlv lv-w">Working</span></div>
+          <div class="trow"><span class="tn">Trello</span><span class="tlv lv-w">Working</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROYECTOS -->
+<section class="sec" id="proyectos">
+  <div class="wrap">
+    <span class="sec-n" aria-hidden="true">03</span>
+    <p class="eyebrow rv" data-i="proj_ey">Casos de estudio</p>
+    <h2 class="sh rv" data-i="proj_h">Proyectos con <em>impacto medible.</em></h2>
+    <p class="sb rv" data-i="proj_sub">Sistemas reales con usuarios reales. Cada proyecto incluye discovery, métricas de negocio y aprendizaje continuo.</p>
+    <div class="fbar rv">
+      <button class="fb on" data-f="all" data-i="f_all">Todos</button>
+      <button class="fb" data-f="ux" data-i="f_ux">UX / UI</button>
+      <button class="fb" data-f="ia" data-i="f_ia">IA & Auto.</button>
+      <button class="fb" data-f="ecom" data-i="f_ecom">E-commerce</button>
+      <button class="fb" data-f="saas" data-i="f_saas">SaaS</button>
+    </div>
+    <div class="bento">
+      <div class="bfeat rv zodi-feature" data-cats="ia saas ux">
+        <a href="/zodi/" class="bc trigger-flash">
+          <div class="bc-img">
+            <img src="/assets/zodi/Hero-principal-portada.webp" alt="ZODI oráculo astral con IA">
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi" data-i="zodi_badge">★ Caso destacado</span><span class="bc-tag">AI Product · PWA · UX Writing</span></div>
+            <h3 class="bc-h" data-i="zodi_h">ZODI — Oráculo astral con IA y humor ácido</h3>
+            <p class="bc-d" data-i="zodi_d">Producto digital completo para horóscopo, tarot, carta natal, numerología y comunidad. Definí una experiencia con IA personalizada, 17 tipos de lectura, 4 tonos de respuesta, planes premium y una marca visual memorable.</p>
+            <div class="bc-m" data-i="zodi_m">17 lecturas · 4 tonos · PWA · modelo freemium</div>
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv zodi-bto-card" data-d="1" data-cats="ia ux">
+        <a href="/zodi-bto/" class="bc trigger-flash">
+          <div class="bc-img bc-img-logo">
+            <img src="/assets/zodi/zodi-logo.png" alt="Logo de ZODI BTO">
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi">Prototipo IA</span><span class="bc-tag">Botpress · UX Writing</span></div>
+            <h3 class="bc-h">ZODI BTO — Oráculo conversacional</h3>
+            <p class="bc-d">Primer prototipo de ZODI: terminal de consulta con Botpress, personalidad mística, memoria contextual y tono honesto antes de escalar al producto PWA actual.</p>
+            <div class="bc-m">Botpress · WordPress · personaje IA</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="1" data-cats="ia">
+        <a href="/invitoo/" class="bc invitoo-project-card trigger-flash">
+          <div class="bc-img bc-img-logo"><img src="/assets/invitoo/invitoo-png-e1741309569943.avif" alt="Logo de Invitoo"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">Founder · IA · Wedding Tech</span></div>
+            <h3 class="bc-h" data-i="p1_h">Invitoo — Invitaciones digitales con IA</h3>
+            <p class="bc-d" data-i="p1_d">Marca propia creada desde cero: UX/UI, web design, RSVP, automatizaciones, canciones generadas con IA, animaciones e invitaciones interactivas personalizadas.</p>
+            <div class="bc-m">Founder único · Suno · React · Make</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv pdf-rodd-card" data-d="2" data-cats="ux saas">
+        <a href="/pdf-rodd/" class="bc trigger-flash">
+          <div class="bc-img">
+            <img src="/assets/pdf-rodd/roodpdf.png" alt="PDF Rodd editor PDF online">
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">UX Tool · PDF.js · Fabric</span></div>
+            <h3 class="bc-h" data-i="p10_h">PDF Rodd — Editor PDF gratuito y rápido</h3>
+            <p class="bc-d" data-i="p10_d">Herramienta web para editar, firmar, resaltar, corregir y comprimir PDFs desde el navegador. Minimalista, funcional y pensada para resolver tareas reales sin instalación.</p>
+            <div class="bc-m">PDF.js · PDF-lib · Fabric.js · descarga local</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="2" data-cats="ux">
+        <a href="/ccse/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-estudio-ccse.png" alt="Estudio CCSE"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">EdTech · UX/UI · GitHub Pages</span></div>
+            <h3 class="bc-h" data-i="p3_h">Estudio CCSE — Simulador para nacionalidad española</h3>
+            <p class="bc-d" data-i="p3_d">Herramienta digital para estudiar la prueba CCSE con preguntas verificadas, interfaz accesible y simulador en vivo desplegado en GitHub Pages.</p>
+            <div class="bc-m">Contenido verificado · acceso gratuito · mobile-first</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="1" data-cats="ia saas">
+        <a href="/dedicalo/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/dedicalo/logo.avif" alt="Dedícalo"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">IA generativa · UX emocional · Música</span></div>
+            <h3 class="bc-h" data-i="p4_h">Dedícalo — Canciones personalizadas con IA</h3>
+            <p class="bc-d" data-i="p4_d">Producto propio para convertir historias en canciones: brainstorming, benchmark, flujo de 3 pasos, audio IA, portadas, video y entrega emocional.</p>
+            <div class="bc-m">7 demos · Suno/Udio · WordPress · CapCut</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="2" data-cats="ecom">
+        <a href="/paratumundo/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-paratumundo.png" alt="Para Tu Mundo"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">E-commerce · UX Research · Shopify</span></div>
+            <h3 class="bc-h" data-i="p5_h">ParaTuMundo — Estrategia UX para marketplace</h3>
+            <p class="bc-d" data-i="p5_d">Research competitivo, DAFO, encuestas, personas, journey map, arquitectura de información y prototipo Figma para un e-commerce multcategoría.</p>
+            <div class="bc-m">33 encuestas · Shopify · BigBuy</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="3" data-cats="ux">
+        <a href="/te-atiendo/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-teatiendo.png" alt="Te Atiendo"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">Gastro-Tech · UX Research · Service Design</span></div>
+            <h3 class="bc-h" data-i="p6_h">Te Atiendo — UX para servicio en mesa</h3>
+            <p class="bc-d" data-i="p6_d">Producto digital para restaurantes: research, DAFO, benchmarking, journey map, gamificación del staff, feedback en tiempo real y prototipo Figma.</p>
+            <div class="bc-m">20 encuestas · 90% validación · Figma</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="1" data-cats="ux saas">
+        <a href="/aquae/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-aquae.png" alt="Aquae"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag" data-i="p7_tag">App Móvil</span></div>
+            <h3 class="bc-h">Aquae</h3>
+            <p class="bc-d" data-i="p7_d">Aplicación móvil concebida para la sostenibilidad. Adopta técnicas de gamificación y ciencia de datos para incentivar el ahorro hídrico.</p>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="2" data-cats="ux ecom">
+        <a href="/travel-of-vapers/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-travel-of-vapers.png" alt="Travel of Vapers"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag" data-i="p8_tag">Branding · Packaging · Operaciones</span></div>
+            <h3 class="bc-h" data-i="p8_h">Travel of Vapers — Marca sensorial</h3>
+            <p class="bc-d" data-i="p8_d">Identidad visual, packaging, sistema de 21 sabores/destinos, marketing social, venta directa, eventos y logística nacional para una marca de producto físico.</p>
+            <div class="bc-m">21 destinos · Photoshop · escala nacional</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="3" data-cats="ux">
+        <a href="/tomapoly/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/tomapoly/logotomapoly.png" alt="Tomapoly"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag" data-i="p9_tag">UX físico · Branding · Packaging</span></div>
+            <h3 class="bc-h">Tomapoly — UX aplicado a un juego físico</h3>
+            <p class="bc-d" data-i="p9_d">Proyecto propio de gamificación física: diseñé mecánicas sociales, tablero de 113 casillas, packaging waterproof, preprensa, testing y producción audiovisual.</p>
+            <div class="bc-m">113 casillas · PVC · Photoshop · Premiere</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LABORATORIO DIGITAL -->
+<section class="sec" id="laboratorio">
+  <div class="wrap">
+    <span class="sec-n" aria-hidden="true">04</span>
+    <p class="eyebrow rv" data-i="lab_ey">Laboratorio digital</p>
+    <h2 class="sh rv" data-i="lab_h">Ecosistemas <em>en producción.</em></h2>
+    <p class="sb rv" data-i="lab_sub">No solo diseño para clientes — construyo y opero mis propios ecosistemas. <strong>10 sitios activos</strong> que demuestran dominio técnico y visión de negocio aplicada.</p>
+    <div class="lab-grid rv">
+      <!-- AIbueno -->
+      <a href="https://aibueno.es" target="_blank" rel="noopener" class="lab-feat lab-feat-ai trigger-flash">
+        <div class="lab-img lab-img-web">
+          <img src="/assets/aibueno-preview.png" alt="Vista previa de la web AIbueno">
+        </div>
+        <div class="lab-body">
+          <span class="lab-tag" style="color:var(--a2)">
+            <span data-i="lab_ai_tag">Agencia IA Boutique ·</span> 
+            <span style="background:color-mix(in srgb,var(--a2) 14%,transparent);padding:2px 8px;border-radius:100px;border:1px solid color-mix(in srgb,var(--a2) 28%,transparent);font-size:9px" data-i="lab_ai_act">Proyecto activo</span>
+          </span>
+          <h3 class="lab-h">AIbueno.es — Agencia de IA y Desarrollo Web</h3>
+          <p class="lab-d" data-i="lab_ai_d">Agencia boutique de Barcelona especializada en desarrollo web, apps móviles y agentes de IA. Transformamos operaciones lentas en ventajas competitivas reales.</p>
+          <div class="lab-pills"><span>Agentes IA</span><span>Desarrollo Web</span><span>Apps Móviles</span><span>Barcelona</span></div>
+          <span class="lab-link" data-i="lab_btn">Visitar →</span>
+        </div>
+      </a>
+      <!-- Featured: Rodd.es -->
+      <a href="https://rodd.es" target="_blank" rel="noopener" class="lab-feat trigger-flash">
+        <div class="lab-img"><img src="/assets/legacy/rodd.png" alt="Rodd.es"></div>
+        <div class="lab-body">
+          <span class="lab-tag" data-i="lab_rodd_tag">Agencia IA · Nodo Central</span>
+          <h3 class="lab-h">Rodd.es — Agencia de IA y Diseño Digital</h3>
+          <p class="lab-d" data-i="lab_rodd_d">Ecosistema web de alto rendimiento. IA generativa, automatización extrema y CRO bajo un solo techo. Arquitectura multisite con 8 sitios activos en producción real.</p>
+          <div class="lab-pills"><span>Full-Stack AI</span><span>Multisite</span><span>WPO Avanzado</span></div>
+          <span class="lab-link" data-i="lab_btn">Visitar →</span>
+        </div>
+      </a>
+      <!-- Grid: 8 sitios -->
+      <div class="lab-sub-grid">
+        <a href="https://jukaatattoo.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img"><img src="/assets/legacy/jukaa.png" alt="Jukaa Tattoo"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">Premium · Ink Network</span>
+            <h4 class="lab-card-h">Jukaa Tattoo</h4>
+            <p class="lab-card-d" data-i="l1_d">Identidad visual oscura y premium. Booking online y galería de artistas.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+        <a href="https://inkmadrid.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img"><img src="/assets/legacy/inkmadrid.png" alt="Ink Madrid"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">Urban · Ink Network</span>
+            <h4 class="lab-card-h">Ink Madrid</h4>
+            <p class="lab-card-d" data-i="l2_d">Estilo urbano, diseño orientado a conversión con CTA de booking prominente.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+        <a href="https://inkbcn.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img"><img src="/assets/legacy/inkbcn.png" alt="Ink BCN"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">Minimalista · Ink Network</span>
+            <h4 class="lab-card-h">Ink BCN</h4>
+            <p class="lab-card-d" data-i="l3_d">Estética minimalista barcelonesa. Layout limpio y alta legibilidad.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+        <a href="https://altofoco.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img"><img src="/assets/legacy/altofoco.png" alt="Alto Foco Studio"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">Agencia · Lead Gen IA</span>
+            <h4 class="lab-card-h">Alto Foco Studio</h4>
+            <p class="lab-card-d" data-i="l4_d">Plataforma minimalista con IA que captura leads cualificados.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+        <a href="https://vortex.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img"><img src="/assets/legacy/vortex.png" alt="Vortex Immersive"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">UX Lab · WebGL</span>
+            <h4 class="lab-card-h">Vortex Immersive</h4>
+            <p class="lab-card-d" data-i="l5_d">Experimento 3D interactivo con WPO extremo para 60fps fluidos.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+        <a href="https://laopticaonline.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img"><img src="/assets/legacy/laoptinaonline.jpg" alt="La Óptica Online"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">E-commerce · CRO</span>
+            <h4 class="lab-card-h">La Óptica Online</h4>
+            <p class="lab-card-d" data-i="l6_d">Prototipo e-commerce orientado a conversión bruta. Checkout optimizado.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+        <a href="/pdf-rodd/" class="lab-card lab-card-new trigger-flash">
+          <div class="lab-card-img"><img src="/assets/pdf-rodd/roodpdf.png" alt="PDF Rodd editor PDF online"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">Herramienta · <span class="lab-new-badge">Nuevo</span></span>
+            <h4 class="lab-card-h">PDF Rodd</h4>
+            <p class="lab-card-d" data-i="l7_d">Editor PDF gratuito para editar, firmar y comprimir documentos desde el navegador.</p>
+            <span class="lab-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+        <a href="https://invitoo.rodd.es" target="_blank" rel="noopener" class="lab-card trigger-flash">
+          <div class="lab-card-img lab-card-img-logo"><img src="/assets/invitoo/invitoo-png-e1741309569943.avif" alt="Logo de Invitoo"></div>
+          <div class="lab-card-body">
+            <span class="lab-tag">SaaS · IA</span>
+            <h4 class="lab-card-h">Invitoo</h4>
+            <p class="lab-card-d" data-i="l8_d">Plataforma SaaS de invitaciones digitales inteligentes con IA.</p>
+            <span class="lab-link" data-i="lab_btn">Ver →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAYECTORIA -->
+<section class="sec" id="trayectoria">
+  <div class="wrap">
+    <span class="sec-n" aria-hidden="true">05</span>
+    <p class="eyebrow rv" data-i="car_ey">Experiencia profesional</p>
+    <h2 class="sh rv" data-i="car_h">Trayectoria <em>no convencional.</em></h2>
+    <p class="sb rv" data-i="car_sub">Business + Technology + Design — los tres pilares en un solo perfil. Una trayectoria que la mayoría de UX Designers no puede replicar.</p>
+
+    <div class="tl-list">
+      <div class="tl curr rv open" data-d="1">
+        <div class="tl-hd">
+          <div class="tl-dot"></div>
+          <div class="tl-meta">
+            <div class="tl-role" data-i="j1_role">Founder · UX/UI Designer · IA aplicada</div>
+            <div class="tl-co" data-i="j1_co">Fundador · Agencia Digital Propia</div>
+          </div>
+          <span class="curr-pill" data-i="curr">Actual</span>
+          <span class="tl-dates">2024–hoy</span>
+          <div class="tl-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="tl-bd">
+          <div class="tl-bi">
+            <p class="tl-desc" data-i="j1_desc">Product design de alto impacto, desarrollo de agentes IA conversacionales y automatización de procesos empresariales. Gestión de 10 ecosistemas web activos con foco en conversión y retención.</p>
+            <div class="tl-tags"><span class="tl-tag">Product Design</span><span class="tl-tag">Design Systems</span><span class="tl-tag">AI Agents</span><span class="tl-tag">Make</span><span class="tl-tag">React</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl curr rv" data-d="2">
+        <div class="tl-hd">
+          <div class="tl-dot"></div>
+          <div class="tl-meta">
+            <div class="tl-role" data-i="j2_role">Gestor de Cobros Empresas +Orange</div>
+            <div class="tl-co">Abai · Cliente Orange Empresas · Barcelona</div>
+          </div>
+          <span class="curr-pill" data-i="curr">Actual</span>
+          <span class="tl-dates">2024–hoy</span>
+          <div class="tl-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="tl-bd">
+          <div class="tl-bi">
+            <p class="tl-desc" data-i="j2_desc">Gestión de cartera B2B para empresas +Orange, seguimiento de deuda, incidencias, acuerdos de pago y coordinación operativa. Aplico criterio de negocio, datos y automatizaciones ligeras para mejorar trazabilidad y eficiencia.</p>
+            <div class="tl-tags"><span class="tl-tag">Cobros B2B</span><span class="tl-tag">Orange Empresas</span><span class="tl-tag">Excel</span><span class="tl-tag">Operaciones</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl rv" data-d="3">
+        <div class="tl-hd">
+          <div class="tl-dot"></div>
+          <div class="tl-meta">
+            <div class="tl-role" data-i="j3_role">Coordinador</div>
+            <div class="tl-co">Garden España · Barcelona</div>
+          </div>
+          <span class="tl-dates">2022–2024</span>
+          <div class="tl-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="tl-bd">
+          <div class="tl-bi">
+            <p class="tl-desc" data-i="j3_desc">Coordinación operativa en Garden España: seguimiento de incidencias, comunicación entre equipos, organización de procesos y mejora de trazabilidad con herramientas digitales.</p>
+            <div class="tl-tags"><span class="tl-tag">Team Leadership</span><span class="tl-tag">Digital Transformation</span><span class="tl-tag">Agile</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tl rv" data-d="4">
+        <div class="tl-hd">
+          <div class="tl-dot"></div>
+          <div class="tl-meta">
+            <div class="tl-role" data-i="j4_role">Senior Enterprise Account Manager</div>
+            <div class="tl-co">Movistar Empresas · Chile</div>
+          </div>
+          <span class="tl-dates">2008–2019</span>
+          <div class="tl-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="tl-bd">
+          <div class="tl-bi">
+            <p class="tl-desc" data-i="j4_desc">Gestión de cartera de 80+ cuentas corporativas de alto valor. Retención de clientes VIP, negociación de contratos enterprise y diseño de estrategias de fidelización a largo plazo. Esta base es el núcleo de mi business acumen aplicado al diseño de producto.</p>
+            <div class="tl-tags"><span class="tl-tag">Enterprise Sales</span><span class="tl-tag">KAM</span><span class="tl-tag">B2B Strategy</span><span class="tl-tag">Customer Retention</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="eyebrow rv" style="margin-top:2.8rem" data-i="edu_ey">Formación académica</p>
+    <div class="edu-list">
+      <div class="edu rv open" data-d="1">
+        <div class="edu-hd">
+          <span class="edu-b edu-curr" data-i="in_progress">En Curso</span>
+          <div class="edu-m">
+            <div class="edu-title" data-i="e1_t">Máster en Hiperautomatización & Agentes IA</div>
+            <div class="edu-school">EBIS Business Techschool · 2025–2026</div>
+          </div>
+          <div class="edu-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="edu-bd">
+          <div class="edu-bi"><p class="edu-desc" data-i="e1_d">Arquitecturas de IA, automatización de procesos empresariales, LLMs y agentes conversacionales avanzados con integración en sistemas de producción.</p></div>
+        </div>
+      </div>
+      <div class="edu rv" data-d="2">
+        <div class="edu-hd">
+          <span class="edu-b edu-curr" data-i="in_progress">En Curso</span>
+          <div class="edu-m">
+            <div class="edu-title" data-i="e2_t">Especialización en IA Generativa</div>
+            <div class="edu-school">UDIA (Universidad de IA) · 2025–2026</div>
+          </div>
+          <div class="edu-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="edu-bd">
+          <div class="edu-bi"><p class="edu-desc" data-i="e2_d">Prompt engineering avanzado, fine-tuning de modelos y producción de activos digitales con herramientas generativas de última generación.</p></div>
+        </div>
+      </div>
+      <div class="edu rv" data-d="3">
+        <div class="edu-hd">
+          <span class="edu-b edu-done">2024</span>
+          <div class="edu-m">
+            <div class="edu-title" data-i="e3_t">Bootcamp UX/UI Design — Professional Track</div>
+            <div class="edu-school">Neoland Madrid</div>
+          </div>
+          <div class="edu-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="edu-bd">
+          <div class="edu-bi"><p class="edu-desc" data-i="e3_d">Design Thinking, User Research, prototipado en Figma, Design Systems, Agile UX y Lean UX. 600+ horas de práctica intensiva con proyectos reales.</p></div>
+        </div>
+      </div>
+      <div class="edu rv" data-d="4">
+        <div class="edu-hd">
+          <span class="edu-b edu-done">2022</span>
+          <div class="edu-m">
+            <div class="edu-title" data-i="e4_t">Desarrollo Web Multimedia & Administración Digital</div>
+            <div class="edu-school">Cipsa.net · Duoc UC</div>
+          </div>
+          <div class="edu-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="edu-bd">
+          <div class="edu-bi"><p class="edu-desc" data-i="e4_d">Front-end development, Digital Marketing, SEO/SEM y gestión financiera corporativa aplicada a negocios digitales.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section class="sec" id="testimonios">
+  <div class="wrap">
+    <div class="validation-head">
+      <div>
+        <p class="eyebrow rv" data-i="test_ey">Validación real</p>
+        <h2 class="sh rv" data-i="test_h">La prueba social debe venir<br><em>de personas reales.</em></h2>
+      </div>
+      <p class="validation-copy rv" data-i="test_sub">Estoy reemplazando las frases genéricas por opiniones verificables. Si hemos trabajado juntos, puedes dejar tu experiencia por email o LinkedIn. Solo publicaré comentarios con permiso explícito.</p>
+    </div>
+    <div class="validation-actions rv">
+      <a class="btn-p trigger-flash" href="mailto:rodrigo.negrete.aros@gmail.com?subject=Validaci%C3%B3n%20para%20tu%20portfolio&body=Hola%20Rodrigo%2C%0A%0AQuiero%20dejarte%20esta%20validaci%C3%B3n%20sobre%20nuestra%20experiencia%20trabajando%20juntos%3A%0A%0A-%20Relaci%C3%B3n%20con%20el%20proyecto%3A%0A-%20Qu%C3%A9%20destacar%C3%ADa%20de%20tu%20trabajo%3A%0A-%20Comentario%20para%20publicar%3A%0A%0AAutorizo%20a%20Rodrigo%20a%20publicar%20este%20comentario%20en%20su%20portfolio%3A%20S%C3%AD%20%2F%20No%0A%0ANombre%20y%20cargo%20a%20mostrar%3A%0ALinkedin%20o%20web%20opcional%3A" data-i="test_email">Deja tu experiencia</a>
+      <a class="btn-s trigger-flash" href="https://www.linkedin.com/in/rodrigonegretearos/" target="_blank" rel="noopener" data-i="test_linkedin">Validar en LinkedIn</a>
+    </div>
+    <div class="test-g validation-g">
+      <div class="test-c validation-card rv" data-d="1">
+        <div class="validation-icon">01</div>
+        <h3 data-i="test_c1_h">Comentario recibido</h3>
+        <p data-i="test_c1_d">La persona envía su experiencia por email o LinkedIn, idealmente con contexto del proyecto, rol y permiso de publicación.</p>
+      </div>
+      <div class="test-c validation-card rv" data-d="2">
+        <div class="validation-icon">02</div>
+        <h3 data-i="test_c2_h">Revisión y permiso</h3>
+        <p data-i="test_c2_d">Antes de publicarlo reviso identidad, tono, relación real y autorización. Nada se publica de forma automática.</p>
+      </div>
+      <div class="test-c validation-card rv" data-d="3">
+        <div class="validation-icon">03</div>
+        <h3 data-i="test_c3_h">Publicación verificada</h3>
+        <p data-i="test_c3_d">Los testimonios aprobados aparecerán aquí con nombre/cargo o de forma anonimizada, según prefiera cada persona.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ESTILOS SHOWCASE -->
+<section class="sec" id="estilos">
+  <div class="wrap">
+    <p class="eyebrow rv" data-i="style_ey">Versatilidad de diseño</p>
+    <h2 class="sh rv" data-i="style_h">5 sistemas visuales,<br><em>una arquitectura.</em></h2>
+    <p class="sb rv" data-i="style_sub">Esta página ejecuta 5 identidades visuales radicalmente distintas sobre el mismo código base. Tipografía, paleta, tokens, personalidad de marca — todo cambia sin tocar el HTML.</p>
+    <div class="thm-g rv">
+      <button class="tc on" data-tc="saas">
+        <div class="tc-p tp-saas"><div class="tp-bar" style="background:#00d4d4;opacity:.7"></div><div class="tp-bar s" style="background:#ff3333;opacity:.7"></div><div class="tp-acc" style="background:#00d4d4"></div><div class="tp-btn" style="background:#000;border:1px solid #00d4d4;opacity:.8"></div><div class="tp-on">Activo</div></div>
+        <div class="tc-l"><div class="tc-n">Dual Core AI</div><div class="tc-d">Inter · Teal & Red</div></div>
+      </button>
+      <button class="tc" data-tc="editorial">
+        <div class="tc-p tp-edit"><div class="tp-bar" style="background:rgba(26,26,26,.8)"></div><div class="tp-bar s" style="background:#8b0000;opacity:.8"></div><div class="tp-acc" style="background:#8b0000"></div><div class="tp-btn" style="background:#1a1a1a"></div><div class="tp-on">Activo</div></div>
+        <div class="tc-l"><div class="tc-n">El Diario Digital</div><div class="tc-d">Lora · Sepia y Tinta</div></div>
+      </button>
+      <button class="tc" data-tc="cyber">
+        <div class="tc-p tp-cyber"><div class="tp-bar" style="background:#00f0ff;opacity:.6"></div><div class="tp-bar s" style="background:#b026ff;opacity:.6"></div><div class="tp-acc" style="background:#00f0ff"></div><div class="tp-btn" style="background:#00f0ff;opacity:.7"></div><div class="tp-on">Activo</div></div>
+        <div class="tc-l"><div class="tc-n">Abstract Cyber</div><div class="tc-d">Outfit · Neón y Plasma</div></div>
+      </button>
+      <button class="tc" data-tc="diario">
+        <div class="tc-p tp-diar"><div class="tp-bar" style="background:rgba(0,0,0,.15)"></div><div class="tp-bar s" style="background:#0052cc;opacity:.6"></div><div class="tp-acc" style="background:#0052cc"></div><div class="tp-btn" style="background:#111111"></div><div class="tp-on">Activo</div></div>
+        <div class="tc-l"><div class="tc-n">Minimal Journal</div><div class="tc-d">Inter · Blanco y Azul</div></div>
+      </button>
+      <button class="tc" data-tc="hud">
+        <div class="tc-p tp-hud"><div class="tp-bar" style="background:rgba(255,255,255,.12)"></div><div class="tp-bar s" style="background:#d4b87a;opacity:.55"></div><div class="tp-acc" style="background:#d4b87a"></div><div class="tp-btn" style="background:#d4b87a;opacity:.75"></div><div class="tp-on">Activo</div></div>
+        <div class="tc-l"><div class="tc-n">Fine Art</div><div class="tc-d">Playfair · Negro mate dorado</div></div>
+      </button>
+    </div>
+    <p class="style-note rv" data-i="style_note"><strong>¿Por qué importa?</strong> Un design system basado en tokens permite escalar identidades de marca de forma sistemática — sin código duplicado, sin inconsistencias. Esto es lo que diferencia un diseñador senior de uno que simplemente entrega pantallas.</p>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section class="sec" id="contacto">
+  <div class="wrap">
+    <div class="contact-box">
+      <div class="c-aurora"></div>
+      <div class="c-inner">
+        <p class="eyebrow" style="justify-content:center" data-i="contact_ey">Contacto</p>
+        <h2 class="c-h" data-i="contact_h">¿Construimos algo<br><em>que marque la diferencia?</em></h2>
+        <p class="c-s" data-i="contact_sub">Disponible para roles de Product Designer UX/UI, AI Product Designer o perfiles híbridos de diseño, IA aplicada y automatización. También asumo proyectos freelance con impacto real.</p>
+        <div class="c-links">
+          <a href="mailto:rodrigo.negrete.aros@gmail.com" class="btn-p trigger-flash" data-i="cta_email">✉ Enviar email</a>
+          <a href="https://wa.me/34653567610" class="btn-s trigger-flash" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a href="https://linkedin.com/in/rodrigonegretearos" class="btn-s trigger-flash" target="_blank" rel="noopener">🔗 LinkedIn</a>
+          <a href="/cv/" class="btn-s trigger-flash">📄 CV</a>
+        </div>
+        <div class="c-cards">
+          <div class="cc"><div class="cc-ic">✉</div><div class="cc-l">Email</div><a href="mailto:rodrigo.negrete.aros@gmail.com" class="cc-v">rodrigo.negrete.aros@gmail.com</a></div>
+          <div class="cc"><div class="cc-ic">📱</div><div class="cc-l" data-i="phone_l">Teléfono</div><a href="tel:+34653567610" class="cc-v">+34 653 567 610</a></div>
+          <div class="cc"><div class="cc-ic">📍</div><div class="cc-l" data-i="loc_l">Ubicación</div><div class="cc-v">Barcelona, España</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot">
+    <div>
+      <p>© 2026 · <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank">LinkedIn</a> · Portfolio</p>
+      <p style="margin-top:.25rem;font-size:11.5px;opacity:.55" data-i="foot_made">Construido con HTML/CSS/JS vanilla. Sin frameworks. Sin plantillas.</p>
+    </div>
+    <div style="display:flex;gap:.4rem">
+      <button class="nlb on" data-lang="es">ES</button>
+      <button class="nlb" data-lang="ca">CA</button>
+      <button class="nlb" data-lang="en">EN</button>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="./src/main.js"></script>
+</body>
 </html>

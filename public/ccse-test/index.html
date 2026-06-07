@@ -1,0 +1,2565 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Test CCSE 2025</title>
+<style>
+  /* Importar Fuente Inter */
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+  /* Base para tipografía fluida */
+  :root {
+    font-size: 16px; /* Base (1rem = 16px) */
+  }
+  
+  /* Reset básico para el 'body' cuando se ve directo */
+  body {
+    background: linear-gradient(180deg, #fbfaf7, #f4efe7);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  /* Estilos Generales - DARK MODE */
+  .quiz-body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(145deg, #ffffff, #fbf7ef);
+    color: #2b2527;
+    text-align: center;
+    padding: 24px;
+    border-radius: 22px;
+    /* Diseño adaptativo PC/Móvil */
+    width: 100%; /* Ocupa el 100% del 'body' o 'embed' */
+    max-width: 700px; 
+    margin: 5px auto;   
+    border: 1px solid rgba(139, 26, 36, 0.14);
+    box-shadow: 0 26px 70px rgba(36, 31, 33, 0.12);
+    box-sizing: border-box; /* Importante para el padding */
+    touch-action: manipulation;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* --- Pantalla de Inicio --- */
+  #start-screen { animation: fadeIn 0.5s ease; }
+  .quiz-body::before { content:''; position:absolute; inset:0; pointer-events:none; background: radial-gradient(circle at 18% 0%, rgba(212,175,55,.2), transparent 32%), radial-gradient(circle at 92% 12%, rgba(139,26,36,.1), transparent 34%); }
+  #start-screen, #quiz-screen, #result-screen { position: relative; z-index: 1; }
+  
+  /* --- TIPOGRAFÍA FLUIDA --- */
+  #start-screen h2 {
+    font-weight: 700;
+    /* Mín: 1.8rem (Móvil), Pref: 5vw, Máx: 2.2rem (PC) */
+    font-size: clamp(1.8rem, 5vw, 2.2rem); 
+    color: #5c1119;
+  }
+  #start-screen p {
+    /* Mín: 1rem (Móvil), Pref: 2.5vw, Máx: 1.1rem (PC) */
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+    color: #667085; 
+    margin-bottom: 24px; 
+    line-height: 1.5;
+  }
+  
+  #nombre-input {
+    display: block; width: 80%; margin: 20px auto; padding: 12px;
+    font-size: clamp(0.9rem, 2.5vw, 1rem); /* Fluido */
+    border-radius: 12px; border: 2px solid rgba(139, 26, 36, 0.14); background-color: #ffffff;
+    color: #5c1119; text-align: center;
+  }
+  #nombre-input::placeholder { color: #777; }
+  #nombre-input:focus { border-color: #8B1A24; outline: none; box-shadow: 0 0 10px rgba(0, 176, 255, 0.3); }
+  
+  .start-btn {
+    background: linear-gradient(135deg, #8B1A24, #5c1119); color: #ffffff; font-weight: 800;
+    font-size: clamp(1rem, 3vw, 1.2rem); /* Fluido */
+    padding: 14px 28px; border: none; border-radius: 14px; cursor: pointer; transition: all 0.3s ease;
+  }
+  .start-btn:hover { background-color: #5c1119; transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0, 176, 255, 0.4); }
+
+  /* --- Pantalla del Quiz --- */
+  #quiz-screen { display: none; text-align: left; }
+  #quiz-header { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; }
+  #progreso-texto { font-size: 0.9em; color: #667085; text-align: left; font-weight: 700; }
+  #cronometro { font-size: 1.1em; color: #8B1A24; font-weight: 700; }
+  .progreso-barra { width: 100%; height: 10px; background-color: #eadfce; border-radius: 5px; margin: 8px 0 20px 0; }
+  #progreso-fill { width: 0%; height: 100%; background-color: #8B1A24; border-radius: 5px; transition: width 0.4s ease; }
+  
+  .pregunta-titulo {
+    font-weight: 700; color: #5c1119; margin-bottom: 24px; text-align: center; line-height: 1.4;
+    /* Mín: 1.25rem (Móvil), Pref: 4vw, Máx: 1.5rem (PC) */
+    font-size: clamp(1.25rem, 4vw, 1.5rem); 
+  }
+
+  .opciones-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .opcion-btn {
+    border: 2px solid rgba(139, 26, 36, 0.14); color: #2b2527; background-color: #ffffff;
+    /* Mín: 0.9rem (Móvil), Pref: 2.5vw, Máx: 1rem (PC) */
+    font-size: clamp(0.9rem, 2.5vw, 1rem); 
+    /* Padding fluido también */
+    padding: clamp(12px, 3vw, 16px); 
+    border-radius: 14px; cursor: pointer; transition: all 0.3s ease;
+    text-align: left; width: 100%; position: relative;
+    box-sizing: border-box; /* Asegura que el padding no rompa el layout */
+  }
+  .opcion-btn:nth-child(3) { grid-column: 1 / 3; }
+  .opcion-btn:hover:not(:disabled) { border-color: #8B1A24; background-color: #fff7ed; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(139,26,36,.1); }
+  
+  /* Estilos de Feedback Instantáneo */
+  .opcion-btn.correct { border-color: #15803D; background-color: #dcfce7; color: #5c1119; }
+  .opcion-btn.incorrect { border-color: #C2410C; background-color: #ffedd5; color: #5c1119; }
+  .opcion-btn.show-correct { border-color: #15803D; box-shadow: 0 0 10px rgba(0, 230, 118, 0.7); }
+  .opcion-btn:disabled { cursor: not-allowed; opacity: 0.8; }
+  
+  /* Contenedor de Feedback */
+  #feedback-container { display: none; margin-top: 20px; text-align: center; animation: fadeIn 0.3s ease; }
+  .feedback-text {
+    font-weight: 700; margin-bottom: 10px;
+    font-size: clamp(1rem, 3vw, 1.2rem); /* Fluido */
+  }
+  .feedback-text.correct { color: #15803D; }
+  .feedback-text.incorrect { color: #C2410C; }
+  
+  .pista-estudio {
+    margin-top: 10px; padding: 10px; background-color: #f8f2e8; border-radius: 12px;
+    border: 1px dashed #8B1A24; text-align: left;
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem); /* Fluido */
+  }
+  .pista-estudio strong { color: #8B1A24; }
+
+  /* --- Pantalla de Resultados --- */
+  #result-screen { display: none; animation: fadeIn 0.5s ease; }
+  .emoji-resultado { font-size: 5em; margin-bottom: 16px; }
+  #resultado-titulo {
+    font-weight: 700; color: #5c1119; margin-bottom: 8px;
+    font-size: clamp(1.8rem, 5vw, 2.2rem); /* Fluido */
+  }
+  #resultado-puntaje { font-size: 1.2em; color: #2b2527; margin-bottom: 24px; }
+  #resultado-tiempo { font-size: 1.1em; color: #8B1A24; margin-bottom: 24px; font-weight: 700; }
+  #resultado-texto {
+    font-size: clamp(1rem, 2.5vw, 1.1rem); /* Fluido */
+    color: #667085; margin-bottom: 30px; 
+  }
+
+  /* Desglose */
+  #desglose-respuestas { text-align: left; margin-top: 30px; border-top: 1px solid rgba(139, 26, 36, 0.14); padding-top: 20px; }
+  .desglose-item { background-color: #ffffff; padding: 16px; border-radius: 14px; margin-bottom: 12px; border-left: 5px solid; }
+  .desglose-item.correcta { border-color: #15803D; }
+  .desglose-item.incorrecta { border-color: #C2410C; }
+  .desglose-pregunta { font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.1rem); color: #5c1119; }
+  .desglose-respuesta-user { color: #667085; }
+  .desglose-respuesta-correcta { color: #15803D; font-weight: 700; }
+
+  /* Botones de acción final */
+  .final-actions { margin-top: 20px; }
+  .mail-btn, .restart-btn {
+    display: inline-block; color: #ffffff; font-weight: 700;
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Fluido */
+    padding: 14px 28px; border: none; border-radius: 14px; cursor: pointer;
+    text-decoration: none; transition: all 0.3s ease; margin: 5px;
+  }
+  .mail-btn { background-color: #8B1A24; }
+  .restart-btn { background-color: #667085; }
+  .mail-btn:hover, .restart-btn:hover { background-color: #5c1119; transform: translateY(-3px); }
+  
+  /* Tabla de Ranking */
+  #ranking-local { margin-top: 30px; border-top: 1px solid rgba(139, 26, 36, 0.14); padding-top: 20px; text-align: left; }
+  #ranking-local h3 { color: #5c1119; text-align: center; }
+  .ranking-table {
+    width: 100%; margin-top: 15px; border-collapse: collapse;
+    font-size: clamp(0.85rem, 2.2vw, 0.95rem); /* Fluido */
+  }
+  .ranking-table th, .ranking-table td { padding: 10px; border-bottom: 1px solid rgba(139, 26, 36, 0.14); }
+  .ranking-table th { background-color: #ffffff; color: #8B1A24; }
+  .ranking-table td { color: #2b2527; }
+  .ranking-table .rank-1 { color: #D4AF37; font-weight: 700; } /* Oro */
+
+  /* Animación */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- RESPUESTA A "MOVIL" --- */
+  @media (max-width: 600px) {
+    /* En móvil, las opciones de respuesta pasan a 1 columna */
+    .opciones-container { 
+      grid-template-columns: 1fr; 
+    }
+    .opcion-btn:nth-child(3) { 
+      grid-column: 1; /* Se resetea */
+    }
+    .quiz-body {
+      padding: 15px; /* Menos padding en móvil */
+    }
+  }
+</style>
+<style id="ccse-theme-override">
+.quiz-body{border:1px solid rgba(139,26,36,.14)!important}
+.start-btn,.mail-btn{background:linear-gradient(135deg,#8B1A24,#5c1119)!important;color:#fff!important;box-shadow:0 16px 34px rgba(139,26,36,.22)!important}
+.start-btn:hover,.mail-btn:hover{background:#5c1119!important;color:#fff!important}
+.restart-btn{background:#D4AF37!important;color:#241f21!important}
+.opcion-btn.correct{color:#14532d!important}.opcion-btn.incorrect{color:#7c2d12!important}.feedback-text.correct{color:#15803D!important}.feedback-text.incorrect{color:#C2410C!important}
+</style>
+</head>
+<body>
+
+<div id="quiz-container" class="quiz-body">
+  
+  <div id="start-screen">
+    <h2>Test CCSE 2025</h2>
+    <p>
+      Bienvenido al simulador del test de nacionalidad.
+      <br>
+      Responderás a <strong>25 preguntas aleatorias</strong> (de un banco de 300) y necesitarás 
+      <strong>15 aciertos</strong> para aprobar.
+    </p>
+    <input type="text" id="nombre-input" placeholder="Escribe tu nombre para el ranking" />
+    <button id="start-btn" class="start-btn">¡Empezar Test!</button>
+  </div>
+
+  <div id="quiz-screen">
+    <div id="quiz-header">
+      <div id="progreso-texto">Pregunta 1 de 25</div>
+      <div id="cronometro">Tiempo: 00:00</div>
+    </div>
+    <div class="progreso-barra"><div id="progreso-fill"></div></div>
+    <p id="pregunta-titulo" class="pregunta-titulo">Cargando pregunta...</p>
+    <div id="opciones-container" class="opciones-container"></div>
+    <div id="feedback-container"></div>
+  </div>
+
+  <div id="result-screen">
+    <div id="emoji-resultado" class="emoji-resultado"></div>
+    <h2 id="resultado-titulo"></h2>
+    <p id="resultado-puntaje"></p>
+    <p id="resultado-tiempo"></p>
+    <p id="resultado-texto"></p>
+    <div class="final-actions">
+      <button id="restart-btn" class="restart-btn">Volver a Intentar</button>
+    </div>
+    <div id="ranking-local">
+      <h3>Mejores Puntuaciones (en este navegador)</h3>
+      <table class="ranking-table">
+        <thead>
+          <tr><th>Pos.</th><th>Nombre</th><th>Aciertos</th><th>Tiempo</th></tr>
+        </thead>
+        <tbody id="ranking-tbody"></tbody>
+      </table>
+    </div>
+    <div id="desglose-respuestas"></div>
+  </div>
+
+</div>
+
+<script>
+  // --- Constantes del Quiz (¡VALORES FINALES!) ---
+  const NUM_PREGUNTAS_TEST = 25;
+  const MIN_ACERTOS_APROBAR = 15;
+  const RANKING_KEY = 'ccseQuizRanking';
+  const TIEMPO_ESPERA_ERROR = 6000; // 6 segundos para leer el error
+  const TIEMPO_ESPERA_ACIERTO = 2000; // 2 segundos si acierta
+
+  // --- Variables de Estado ---
+  let testQuestions = []; 
+  let userAnswers = [];
+  let aciertos = 0; 
+  let currentQuestionIndex = 0;
+  let timerInterval;
+  let startTime;
+  let userName = "Usuario";
+
+  // --- Selectores de DOM (se definirán cuando el DOM esté cargado) ---
+  let startScreen, quizScreen, resultScreen, feedbackContainer, opcionesContainer;
+  let nombreInput, startBtn, restartBtn, cronometro, progresoFill, progresoTexto;
+  let preguntaTitulo, emojiResultado, resultadoTitulo, resultadoPuntaje, resultadoTiempo, resultadoTexto;
+  let mailBtn, rankingTbody, desgloseRespuestas;
+
+  
+  // --- BANCO DE PREGUNTAS (INICIO) ---
+  const fullQuestionBank = [
+  // BLOQUE 1 de 10 (Preguntas 1-30)
+    {
+      pregunta: "España es...",
+      opciones: ["a) una monarquía parlamentaria.", "b) una república federal.", "c) una monarquía federal."],
+      respuestaCorrecta: 0,
+      explicacion: "El Reino de España es un Estado social y democrático de Derecho con la forma política de monarquía parlamentaria."
+    },
+    {
+      pregunta: "La ley fundamental de España se llama...",
+      opciones: ["a) Constitución.", "b) Ley básica.", "c) Ordenamiento esencial."],
+      respuestaCorrecta: 0,
+      explicacion: "La Constitución es la «ley de leyes» o ley fundamental de España."
+    },
+    {
+      pregunta: "Según la Constitución española, la soberanía nacional reside en...",
+      opciones: ["a) el pueblo español.", "b) el Gobierno del Estado.", "c) el Congreso de los Diputados."],
+      respuestaCorrecta: 0,
+      explicacion: "La soberanía nacional reside en el pueblo español, del que proceden los poderes del Estado."
+    },
+    {
+      pregunta: "El Instituto de las Mujeres es...",
+      opciones: ["a) una institución europea.", "b) un organismo español.", "c) una ONG."],
+      respuestaCorrecta: 1,
+      explicacion: "Algunos ejemplos de organismos que pertenecen a ministerios de España son... el Instituto de las Mujeres."
+    },
+    {
+      pregunta: "¿Cuántas religiones oficiales hay en España?",
+      opciones: ["a) Ninguna.", "b) Una.", "c) Dos."],
+      respuestaCorrecta: 0,
+      explicacion: "No hay ninguna religión oficial en España. [Por eso España es un estado aconfesional]."
+    },
+    {
+      pregunta: "El castellano o español es lengua oficial...",
+      opciones: ["a) en toda España.", "b) solo donde no hay otras lenguas.", "c) en toda la Península Ibérica."],
+      respuestaCorrecta: 0,
+      explicacion: "En la Constitución se indica que el castellano es la lengua oficial de España."
+    },
+    {
+      pregunta: "¿Cuál de estas fuerzas de seguridad es de ámbito autonómico?",
+      opciones: ["a) Policía local.", "b) Guardia Civil.", "c) Policía Foral de Navarra."],
+      respuestaCorrecta: 2,
+      explicacion: "De ámbito autonómico: Ertzaintza en el País Vasco, Mossos d'Esquadra en Cataluña, Policía Foral de Navarra..."
+    },
+    {
+      pregunta: "¿Qué fuerza de seguridad está en toda España?",
+      opciones: ["a) La Policía Foral de Navarra.", "b) El Cuerpo Nacional de Policía.", "c) Los Mossos d'Esquadra."],
+      respuestaCorrecta: 1,
+      explicacion: "De ámbito nacional (Fuerzas y Cuerpos de Seguridad del Estado): Cuerpo Nacional de Policía y Guardia Civil."
+    },
+    {
+      pregunta: "En la Constitución se establece la separación de poderes: el poder ejecutivo, el legislativo y el...",
+      opciones: ["a) judicial.", "b) informativo.", "c) político."],
+      respuestaCorrecta: 0,
+      explicacion: "En la Constitución se establece la separación de los poderes ejecutivo, legislativo y judicial."
+    },
+    {
+      pregunta: "La bandera de España debe utilizarse...",
+      opciones: ["a) solo los días de fiesta oficial.", "b) en todos los edificios públicos.", "c) solo en actos del Gobierno español."],
+      respuestaCorrecta: 1,
+      explicacion: "Cada comunidad autónoma tiene su propia bandera y debe utilizarla junto a la española en sus edificios públicos y en sus actos oficiales."
+    },
+    {
+      pregunta: "¿Quién fue el primer rey de España?",
+      opciones: ["a) Fernando VII.", "b) Carlos I.", "c) Juan Carlos I."],
+      respuestaCorrecta: 1,
+      explicacion: "A Carlos I se le considera el primer rey de España, porque con él se unificaron los reinos españoles."
+    },
+    {
+      pregunta: "La gestión de la sanidad es competencia de...",
+      opciones: ["a) el Estado.", "b) las comunidades autónomas.", "c) los ayuntamientos."],
+      respuestaCorrecta: 1,
+      explicacion: "Entre las más significativas [competencias asumidas por las CC.AA.] se encuentran la sanidad y la educación."
+    },
+    {
+      pregunta: "¿Quién fue el primer presidente del Gobierno de España en democracia?",
+      opciones: ["a) Mariano Rajoy.", "b) Adolfo Suárez.", "c) José Luis Rodríguez Zapatero."],
+      respuestaCorrecta: 1,
+      explicacion: "La Transición española es el periodo... liderado por Adolfo Suárez... Las primeras elecciones generales de la democracia se celebraron en junio de 1977."
+    },
+    {
+      pregunta: "¿Cuál de estos organismos se encarga de interpretar la Constitución?",
+      opciones: ["a) El Poder Constitucional.", "b) El Tribunal Constitucional.", "c) El Consejo General del Poder Judicial."],
+      respuestaCorrecta: 1,
+      explicacion: "El Tribunal Constitucional interpreta la Constitución española. Es independiente de los poderes del Estado."
+    },
+    {
+      pregunta: "¿Quién modera el funcionamiento de las instituciones españolas?",
+      opciones: ["a) El presidente del Gobierno.", "b) El rey.", "c) El director de la Real Academia Española."],
+      respuestaCorrecta: 1,
+      explicacion: "El rey de España es el jefe del Estado, tiene la máxima representación del mismo y modera el funcionamiento de las instituciones."
+    },
+    {
+      pregunta: "¿Cómo se llama la cámara de representación territorial en España?",
+      opciones: ["a) Senado.", "b) Diputación permanente.", "c) Congreso de los Diputados."],
+      respuestaCorrecta: 0,
+      explicacion: "Por su parte, el Senado es la cámara de representación territorial de España."
+    },
+    {
+      pregunta: "¿Cuántas ciudades autónomas hay en España?",
+      opciones: ["a) 17.", "b) 2.", "c) 50."],
+      respuestaCorrecta: 1,
+      explicacion: "Son 17 las comunidades y 2 las ciudades autónomas de España."
+    },
+    {
+      pregunta: "¿Cómo se aprobó la Constitución?",
+      opciones: ["a) Por ley.", "b) En referéndum.", "c) Lo mandó el rey."],
+      respuestaCorrecta: 1,
+      explicacion: "La Constitución española fue aprobada en referéndum por los españoles el 6 de diciembre de 1978."
+    },
+    {
+      pregunta: "¿Cómo se llama la ley más importante de cada comunidad autónoma?",
+      opciones: ["a) Estatuto de Autonomía.", "b) Normativa autonómica.", "c) Ley de la comunidad."],
+      respuestaCorrecta: 0,
+      explicacion: "La norma institucional básica de cada comunidad es el Estatuto de Autonomía."
+    },
+    {
+      pregunta: "Las instalaciones culturales y deportivas públicas son competencia del...",
+      opciones: ["a) Ayuntamiento.", "b) Ministerio de Educación, Formación Profesional y Deportes.", "c) Ministerio de Igualdad."],
+      respuestaCorrecta: 0,
+      explicacion: "Entre las competencias de los ayuntamientos se encuentran... instalaciones culturales y deportivas, etc."
+    },
+    {
+      pregunta: "¿Quién dirige la administración militar de España?",
+      opciones: ["a) Los ayuntamientos.", "b) El Gobierno.", "c) Las Cortes Generales."],
+      respuestaCorrecta: 1,
+      explicacion: "El Gobierno dirige la política interior y exterior de España, la Administración civil y militar..."
+    },
+    {
+      pregunta: "¿Qué hay en las islas Baleares, en vez de diputaciones?",
+      opciones: ["a) Cabildos.", "b) Consejos insulares.", "c) Centros de diputados."],
+      respuestaCorrecta: 1,
+      explicacion: "...excepto en Canarias e Islas Baleares, que cuentan con cabildos (Canarias) o consejos insulares (en Baleares)."
+    },
+    {
+      pregunta: "¿Qué ciudad tiene más habitantes?",
+      opciones: ["a) Sevilla.", "b) Barcelona.", "c) Zaragoza."],
+      respuestaCorrecta: 1,
+      explicacion: "Las diez ciudades de España con mayor población son, por este orden: Madrid, Barcelona, Valencia, Sevilla, Zaragoza..."
+    },
+    {
+      pregunta: "Las Cortes Generales representan...",
+      opciones: ["a) al pueblo español.", "b) a los partidos políticos.", "c) a los ministros."],
+      respuestaCorrecta: 0,
+      explicacion: "Las Cortes Generales (nombre oficial del Parlamento español) representan al pueblo español."
+    },
+    {
+      pregunta: "El Congreso de los Diputados y el Senado constituyen el poder...",
+      opciones: ["a) ejecutivo.", "b) legislativo.", "c) judicial."],
+      respuestaCorrecta: 1,
+      explicacion: "Las Cortes Generales... están formadas por dos cámaras: el Congreso de los Diputados y el Senado. ...elaborar y aprobar las leyes..."
+    },
+    {
+      pregunta: "¿Qué ley dicta el Gobierno en casos de especial urgencia?",
+      opciones: ["a) El decreto ley.", "b) La ley ordinaria.", "c) la ley orgánica."],
+      respuestaCorrecta: 0,
+      explicacion: "Decreto ley. Ley dictada por el Gobierno en casos de especial urgencia."
+    },
+    {
+      pregunta: "¿Cuántas comunidades autónomas hay en España?",
+      opciones: ["a) 8.", "b) 17.", "c) 25."],
+      respuestaCorrecta: 1,
+      explicacion: "Son 17 las comunidades y 2 las ciudades autónomas de España."
+    },
+    {
+      pregunta: "Los colores de la bandera española son...",
+      opciones: ["a) blanco y roјо.", "b) rojo y amarillo.", "c) amarillo y blanco."],
+      respuestaCorrecta: 1,
+      explicacion: "La bandera de España tiene tres franjas (roja, amarilla y roja)."
+    },
+    {
+      pregunta: "¿Dónde está la sede del Gobierno de España?",
+      opciones: ["a) En Madrid.", "b) En Barcelona.", "c) En Sevilla."],
+      respuestaCorrecta: 0,
+      explicacion: "El Gobierno tiene su sede en Madrid..."
+    },
+    {
+      pregunta: "La bandera azul con 12 estrellas amarillas en círculo es la bandera de...",
+      opciones: ["a) la Unión Europea.", "b) El Parlamento Europeo.", "c) la Comisión de Europa."],
+      respuestaCorrecta: 0,
+      explicacion: "La bandera de la Unión Europea es azul con 12 estrellas amarillas en círculo."
+    },
+    // BLOQUE 2 de 10 (Preguntas 31-60)
+    {
+      pregunta: "En las elecciones municipales se vota a...",
+      opciones: ["a) alcaldes y concejales.", "b) ministros y ministras.", "c) diputados y senadores."],
+      respuestaCorrecta: 0,
+      explicacion: "El órgano de gobierno de este nivel [municipal] es el Ayuntamiento, formado por el alcalde y los concejales... elegidos por los vecinos... en las elecciones municipales."
+    },
+    {
+      pregunta: "¿Qué lengua es oficial en el País Vasco?",
+      opciones: ["a) El bable.", "b) El aragonés.", "c) El euskera."],
+      respuestaCorrecta: 2,
+      explicacion: "Además del castellano o español, se hablan otras lenguas oficiales en... Navarra y País Vasco (vasco o euskera)..."
+    },
+    {
+      pregunta: "Todos los españoles tienen el deber de conocer la lengua...",
+      opciones: ["a) autonómica del Estado.", "b) oficial del Estado.", "c) local del Estado."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Constitución se indica que el castellano es la lengua oficial de España. Todos los españoles tienen el derecho de usarla y el deber de conocerla."
+    },
+    {
+      pregunta: "El aranés es una lengua cooficial que se habla en un pequeño territorio de...",
+      opciones: ["a) Cataluña.", "b) la Rioja.", "c) Aragón."],
+      respuestaCorrecta: 0,
+      explicacion: "Además del castellano o español, se hablan otras lenguas oficiales en... Cataluña (catalán y aranés)..."
+    },
+    {
+      pregunta: "Las instituciones de una comunidad autónoma son: la asamblea legislativa, el consejo de gobierno y...",
+      opciones: ["a) la diputación.", "b) el presidente.", "c) el delegado de gobierno."],
+      respuestaCorrecta: 1,
+      explicacion: "Las institutions de las comunidades autónomas son: la asamblea legislativa..., el consejo de gobierno... y el presidente..."
+    },
+    {
+      pregunta: "¿Cuál de estas opciones es una lengua cooficial en alguna comunidad autónoma?",
+      opciones: ["a) El gallego.", "b) El aragonés.", "c) El murciano."],
+      respuestaCorrecta: 0,
+      explicacion: "Además del castellano o español, se hablan otras lenguas oficiales en las siguientes comunidades autónomas: Galicia (gallego)..."
+    },
+    {
+      pregunta: "¿Qué institución tiene como fin la promoción de la enseñanza de la lengua española y la difusión de la cultura en español?",
+      opciones: ["a) El Instituto Nacional de Administración Pública.", "b) El Instituto Nacional de Estadística.", "c) El Instituto Cervantes."],
+      respuestaCorrecta: 2,
+      explicacion: "El Instituto Cervantes es un organismo para la difusión y promoción de la lengua (Castellano o español) y la cultura."
+    },
+    {
+      pregunta: "¿Cuál de los siguientes organismos trabaja para conseguir la normalización lingüística?",
+      opciones: ["a) El Institut Ramon Llull.", "b) El Instituto Cervantes.", "c) La Real Academia Española."],
+      respuestaCorrecta: 2,
+      explicacion: "La Real Academia Española (RAE) es el organismo para la normalización lingüística del Castellano o español."
+    },
+    {
+      pregunta: "¿Dónde vive el presidente del Gobierno?",
+      opciones: ["a) En el Palacio Real.", "b) En el Palacio de la Zarzuela.", "c) En el Palacio de la Moncloa."],
+      respuestaCorrecta: 2,
+      explicacion: "El presidente del Gobierno tiene su residencia oficial en el Palacio de la Moncloa."
+    },
+    {
+      pregunta: "¿Cuál de los siguientes cuerpos forma parte de las Fuerzas Armadas de España?",
+      opciones: ["a) La Policía Foral.", "b) La Guardia Civil.", "c) El Ejército del Aire."],
+      respuestaCorrecta: 2,
+      explicacion: "Las Fuerzas Armadas... Están compuestas por el Ejército de Tierra, el Ejército del Aire y la Armada."
+    },
+    {
+      pregunta: "¿Quiénes forman parte del Gobierno?",
+      opciones: ["a) Los ministros.", "b) Los concejales.", "c) Los alcaldes."],
+      respuestaCorrecta: 0,
+      explicacion: "El Gobierno... está formado por el presidente, uno o varios vicepresidentes y los ministros."
+    },
+    {
+      pregunta: "España es un...",
+      opciones: ["a) estado social y democrático de Derecho.", "b) estado libre asociado.", "c) estado confederado."],
+      respuestaCorrecta: 0,
+      explicacion: "El Reino de España es un Estado social y democrático de Derecho..."
+    },
+    {
+      pregunta: "¿Cuál de las siguientes siglas corresponde a un partido político?",
+      opciones: ["a) PP.", "b) PIB.", "c) UE."],
+      respuestaCorrecta: 0,
+      explicacion: "En la Tabla 3 se lista el Partido Popular (PP) como un partido político."
+    },
+    {
+      pregunta: "¿Qué título tiene la futura reina, hija del rey?",
+      opciones: ["a) Princesa de Asturias.", "b) Princesa de Aragón.", "c) Duquesa de Alba."],
+      respuestaCorrecta: 0,
+      explicacion: "...el heredero o heredera de la Corona tiene el título de Príncipe o Princesa de Asturias."
+    },
+    {
+      pregunta: "¿Con qué rey se restaura la democracia en España después del régimen de Franco?",
+      opciones: ["a) Con Carlos III.", "b) Con Alfonso XIII.", "c) Con Juan Carlos I."],
+      respuestaCorrecta: 2,
+      explicacion: "Juan Carlos I fue rey de España desde... 1975... Con su reinado se restauró la democracia en España..."
+    },
+    {
+      pregunta: "¿En qué año se aprobó la Constitución española?",
+      opciones: ["a) En 1957.", "b) En 1978.", "c) En 2001."],
+      respuestaCorrecta: 1,
+      explicacion: "La Constitución española fue aprobada en referéndum por los españoles el 6 de diciembre de 1978."
+    },
+    {
+      pregunta: "¿Cuántas comunidades autónomas tienen su propia bandera?",
+      opciones: ["a) Ninguna.", "b) Todas.", "c) Las que tienen una lengua cooficial."],
+      respuestaCorrecta: 1,
+      explicacion: "Cada comunidad autónoma tiene su propia bandera..."
+    },
+    {
+      pregunta: "¿Qué organismo oficial atiende las quejas de los ciudadanos por el mal funcionamiento de las administraciones?",
+      opciones: ["a) La Oficina de Atención al Consumidor.", "b) La Policía Nacional.", "c) El Defensor del Pueblo."],
+      respuestaCorrecta: 2,
+      explicacion: "El Defensor del Pueblo... se hace eco de las quejas de los ciudadanos por el mal funcionamiento de las administraciones."
+    },
+    {
+      pregunta: "¿Cuántas firmas, como mínimo, deben recoger los ciudadanos para poder presentar una proposición de ley?",
+      opciones: ["a) 250 000.", "b) 100 000.", "c) 500 000."],
+      respuestaCorrecta: 2,
+      explicacion: "...una proposición de ley (la propone... un mínimo de 500 000 ciudadanos)."
+    },
+    {
+      pregunta: "¿A cuál de estas organizaciones internacionales pertenece España?",
+      opciones: ["a) Al Mercado Común del Sur (MERCOSUR).", "b) A la Organización de las Naciones Unidas (ONU).", "c) A la Unión Económica Euroasiática (UEE)."],
+      respuestaCorrecta: 1,
+      explicacion: "España también forma parte de otras organizaciones internacionales, como la Organización de las Naciones Unidas (ONU)..."
+    },
+    {
+      pregunta: "En la organización de la Administración se distinguen tres niveles: central, autonómica y...",
+      opciones: ["a) estatal.", "b) regional.", "c) local."],
+      respuestaCorrecta: 2,
+      explicacion: "Se distinguen tres niveles de organización de la Administración: central (del Estado), autonómica y local..."
+    },
+    {
+      pregunta: "El poder legislativo corresponde...",
+      opciones: ["a) al presidente y los ministros.", "b) a los jueces y magistrados.", "c) a los diputados y senadores."],
+      respuestaCorrecta: 2,
+      explicacion: "El Poder Legislativo (Parlamento) está representado por Diputados y Senadores."
+    },
+    {
+      pregunta: "¿Dónde vive el rey?",
+      opciones: ["a) En el Palacio de la Moneda.", "b) En el Palacio de la Zarzuela.", "c) En el Palacio de la Moncloa."],
+      respuestaCorrecta: 1,
+      explicacion: "El rey tiene su residencia oficial en el Palacio Real, pero vive en el Palacio de la Zarzuela."
+    },
+    {
+      pregunta: "El nombre oficial del parlamento español es...",
+      opciones: ["a) Cortes Generales.", "b) Congreso de los Diputados.", "c) Senado."],
+      respuestaCorrecta: 0,
+      explicacion: "Las Cortes Generales (nombre oficial del Parlamento español)..."
+    },
+    {
+      pregunta: "El Gobierno está formado por el presidente, uno o más vicepresidentes y los...",
+      opciones: ["a) concejales.", "b) ministros.", "c) gobernadores."],
+      respuestaCorrecta: 1,
+      explicacion: "El Gobierno... está formado por el presidente, uno o varios vicepresidentes y los ministros."
+    },
+    {
+      pregunta: "¿Quién puede reinar en España?",
+      opciones: ["a) Solo los hombres.", "b) Solo las mujeres.", "c) Tanto los hombres como las mujeres."],
+      respuestaCorrecta: 2,
+      explicacion: "En España se permite reinar tanto a hombres como a mujeres."
+    },
+    {
+      pregunta: "El Tribunal de Cuentas depende de...",
+      opciones: ["a) la Presidencia del Gobierno.", "b) las Cortes Generales.", "c) el Ministerio de Hacienda."],
+      respuestaCorrecta: 1,
+      explicacion: "El Defensor del Pueblo y el Tribunal de Cuentas dependen de las Cortes Generales."
+    },
+    {
+      pregunta: "¿Quién es la tercera autoridad del Estado, después del rey y el presidente del Gobierno?",
+      opciones: ["a) El presidente del Senado.", "b) El ministro de Economía.", "c) El presidente del Congreso de los Diputados."],
+      respuestaCorrecta: 2,
+      explicacion: "El presidente del Congreso de los Diputados es la tercera autoridad del Estado español."
+    },
+    {
+      pregunta: "¿Qué lengua cooficial se habla en las islas Baleares?",
+      opciones: ["a) Gallego.", "b) Catalán.", "c) Euskera."],
+      respuestaCorrecta: 1,
+      explicacion: "Además del castellano o español, se hablan otras lenguas oficiales en... Islas Baleares (catalán)..."
+    },
+    {
+      pregunta: "La Constitución defiende valores tales como la libertad, la igualdad, el pluralismo político y...",
+      opciones: ["a) la justicia.", "b) la solidaridad.", "c) la fraternidad."],
+      respuestaCorrecta: 0,
+      explicacion: "Tiene como valores superiores la libertad, la justicia, la igualdad y el pluralismo político."
+    },
+    // BLOQUE 3 de 10 (Preguntas 61-90)
+    {
+      pregunta: "¿Cuántos kilómetros cuadrados tiene España, más o menos?",
+      opciones: ["a) 100 000.", "b) 500 000.", "c) 1 000 000."],
+      respuestaCorrecta: 1,
+      explicacion: "España es... el segundo país más extenso de la UE, con una superficie de 505 944 km²."
+    },
+    {
+      pregunta: "¿Cuántos millones de habitantes tiene España?",
+      opciones: ["a) 35 millones.", "b) 48 millones.", "c) 62 millones."],
+      respuestaCorrecta: 1,
+      explicacion: "España es el cuarto país más poblado de la Unión Europea... con una población en 2024 de más de 48 millones de habitantes."
+    },
+    {
+      pregunta: "¿Cuál de estos es un órgano consultivo del Gobierno de España?",
+      opciones: ["a) El Parlamento Europeo.", "b) El Consejo de Estado.", "c) El Tribunal Constitucional."],
+      respuestaCorrecta: 1,
+      explicacion: "Son órganos consultivos del Gobierno el Consejo de Estado y el Consejo Económico y Social."
+    },
+    {
+      pregunta: "¿Quién dirige la política interior y exterior de España?",
+      opciones: ["a) El rey.", "b) El Gobierno.", "c) El Congreso de los Diputados."],
+      respuestaCorrecta: 1,
+      explicacion: "El Gobierno dirige la política interior y exterior de España..."
+    },
+    {
+      pregunta: "El Defensor del Pueblo depende de...",
+      opciones: ["a) el Consejo de Ministros.", "b) el Tribunal de Cuentas.", "c) las Cortes Generales."],
+      respuestaCorrecta: 2,
+      explicacion: "El Defensor del Pueblo y el Tribunal de Cuentas dependen de las Cortes Generales."
+    },
+    {
+      pregunta: "El Instituto Etxepare tiene como misión la difusión del...",
+      opciones: ["a) euskera y la cultura vasca.", "b) bable y la cultura cántabra.", "c) gallego y la cultura galaica."],
+      respuestaCorrecta: 0,
+      explicacion: "Organismos para la difusión y promoción de las lenguas... Vasco o euskera: Instituto Vasco Etxepare."
+    },
+    {
+      pregunta: "La Comunidad Iberoamericana de Naciones está formada por...",
+      opciones: ["a) 22 países de América y de Europa.", "b) América del Sur y España.", "c) todos los países donde se habla español."],
+      respuestaCorrecta: 0,
+      explicacion: "La Comunidad Iberoamericana de Naciones... está formada por los 19 países de América Latina... y los 3 de la Península Ibérica... [total 22 países]."
+    },
+    {
+      pregunta: "La Secretaría Xeral de Política Lingüística difunde y promociona la lengua y la cultura...",
+      opciones: ["a) catalanas.", "b) gallegas.", "c) vascas."],
+      respuestaCorrecta: 1,
+      explicacion: "Organismos para la difusión y promoción de las lenguas... Gallego: Secretaría Xeral de Política Lingüística."
+    },
+    {
+      pregunta: "¿Cómo se llama el rey de España?",
+      opciones: ["a) Juan Carlos I.", "b) Felipe VI.", "c) Alfonso XIII."],
+      respuestaCorrecta: 1,
+      explicacion: "En junio del año 2014, fue proclamado rey su hijo, Felipe VI."
+    },
+    {
+      pregunta: "¿Cómo se llama el órgano de gobierno de los jueces y magistrados?",
+      opciones: ["a) Tribunal Supremo.", "b) Consejo General del Poder Judicial.", "c) Consejo de Estado."],
+      respuestaCorrecta: 1,
+      explicacion: "El Consejo General del Poder Judicial (CGPJ) es el órgano de gobierno de los jueces."
+    },
+    {
+      pregunta: "¿Quién aprueba los presupuestos generales del Estado?",
+      opciones: ["a) Las Cortes Generales.", "b) La Junta Electoral Central.", "c) El rey."],
+      respuestaCorrecta: 0,
+      explicacion: "Las funciones principales de las Cortes Generales son elaborar y aprobar las leyes y los Presupuestos generales del Estado..."
+    },
+    {
+      pregunta: "La Constitución española es...",
+      opciones: ["a) la ley fundamental.", "b) parte de otra ley.", "c) una ley secundaria."],
+      respuestaCorrecta: 0,
+      explicacion: "La Constitución es la «ley de leyes» o ley fundamental de España..."
+    },
+    {
+      pregunta: "Las Cortes Generales están compuestas por el Senado y...",
+      opciones: ["a) el Congreso de los Diputados.", "b) el Tribunal Supremo.", "c) el Consejo de Estado."],
+      respuestaCorrecta: 0,
+      explicacion: "Las Cortes Generales... están formadas por dos cámaras: el Congreso de los Diputados y el Senado."
+    },
+    {
+      pregunta: "¿Quién elabora las leyes?",
+      opciones: ["a) El poder ejecutivo.", "b) El poder legislativo.", "c) El poder judicial."],
+      respuestaCorrecta: 1,
+      explicacion: "El Poder Legislativo (Parlamento) es quien elabora las leyes."
+    },
+    {
+      pregunta: "La defensa de la integridad territorial de España corresponde a...",
+      opciones: ["a) la Policía Nacional y la Guardia Civil.", "b) las Fuerzas Armadas.", "c) la Policía Nacional y las policías autonómicas."],
+      respuestaCorrecta: 1,
+      explicacion: "Las Fuerzas Armadas tienen como misión... defender su integridad territorial..."
+    },
+    {
+      pregunta: "El Ejército español participa desde 1989 en misiones de paz de la...",
+      opciones: ["a) Organización de Estados Iberoamericanos (ΟΕΙ).", "b) Unión Europea Occidental (UEO).", "c) Organización de Naciones Unidas (ONU)."],
+      respuestaCorrecta: 2,
+      explicacion: "Las Fuerzas Armadas... participan en misiones de paz de la ONU desde 1989."
+    },
+    {
+      pregunta: "¿Quién vigila puertos y aeropuertos, fronteras y costas?",
+      opciones: ["a) La Guardia Civil.", "b) La Policía local.", "c) La Policía Nacional."],
+      respuestaCorrecta: 0,
+      explicacion: "Por su parte, la Guardia Civil tiene como funciones, entre otras, vigilar... puertos, aeropuertos, fronteras y costas."
+    },
+    {
+      pregunta: "¿Quién hace el control de pasaportes en las fronteras de España?",
+      opciones: ["a) La Guardia Civil.", "b) La Policía local.", "c) La Policía Nacional."],
+      respuestaCorrecta: 2,
+      explicacion: "Entre las funciones de la Policía Nacional está... el control de entrada y salida del territorio nacional de españoles y extranjeros."
+    },
+    {
+      pregunta: "¿Quién controla la circulación de coches en las ciudades?",
+      opciones: ["a) La Guardia Civil.", "b) La Policía local.", "c) La Policía Nacional."],
+      respuestaCorrecta: 1,
+      explicacion: "Entre las funciones de la Policía local están... la regulación del tráfico en el casco urbano..."
+    },
+    {
+      pregunta: "¿Cómo se llama la policía autonómica de Cataluña?",
+      opciones: ["a) Guardia Civil.", "b) Ertzaintza.", "c) Mossos d'Esquadra."],
+      respuestaCorrecta: 2,
+      explicacion: "De ámbito autonómico: Ertzaintza en el País Vasco, Mossos d'Esquadra en Cataluña..."
+    },
+    {
+      pregunta: "¿Cómo se llama la policía autonómica del País Vasco?",
+      opciones: ["a) Ertzaintza.", "b) Guardia Civil.", "c) Mossos d'Esquadra."],
+      respuestaCorrecta: 0,
+      explicacion: "De ámbito autonómico: Ertzaintza en el País Vasco..."
+    },
+    {
+      pregunta: "¿Desde qué año es rey Felipe VI?",
+      opciones: ["a) Desde 1975.", "b) Desde 2014.", "c) Desde 2020."],
+      respuestaCorrecta: 1,
+      explicacion: "En junio del año 2014, fue proclamado rey su hijo, Felipe VI."
+    },
+    {
+      pregunta: "¿Quién regula el tráfico en los pueblos y ciudades?",
+      opciones: ["a) La Guardia Civil.", "b) Protección Civil.", "c) La Policía Local."],
+      respuestaCorrecta: 2,
+      explicacion: "Entre las funciones de la Policía local están... la regulación del tráfico en el casco urbano..."
+    },
+    {
+      pregunta: "¿Quién puede presentar una queja al Defensor del Pueblo?",
+      opciones: ["a) Solo los ciudadanos legalmente residentes.", "b) Solo los españoles mayores de 18 años.", "c) Todos los ciudadanos, españoles o extranjeros."],
+      respuestaCorrecta: 2,
+      explicacion: "Cualquier ciudadano puede presentar una queja al Defensor del Pueblo..."
+    },
+    {
+      pregunta: "En España el voto en las elecciones es...",
+      opciones: ["a) un derecho.", "b) un deber.", "c) una obligación."],
+      respuestaCorrecta: 0,
+      explicacion: "La Constitución establece que la base del sistema político es el derecho al voto de todos los españoles..."
+    },
+    {
+      pregunta: "¿Quién vigila el tráfico en las carreteras?",
+      opciones: ["a) La Guardia Civil.", "b) La Policía Nacional.", "c) El Ejército de Tierra."],
+      respuestaCorrecta: 0,
+      explicacion: "Por su parte, la Guardia Civil tiene como funciones, entre otras, vigilar el tráfico en las vías públicas interurbanas..."
+    },
+    {
+      pregunta: "¿Qué organismo se encarga de recaudar los impuestos?",
+      opciones: ["a) El Tribunal de Cuentas.", "b) La Agencia Tributaria.", "c) El Consejo Económico y Social."],
+      respuestaCorrecta: 1,
+      explicacion: "La Agencia Tributaria es la encargada de la recaudación de impuestos..."
+    },
+    {
+      pregunta: "¿Dónde se publican las leyes nacionales?",
+      opciones: ["a) En el boletín del Instituto Nacional de Estadística (INE).", "b) En el Portal de la Administración Electrónica (PAe).", "c) En el Boletín Oficial del Estado (BOE)."],
+      respuestaCorrecta: 2,
+      explicacion: "El Boletín Oficial del Estado (BOE)... informa de las leyes, decretos, nombramientos, etc."
+    },
+    {
+      pregunta: "¿Cómo se llaman los órganos de gobierno que solo existen en Canarias?",
+      opciones: ["a) Cabildos.", "b) Consejos Insulares.", "c) Diputaciones."],
+      respuestaCorrecta: 0,
+      explicacion: "...excepto en Canarias e Islas Baleares, que cuentan con cabildos (Canarias)..."
+    },
+    {
+      pregunta: "¿Dónde se difunde toda la información sobre novedades e iniciativas de la Administración electrónica?",
+      opciones: ["a) En el INE (Instituto Nacional de Estadística).", "b) En el BOE (Boletín Oficial del Estado).", "c) En el PAe (Portal de la Administración Electrónica)."],
+      respuestaCorrecta: 2,
+      explicacion: "...el Portal de la Administración Electrónica (PAe), donde el ciudadano puede encontrar toda la información sobre novedades e iniciativas..."
+    },
+    // BLOQUE 4 de 10 (Preguntas 91-120)
+    {
+      pregunta: "¿Cuál es el número de teléfono de información de la Administración General del Estado?",
+      opciones: ["a) 010.", "b) 060.", "c) 091."],
+      respuestaCorrecta: 1,
+      explicacion: "...el teléfono 060 (teléfono de información de la Administración General del Estado)..."
+    },
+    {
+      pregunta: "España está organizada en...",
+      opciones: ["a) cantones.", "b) comunidades autónomas.", "c) estados federales."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Constitución de 1978 se establece que España se organiza a partir de ese momento en comunidades autónomas..."
+    },
+    {
+      pregunta: "¿Cuántos partidos políticos hay en España?",
+      opciones: ["a) Ninguno.", "b) Uno.", "c) Muchos."],
+      respuestaCorrecta: 2,
+      explicacion: "España tiene un sistema pluripartidista [muchos partidos], tanto en el ámbito nacional como en el autonómico o en el local."
+    },
+    {
+      pregunta: "¿Dónde tiene lugar la investidura del presidente del Gobierno?",
+      opciones: ["a) En el Palacio de la Moncloa.", "b) En el Congreso de los Diputados.", "c) En el Senado."],
+      respuestaCorrecta: 1,
+      explicacion: "En el Congreso de los Diputados también tiene lugar la investidura del presidente del Gobierno..."
+    },
+    {
+      pregunta: "¿Quién tiene el mando supremo de las Fuerzas Armadas?",
+      opciones: ["a) El rey.", "b) El presidente del Gobierno.", "c) El ministro de Defensa."],
+      respuestaCorrecta: 0,
+      explicacion: "...entre otras funciones, [el rey] tiene el mando supremo de las Fuerzas Armadas de España."
+    },
+    {
+      pregunta: "¿Quién es el representante del Estado en una comunidad autónoma?",
+      opciones: ["a) El presidente de la comunidad autónoma.", "b) El delegado del Gobierno.", "c) El presidente de la Asamblea autonómica."],
+      respuestaCorrecta: 1,
+      explicacion: "El representante del Estado en una comunidad autónoma es el delegado del Gobierno."
+    },
+    {
+      pregunta: "¿Cuántas provincias hay en España?",
+      opciones: ["a) 45.", "b) 50.", "c) 55."],
+      respuestaCorrecta: 1,
+      explicacion: "Existen 50 provincias en España..."
+    },
+    {
+      pregunta: "La enseñanza de las lenguas cooficiales es competencia...",
+      opciones: ["a) del Estado.", "b) de la comunidad autónoma.", "c) de la provincia."],
+      respuestaCorrecta: 1,
+      explicacion: "En España la enseñanza de las lenguas cooficiales es competencia de las comunidades autónomas."
+    },
+    {
+      pregunta: "El poder ejecutivo corresponde...",
+      opciones: ["a) al Gobierno del Estado.", "b) al Congreso y al Senado.", "c) a los jueces y magistrados."],
+      respuestaCorrecta: 0,
+      explicacion: "El Gobierno... Es el órgano superior del poder ejecutivo."
+    },
+    {
+      pregunta: "¿Cuántas cámaras hay en el Parlamento español?",
+      opciones: ["a) Una.", "b) Dos.", "c) Tres."],
+      respuestaCorrecta: 1,
+      explicacion: "Las Cortes Generales... están formadas por dos cámaras: el Congreso de los Diputados y el Senado."
+    },
+    {
+      pregunta: "El suministro de agua y el alumbrado de las ciudades es competencia de ...",
+      opciones: ["a) el ayuntamiento.", "b) el Gobierno autonómico.", "c) el Ministerio de Obras Públicas y Urbanismo."],
+      respuestaCorrecta: 0,
+      explicacion: "Entre las competencias de los ayuntamientos se encuentran... suministro de agua y alumbrado..."
+    },
+    {
+      pregunta: "En materias como nacionalidad, inmigración, emigración o extranjería solo tiene competencia...",
+      opciones: ["a) el Estado.", "b) las comunidades autónomas.", "c) los ayuntamientos."],
+      respuestaCorrecta: 0,
+      explicacion: "El Estado posee competencias exclusivas sobre materias como nacionalidad, extranjería, inmigración..."
+    },
+    {
+      pregunta: "¿Cuántas mujeres han sido presidentas de Gobierno en España?",
+      opciones: ["a) Ninguna.", "b) Una.", "c) Dos."],
+      respuestaCorrecta: 0,
+      explicacion: "El manual CCSE 2025 no lista a ninguna mujer en la 'Tabla 3: Relación de presidentes de Gobierno y sus partidos políticos entre 1979 y 2024'."
+    },
+    {
+      pregunta: "Las relaciones internacionales son competencia de...",
+      opciones: ["a) el Estado.", "b) las comunidades autónomas.", "c) los ayuntamientos."],
+      respuestaCorrecta: 0,
+      explicacion: "El Estado posee competencias exclusivas sobre materias como... relaciones internacionales..."
+    },
+    {
+      pregunta: "El Ayuntamiento está formado por el alcalde y...",
+      opciones: ["a) los concejales.", "b) los diputados.", "c) los senadores."],
+      respuestaCorrecta: 0,
+      explicacion: "El órgano de gobierno de este nivel [municipal] es el Ayuntamiento, formado por el alcalde y los concejales..."
+    },
+    {
+      pregunta: "¿Quiénes forman el gobierno de las comunidades autónomas?",
+      opciones: ["a) El presidente y los ministros.", "b) El alcalde y los concejales.", "c) El presidente y los consejeros."],
+      respuestaCorrecta: 2,
+      explicacion: "Las instituciones de las comunidades autónomas son: la asamblea legislativa... el consejo de gobierno... y el presidente."
+    },
+    {
+      pregunta: "¿Cuál es el órgano de gobierno en los municipios?",
+      opciones: ["a) El ayuntamiento.", "b) La diputación.", "c) El cabildo."],
+      respuestaCorrecta: 0,
+      explicacion: "El órgano de gobierno de este nivel [municipal] es el Ayuntamiento..."
+    },
+    {
+      pregunta: "¿Cómo se llaman los órganos de gobierno de las provincias españolas?",
+      opciones: ["a) Cabildos.", "b) Consejos Insulares.", "c) Diputaciones."],
+      respuestaCorrecta: 2,
+      explicacion: "El órgano de gobierno de la provincia es la Diputación."
+    },
+    {
+      pregunta: "¿Cuál es el órgano superior del poder ejecutivo?",
+      opciones: ["a) El Gobierno.", "b) Las Fuerzas Armadas.", "c) Las Cortes Generales."],
+      respuestaCorrecta: 0,
+      explicacion: "El Gobierno... Es el órgano superior del poder ejecutivo."
+    },
+    {
+      pregunta: "El idioma español también se llama...",
+      opciones: ["a) aragonés.", "b) castellano.", "c) leonés."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Constitución se indica que el castellano es la lengua oficial de España."
+    },
+    {
+      pregunta: "¿A quiénes se elige en las elecciones al Parlamento Europeo?",
+      opciones: ["a) A los ministros europeos.", "b) A los consejeros delegados.", "c) A los eurodiputados."],
+      respuestaCorrecta: 2,
+      explicacion: "...las elecciones europeas, en las que se elige a los eurodiputados españoles en el Parlamento Europeo."
+    },
+    {
+      pregunta: "Los españoles pueden votar a partir de los...",
+      opciones: ["a) 16 años.", "b) 18 años.", "c) 21 años."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 12: Los españoles son mayores de edad a los 18 años. ...[y] son electores y elegibles todos los españoles mayores de 18 años."
+    },
+    {
+      pregunta: "Algunos ciudadanos extranjeros pueden votar en las elecciones...",
+      opciones: ["a) municipales.", "b) autonómicas.", "c) generales."],
+      respuestaCorrecta: 0,
+      explicacion: "En las elecciones locales [municipales] también se permite el voto de los ciudadanos residentes en España procedentes de la Unión Europea y de algunos países..."
+    },
+    {
+      pregunta: "¿Quién controla la gestión financiera del Estado?",
+      opciones: ["a) El Banco de España.", "b) La Agencia Tributaria.", "c) El Tribunal de Cuentas."],
+      respuestaCorrecta: 2,
+      explicacion: "El Tribunal de Cuentas controla las finanzas y presupuesto de las administraciones..."
+    },
+    {
+      pregunta: "¿A quiénes se elige en las elecciones generales?",
+      opciones: ["a) A los senadores y diputados.", "b) A los eurodiputados.", "c) A los concejales."],
+      respuestaCorrecta: 0,
+      explicacion: "En España se convocan [elecciones] generales, para elegir a los diputados y senadores del Congreso y del Senado, respectivamente."
+    },
+    {
+      pregunta: "¿Cuántos miembros tiene el Congreso de los Diputados?",
+      opciones: ["a) 300.", "b) 350.", "c) 400."],
+      respuestaCorrecta: 1,
+      explicacion: "El Congreso de los Diputados está compuesto por 350 diputados..."
+    },
+    {
+      pregunta: "Los municipios y provincias forman parte de la Administración...",
+      opciones: ["a) autonómica.", "b) local.", "c) central."],
+      respuestaCorrecta: 1,
+      explicacion: "Se distinguen tres niveles de organización de la Administración: central..., autonómica y local (en este nivel se incluyen las provincias y los municipios)."
+    },
+    {
+      pregunta: "La comunidad autónoma más poblada de España es...",
+      opciones: ["a) Andalucía.", "b) Cataluña.", "c) Castilla y León."],
+      respuestaCorrecta: 0,
+      explicacion: "Según la 'Tabla 2: Número de habitantes por comunidades autónomas', Andalucía es la más poblada (8 584 147)."
+    },
+    {
+      pregunta: "¿Cómo se llama la organización que defiende los intereses de los trabajadores?",
+      opciones: ["a) Asociación.", "b) Partido.", "c) Sindicato."],
+      respuestaCorrecta: 2,
+      explicacion: "...los sindicatos -organizaciones que defienden y promueven los intereses de los trabajadores..."
+    },
+    {
+      pregunta: "¿Cuál de las siguientes personalidades ha sido presidente del Gobierno de España?",
+      opciones: ["a) José María Aznar.", "b) Manuel Fraga.", "c) Dolores Ibárruri."],
+      respuestaCorrecta: 0,
+      explicacion: "La 'Tabla 3: Relación de presidentes de Gobierno' lista a José María Aznar (1996-2004)."
+    },
+    // BLOQUE 4 de 10 (Preguntas 91-120)
+    {
+      pregunta: "¿Cuál es el número de teléfono de información de la Administración General del Estado?",
+      opciones: ["a) 010.", "b) 060.", "c) 091."],
+      respuestaCorrecta: 1,
+      explicacion: "...el teléfono 060 (teléfono de información de la Administración General del Estado)..."
+    },
+    {
+      pregunta: "España está organizada en...",
+      opciones: ["a) cantones.", "b) comunidades autónomas.", "c) estados federales."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Constitución de 1978 se establece que España se organiza a partir de ese momento en comunidades autónomas..."
+    },
+    {
+      pregunta: "¿Cuántos partidos políticos hay en España?",
+      opciones: ["a) Ninguno.", "b) Uno.", "c) Muchos."],
+      respuestaCorrecta: 2,
+      explicacion: "España tiene un sistema pluripartidista [muchos partidos], tanto en el ámbito nacional como en el autonómico o en el local."
+    },
+    {
+      pregunta: "¿Dónde tiene lugar la investidura del presidente del Gobierno?",
+      opciones: ["a) En el Palacio de la Moncloa.", "b) En el Congreso de los Diputados.", "c) En el Senado."],
+      respuestaCorrecta: 1,
+      explicacion: "En el Congreso de los Diputados también tiene lugar la investidura del presidente del Gobierno..."
+    },
+    {
+      pregunta: "¿Quién tiene el mando supremo de las Fuerzas Armadas?",
+      opciones: ["a) El rey.", "b) El presidente del Gobierno.", "c) El ministro de Defensa."],
+      respuestaCorrecta: 0,
+      explicacion: "...entre otras funciones, [el rey] tiene el mando supremo de las Fuerzas Armadas de España."
+    },
+    {
+      pregunta: "¿Quién es el representante del Estado en una comunidad autónoma?",
+      opciones: ["a) El presidente de la comunidad autónoma.", "b) El delegado del Gobierno.", "c) El presidente de la Asamblea autonómica."],
+      respuestaCorrecta: 1,
+      explicacion: "El representante del Estado en una comunidad autónoma es el delegado del Gobierno."
+    },
+    {
+      pregunta: "¿Cuántas provincias hay en España?",
+      opciones: ["a) 45.", "b) 50.", "c) 55."],
+      respuestaCorrecta: 1,
+      explicacion: "Existen 50 provincias en España..."
+    },
+    {
+      pregunta: "La enseñanza de las lenguas cooficiales es competencia...",
+      opciones: ["a) del Estado.", "b) de la comunidad autónoma.", "c) de la provincia."],
+      respuestaCorrecta: 1,
+      explicacion: "En España la enseñanza de las lenguas cooficiales es competencia de las comunidades autónomas."
+    },
+    {
+      pregunta: "El poder ejecutivo corresponde...",
+      opciones: ["a) al Gobierno del Estado.", "b) al Congreso y al Senado.", "c) a los jueces y magistrados."],
+      respuestaCorrecta: 0,
+      explicacion: "El Gobierno... Es el órgano superior del poder ejecutivo."
+    },
+    {
+      pregunta: "¿Cuántas cámaras hay en el Parlamento español?",
+      opciones: ["a) Una.", "b) Dos.", "c) Tres."],
+      respuestaCorrecta: 1,
+      explicacion: "Las Cortes Generales... están formadas por dos cámaras: el Congreso de los Diputados y el Senado."
+    },
+    {
+      pregunta: "El suministro de agua y el alumbrado de las ciudades es competencia de ...",
+      opciones: ["a) el ayuntamiento.", "b) el Gobierno autonómico.", "c) el Ministerio de Obras Públicas y Urbanismo."],
+      respuestaCorrecta: 0,
+      explicacion: "Entre las competencias de los ayuntamientos se encuentran... suministro de agua y alumbrado..."
+    },
+    {
+      pregunta: "En materias como nacionalidad, inmigración, emigración o extranjería solo tiene competencia...",
+      opciones: ["a) el Estado.", "b) las comunidades autónomas.", "c) los ayuntamientos."],
+      respuestaCorrecta: 0,
+      explicacion: "El Estado posee competencias exclusivas sobre materias como nacionalidad, extranjería, inmigración..."
+    },
+    {
+      pregunta: "¿Cuántas mujeres han sido presidentas de Gobierno en España?",
+      opciones: ["a) Ninguna.", "b) Una.", "c) Dos."],
+      respuestaCorrecta: 0,
+      explicacion: "El manual CCSE 2025 no lista a ninguna mujer en la 'Tabla 3: Relación de presidentes de Gobierno y sus partidos políticos entre 1979 y 2024'."
+    },
+    {
+      pregunta: "Las relaciones internacionales son competencia de...",
+      opciones: ["a) el Estado.", "b) las comunidades autónomas.", "c) los ayuntamientos."],
+      respuestaCorrecta: 0,
+      explicacion: "El Estado posee competencias exclusivas sobre materias como... relaciones internacionales..."
+    },
+    {
+      pregunta: "El Ayuntamiento está formado por el alcalde y...",
+      opciones: ["a) los concejales.", "b) los diputados.", "c) los senadores."],
+      respuestaCorrecta: 0,
+      explicacion: "El órgano de gobierno de este nivel [municipal] es el Ayuntamiento, formado por el alcalde y los concejales..."
+    },
+    {
+      pregunta: "¿Quiénes forman el gobierno de las comunidades autónomas?",
+      opciones: ["a) El presidente y los ministros.", "b) El alcalde y los concejales.", "c) El presidente y los consejeros."],
+      respuestaCorrecta: 2,
+      explicacion: "Las instituciones de las comunidades autónomas son: la asamblea legislativa... el consejo de gobierno... y el presidente."
+    },
+    {
+      pregunta: "¿Cuál es el órgano de gobierno en los municipios?",
+      opciones: ["a) El ayuntamiento.", "b) La diputación.", "c) El cabildo."],
+      respuestaCorrecta: 0,
+      explicacion: "El órgano de gobierno de este nivel [municipal] es el Ayuntamiento..."
+    },
+    {
+      pregunta: "¿Cómo se llaman los órganos de gobierno de las provincias españolas?",
+      opciones: ["a) Cabildos.", "b) Consejos Insulares.", "c) Diputaciones."],
+      respuestaCorrecta: 2,
+      explicacion: "El órgano de gobierno de la provincia es la Diputación."
+    },
+    {
+      pregunta: "¿Cuál es el órgano superior del poder ejecutivo?",
+      opciones: ["a) El Gobierno.", "b) Las Fuerzas Armadas.", "c) Las Cortes Generales."],
+      respuestaCorrecta: 0,
+      explicacion: "El Gobierno... Es el órgano superior del poder ejecutivo."
+    },
+    {
+      pregunta: "El idioma español también se llama...",
+      opciones: ["a) aragonés.", "b) castellano.", "c) leonés."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Constitución se indica que el castellano es la lengua oficial de España."
+    },
+    {
+      pregunta: "¿A quiénes se elige en las elecciones al Parlamento Europeo?",
+      opciones: ["a) A los ministros europeos.", "b) A los consejeros delegados.", "c) A los eurodiputados."],
+      respuestaCorrecta: 2,
+      explicacion: "...las elecciones europeas, en las que se elige a los eurodiputados españoles en el Parlamento Europeo."
+    },
+    {
+      pregunta: "Los españoles pueden votar a partir de los...",
+      opciones: ["a) 16 años.", "b) 18 años.", "c) 21 años."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 12: Los españoles son mayores de edad a los 18 años. ...[y] son electores y elegibles todos los españoles mayores de 18 años."
+    },
+    {
+      pregunta: "Algunos ciudadanos extranjeros pueden votar en las elecciones...",
+      opciones: ["a) municipales.", "b) autonómicas.", "c) generales."],
+      respuestaCorrecta: 0,
+      explicacion: "En las elecciones locales [municipales] también se permite el voto de los ciudadanos residentes en España procedentes de la Unión Europea y de algunos países..."
+    },
+    {
+      pregunta: "¿Quién controla la gestión financiera del Estado?",
+      opciones: ["a) El Banco de España.", "b) La Agencia Tributaria.", "c) El Tribunal de Cuentas."],
+      respuestaCorrecta: 2,
+      explicacion: "El Tribunal de Cuentas controla las finanzas y presupuesto de las administraciones..."
+    },
+    {
+      pregunta: "¿A quiénes se elige en las elecciones generales?",
+      opciones: ["a) A los senadores y diputados.", "b) A los eurodiputados.", "c) A los concejales."],
+      respuestaCorrecta: 0,
+      explicacion: "En España se convocan [elecciones] generales, para elegir a los diputados y senadores del Congreso y del Senado, respectivamente."
+    },
+    {
+      pregunta: "¿Cuántos miembros tiene el Congreso de los Diputados?",
+      opciones: ["a) 300.", "b) 350.", "c) 400."],
+      respuestaCorrecta: 1,
+      explicacion: "El Congreso de los Diputados está compuesto por 350 diputados..."
+    },
+    {
+      pregunta: "Los municipios y provincias forman parte de la Administración...",
+      opciones: ["a) autonómica.", "b) local.", "c) central."],
+      respuestaCorrecta: 1,
+      explicacion: "Se distinguen tres niveles de organización de la Administración: central..., autonómica y local (en este nivel se incluyen las provincias y los municipios)."
+    },
+    {
+      pregunta: "La comunidad autónoma más poblada de España es...",
+      opciones: ["a) Andalucía.", "b) Cataluña.", "c) Castilla y León."],
+      respuestaCorrecta: 0,
+      explicacion: "Según la 'Tabla 2: Número de habitantes por comunidades autónomas', Andalucía es la más poblada (8 584 147)."
+    },
+    {
+      pregunta: "¿Cómo se llama la organización que defiende los intereses de los trabajadores?",
+      opciones: ["a) Asociación.", "b) Partido.", "c) Sindicato."],
+      respuestaCorrecta: 2,
+      explicacion: "...los sindicatos -organizaciones que defienden y promueven los intereses de los trabajadores..."
+    },
+    {
+      pregunta: "¿Cuál de las siguientes personalidades ha sido presidente del Gobierno de España?",
+      opciones: ["a) José María Aznar.", "b) Manuel Fraga.", "c) Dolores Ibárruri."],
+      respuestaCorrecta: 0,
+      explicacion: "La 'Tabla 3: Relación de presidentes de Gobierno' lista a José María Aznar (1996-2004)."
+    },
+    // BLOQUE 5 de 10 (Preguntas 121-150)
+    {
+      pregunta: "La mayoría de edad en España es a los 16 años.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 12: Los españoles son mayores de edad a los 18 años."
+    },
+    {
+      pregunta: "Los españoles que obtienen la nacionalidad por residencia deben esperar tres años para poder votar en las elecciones.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 14: Los españoles [por nacimiento o los que lo sean por haber obtenido la nacionalidad española] son iguales ante la ley..."
+    },
+    {
+      pregunta: "Los jóvenes tienen derecho a participar libremente en el desarrollo político del país.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 48: Los jóvenes tienen el derecho de participar libremente en el desarrollo político, social, económico y cultural del país."
+    },
+    {
+      pregunta: "El funcionamiento de los partidos políticos tiene que ser democrático.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 6: Los partidos políticos... Su estructura y funcionamiento deberán ser democráticos."
+    },
+    {
+      pregunta: "Se puede obligar a alguien a decir cuáles son sus ideas políticas o religiosas.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 16: Nadie puede ser obligado a decir cuáles son sus ideas políticas o religiosas."
+    },
+    {
+      pregunta: "Se puede limitar a una persona el derecho a entrar y salir libremente de España por motivos ideológicos.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 19: ...pueden... entrar y salir sin que pueda limitarse este derecho por motivos políticos o ideológicos."
+    },
+    {
+      pregunta: "La Educación Primaria (de 6 a 12 años) es gratuita y obligatoria.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 27: La enseñanza básica es obligatoria y gratuita. [Consta de... Educación Primaria (de 6 a 12 años)...]"
+    },
+    {
+      pregunta: "La Constitución garantiza el derecho de los españoles a una vivienda digna.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 47: Todos los españoles tienen derecho a disfrutar de una vivienda digna y adecuada."
+    },
+    {
+      pregunta: "En España la policía puede entrar en cualquier casa sin resolución judicial en cualquier momento.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 18: El domicilio es inviolable... La policía solo podrá entrar por resolución judicial o cuando se esté cometiendo un delito."
+    },
+    {
+      pregunta: "Se garantiza el secreto de las comunicaciones de los españoles, salvo resolución judicial.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 18: Se garantiza el secreto de las comunicaciones... excepto si hay resolución judicial."
+    },
+    {
+      pregunta: "Todos los españoles, ya sean mayores o menores de edad, tienen derecho a votar en las elecciones.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 23: Tienen derecho de voto todos los españoles mayores de 18 años..."
+    },
+    {
+      pregunta: "Los profesores pueden enseñar con libertad, dentro de los límites de la Constitución.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 20: Se reconocen y protegen los derechos... A que los profesores puedan impartir sus enseñanzas con libertad."
+    },
+    {
+      pregunta: "La Constitución reconoce únicamente los derechos fundamentales de los españoles.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "La Constitución de 1978 se recogen los derechos fundamentales, deberes y libertades de los españoles... y de los residentes extranjeros."
+    },
+    {
+      pregunta: "En España existe la pena de muerte.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 15: Se elimina la pena de muerte y se prohíbe la tortura."
+    },
+    {
+      pregunta: "La ley limita el acceso de terceras personas a datos de carácter personal.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 18: La ley limita el uso de la informática... [También se limita el acceso de terceras personas a datos de carácter personal]."
+    },
+    {
+      pregunta: "La libertad de prensa está limitada por el respeto al honor de las personas.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 20: ...su único límite es el respeto a los derechos reconocidos... especialmente, el derecho al honor..."
+    },
+    {
+      pregunta: "En España las causas de separación y divorcio están reguladas por la ley.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 32: La ley regulará... las causas de separación y divorcio y sus efectos."
+    },
+    {
+      pregunta: "Todos los españoles pagan la misma cantidad de impuestos.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 31: Todos los ciudadanos deben pagar unos impuestos... de acuerdo a su capacidad económica."
+    },
+    {
+      pregunta: "En España los hombres y las mujeres tienen los mismos derechos.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 14: Los españoles son iguales ante la ley y no podrá existir discriminación por... sexo..."
+    },
+    {
+      pregunta: "La enseñanza obligatoria consta de dos etapas: Educación Primaria y Educación Secundaria Obligatoria.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 27: [La enseñanza básica] Consta de dos etapas: Educación Primaria (de 6 a 12 años) y Educación Secundaria Obligatoria (de 12 a 16 años)."
+    },
+    {
+      pregunta: "En España hay una religión oficial.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 16: No hay ninguna religión oficial en España. [Por eso España es un estado aconfesional]."
+    },
+    {
+      pregunta: "La atención sanitaria pública es gratuita.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "El Sistema Nacional de Salud es el conjunto de servicios sanitarios ofrecidos por los poderes públicos de España."
+    },
+    {
+      pregunta: "Los poderes públicos deben promover la educación física y el deporte.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 43: Los poderes públicos deben proteger la salud y promover... la educación física y el deporte."
+    },
+    {
+      pregunta: "En España está reconocido el derecho de asociación.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 22: Se reconoce el derecho de asociación."
+    },
+    {
+      pregunta: "En caso de huelga, es obligatorio por ley mantener unos servicios mínimos.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 28: Se reconoce el derecho a la huelga... y se prevé el mantenimiento de los servicios mínimos..."
+    },
+    {
+      pregunta: "Los trabajadores tienen derecho a hacer huelga.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 28: Se reconoce el derecho a la huelga de los trabajadores para defender sus intereses..."
+    },
+    {
+      pregunta: "La libertad ideológica está garantizada solo en parte del territorio nacional.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 16: Se garantiza la libertad ideológica y religiosa de los individuos y las comunidades. (No está limitada territorialmente)."
+    },
+    {
+      pregunta: "Todos los ciudadanos tienen acceso al sistema de Seguridad Social público, excepto si están desempleados.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 41: Todos los ciudadanos tendrán acceso a un sistema de Seguridad Social público... especialmente para los que no tienen trabajo."
+    },
+    {
+      pregunta: "Todos tienen derecho a disfrutar de un medio ambiente adecuado para el desarrollo de la persona, así como el deber de conservarlo.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 45: Todos tienen derecho a disfrutar de un medio ambiente adecuado... así como el deber de conservarlo."
+    },
+    {
+      pregunta: "Todo el mundo tiene derecho a expresar su opinión.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 20: Se reconocen y protegen los derechos: A expresar y difundir libremente los pensamientos, ideas y opiniones..."
+    },
+    // BLOQUE 6 de 10 (Preguntas 151-180)
+    {
+      pregunta: "La edad mínima para casarse en España es de 12 años.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 32: La edad mínima para contraer matrimonio es de 16 años."
+    },
+    {
+      pregunta: "La Ley prohíbe la discriminación por cualquier circunstancia personal o social.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 14: Los españoles son iguales ante la ley y no podrá existir discriminación por... cualquier otra condición o circunstancia personal o social."
+    },
+    {
+      pregunta: "Los poderes públicos garantizan la defensa de los consumidores.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 51: Los poderes públicos garantizarán la defensa y protección de los consumidores y usuarios..."
+    },
+    {
+      pregunta: "Los jueces administran la justicia en España según las indicaciones del Gobierno.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 1,
+      explicacion: "ARTÍCULO 117: La justicia surge del pueblo y la administran jueces y magistrados de forma independiente y responsable."
+    },
+    {
+      pregunta: "Los españoles deben ayudar en los casos de catástrofe o calamidad pública.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 30: Los ciudadanos deben ayudar en los casos de grave riesgo, catástrofe o calamidad pública."
+    },
+    {
+      pregunta: "En España los ciudadanos pueden elegir en qué ciudad quieren vivir.",
+      opciones: ["a) Verdadero.", "b) Falso."],
+      respuestaCorrecta: 0,
+      explicacion: "ARTÍCULO 19: Los españoles tienen el derecho a elegir libremente dónde quieren vivir."
+    },
+    {
+      pregunta: "¿Dónde están Cáceres y Badajoz?",
+      opciones: ["a) En el Principado de Asturias.", "b) En Andalucía.", "c) En Extremadura."],
+      respuestaCorrecta: 2,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, Cáceres y Badajoz son provincias de Extremadura."
+    },
+    {
+      pregunta: "¿Cuál es la capital del Principado de Asturias?",
+      opciones: ["a) Avilés.", "b) Gijón.", "c) Oviedo."],
+      respuestaCorrecta: 2,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, la capital del Principado de Asturias es Oviedo."
+    },
+    {
+      pregunta: "¿Dónde están las islas Baleares?",
+      opciones: ["a) En el mar Cantábrico.", "b) En el mar Mediterráneo.", "c) En el océano Atlántico."],
+      respuestaCorrecta: 1,
+      explicacion: "España está compuesta por... las islas Baleares, en el mar Mediterráneo..."
+    },
+    {
+      pregunta: "¿Cómo se llama la extensa llanura situada en el centro de la península ibérica?",
+      opciones: ["a) Marisma.", "b) Cordillera.", "c) Meseta."],
+      respuestaCorrecta: 2,
+      explicacion: "Meseta: es una extensa llanura situada en el centro de la península ibérica..."
+    },
+    {
+      pregunta: "¿Cuál es la montaña más alta de la península ibérica?",
+      opciones: ["a) El Mulhacén.", "b) El Aneto.", "c) El Teide."],
+      respuestaCorrecta: 0,
+      explicacion: "La montaña más alta de España es el Teide (Canarias). En los Sistemas Bético y Penibético se localiza el segundo pico más alto de España, el Mulhacén [que es el más alto de la península]."
+    },
+    {
+      pregunta: "¿En qué comunidad autónoma están Guadalajara y Cuenca?",
+      opciones: ["a) En Castilla y León.", "b) En Castilla-La Mancha.", "c) En Cantabria."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, Guadalajara y Cuenca son provincias de Castilla-La Mancha."
+    },
+    {
+      pregunta: "¿De qué comunidad autónoma es capital Mérida?",
+      opciones: ["a) De Valencia.", "b) De Cataluña.", "c) De Extremadura."],
+      respuestaCorrecta: 2,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, la capital de Extremadura es Mérida."
+    },
+    {
+      pregunta: "¿Dónde está Almería?",
+      opciones: ["a) En Andalucía.", "b) En Canarias.", "c) En Aragón."],
+      respuestaCorrecta: 0,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, Almería es una provincia de Andalucía."
+    },
+    {
+      pregunta: "La capital de la Comunidad Autónoma de Galicia es...",
+      opciones: ["a) A Coruña.", "b) Vigo.", "c) Santiago de Compostela."],
+      respuestaCorrecta: 2,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, la capital de Galicia es Santiago de Compostela."
+    },
+    {
+      pregunta: "¿Cuál de estos climas es propio de España?",
+      opciones: ["a) Polar.", "b) Mediterráneo.", "c) Tropical."],
+      respuestaCorrecta: 1,
+      explicacion: "España se caracteriza por su variedad de climas: Clima oceánico... Clima mediterráneo... Clima continental... Clima subtropical."
+    },
+    {
+      pregunta: "¿Dónde está el monte Aneto?",
+      opciones: ["a) En los Pirineos.", "b) En el Sistema Central.", "c) En Sierra Nevada."],
+      respuestaCorrecta: 0,
+      explicacion: "Sistemas montañosos: los más importantes... son los Pirineos, donde se sitúa el tercer monte más alto de España, el Aneto."
+    },
+    {
+      pregunta: "Tarragona está en...",
+      opciones: ["a) Cataluña.", "b) Galicia.", "c) Navarra."],
+      respuestaCorrecta: 0,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, Tarragona es una provincia de Cataluña."
+    },
+    {
+      pregunta: "España se divide en...",
+      opciones: ["a) departamentos y regiones.", "b) comunidades y ciudades autónomas.", "c) regiones autónomas y distritos."],
+      respuestaCorrecta: 1,
+      explicacion: "En la Constitución de 1978 se establece que España se organiza... en comunidades autónomas, provincias y municipios."
+    },
+    {
+      pregunta: "¿Cuál de estas comunidades autónomas tiene solo una provincia?",
+      opciones: ["a) La Rioja.", "b) Aragón.", "c) Galicia."],
+      respuestaCorrecta: 0,
+      explicacion: "Hay comunidades autónomas de una sola provincia como Madrid, Murcia, La Rioja, etc."
+    },
+    {
+      pregunta: "En el norte de África están Ceuta y...",
+      opciones: ["a) Almería.", "b) Melilla.", "c) Cádiz."],
+      respuestaCorrecta: 1,
+      explicacion: "España está compuesta por... las ciudades de Ceuta y Melilla, situadas en la costa norte de África."
+    },
+    {
+      pregunta: "¿Cuál de estas comunidades autónomas tiene más de una provincia?",
+      opciones: ["a) Asturias.", "b) Madrid.", "c) Castilla-La Mancha."],
+      respuestaCorrecta: 2,
+      explicacion: "Castilla-La Mancha está formada por varias provincias (Albacete, Ciudad Real, Cuenca, Guadalajara, Toledo)."
+    },
+    {
+      pregunta: "¿Cuál de estos ríos desemboca en el océano Atlántico?",
+      opciones: ["a) El Guadalquivir.", "b) El Manzanares.", "c) El Júcar."],
+      respuestaCorrecta: 0,
+      explicacion: "Ríos: los ríos más importantes de España que desembocan en el océano Atlántico son: Miño, Duero, Tajo, Guadiana y Guadalquivir."
+    },
+    {
+      pregunta: "¿Cuál de estas provincias forma parte de la Comunidad de Castilla-León?",
+      opciones: ["a) Burgos.", "b) Huesca.", "c) Guadalajara."],
+      respuestaCorrecta: 0,
+      explicacion: "En la Tabla 4 de Comunidades Autónomas, Burgos es una provincia de Castilla y León."
+    },
+    {
+      pregunta: "Las temperaturas suaves con abundantes lluvias son propias del clima...",
+      opciones: ["a) continental.", "b) oceánico.", "c) subtropical."],
+      respuestaCorrecta: 1,
+      explicacion: "Clima oceánico: ...Se caracteriza por temperaturas suaves todo el año. Llueve mucho."
+    },
+    {
+      pregunta: "Canarias tiene un clima...",
+      opciones: ["a) mediterráneo.", "b) oceánico.", "c) subtropical."],
+      respuestaCorrecta: 2,
+      explicacion: "Clima subtropical: es el de las islas Canarias. Tiene temperaturas suaves todo el año..."
+    },
+    {
+      pregunta: "El principal río que desemboca en el mar Mediterráneo es el...",
+      opciones: ["a) Ebro.", "b) Duero.", "c) Tajo."],
+      respuestaCorrecta: 0,
+      explicacion: "En el mar Mediterráneo desembocan los ríos Ebro, Júcar, Segura y Turia."
+    },
+    {
+      pregunta: "España está entre los países de Europa más...",
+      opciones: ["a) lluviosos.", "b) montañosos.", "c) fríos."],
+      respuestaCorrecta: 1,
+      explicacion: "Es uno de los países más montañosos de Europa..."
+    },
+    {
+      pregunta: "¿En qué provincia está el parque nacional de Monfragüe?",
+      opciones: ["a) En Cáceres.", "b) En Murcia.", "c) En Ciudad Real."],
+      respuestaCorrecta: 0,
+      explicacion: "Los parques nacionales de España son... Monfragüe (Extremadura). Cáceres es una provincia de Extremadura."
+    },
+    {
+      pregunta: "Los Picos de Europa están en...",
+      opciones: ["a) Andalucía.", "b) Cataluña.", "c) Asturias."],
+      respuestaCorrecta: 2,
+      explicacion: "Los parques nacionales de España son... Picos de Europa (Asturias, Castilla y León y Cantabria)."
+    },
+    // BLOQUE 7 de 10 (Preguntas 181-210)
+    {
+      pregunta: "Los personajes principales de la novela el Quijote son don Quijote y...",
+      opciones: ["a) Don Juan.", "b) Sancho Panza.", "c) Doña Inés."],
+      respuestaCorrecta: 1,
+      explicacion: "Su obra, el Quijote... sus personajes principales, don Quijote y Sancho Panza, son conocidos en todo el mundo."
+    },
+    {
+      pregunta: "¿Cuál de las siguientes mujeres es una científica española reconocida mundialmente?",
+      opciones: ["a) Montserrat Caballé.", "b) Ana María Matute.", "c) Margarita Salas."],
+      respuestaCorrecta: 2,
+      explicacion: "...destacan en bioquímica y biología molecular, Margarita Salas, etc."
+    },
+    {
+      pregunta: "¿Cómo se llama, en literatura, a los siglos XVI y XVII?",
+      opciones: ["a) Siglos de Oro.", "b) Siglos de Plata.", "c) Siglos de Platino."],
+      respuestaCorrecta: 0,
+      explicacion: "Siglos de Oro de la literatura española (siglos XVI y XVII)..."
+    },
+    {
+      pregunta: "María Zambrano, María Teresa León y Rosa Chacel son...",
+      opciones: ["a) pintoras.", "b) escritoras.", "c) deportistas."],
+      respuestaCorrecta: 1,
+      explicacion: "la Generación del 27... también... M.ª Teresa León, María Zambrano... Rosa Chacel..."
+    },
+    {
+      pregunta: "¿Qué músico compuso El amor brujo?",
+      opciones: ["a) Manuel de Falla.", "b) Isaac Albéniz.", "c) Joaquín Rodrigo."],
+      respuestaCorrecta: 0,
+      explicacion: "Compositores: Manuel de Falla con El amor brujo..."
+    },
+    {
+      pregunta: "¿Qué dulce es típico de las navidades?",
+      opciones: ["a) El flan.", "b) El turrón.", "c) El huevo de Pascua."],
+      respuestaCorrecta: 1,
+      explicacion: "Alimentos y bebidas [de Navidades]: turrón, mazapán, polvorones, cava."
+    },
+    {
+      pregunta: "¿Qué instrumento musical es típico del folclore español?",
+      opciones: ["a) El piano.", "b) El violín.", "c) La guitarra."],
+      respuestaCorrecta: 2,
+      explicacion: "Los instrumentos musicales típicos del folclore español son: la guitarra, las castañuelas, la gaita..."
+    },
+    {
+      pregunta: "Isabel Coixet es una...",
+      opciones: ["a) cantante pop.", "b) bailarina clásica.", "c) directora de cine."],
+      respuestaCorrecta: 2,
+      explicacion: "Pero también a otros grandes directores como... Isabel Coixet..."
+    },
+    {
+      pregunta: "Una de las cantantes españolas más famosas actualmente es...",
+      opciones: ["a) Rosalía.", "b) Marisol.", "c) Lola Flores."],
+      respuestaCorrecta: 0,
+      explicacion: "Rosalía, Luz Casal y Enrique Iglesias, son cantantes con gran proyección en EE. UU. e Hispanoamérica."
+    },
+    {
+      pregunta: "¿En qué ciudad de España hay una mezquita que es Patrimonio de la Humanidad?",
+      opciones: ["a) Santiago de Compostela.", "b) Madrid.", "c) Córdoba."],
+      respuestaCorrecta: 2,
+      explicacion: "En 1984 España incorporó los primeros cinco bienes a la lista de Patrimonio de la Humanidad... la Mezquita de Córdoba."
+    },
+    {
+      pregunta: "¿En qué ciudad de España se encuentra La Alhambra, que es Patrimonio de la Humanidad?",
+      opciones: ["a) En Sevilla.", "b) En Córdoba.", "c) En Granada."],
+      respuestaCorrecta: 2,
+      explicacion: "En 1984 España incorporó los primeros cinco bienes a la lista de Patrimonio de la Humanidad: la Alhambra y el Generalife (Granada...)"
+    },
+    {
+      pregunta: "¿Dónde está La Sagrada Familia, el monumento de Gaudí?",
+      opciones: ["a) En Barcelona.", "b) En Granada.", "c) En Madrid."],
+      respuestaCorrecta: 0,
+      explicacion: "...la fachada de la Natividad y la cripta de la Sagrada Familia de Gaudí (Barcelona...)"
+    },
+    {
+      pregunta: "Pablo Picasso fue un famoso...",
+      opciones: ["a) pintor.", "b) músico.", "c) escritor."],
+      respuestaCorrecta: 0,
+      explicacion: "Pablo Picasso (1881-1973) [es listado en la Tabla 5 de pintores]."
+    },
+    {
+      pregunta: "¿Cómo se llama la mayor institución pública dedicada a la investigación en España?",
+      opciones: ["a) Real Academia Española (RAE).", "b) Consejo Superior de investigaciones Científicas (CSIC).", "c) La sociedad General de Autores (SGAE)."],
+      respuestaCorrecta: 1,
+      explicacion: "El Consejo Superior de Investigaciones Científicas (CSIC), la mayor institución pública dedicada a la investigación en España..."
+    },
+    {
+      pregunta: "Paco de Lucía fue un famoso....",
+      opciones: ["a) científico.", "b) guitarrista.", "c) pintor."],
+      respuestaCorrecta: 1,
+      explicacion: "Flamenco: ...Paco de Lucía, compositor y guitarrista..."
+    },
+    {
+      pregunta: "¿Cuál de estas manifestaciones folclóricas es patrimonio cultural inmaterial de la humanidad?",
+      opciones: ["a) El flamenco.", "b) La jota.", "c) La sardana."],
+      respuestaCorrecta: 0,
+      explicacion: "...el flamenco, especialmente en Andalucía, declarado Patrimonio Cultural Inmaterial de la Humanidad en 2010."
+    },
+    {
+      pregunta: "¿Cuál es la moneda común en muchos países de la Unión Europea?",
+      opciones: ["a) El dólar.", "b) El peso.", "c) El euro."],
+      respuestaCorrecta: 2,
+      explicacion: "La moneda de España es, desde 2002, el euro..."
+    },
+    {
+      pregunta: "La fiesta de la Tomatina se celebra en...",
+      opciones: ["a) Mérida.", "b) Buñol.", "c) Santiago de Compostela."],
+      respuestaCorrecta: 1,
+      explicacion: "La Tomatina se celebra... en la localidad de Buñol (Comunidad Valenciana)."
+    },
+    {
+      pregunta: "La Feria del Libro se celebra en toda España, normalmente, en...",
+      opciones: ["a) invierno.", "b) primavera.", "c) verano."],
+      respuestaCorrecta: 1,
+      explicacion: "Ferias del Libro: se celebran en toda España, en torno al Día del Libro, el 23 de abril [Primavera]."
+    },
+    {
+      pregunta: "La Liga y la Copa del Rey son competiciones de...",
+      opciones: ["a) natación.", "b) atletismo.", "c) fútbol."],
+      respuestaCorrecta: 2,
+      explicacion: "En España tienen mucha importancia los campeonatos de Liga y de Copa del Rey de fútbol y baloncesto..."
+    },
+    {
+      pregunta: "¿Quién ha recibido el premio Nobel de Literatura?",
+      opciones: ["a) María Zambrano.", "b) Pablo Picasso.", "c) Vicente Aleixandre."],
+      respuestaCorrecta: 2,
+      explicacion: "La 'Tabla 8: Españoles galardonados con el premio Nóbel' lista a Vicente Aleixandre (Literatura, 1977)."
+    },
+    {
+      pregunta: "Las chirigotas de Cádiz son típicas de...",
+      opciones: ["a) la Semana Santa.", "b) los carnavales.", "c) las verbenas de verano."],
+      respuestaCorrecta: 1,
+      explicacion: "Carnavales... los más conocidos son los de Tenerife y Cádiz. ...Música: chirigotas en Cádiz."
+    },
+    {
+      pregunta: "Teresa Perales y Daniel Molina son...",
+      opciones: ["a) campeones paraolímpicos.", "b) músicos famosos.", "c) artistas de cine."],
+      respuestaCorrecta: 0,
+      explicacion: "Teresa Perales, leyenda de la natación [paralímpica]... Además, Daniel Molina fue campeón en la categoría PTS3 de triatlón..."
+    },
+    {
+      pregunta: "¿Qué toman los españoles la noche del 31 de diciembre para celebrar el cambio de año?",
+      opciones: ["a) Lentejas.", "b) Uvas.", "c) Aceitunas."],
+      respuestaCorrecta: 1,
+      explicacion: "Tradiciones [de Navidades]: ...tomar las uvas la noche del 31 de diciembre, conocida como Nochevieja..."
+    },
+    {
+      pregunta: "¿Dónde está al Museo del Prado?",
+      opciones: ["a) En Madrid.", "b) En Bilbao.", "c) En Sevilla."],
+      respuestaCorrecta: 0,
+      explicacion: "Algunos pintores, obras y museos españoles de fama internacional son: ...Museo del Prado (Madrid)."
+    },
+    {
+      pregunta: "¿Dónde se celebra un famoso festival de cine?",
+      opciones: ["a) En San Sebastián.", "b) En Cuenca.", "c) En Vigo."],
+      respuestaCorrecta: 0,
+      explicacion: "Festivales de cine: los más conocidos son los de San Sebastián, Sitges, Málaga y Valladolid."
+    },
+    {
+      pregunta: "¿Qué escritora española escribe en otra lengua oficial de España?",
+      opciones: ["a) Mercè Rodoreda.", "b) Almudena Grandes.", "c) Ana María Matute."],
+      respuestaCorrecta: 0,
+      explicacion: "También podemos citar a autores que escriben en las otras lenguas de España: ...Mercè Rodoreda con La plaça del Diamant [en catalán]."
+    },
+    {
+      pregunta: "¿Qué tres culturas convivieron en la España medieval?",
+      opciones: ["a) La cristiana, la judía y la musulmana.", "b) La fenicia, la judía y la musulmana.", "c) La griega, la cristiana y la judía."],
+      respuestaCorrecta: 0,
+      explicacion: "Alfonso X convierte Toledo en referente de la cultura medieval. Toledo es conocida como la ciudad de las tres culturas: la judía, la musulmana y la cristiana."
+    },
+    {
+      pregunta: "El 6 de diciembre se celebra en España...",
+      opciones: ["a) el Día de la Constitución.", "b) la llegada de Colón a América.", "c) el Día del Libro."],
+      respuestaCorrecta: 0,
+      explicacion: "Las principales fiestas de España son: ...6 de diciembre o Día de la Constitución española..."
+    },
+    {
+      pregunta: "¿Dónde se encuentran la Cueva de Altamira que son Patrimonio Mundial de UNESCO?",
+      opciones: ["a) En Cataluña.", "b) En Aragón.", "c) En Cantabria."],
+      respuestaCorrecta: 2,
+      explicacion: "Posteriormente, se han sumado la Cueva de Altamira... (Asturias, Cantabria y País Vasco)."
+    },
+    // BLOQUE 8 de 10 (Preguntas 211-240)
+    {
+      pregunta: "La Transición española a la democracia comienza en...",
+      opciones: ["a) 1936.", "b) 1975.", "c) 1982."],
+      respuestaCorrecta: 1,
+      explicacion: "La Transición española es el periodo comprendido entre la muerte de Francisco Franco (20 de noviembre de 1975) y las elecciones democráticas de octubre de 1982."
+    },
+    {
+      pregunta: "El Premio Cervantes se da a...",
+      opciones: ["a) actores.", "b) escritores.", "c) pintores."],
+      respuestaCorrecta: 1,
+      explicacion: "El Premio Cervantes... premia la obra literaria completa en español de un escritor español o hispanoamericano."
+    },
+    {
+      pregunta: "Los Premios Goya están relacionados con...",
+      opciones: ["a) el cine.", "b) la literatura.", "c) la pintura."],
+      respuestaCorrecta: 0,
+      explicacion: "Los Premios Goya... premian a los mejores profesionales de cada una de las especialidades técnicas y creativas del cine."
+    },
+    {
+      pregunta: "¿Qué premios promueven en España valores científicos, culturales y humanísticos?",
+      opciones: ["a) Los Premios Cervantes.", "b) Los Premios Princesa de Asturias.", "c) Los Premios Goya."],
+      respuestaCorrecta: 1,
+      explicacion: "Los Premios Princesa de Asturias... para promover valores científicos, culturales y humanísticos que son patrimonio universal."
+    },
+    {
+      pregunta: "¿Cuándo fueron los Juegos Olímpicos de Barcelona?",
+      opciones: ["a) En 1992.", "b) En 1996.", "c) En 2004."],
+      respuestaCorrecta: 0,
+      explicacion: "En el año 1992 se celebran los Juegos Olímpicos de Barcelona..."
+    },
+    {
+      pregunta: "El escritor Miguel de Cervantes nació en...",
+      opciones: ["a) La Mancha.", "b) Madrid.", "c) Alcalá de Henares."],
+      respuestaCorrecta: 2,
+      explicacion: "Uno de los más famosos es Miguel de Cervantes Saavedra... nacido en Alcalá de Henares (Madrid)."
+    },
+    {
+      pregunta: "¿Quién hace el DNI?",
+      opciones: ["a) La Policía Nacional.", "b) La Guardia Civil.", "c) La Policía local."],
+      respuestaCorrecta: 0,
+      explicacion: "Entre las funciones de la Policía Nacional está la expedición del documento nacional de identidad [DNI]..."
+    },
+    {
+      pregunta: "¿Cuál es el documento que certifica el lugar de residencia del titular?",
+      opciones: ["a) El certificado de empadronamiento.", "b) La partida de nacimiento.", "c) El carné de conducir."],
+      respuestaCorrecta: 0,
+      explicacion: "el certificado de empadronamiento muestra el lugar de residencia."
+    },
+    {
+      pregunta: "Para hacer el DNI debes acudir a...",
+      opciones: ["a) una comisaría de policía.", "b) el Registro Civil.", "c) el ayuntamiento."],
+      respuestaCorrecta: 0,
+      explicacion: "Comisaría de policía (Ministerio del Interior). DNI, TIE y pasaporte. De forma presencial."
+    },
+    {
+      pregunta: "¿Cuál es la edad mínima para conducir un coche en España?",
+      opciones: ["a) 16 años.", "b) 18 años.", "c) 20 años."],
+      respuestaCorrecta: 1,
+      explicacion: "el carné o permiso de conducir... lo pueden conseguir los mayores de 18 años."
+    },
+    {
+      pregunta: "El carné de conducir se hace en...",
+      opciones: ["a) la Dirección General de Tráfico (DGT).", "b) la Policía Nacional.", "c) el Registro Civil."],
+      respuestaCorrecta: 0,
+      explicacion: "El organismo responsable de examinar y expedir el documento es la Dirección General de Tráfico (DGT)."
+    },
+    {
+      pregunta: "Para sacar el carné de conducir hay que aprobar...",
+      opciones: ["a) un examen teórico.", "b) un examen práctico.", "c) un examen teórico y otro práctico."],
+      respuestaCorrecta: 2,
+      explicacion: "Para obtenerlo hay que aprobar un examen teórico y uno práctico..."
+    },
+    {
+      pregunta: "¿Dónde se tramita el libro de familia?",
+      opciones: ["a) En el Registro Civil.", "b) En la Seguridad Social.", "c) En las comisarías de policía."],
+      respuestaCorrecta: 0,
+      explicacion: "el libro de familia... los trámites se realizaban en el Registro Civil."
+    },
+    {
+      pregunta: "¿Cuál de estos canales de televisión es autonómico?",
+      opciones: ["a) Telecinco.", "b) Nova.", "c) Canal Sur."],
+      respuestaCorrecta: 2,
+      explicacion: "Cadenas autonómicas de televisión pública: Canal Sur (Andalucía)..."
+    },
+    {
+      pregunta: "¿Cuánto dura el permiso de maternidad o paternidad?",
+      opciones: ["a) 12 semanas.", "b) 16 semanas.", "c) 22 semanas."],
+      respuestaCorrecta: 1,
+      explicacion: "...permisos laborales por nacimiento (o adopción) y cuidado del menor, (16 semanas para la madre y 16 para el padre)..."
+    },
+    {
+      pregunta: "¿Cuál es la tasa máxima de alcohol en sangre permitida a los conductores, en gramos por litro (g/l)?",
+      opciones: ["a) 0,5.", "b) 0,7.", "c) 0,9."],
+      respuestaCorrecta: 0,
+      explicacion: "...control de alcoholemia (límite de 0,5 g/l en sangre)..."
+    },
+    {
+      pregunta: "Las viviendas de protección oficial...",
+      opciones: ["a) tienen un precio limitado.", "b) son para los funcionarios.", "c) tienen sistema de vigilancia."],
+      respuestaCorrecta: 0,
+      explicacion: "También existen viviendas de protección oficial que tienen un precio limitado..."
+    },
+    {
+      pregunta: "¿Qué comunidad autónoma es conocida por la calidad de su aceite de oliva?",
+      opciones: ["a) Cantabria.", "b) Andalucía.", "c) La Rioja."],
+      respuestaCorrecta: 1,
+      explicacion: "Las regiones más conocidas por sus denominaciones de origen (D. O.) son: ...Andalucía y Castilla-La Mancha, para el aceite de oliva."
+    },
+    {
+      pregunta: "¿Cómo se llama la revisión que deben pasar obligatoriamente los coches?",
+      opciones: ["a) IBI (Impuesto sobre Bienes Inmuebles).", "b) ITV (Inspección Técnica de Vehículos).", "c) ITE (Inspección Técnica de Edificios)."],
+      respuestaCorrecta: 1,
+      explicacion: "Los propietarios de los vehículos deben cumplir una serie de obligaciones, como... hacer las revisiones necesarias (Inspección Técnica de Vehículos, ITV)..."
+    },
+    {
+      pregunta: "El aperitivo que acompaña a la bebida en bares y restaurantes se llama...",
+      opciones: ["a) bocadillo.", "b) tapa.", "c) primer plato."],
+      respuestaCorrecta: 1,
+      explicacion: "El aperitivo... Se llama de forma diferente según tamaño, presentación u origen: tapa, banderilla, pincho, ración..."
+    },
+    {
+      pregunta: "¿Dónde se tramita la tarjeta sanitaria?",
+      opciones: ["a) En la comisaría de policía.", "b) En el centro de salud.", "c) En el Ministerio de Sanidad."],
+      respuestaCorrecta: 1,
+      explicacion: "Se tramita en el centro de salud que corresponde al domicilio."
+    },
+    {
+      pregunta: "¿Con cuántos hijos una familia es numerosa?",
+      opciones: ["a) Con 1 hijo.", "b) Con 2 hijos.", "c) Con 3 hijos."],
+      respuestaCorrecta: 2,
+      explicacion: "Son familias numerosas las que tienen tres hijos o más."
+    },
+    {
+      pregunta: "En España está permitido el matrimonio...",
+      opciones: ["a) solo entre personas del mismo sexo.", "b) entre personas del mismo y diferente sexo.", "c) solo entre personas de diferente sexo."],
+      respuestaCorrecta: 1,
+      explicacion: "En España se permite el matrimonio entre personas del mismo sexo. [Y también el civil o religioso entre diferente sexo]."
+    },
+    {
+      pregunta: "Los propietarios de perros deben registrarlos en...",
+      opciones: ["a) el Ministerio de Justicia.", "b) la comisaría de policía.", "c) el Ayuntamiento."],
+      respuestaCorrecta: 2,
+      explicacion: "Estos animales deben registrarse obligatoriamente con un microchip electrónico... [El registro se asocia al padrón municipal, gestionado por el Ayuntamiento]."
+    },
+    {
+      pregunta: "Los principales ingredientes de la tortilla española son huevos y...",
+      opciones: ["a) pimientos.", "b) patatas.", "c) tomates."],
+      respuestaCorrecta: 1,
+      explicacion: "Algunas de las comidas... más conocidas... la tortilla de patatas o tortilla española (huevos, patata, cebolla)..."
+    },
+    {
+      pregunta: "¿Quién es un cocinero famoso dentro y fuera de España?",
+      opciones: ["a) José Andrés.", "b) Rafael Nadal.", "c) Josep Carreras."],
+      respuestaCorrecta: 0,
+      explicacion: "España cuenta con grandes cocineros, entre otros... el asturiano José Andrés..."
+    },
+    {
+      pregunta: "¿Cuál de estos canales de televisión es público?",
+      opciones: ["a) Tele5.", "b) La 1.", "c) Antena 3."],
+      respuestaCorrecta: 1,
+      explicacion: "Canales públicos. Corporación RTVE (Radio Televisión Española): La 1 (generalista)..."
+    },
+    {
+      pregunta: "En una comunidad de vecinos, una de las normas es...",
+      opciones: ["a) abrir la puerta al cartero.", "b) no molestar con ruido.", "c) limpiar los espacios comunes."],
+      respuestaCorrecta: 1,
+      explicacion: "En las comunidades de vecinos hay normas básicas... por ejemplo: ...no molestar a los demás vecinos con ruidos..."
+    },
+    {
+      pregunta: "La sangría es una bebida compuesta por refrescos, vino y...",
+      opciones: ["a) fruta.", "b) té.", "c) agua."],
+      respuestaCorrecta: 0,
+      explicacion: "Algunas de las comidas o bebidas españolas más conocidas... la sangría (vino, frutas, refrescos...)."
+    },
+    {
+      pregunta: "La sidra es una bebida típica de...",
+      opciones: ["a) Asturias.", "b) Valencia.", "c) Canarias."],
+      respuestaCorrecta: 0,
+      explicacion: "Las regiones más conocidas por sus denominaciones de origen (D. O.) son: ...Principado de Asturias, para la sidra..."
+    },
+    // BLOQUE 9 de 10 (Preguntas 241-270)
+    {
+      pregunta: "Los españoles tienen dos apellidos, el primero es...",
+      opciones: ["a) obligatoriamente el de la madre.", "b) obligatoriamente el del padre.", "c) puede ser el de la madre o el del padre."],
+      respuestaCorrecta: 2,
+      explicacion: "Generalmente, el primero es el primer apellido del padre y el segundo, el primer apellido de la madre, aunque los padres pueden decidir invertir el orden."
+    },
+    {
+      pregunta: "La Fiesta Nacional de España es el...",
+      opciones: ["a) 6 de diciembre.", "b) 15 de agosto.", "c) 12 de octubre."],
+      respuestaCorrecta: 2,
+      explicacion: "Las principales fiestas de España son: ...12 de octubre o Fiesta Nacional de España..."
+    },
+    {
+      pregunta: "¿Cuál es el horario habitual de los hipermercados y centros comerciales?",
+      opciones: ["a) De 9:00 a 17:00 h.", "b) De 10:00 a 22:00 h.", "c) De 8:00 a 23:00 h."],
+      respuestaCorrecta: 1,
+      explicacion: "Muchos hipermercados y centros comerciales abren de 10:00 a 22:00 todos los días."
+    },
+    {
+      pregunta: "¿Dónde se hace el pasaporte?",
+      opciones: ["a) En el registro civil.", "b) En una comisaría de policía.", "c) En el Ayuntamiento."],
+      respuestaCorrecta: 1,
+      explicacion: "Comisaría de policía (Ministerio del Interior). DNI, TIE y pasaporte."
+    },
+    {
+      pregunta: "El Ministerio de Igualdad es el encargado de luchar contra la violencia de género y la...",
+      opciones: ["a) separación.", "b) discriminación.", "c) solidaridad."],
+      respuestaCorrecta: 1,
+      explicacion: "El Ministerio de Igualdad se encarga de luchar contra la discriminación y la violencia de género."
+    },
+    {
+      pregunta: "¿Cuál de estas regiones es conocida por sus vinos con denominación de origen?",
+      opciones: ["a) Ribera de Duero.", "b) Pirineos.", "c) La Vera."],
+      respuestaCorrecta: 0,
+      explicacion: "Las regiones más conocidas por sus denominaciones de origen (D. O.) son: La Rioja, Ribera del Duero y Jerez, para los vinos..."
+    },
+    {
+      pregunta: "El DNI se hace...",
+      opciones: ["a) por internet.", "b) en persona.", "c) por teléfono."],
+      respuestaCorrecta: 1,
+      explicacion: "Comisaría de policía (Ministerio del Interior). DNI, TIE y pasaporte. De forma presencial."
+    },
+    {
+      pregunta: "El horario de Canarias, con respecto a la Península, es de...",
+      opciones: ["a) dos horas menos.", "b) una hora menos.", "c) una hora más."],
+      respuestaCorrecta: 1,
+      explicacion: "El horario de España es GMT/UTC + 1 hora... excepto en Canarias, que es una hora menos."
+    },
+    {
+      pregunta: "Para acceder a la Universidad se debe superar una prueba de evaluación llamada...",
+      opciones: ["a) Selectividad.", "b) Examen preuniversitario.", "c) Prueba de Acceso a la Universidad."],
+      respuestaCorrecta: 2,
+      explicacion: "Para acceder [a la universidad] se requiere... la superación de una prueba de evaluación para el acceso a la Universidad (EvAU/EBAU)."
+    },
+    {
+      pregunta: "¿Cuál de estos productos necesita importar España de otros países?",
+      opciones: ["a) Petróleo.", "b) Aceite de oliva.", "c) Medicamentos."],
+      respuestaCorrecta: 0,
+      explicacion: "España importa petróleo y derivados, componentes del automóvil, textiles, confección, etc."
+    },
+    {
+      pregunta: "¿Qué tipo de impuestos tienen que pagar los ciudadanos en España?",
+      opciones: ["a) impuestos directos como el IRPF.", "b) impuestos indirectos como el IVA.", "c) impuestos directos e indirectos."],
+      respuestaCorrecta: 2,
+      explicacion: "en España se distinguen: impuestos directos... [e] impuestos indirectos..."
+    },
+    {
+      pregunta: "Los adultos sin Bachillerato pueden estudiar en la Universidad haciendo una prueba especial a partir de los...",
+      opciones: ["a) 18 años.", "b) 23 años.", "c) 25 años."],
+      respuestaCorrecta: 2,
+      explicacion: "...centros de educación de personas adultas (CEPA): ...cursos de preparación para el acceso a la universidad para mayores de 25 años."
+    },
+    {
+      pregunta: "¿Dónde puede encontrarse la siguiente norma «Dejar salir antes de entrar»?",
+      opciones: ["a) En el transporte público.", "b) En parques y jardines.", "c) En instalaciones deportivas."],
+      respuestaCorrecta: 0,
+      explicacion: "Principales normas de comportamiento en los transportes públicos: ...5. Dejar salir antes de entrar."
+    },
+    {
+      pregunta: "El Bachillerato en España...",
+      opciones: ["a) es obligatorio.", "b) se compone de dos cursos académicos.", "c) es la enseñanza a alumnos de 14 a 16 años."],
+      respuestaCorrecta: 1,
+      explicacion: "Bachillerato: Dura dos cursos académicos, que se cursan entre los 16 y los 18 años."
+    },
+    {
+      pregunta: "El Impuesto sobre el Valor Añadido (IVA) forma parte de los...",
+      opciones: ["a) impuestos indirectos.", "b) impuestos sobre la renta.", "c) impuestos sobre sociedades."],
+      respuestaCorrecta: 0,
+      explicacion: "impuestos indirectos: se aplican al consumo... como el IVA..."
+    },
+    {
+      pregunta: "¿Qué número reciben los trabajadores al comenzar su primer empleo?",
+      opciones: ["a) El de la Seguridad Social.", "b) El del pasaporte.", "c) El número de servicio."],
+      respuestaCorrecta: 0,
+      explicacion: "el número de la Seguridad Social, que recibe una persona cuando empieza a trabajar y a cotizar en la Seguridad Social."
+    },
+    {
+      pregunta: "Los colegios públicos...",
+      opciones: ["a) pueden decidir su número de plazas.", "b) pueden contratar los profesores que quieran.", "c) son gratuitos."],
+      respuestaCorrecta: 2,
+      explicacion: "La educación es... obligatoria y gratuita (excepto libros y materiales educativos) desde los 6 hasta los 16 años... [Los colegios públicos imparten esta enseñanza]."
+    },
+    {
+      pregunta: "¿Cuál de estos puertos es uno de los principales de España?",
+      opciones: ["a) Tenerife.", "b) Alicante.", "c) Algeciras."],
+      respuestaCorrecta: 2,
+      explicacion: "Puertos más importantes: Algeciras, Barcelona, Las Palmas, Bilbao, Valencia y Vigo."
+    },
+    {
+      pregunta: "Un colegio concertado es un colegio privado que...",
+      opciones: ["a) recibe dinero de la Administración.", "b) financian los padres de los alumnos.", "c) recibe dinero de los bancos."],
+      respuestaCorrecta: 0,
+      explicacion: "centros concertados: centros privados... reciben subvenciones de la Administración pública."
+    },
+    {
+      pregunta: "España exporta productos principalmente a países...",
+      opciones: ["a) de Hispanoamérica.", "b) de la Unión Europea.", "c) del Norte de África."],
+      respuestaCorrecta: 1,
+      explicacion: "Estas transacciones [exportaciones] se realizan principalmente con países de la Unión Europea."
+    },
+    {
+      pregunta: "Las bibliotecas públicas son gratuitas para...",
+      opciones: ["a) todos.", "b) los parados.", "c) los niños."],
+      respuestaCorrecta: 0,
+      explicacion: "las bibliotecas: de acceso gratuito y donde se pueden consultar o sacar en préstamo libros..."
+    },
+    {
+      pregunta: "¿Cuál de estos productos exporta España más que importa?",
+      opciones: ["a) Gas.", "b) Ropa.", "c) Calzado."],
+      respuestaCorrecta: 2,
+      explicacion: "España importa... textiles, confección, etc.; y exporta... calzado..."
+    },
+    {
+      pregunta: "Una persona mayor de 18 años puede obtener el título de Graduado en Educación Secundaria Obligatoria en...",
+      opciones: ["a) un Centro de Educación de Personas Adultas.", "b) un centro de enseñanza Primaria.", "c) una universidad."],
+      respuestaCorrecta: 0,
+      explicacion: "centros de educación de personas adultas (CEPA): para proporcionar a las personas mayores de 18 años la posibilidad de completar estudios (obtener el Título de Graduado en Educación Secundaria Obligatoria)..."
+    },
+    {
+      pregunta: "La formación profesional...",
+      opciones: ["a) es para mayores de 25 años.", "b) puede ser de grado medio o superior.", "c) es obligatoria."],
+      respuestaCorrecta: 1,
+      explicacion: "Formación profesional (FP): ...Ciclos formativos de Grado Medio... Ciclos formativos de Grado Superior..."
+    },
+    {
+      pregunta: "¿Adónde vamos para ver al médico de familia o al pediatra?",
+      opciones: ["a) Al hospital.", "b) Al centro de salud.", "c) A la farmacia."],
+      respuestaCorrecta: 1,
+      explicacion: "centro de salud: para una atención primaria de salud donde médicos de familia, pediatras, enfermeros prestan su servicio."
+    },
+    {
+      pregunta: "¿Para cuántos años vale la tarjeta sanitaria europea?",
+      opciones: ["a) Para un año.", "b) Para dos años.", "c) Para 10 años."],
+      respuestaCorrecta: 1,
+      explicacion: "Los ciudadanos también pueden solicitar la tarjeta sanitaria europea... que tiene una validez de dos años."
+    },
+    {
+      pregunta: "¿A qué hora se cena normalmente en España?",
+      opciones: ["a) A las 18 h.", "b) A las 23 h.", "c) A las 21 o 22 h."],
+      respuestaCorrecta: 2,
+      explicacion: "Los horarios de las comidas en España... la cena de 21:00 a 22:00 h."
+    },
+    {
+      pregunta: "¿Cuál es el número de teléfono único para cualquier emergencia?",
+      opciones: ["a) 060.", "b) 112.", "c) 911."],
+      respuestaCorrecta: 1,
+      explicacion: "El número de teléfono 112 es gratuito y ofrece ayuda al ciudadano ante cualquier tipo de emergencia..."
+    },
+    {
+      pregunta: "¿Cuál es un periódico deportivo?",
+      opciones: ["a) ABC.", "b) As.", "c) Cinco días."],
+      respuestaCorrecta: 1,
+      explicacion: "En los medios de comunicación escrita se pueden distinguir: ...deportivos: As, Marca, Mundo Deportivo."
+    },
+    {
+      pregunta: "¿Dónde se venden sellos y tabaco?",
+      opciones: ["a) En el quiosco.", "b) En la farmacia.", "c) En el estanco."],
+      respuestaCorrecta: 2,
+      explicacion: "estancos: establecimiento donde se venden sellos y tabaco."
+    },
+    
+    // BLOQUE 10 de 10 (Preguntas 271-300)
+    {
+      pregunta: "¿Cómo se llama el tren español de alta velocidad?",
+      opciones: ["a) AVE.", "b) TGV.", "c) Eurostar."],
+      respuestaCorrecta: 0,
+      explicacion: "Los trenes AVE, ALVIA y ALARIS son los principales exponentes de la red de alta velocidad."
+    },
+    {
+      pregunta: "La organización que trabaja para conseguir la integración de las personas con discapacidad visual es...",
+      opciones: ["a) la ONCE.", "b) Unicef.", "c) Cáritas."],
+      respuestaCorrecta: 0,
+      explicacion: "La Organización Nacional de Ciegos Españoles (ONCE) trabaja para conseguir la integración de las personas con discapacidad visual..."
+    },
+    {
+      pregunta: "El Camino de Santiago es...",
+      opciones: ["a) Patrimonio de la Humanidad.", "b) una vía de ferrocarril.", "c) una ruta para excursionistas."],
+      respuestaCorrecta: 0,
+      explicacion: "Otro de los bienes españoles declarado Patrimonio de la Humanidad es el Camino de Santiago..."
+    },
+    {
+      pregunta: "¿Cuál es el canal de televisión estatal que transmite noticias de actualidad nacional e internacional continuamente?",
+      opciones: ["a) Teledeporte.", "b) La 1.", "c) Canal 24 horas."],
+      respuestaCorrecta: 2,
+      explicacion: "Canales públicos. Corporación RTVE (Radio Televisión Española): ...Canal 24 horas (noticias)..."
+    },
+    {
+      pregunta: "El teléfono gratuito para las víctimas de violencia de género es el...",
+      opciones: ["a) 091.", "b) 112.", "c) 016."],
+      respuestaCorrecta: 2,
+      explicacion: "El número de teléfono 016 es gratuito y ofrece servicio de atención a las víctimas de violencia de género..."
+    },
+    {
+      pregunta: "En España, la red de trenes puede ser de larga distancia, de media distancia y...",
+      opciones: ["a) de cercanías.", "b) rural.", "c) transnacional."],
+      respuestaCorrecta: 0,
+      explicacion: "...red de trenes (de cercanías, y de media y larga distancia)."
+    },
+    {
+      pregunta: "¿Qué está prohibido hacer en la puerta de un hospital o colegio?",
+      opciones: ["a) Fumar.", "b) Comer.", "c) Beber."],
+      respuestaCorrecta: 0,
+      explicacion: "Normas para los espacios públicos de ocio y recreo: ...5. No fumar, en el caso de que el lugar público esté frente a un hospital o centro educativo."
+    },
+    {
+      pregunta: "Cuando compramos 250 gramos de un alimento estamos comprando...",
+      opciones: ["a) medio kilo.", "b) un cuarto de kilo.", "c) un tercio de kilo."],
+      respuestaCorrecta: 1,
+      explicacion: "Tabla 12: Expresiones de medidas. Un cuarto... de kilo (250 g)."
+    },
+    {
+      pregunta: "Si compramos una botella de agua de 750 ml, compramos una botella de...",
+      opciones: ["a) tres cuartos de litro.", "b) medio litro.", "c) un litro."],
+      respuestaCorrecta: 0,
+      explicacion: "Tabla 12: Expresiones de medidas. Tres cuartos... de litro (750 ml)."
+    },
+    {
+      pregunta: "¿Dónde se compran las medicinas con receta?",
+      opciones: ["a) En el hospital.", "b) En el centro de salud.", "c) En la farmacia."],
+      respuestaCorrecta: 2,
+      explicacion: "farmacias: donde se venden medicinas con receta médica..."
+    },
+    {
+      pregunta: "¿Cuál de estas tres recomendaciones podemos encontrar en un parque?",
+      opciones: ["a) No pisar el césped.", "b) Se recomienda pagar el billete con el dinero justo.", "c) Respetar las normas sobre equipaje."],
+      respuestaCorrecta: 0,
+      explicacion: "Normas para los espacios públicos de ocio y recreo: ...6. No pisar el césped, ni arrancar flores."
+    },
+    {
+      pregunta: "¿Cuál de las siguientes cosas es obligatoria para el propietario de un coche en España?",
+      opciones: ["a) El garaje.", "b) El seguro.", "c) La alarma."],
+      respuestaCorrecta: 1,
+      explicacion: "Los propietarios de los vehículos deben cumplir una serie de obligaciones, como... tener al día el seguro del coche..."
+    },
+    {
+      pregunta: "El aeropuerto Adolfo Suárez está en...",
+      opciones: ["a) Barcelona.", "b) Madrid.", "c) Bilbao."],
+      respuestaCorrecta: 1,
+      explicacion: "Aeropuertos más importantes: Madrid (Adolfo Suárez Madrid-Barajas)..."
+    },
+    {
+      pregunta: "En un coche es obligatorio el uso del cinturón de seguridad...",
+      opciones: ["a) solo en el asiento del conductor.", "b) en los asientos delanteros.", "c) en todos los asientos."],
+      respuestaCorrecta: 2,
+      explicacion: "...uso obligatorio del cinturón de seguridad de todos los ocupantes..."
+    },
+    {
+      pregunta: "¿Cuál es el límite de velocidad en autopista?",
+      opciones: ["a) 90 km/h.", "b) 120 km/h.", "c) 150 km/h."],
+      respuestaCorrecta: 1,
+      explicacion: "...control de velocidad... el límite en autopista o autovía es de 120 km/h..."
+    },
+    {
+      pregunta: "Ceder el asiento a las personas con movilidad reducida es una norma que encontramos indicada en...",
+      opciones: ["a) el transporte público.", "b) las bibliotecas.", "c) los museos."],
+      respuestaCorrecta: 0,
+      explicacion: "Principales normas de comportamiento en los transportes públicos: ...7. Ceder el asiento a las personas mayores, con movilidad reducida o embarazadas."
+    },
+    {
+      pregunta: "¿En qué caso se retira el permiso de conducir?",
+      opciones: ["a) Por accidente grave.", "b) Por la pérdida de los puntos.", "c) Por exceso de velocidad."],
+      respuestaCorrecta: 1,
+      explicacion: "...no haber perdido todos los puntos del carné (en este caso se retira el permiso de conducir)."
+    },
+    {
+      pregunta: "¿Qué significa Renfe?",
+      opciones: ["a) Red Nacional de Fondos Europeos.", "b) Red Nacional de los Ferrocarriles Españoles.", "c) Red Nacional de Fundaciones Estatales."],
+      respuestaCorrecta: 1,
+      explicacion: "RENFE (Red Nacional de Ferrocarriles Españoles)..."
+    },
+    {
+      pregunta: "Los españoles necesitan el pasaporte para viajar a...",
+      opciones: ["a) Italia.", "b) China.", "c) Alemania."],
+      respuestaCorrecta: 1,
+      explicacion: "el pasaporte. Es el documento oficial español para poder viajar a países que no pertenecen a la Unión Europea... [China no pertenece a la UE, Italia y Alemania sí]."
+    },
+    {
+      pregunta: "¿Cuál es la edad mínima para trabajar en España?",
+      opciones: ["a) 16 años.", "b) 18 años.", "c) 21 años."],
+      respuestaCorrecta: 0,
+      explicacion: "La edad mínima para trabajar en España es de 16 años."
+    },
+    {
+      pregunta: "¿Cuál es el sector de mayor peso en la economía española?",
+      opciones: ["a) Agricultura.", "b) Servicios.", "c) Construcción."],
+      respuestaCorrecta: 1,
+      explicacion: "En primer lugar, se encuentra el sector terciario (servicios)..."
+    },
+    {
+      pregunta: "España es innovadora en el sector de...",
+      opciones: ["a) la ingeniería aeroespacial.", "b) las energías renovables.", "c) la energía nuclear."],
+      respuestaCorrecta: 1,
+      explicacion: "España cuenta con una importante posición en innovación, con desarrollos importantes en energías renovables..."
+    },
+    {
+      pregunta: "¿Cómo se llama la ley laboral más importante de España?",
+      opciones: ["a) La Constitución.", "b) El Estatuto de los Trabajadores.", "c) El Servicio Público de Empleo Estatal."],
+      respuestaCorrecta: 1,
+      explicacion: "La ley laboral más importante es el Estatuto de los Trabajadores."
+    },
+    {
+      pregunta: "¿Cuáles de estos establecimientos está abierto 24 horas si es necesario?",
+      opciones: ["a) Farmacia.", "b) Pescadería.", "c) Librería."],
+      respuestaCorrecta: 0,
+      explicacion: "farmacias: ...tienen... un servicio de guardia para atender a los ciudadanos durante las 24 horas del día."
+    },
+    {
+      pregunta: "La educación infantil en España...",
+      opciones: ["a) es obligatoria.", "b) tiene dos ciclos.", "c) empieza a los 4 años."],
+      respuestaCorrecta: 1,
+      explicacion: "Educación Infantil: No es obligatoria. Se divide en dos ciclos..."
+    },
+    {
+      pregunta: "¿Cuándo empieza el calendario escolar?",
+      opciones: ["a) En agosto.", "b) En septiembre.", "c) En octubre."],
+      respuestaCorrecta: 1,
+      explicacion: "Calendario escolar: comienza en septiembre y termina en el mes de junio."
+    },
+    {
+      pregunta: "Las Escuelas Oficiales de Idiomas...",
+      opciones: ["a) son centros de enseñanza privada.", "b) son para mayores de 16 años.", "c) dependen del Instituto Cervantes."],
+      respuestaCorrecta: 1,
+      explicacion: "Enseñanza de idiomas en Escuelas Oficiales de Idiomas (EOI): ...para acceder es requisito tener 16 años o más."
+    },
+    {
+      pregunta: "¿Cuál es el documento que recoge los años de cotización a la Seguridad Social?",
+      opciones: ["a) Informe de vida laboral.", "b) Recibo de finiquito.", "c) Certificado de profesionalidad."],
+      respuestaCorrecta: 0,
+      explicacion: "el informe de vida laboral. Es un documento que muestra la cotización a la Seguridad Social..."
+    },
+    {
+      pregunta: "Los convenios colectivos de una empresa son los que se firman con los representantes de los trabajadores sobre...",
+      opciones: ["a) las condiciones laborales.", "b) El futuro de la empresa.", "c) La relación con los clientes."],
+      respuestaCorrecta: 0,
+      explicacion: "Los convenios colectivos son acuerdos... sobre las condiciones laborales."
+    },
+    {
+      pregunta: "¿Cuál de estas comunidades autónomas tiene el PIB por habitante más alto?",
+      opciones: ["a) Navarra.", "b) Galicia.", "c) Andalucía."],
+      respuestaCorrecta: 0,
+      explicacion: "Las comunidades con mayor PIB por habitante son Madrid, País Vasco, Navarra y Cataluña..."
+    }
+  ]; // <-- ¡¡IMPORTANTE!! ESTE ES EL CIERRE DEL BANCO DE PREGUNTAS
+  
+  // --- Lógica del Quiz ---
+
+  function startQuiz() {
+    userName = nombreInput.value || "Anónimo";
+    startScreen.style.display = 'none';
+    resultScreen.style.display = 'none';
+    quizScreen.style.display = 'block';
+    
+    selectRandomQuestions();
+    userAnswers = new Array(testQuestions.length).fill(null);
+    currentQuestionIndex = 0;
+    aciertos = 0; // Resetear aciertos
+    
+    startTimer();
+    renderQuestion(0);
+  }
+
+  function selectRandomQuestions() {
+    // Lógica final para las 300
+    const shuffled = [...fullQuestionBank].sort(() => 0.5 - Math.random());
+    testQuestions = shuffled.slice(0, NUM_PREGUNTAS_TEST);
+  }
+  
+  function startTimer() {
+    startTime = Date.now();
+    timerInterval = setInterval(() => {
+      const elapsed = Date.now() - startTime;
+      const minutes = Math.floor(elapsed / 60000);
+      const seconds = Math.floor((elapsed % 60000) / 1000);
+      cronometro.textContent = `Tiempo: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    }, 1000);
+  }
+  
+  function stopTimer() {
+    clearInterval(timerInterval);
+    const endTime = Date.now();
+    return Math.floor((endTime - startTime) / 1000); // en segundos
+  }
+  
+  function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  }
+
+  function renderQuestion(index) {
+    if (index < 0 || index >= testQuestions.length) return;
+
+    currentQuestionIndex = index;
+    const pregunta = testQuestions[index];
+    
+    feedbackContainer.style.display = 'none';
+    feedbackContainer.innerHTML = '';
+    
+    preguntaTitulo.textContent = pregunta.pregunta;
+    opcionesContainer.innerHTML = '';
+
+    pregunta.opciones.forEach((opcion, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'opcion-btn';
+      btn.textContent = opcion;
+      btn.onclick = () => checkAnswer(i, pregunta.respuestaCorrecta, pregunta.explicacion);
+      opcionesContainer.appendChild(btn);
+    });
+
+    const progreso = ((index + 1) / testQuestions.length) * 100;
+    progresoFill.style.width = progreso + '%';
+    progresoTexto.textContent = `Pregunta ${index + 1} de ${NUM_PREGUNTAS_TEST}`;
+  }
+
+  function checkAnswer(selectedIndex, correctIndex, explicacion) {
+    userAnswers[currentQuestionIndex] = selectedIndex;
+    
+    const allButtons = opcionesContainer.querySelectorAll('.opcion-btn');
+    allButtons.forEach(btn => {
+      btn.disabled = true;
+      btn.style.pointerEvents = 'none';
+    });
+    
+    let tiempoEsperaIndividual = TIEMPO_ESPERA_ERROR; // 6 segundos por defecto
+
+    if (selectedIndex === correctIndex) {
+      aciertos++;
+      allButtons[selectedIndex].classList.add('correct');
+      feedbackContainer.innerHTML = `<p class="feedback-text correct">✅ ¡Correcto!</p>`;
+      tiempoEsperaIndividual = TIEMPO_ESPERA_ACIERTO; // 2 segundos si acierta
+    } else {
+      allButtons[selectedIndex].classList.add('incorrect');
+      allButtons[correctIndex].classList.add('show-correct');
+      feedbackContainer.innerHTML = `
+        <p class="feedback-text incorrect">❌ Incorrecto</p>
+        <div class="pista-estudio">
+          <strong>Respuesta correcta:</strong> ${allButtons[correctIndex].textContent}
+          <br>
+          <strong>Motivo:</strong> ${explicacion}
+        </div>
+      `;
+    }
+    
+    feedbackContainer.style.display = 'block';
+    
+    setTimeout(() => {
+      const nextIndex = currentQuestionIndex + 1;
+      if (nextIndex < testQuestions.length) {
+        renderQuestion(nextIndex);
+      } else {
+        finishQuiz();
+      }
+    }, tiempoEsperaIndividual); // Usa el tiempo de espera variable
+  }
+  
+  function finishQuiz() {
+    const totalTime = stopTimer();
+    quizScreen.style.display = 'none';
+    resultScreen.style.display = 'block';
+    calculateScore(totalTime);
+  }
+  
+  function restartQuiz() {
+    resultScreen.style.display = 'none';
+    startScreen.style.display = 'block';
+    cronometro.textContent = 'Tiempo: 00:00';
+    // Limpiar el desglose y el ranking de la vista (se recargarán al jugar)
+    desgloseRespuestas.innerHTML = '';
+    rankingTbody.innerHTML = '';
+  }
+
+  function calculateScore(totalTime) {
+    let desgloseHTML = '<h3>Desglose de Respuestas:</h3>';
+    // let desgloseParaEmail = ""; // <-- BORRADO
+
+    testQuestions.forEach((pregunta, i) => {
+      const respuestaUsuario = userAnswers[i];
+      const respuestaCorrecta = pregunta.respuestaCorrecta;
+      
+      if (respuestaUsuario === respuestaCorrecta) {
+        desgloseHTML += `
+          <div class="desglose-item correcta">
+            <p class="desglose-pregunta">✔ ${pregunta.pregunta}</p>
+            <p class="desglose-respuesta-user">Tu respuesta: ${pregunta.opciones[respuestaUsuario]}</p>
+          </div>`;
+        // desgloseParaEmail += ...; // <-- BORRADO
+      } else {
+        desgloseHTML += `
+          <div class="desglose-item incorrecta">
+            <p class="desglose-pregunta">❌ ${pregunta.pregunta}</p>
+            <p class="desglose-respuesta-user">Tu respuesta: ${respuestaUsuario !== null ? pregunta.opciones[respuestaUsuario] : 'No contestada'}</p>
+            <p class="desglose-respuesta-correcta">Respuesta correcta: ${pregunta.opciones[respuestaCorrecta]}</p>
+            <div class="pista-estudio">
+              <strong>Motivo:</strong> ${pregunta.explicacion}
+            </div>
+          </div>`;
+        // desgloseParaEmail += ...; // <-- BORRADO
+      }
+    });
+
+    const aprobado = aciertos >= MIN_ACERTOS_APROBAR;
+    const puntajeTexto = `(${aciertos} de ${NUM_PREGUNTAS_TEST} aciertos)`;
+    const tiempoTexto = `Tiempo Total: ${formatTime(totalTime)}`;
+
+    if (aprobado) {
+      emojiResultado.textContent = '🏆';
+      resultadoTitulo.textContent = '¡APROBADO!';
+      resultadoTexto.textContent = '¡Enhorabuena, lo has conseguido! 😊';
+    } else {
+      emojiResultado.textContent = '🙈';
+      resultadoTitulo.textContent = 'SUSPENSO';
+      resultadoTexto.textContent = '¡Lo intentaremos nuevamente!';
+    }
+    
+    resultadoPuntaje.textContent = puntajeTexto;
+    resultadoTiempo.textContent = tiempoTexto;
+    desgloseRespuestas.innerHTML = desgloseHTML;
+    
+    // setupMailtoButton(aprobado, aciertos, totalTime, desgloseParaEmail); // <-- BORRADO
+    
+    saveScoreToRanking(userName, aciertos, totalTime);
+    loadRanking();
+  }
+
+  // function setupMailtoButton(...) { ... } // <-- FUNCIÓN ENTERA BORRADA
+
+  // --- Lógica de Ranking (localStorage) ---
+  function saveScoreToRanking(name, score, time) {
+    const newScore = { name, score, time };
+    const ranking = getRanking();
+    ranking.push(newScore);
+    ranking.sort((a, b) => {
+      if (a.score !== b.score) return b.score - a.score;
+      return a.time - b.time;
+    });
+    const top20 = ranking.slice(0, 20);
+    localStorage.setItem(RANKING_KEY, JSON.stringify(top20));
+  }
+
+  function getRanking() {
+    const rankingJSON = localStorage.getItem(RANKING_KEY);
+    return rankingJSON ? JSON.parse(rankingJSON) : [];
+  }
+
+  function loadRanking() {
+    const ranking = getRanking();
+    if (!rankingTbody) return; // Seguridad
+    rankingTbody.innerHTML = '';
+    
+    if (ranking.length === 0) {
+      rankingTbody.innerHTML = '<tr><td colspan="4">Aún no hay puntuaciones. ¡Sé el primero!</td></tr>';
+      return;
+    }
+    
+    ranking.forEach((entry, index) => {
+      const tr = document.createElement('tr');
+      if (index === 0) tr.classList.add('rank-1'); // Resaltar al ganador
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${entry.name}</td>
+        <td>${entry.score} / ${NUM_PREGUNTAS_TEST}</td>
+        <td>${formatTime(entry.time)}</td>
+      `;
+      rankingTbody.appendChild(tr);
+    });
+  }
+  
+ // **** ¡EL CÓDIGO CORREGIDO PARA LOS BOTONES (INCLUYE FIX MÓVIL)! ****
+  // Esta función se asegura de que todo el HTML esté cargado antes de conectar los botones.
+ document.addEventListener('DOMContentLoaded', function() {
+    
+    // Conectar todas las variables de DOM
+    startScreen = document.getElementById('start-screen');
+    quizScreen = document.getElementById('quiz-screen');
+    resultScreen = document.getElementById('result-screen');
+    feedbackContainer = document.getElementById('feedback-container');
+    opcionesContainer = document.getElementById('opciones-container');
+    nombreInput = document.getElementById('nombre-input');
+    startBtn = document.getElementById('start-btn');
+    restartBtn = document.getElementById('restart-btn');
+    cronometro = document.getElementById('cronometro');
+    progresoFill = document.getElementById('progreso-fill');
+    progresoTexto = document.getElementById('progreso-texto');
+    preguntaTitulo = document.getElementById('pregunta-titulo');
+    emojiResultado = document.getElementById('emoji-resultado');
+    resultadoTitulo = document.getElementById('resultado-titulo');
+    resultadoPuntaje = document.getElementById('resultado-puntaje');
+    resultadoTiempo = document.getElementById('resultado-tiempo');
+    resultadoTexto = document.getElementById('resultado-texto');
+    rankingTbody = document.getElementById('ranking-tbody');
+    desgloseRespuestas = document.getElementById('desglose-respuestas');
+
+    // --- Conexión de eventos para PC (click) y MÓVIL (touchend) ---
+    // 'touchend' es el "clic" en pantallas táctiles.
+    
+    if (startBtn) {
+      // Previene que se active el 'click' si ya se usó el 'touch'
+      let startClicked = false;
+      startBtn.addEventListener('click', function() {
+        if (!startClicked) startQuiz();
+        startClicked = false;
+      });
+      // Este es el evento para móviles
+      startBtn.addEventListener('touchend', function(e) {
+        e.preventDefault(); // Previene el "clic fantasma"
+        startClicked = true;
+        startQuiz();
+      });
+    }
+    
+    if (restartBtn) {
+      // Previene que se active el 'click' si ya se usó el 'touch'
+      let restartClicked = false;
+      restartBtn.addEventListener('click', function() {
+        if (!restartClicked) restartQuiz();
+        restartClicked = false;
+      });
+      // Este es el evento para móviles
+      restartBtn.addEventListener('touchend', function(e) {
+        e.preventDefault(); // Previene el "clic fantasma"
+        restartClicked = true;
+        restartQuiz();
+      });
+    }
+    
+    // Cargar el ranking en cuanto se cargue la página
+    loadRanking();
+  });
+
+</script>
+</body>
+</html>

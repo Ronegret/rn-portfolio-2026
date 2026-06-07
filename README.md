@@ -1,16 +1,25 @@
-# React + Vite
+# Portfolio Rodrigo Negrete
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Portfolio convertido desde el HTML original a una estructura editable con Vite, manteniendo el estilo, los temas, las animaciones y las imagenes originales.
 
-Currently, two official plugins are available:
+## Estructura
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `index.html`: estructura principal de secciones, tarjetas, enlaces e imagenes.
+- `src/styles.css`: estilos, responsive, tokens y los 5 temas visuales.
+- `src/content.js`: textos traducibles en ES/CA/EN.
+- `src/main.js`: cambio de idioma, cambio de tema, animaciones, canvas e interacciones.
 
-## React Compiler
+## Desarrollo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the ESLint configuration
+## Produccion
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm run build
+```
+
+El build final queda en `dist/`. Las imagenes siguen apuntando a las URLs publicas de `rodrigonegrete.es` para que sean visibles desde el primer arranque.
