@@ -162,13 +162,13 @@ export default function Hero({ lang, theme, onOpenCv }) {
               </div>
               <div className="cstat">
                 <div className="cstat-n">
-                  <AnimatedCounter target={9} />
+                  <AnimatedCounter target={11} />
                 </div>
                 <div className="cstat-l">{t.stat2}</div>
               </div>
               <div className="cstat">
                 <div className="cstat-n">
-                  <AnimatedCounter target={40} suffix="+" />
+                  <AnimatedCounter target={50} suffix="+" />
                 </div>
                 <div className="cstat-l">{t.stat3}</div>
               </div>
@@ -181,9 +181,17 @@ export default function Hero({ lang, theme, onOpenCv }) {
               <span className="cb cb1">Figma</span>
               <span className="cb cb1">React</span>
               <span className="cb cb1">Tailwind</span>
-              <span className="cb cbn">Claude API</span>
-              <span className="cb cbn">WordPress</span>
               <span className="cb cb2">Vapi</span>
+              <span className="cb cbn">Claude</span>
+              <span className="cb cbn">ChatGPT</span>
+              <span className="cb cbn">Gemini</span>
+              <span className="cb cbn">Google AI Studio</span>
+              <span className="cb cbn">Copilot</span>
+              <span className="cb cbn">Cloud</span>
+              <span className="cb cbn">WordPress</span>
+              <span className="cb cb1">Elementor</span>
+              <span className="cb cb1">Canva</span>
+              <span className="cb cb1">Photoshop</span>
             </div>
           </div>
         </div>
