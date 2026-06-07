@@ -1,0 +1,22 @@
+export const skills = [
+  { name: 'Make', className: 'mp2' },
+  { name: 'n8n', className: 'mp2' },
+  { name: 'Botpress', className: 'mp2' },
+  { name: 'Vapi', className: 'mp2' },
+  { name: 'Figma', className: 'mp1' },
+  { name: 'React', className: 'mp1' },
+  { name: 'Tailwind', className: 'mp1' },
+  { name: 'WordPress', className: 'mp1' },
+  { name: 'Claude API', className: 'mp2' },
+  { name: 'GPT-4o', className: 'mp2' },
+  { name: 'ElevenLabs', className: 'mp2' },
+  { name: 'Gemini AI', className: 'mp2' },
+  { name: 'Shopify', className: '' },
+  { name: 'Node.js', className: '' },
+  { name: 'Firebase', className: '' },
+  { name: 'Framer', className: '' },
+  { name: 'GA4', className: 'mp1' },
+  { name: 'Hotjar', className: '' },
+  { name: 'Notion', className: '' },
+  { name: 'Excel Avanzado', className: 'mp1' }
+];
