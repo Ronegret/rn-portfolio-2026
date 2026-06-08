@@ -257,19 +257,27 @@ void main(){
   document.body.classList.add('has-custom-cursor');
 
   let cx=0,cy=0,rx=0,ry=0;
+  let animRId=null;
+
+  function animR(){
+    const dx=cx-rx, dy=cy-ry;
+    rx+=dx*.1; ry+=dy*.1;
+    curR.style.transform=`translate(calc(${rx}px - 50%),calc(${ry}px - 50%))`;
+    if(Math.abs(dx)>.05||Math.abs(dy)>.05){
+      animRId=requestAnimationFrame(animR);
+    } else {
+      rx=cx; ry=cy;
+      animRId=null;
+    }
+  }
+
   document.addEventListener('mousemove',e=>{
     cx=e.clientX; cy=e.clientY;
     cur.style.left=cx+'px'; cur.style.top=cy+'px';
+    if(!animRId) animRId=requestAnimationFrame(animR);
   },{passive:true});
   document.addEventListener('mouseleave',()=>{ cur.style.opacity='0'; curR.style.opacity='0'; });
   document.addEventListener('mouseenter',()=>{ cur.style.opacity=''; curR.style.opacity=''; });
-
-  // Anillo con lerp suave
-  (function animR(){
-    rx+=(cx-rx)*.1; ry+=(cy-ry)*.1;
-    curR.style.left=rx+'px'; curR.style.top=ry+'px';
-    requestAnimationFrame(animR);
-  })();
 
   // Gestión de estados
   const CUR_STATES=['cur-btn','cur-card'];
