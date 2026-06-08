@@ -168,6 +168,10 @@
         <a href="#proyectos" class="btn-p trigger-flash" data-i="cta_p">Ver proyectos →</a>
         <a href="https://wa.me/34653567610" class="btn-s trigger-flash" target="_blank" rel="noopener">💬 WhatsApp</a>
         <a href="/cv/" class="btn-s trigger-flash">📄 CV</a>
+        <button class="btn-music" id="btn-music" data-state="idle" aria-label="Activar música de fondo">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+          Activar música
+        </button>
       </div>
       <p class="trust rv" data-d="5">
         <span data-i="trust1">17+ años de experiencia</span><span class="tdot"></span>
@@ -887,6 +891,33 @@
     </div>
   </div>
 </footer>
+
+<audio id="rn-audio" preload="none" loop>
+  <source src="/audio/No_Hago_Pantallas.mp3" type="audio/mpeg">
+</audio>
+
+<div id="music-player" class="music-player" hidden role="complementary" aria-label="Reproductor de música">
+  <div class="mp-row1">
+    <span class="mp-note" aria-hidden="true">♪</span>
+    <div class="mp-info">
+      <span class="mp-title">No Hago Pantallas</span>
+      <span class="mp-artist">Rodrigo Negrete</span>
+    </div>
+    <button class="mp-close" id="mp-close" aria-label="Cerrar reproductor">✕</button>
+  </div>
+  <div class="mp-prog-wrap">
+    <div class="mp-prog"><div class="mp-prog-fill" id="mp-fill"></div></div>
+    <span class="mp-time" id="mp-time">0:00</span>
+  </div>
+  <div class="mp-ctrl">
+    <button class="mp-btn-ctrl" id="mp-mute" aria-label="Silenciar">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
+    </button>
+    <button class="mp-btn-ctrl mp-btn-main" id="mp-play" aria-label="Pausar">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+    </button>
+  </div>
+</div>
 
 <script type="module" src="./src/main.js"></script>
 </body>
