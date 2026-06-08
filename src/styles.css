@@ -549,9 +549,12 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .av-wrap::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--surf); }
 .av { position: relative; z-index: 1; width: 100% !important; height: 100% !important; border-radius: 50% !important; object-fit: cover !important; object-position: center top !important; background: var(--bg3); max-width: none !important;}
 [data-theme="saas"] .av {
-  object-position: 50% 42% !important;
+  object-position: 50% 8% !important;
   filter: contrast(1.04) saturate(.95) brightness(.92);
 }
+[data-theme="editorial"] .av { object-position: 50% 8% !important; }
+[data-theme="diario"] .av { object-position: 50% 35% !important; }
+[data-theme="hud"] .av { object-position: 50% 10% !important; }
 .cname { font-family: var(--fd); font-size: clamp(17px, 1.4rem, 21px); color: var(--t1); margin-bottom: 3px; position: relative; z-index: 1; transition: font-family 0.5s; font-weight: 700; }
 .crole { font-size: 12px; color: var(--t2); margin-bottom: 0.9rem; position: relative; z-index: 1; }
 .cloc { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; color: var(--t3); font-weight: 700; background: var(--bg); padding: 5px 11px; border-radius: 100px; border: 1px solid var(--bord); margin-bottom: 1.1rem; position: relative; z-index: 1; }
