@@ -14,7 +14,7 @@
     <meta property="og:site_name" content="Rodrigo Negrete Portfolio">
     <meta property="og:url" content="https://rodrigonegrete.es/pdf-rodd/">
     <meta property="og:title" content="PDF Rodd — Editor PDF online gratuito">
-    <meta property="og:description" content="Editor PDF en navegador para editar texto, firmar, resaltar, borrar, comprimir y exportar documentos de forma rÃ¡pida.">
+    <meta property="og:description" content="Editor PDF en navegador para editar texto, firmar, resaltar, borrar, comprimir y exportar documentos de forma rápida.">
     <meta property="og:image" content="https://rodrigonegrete.es/assets/seo/rodrigo-negrete-og.png">
     <meta property="og:image:secure_url" content="https://rodrigonegrete.es/assets/seo/rodrigo-negrete-og.png">
     <meta property="og:image:type" content="image/png">
@@ -25,15 +25,15 @@
     <meta name="twitter:title" content="PDF Rodd — Editor PDF online gratuito">
     <meta name="twitter:description" content="Edita, firma, resalta, borra y comprime PDFs desde el navegador. Proyecto de Rodrigo Negrete.">
     <meta name="twitter:image" content="https://rodrigonegrete.es/assets/seo/rodrigo-negrete-og.png">
-    
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <!-- Librerías Core -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.1/fabric.min.js"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-    
+
     <!-- Iconos Phosphor -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
@@ -47,7 +47,7 @@
                             100: '#fee2e2',
                             200: '#fecaca',
                             500: '#ef4444',
-                            600: '#dc2626', // Rojo principal
+                            600: '#dc2626',
                             700: '#b91c1c',
                             900: '#7f1d1d',
                         }
@@ -92,7 +92,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        ::-webkit-scrollbar { width: 6px; height: 6px; } 
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
@@ -143,7 +143,7 @@
                 <i class="ph ph-x text-lg md:mr-1.5"></i>
                 <span class="hidden md:inline">Cerrar</span>
             </button>
-            
+
             <div class="flex items-center bg-slate-50 rounded-md border border-slate-200 p-0.5 ml-1">
                 <button onclick="undo()" id="btn-undo" disabled class="w-7 h-7 flex items-center justify-center hover:bg-white rounded text-slate-600 shadow-sm disabled:opacity-30 disabled:cursor-not-allowed" title="Deshacer (Ctrl+Z)"><i class="ph ph-arrow-u-up-left text-base"></i></button>
                 <div class="w-px h-4 bg-slate-300 mx-0.5"></div>
@@ -189,9 +189,6 @@
         <button onclick="toggleTool('text')" id="tool-text" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Añadir Texto Nuevo">
             <i class="ph ph-text-t text-xl"></i>
         </button>
-        <button onclick="runOcrOnCurrentPage()" id="tool-ocr" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Reconocer texto escaneado con OCR">
-            <i class="ph ph-scan-text text-xl"></i>
-        </button>
         <button onclick="toggleTool('highlight')" id="tool-highlight" class="tool-btn w-10 h-10 flex items-center justify-center rounded-lg text-slate-500 hover:bg-slate-100 border border-transparent flex-shrink-0" title="Resaltar">
             <i class="ph ph-highlighter text-xl"></i>
         </button>
@@ -232,9 +229,6 @@
             <option value="Helvetica" class="text-black">Arial / Sans</option>
             <option value="Times New Roman" class="text-black">Times / Serif</option>
             <option value="Courier New" class="text-black">Courier / Mono</option>
-            <option value="Inter" class="text-black">Inter</option>
-            <option value="Verdana" class="text-black">Verdana</option>
-            <option value="Georgia" class="text-black">Georgia</option>
         </select>
     </div>
     <div class="flex items-center bg-slate-700 rounded-md px-1.5 py-0.5" title="Tamaño de Letra">
@@ -250,7 +244,7 @@
 <!-- CONTENEDOR PRINCIPAL -->
 <main class="pt-14 w-full h-full" id="main-area">
     <div id="workspace-container" class="relative w-full flex justify-center">
-        
+
         <!-- PANTALLA DE SUBIDA (DRAG & DROP) -->
         <label id="upload-zone" for="pdf-upload" class="flex flex-col items-center justify-center w-[90%] max-w-xl h-[60vh] md:h-[380px] mt-8 md:mt-16 border-2 border-dashed border-slate-300 bg-white hover:border-brand-500 hover:bg-brand-50 rounded-2xl cursor-pointer transition-all shadow-sm">
             <div class="bg-brand-50 text-brand-600 p-5 rounded-full mb-5 shadow-sm border border-brand-100 pointer-events-none">
@@ -324,7 +318,7 @@
 <script>
     // Configuración Base
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-    
+
     // Estado Global
     const state = {
         pdfBuffer: null,
@@ -332,18 +326,16 @@
         currentPage: 1,
         totalPages: 0,
         scale: window.innerWidth < 768 ? 1.0 : 1.5,
-        activeTool: null, 
+        activeTool: null,
         canvas: null,
         pageData: {},
-        pageHistory: {}, 
+        pageHistory: {},
         isHistoryProcessing: false,
         pageViewInfo: null,
         originalFileName: 'documento.pdf',
-        bgCtx: null,        
+        bgCtx: null,
         outputScale: 1,
-        isOcrRunning: false,
-        erasePreview: null,
-        
+
         toolSettings: {
             draw: { color: '#1e293b', width: 3 },
             highlight: { color: '#facc15', width: 18 },
@@ -412,7 +404,7 @@
         ui.uploadZone.classList.toggle('hidden', isDocOpen);
         ui.canvasWrapper.classList.toggle('hidden', !isDocOpen);
         ui.mainToolbar.classList.toggle('hidden', !isDocOpen);
-        
+
         if (isDocOpen) {
             ui.docControls.classList.remove('hidden');
             ui.docControls.classList.add('flex');
@@ -436,21 +428,15 @@
         updateHistoryButtons();
     }
 
-    const customCanvasProps = ['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight', 'isOcrText'];
-    function capturePageState() {
-        removeErasePreview();
-        return state.canvas.toJSON(customCanvasProps);
-    }
-
     function saveHistory() {
         if (state.isHistoryProcessing || !state.canvas) return;
         const pageHist = state.pageHistory[state.currentPage];
-        const json = JSON.stringify(capturePageState());
-        
+        const json = JSON.stringify(state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']));
+
         if (pageHist.index < pageHist.states.length - 1) {
             pageHist.states.length = pageHist.index + 1;
         }
-        
+
         pageHist.states.push(json);
         pageHist.index++;
         updateHistoryButtons();
@@ -491,11 +477,10 @@
         }
     };
 
-
     // --- CARGA DE DOCUMENTOS ---
     const handleFileUpload = async (file) => {
         if (!file || file.type !== 'application/pdf') return alert('Por favor sube un archivo PDF válido.');
-        
+
         state.originalFileName = file.name;
         setStatus('Abriendo documento...', true);
         try {
@@ -504,7 +489,7 @@
             state.totalPages = state.pdfDoc.numPages;
             state.pageData = {};
             state.pageHistory = {};
-            
+
             if (state.totalPages > 1) {
                 document.getElementById('modal-total-pages').innerText = state.totalPages;
                 ui.modalInput.max = state.totalPages;
@@ -552,7 +537,7 @@
 
     window.navigatePage = async (offset) => {
         if(state.canvas && !state.isHistoryProcessing) {
-            state.pageData[state.currentPage] = capturePageState();
+            state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
         }
         const next = state.currentPage + offset;
         if(next >= 1 && next <= state.totalPages) {
@@ -564,7 +549,7 @@
     window.changeZoom = async (delta) => {
         const newScale = Math.max(0.75, Math.min(2.5, state.scale + delta));
         if (newScale !== state.scale) {
-            if(state.canvas) state.pageData[state.currentPage] = capturePageState();
+            if(state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
             state.scale = newScale;
             await renderPage();
         }
@@ -579,10 +564,10 @@
             const canvasHeight = state.bgCtx.canvas.height;
             const safeX = Math.min(Math.max(0, px), canvasWidth - 1);
             const safeY = Math.min(Math.max(0, py), canvasHeight - 1);
-            
+
             const data = state.bgCtx.getImageData(safeX, safeY, 1, 1).data;
-            if (data[3] === 0) return { r: 1, g: 1, b: 1, hex: '#ffffff' }; 
-            
+            if (data[3] === 0) return { r: 1, g: 1, b: 1, hex: '#ffffff' };
+
             const r = data[0] / 255;
             const g = data[1] / 255;
             const b = data[2] / 255;
@@ -592,61 +577,6 @@
             return { r: 1, g: 1, b: 1, hex: '#ffffff' };
         }
     };
-
-    function loadTesseract() {
-        return new Promise((resolve, reject) => {
-            if (window.Tesseract) return resolve(window.Tesseract);
-            const existing = document.querySelector('script[data-ocr-loader]');
-            if (existing) {
-                existing.addEventListener('load', () => resolve(window.Tesseract));
-                existing.addEventListener('error', reject);
-                return;
-            }
-            const script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';
-            script.async = true;
-            script.dataset.ocrLoader = 'true';
-            script.onload = () => window.Tesseract ? resolve(window.Tesseract) : reject(new Error('OCR no disponible.'));
-            script.onerror = () => reject(new Error('No se pudo cargar OCR.'));
-            document.head.appendChild(script);
-        });
-    }
-
-    function removeErasePreview() {
-        if (!state.canvas || !state.erasePreview) return;
-        state.isHistoryProcessing = true;
-        state.canvas.remove(state.erasePreview);
-        state.erasePreview = null;
-        state.isHistoryProcessing = false;
-        state.canvas.requestRenderAll();
-    }
-
-    function updateErasePreview(pointer) {
-        if (!state.canvas || state.activeTool !== 'erase') return;
-        const rSize = state.toolSettings.erase.size * state.scale;
-        state.isHistoryProcessing = true;
-        if (!state.erasePreview) {
-            state.erasePreview = new fabric.Circle({
-                left: pointer.x - rSize,
-                top: pointer.y - rSize,
-                radius: rSize,
-                fill: 'rgba(220, 38, 38, 0.08)',
-                stroke: '#dc2626',
-                strokeWidth: 1.5,
-                strokeDashArray: [5, 4],
-                selectable: false,
-                evented: false,
-                excludeFromExport: true,
-                isPreview: true
-            });
-            state.canvas.add(state.erasePreview);
-        } else {
-            state.erasePreview.set({ left: pointer.x - rSize, top: pointer.y - rSize, radius: rSize });
-        }
-        state.erasePreview.bringToFront();
-        state.isHistoryProcessing = false;
-        state.canvas.requestRenderAll();
-    }
 
     async function renderPage() {
         if (!state.pdfDoc) return;
@@ -669,19 +599,19 @@
 
             await page.render({ canvasContext: ctx, viewport }).promise;
             const bgDataUrl = bgCanvas.toDataURL('image/jpeg', 0.95);
-            
+
             state.bgCtx = ctx;
             state.outputScale = outputScale;
 
             const textContent = await page.getTextContent();
-            
+
             ui.canvasWrapper.style.width = `${viewport.width}px`;
             ui.canvasWrapper.style.height = `${viewport.height}px`;
 
             if (!state.canvas) {
                 state.canvas = new fabric.Canvas('pdf-canvas', {
-                    width: viewport.width, 
-                    height: viewport.height, 
+                    width: viewport.width,
+                    height: viewport.height,
                     selection: false,
                     preserveObjectStacking: true,
                     allowTouchScrolling: true
@@ -690,11 +620,7 @@
                 state.canvas.on('selection:updated', onObjectSelected);
                 state.canvas.on('selection:cleared', onSelectionCleared);
                 state.canvas.on('mouse:down', onCanvasMouseDown);
-                state.canvas.on('mouse:move', (o) => {
-                    if (state.activeTool === 'erase') updateErasePreview(state.canvas.getPointer(o.e));
-                });
-                state.canvas.on('mouse:out', removeErasePreview);
-                
+
                 state.canvas.on('object:added', saveHistory);
                 state.canvas.on('object:modified', saveHistory);
                 state.canvas.on('object:removed', saveHistory);
@@ -713,7 +639,7 @@
                     state.canvas.requestRenderAll();
                 });
             } else {
-                state.isHistoryProcessing = true; 
+                state.isHistoryProcessing = true;
                 state.canvas.setWidth(viewport.width);
                 state.canvas.setHeight(viewport.height);
                 state.canvas.clear();
@@ -724,7 +650,7 @@
             fabric.Image.fromURL(bgDataUrl, (img) => {
                 img.set({ scaleX: viewport.width / img.width, scaleY: viewport.height / img.height });
                 state.canvas.setBackgroundImage(img, state.canvas.renderAll.bind(state.canvas));
-                
+
                 if (state.pageData[state.currentPage]) {
                     state.canvas.loadFromJSON(state.pageData[state.currentPage], () => {
                         state.canvas.renderAll();
@@ -734,14 +660,14 @@
                 } else {
                     autoCreateInteractiveText(textContent.items, viewport, page);
                     state.isHistoryProcessing = false;
-                    saveHistory(); 
+                    saveHistory();
                 }
-                
+
                 ui.pageInfo.innerText = `${state.currentPage}/${state.totalPages}`;
                 ui.zoomInfo.innerText = `${Math.round(state.scale * 100)}%`;
                 toggleAppUI(true);
                 ui.canvasWrapper.classList.remove('hidden');
-                
+
                 toggleTool(null);
                 setStatus('¡Listo para editar!');
             });
@@ -755,14 +681,14 @@
     // --- DETECCIÓN INTELIGENTE ---
     function autoCreateInteractiveText(textItems, viewport, page) {
         if(!textItems || textItems.length === 0) return;
-        
-        state.isHistoryProcessing = true; 
+
+        state.isHistoryProcessing = true;
         const interactiveBoxes = [];
-        
+
         textItems.forEach(item => {
             const str = item.str.trim();
             if (str === '') return;
-            
+
             const transform = item.transform;
             const rawFontSize = Math.sqrt(transform[0] * transform[0] + transform[1] * transform[1]);
             const fontSize = rawFontSize * state.scale;
@@ -794,15 +720,15 @@
 
             let bgColor = window.getBackgroundColor(canvasX + 2, canvasY - 4);
             if (bgColor.r < 0.2 && bgColor.g < 0.2 && bgColor.b < 0.2) {
-                bgColor = window.getBackgroundColor(canvasX - 8, canvasY + (fontSize / 2)); 
+                bgColor = window.getBackgroundColor(canvasX - 8, canvasY + (fontSize / 2));
             }
 
             const placeholder = new fabric.Rect({
                 left: canvasX - 1,
                 top: canvasY - (fontSize * 0.05),
-                width: textWidth + 2, 
-                height: fontSize * 1.15, 
-                fill: isFormField ? 'rgba(37, 99, 235, 0.1)' : 'rgba(220, 38, 38, 0.0)', 
+                width: textWidth + 2,
+                height: fontSize * 1.15,
+                fill: isFormField ? 'rgba(37, 99, 235, 0.1)' : 'rgba(220, 38, 38, 0.0)',
                 rx: 2, ry: 2,
                 selectable: false, hasBorders: false, hasControls: false, hoverCursor: 'text',
                 isAutoText: true,
@@ -810,10 +736,10 @@
                 pdfItem: item, fontSize: fontSize, originalColor: hexColor, bgColor: bgColor,
                 originalX: canvasX, originalY: canvasY, isBold: isBold, isItalic: isItalic, detectedFont: fontFamily
             });
-            
+
             placeholder.on('mouseover', function() {
                 if (state.activeTool === null) {
-                    this.set('fill', isFormField ? 'rgba(37, 99, 235, 0.25)' : 'rgba(220, 38, 38, 0.1)'); 
+                    this.set('fill', isFormField ? 'rgba(37, 99, 235, 0.25)' : 'rgba(220, 38, 38, 0.1)');
                     state.canvas.requestRenderAll();
                 }
             });
@@ -828,114 +754,29 @@
 
             interactiveBoxes.push(placeholder);
         });
-        
+
         state.canvas.add(...interactiveBoxes);
         state.isHistoryProcessing = false;
     }
-
-    window.runOcrOnCurrentPage = async () => {
-        if (!state.canvas || !state.bgCtx || state.isOcrRunning) return;
-        state.isOcrRunning = true;
-        setStatus('OCR: leyendo texto escaneado...', true);
-
-        try {
-            const TesseractApi = await loadTesseract();
-            const result = await TesseractApi.recognize(state.bgCtx.canvas, 'spa+eng', {
-                logger: (m) => {
-                    if (m.status === 'recognizing text') {
-                        setStatus(`OCR: ${Math.round((m.progress || 0) * 100)}%`, true);
-                    }
-                }
-            });
-
-            const lines = (result.data.lines && result.data.lines.length ? result.data.lines : result.data.words) || [];
-            const added = [];
-            state.isHistoryProcessing = true;
-
-            lines.forEach(item => {
-                const text = (item.text || '').trim();
-                const confidence = typeof item.confidence === 'number' ? item.confidence : 100;
-                const box = item.bbox || {};
-                if (!text || confidence < 40 || box.x1 == null || box.y1 == null) return;
-
-                const left = box.x0 / state.outputScale;
-                const top = box.y0 / state.outputScale;
-                const width = Math.max(10, (box.x1 - box.x0) / state.outputScale);
-                const height = Math.max(10, (box.y1 - box.y0) / state.outputScale);
-                const bgColor = window.getBackgroundColor(left + 2, top + height / 2);
-                const fontSize = Math.max(9, Math.min(48, height * 0.78));
-
-                const mask = new fabric.Rect({
-                    left: left - 1,
-                    top: top - 1,
-                    width: width + 2,
-                    height: height + 2,
-                    fill: bgColor.hex,
-                    rx: 2,
-                    ry: 2,
-                    selectable: true,
-                    isMask: true,
-                    strokeWidth: 0,
-                    stroke: 'transparent',
-                    shadow: new fabric.Shadow({ color: bgColor.hex, blur: 2, offsetX: 0, offsetY: 0 })
-                });
-
-                const textObj = new fabric.IText(text, {
-                    left,
-                    top,
-                    width,
-                    fontFamily: 'Helvetica',
-                    fill: '#111827',
-                    fontSize,
-                    lineHeight: 1.05,
-                    transparentCorners: false,
-                    cornerColor: '#dc2626',
-                    borderColor: '#dc2626',
-                    cornerSize: 8,
-                    isOcrText: true
-                });
-
-                state.canvas.add(mask);
-                state.canvas.add(textObj);
-                added.push(textObj);
-            });
-
-            state.isHistoryProcessing = false;
-            if (!added.length) {
-                setStatus('OCR no encontrÃ³ texto claro en esta pÃ¡gina');
-                return;
-            }
-
-            saveHistory();
-            state.canvas.setActiveObject(added[0]);
-            state.canvas.requestRenderAll();
-            setStatus(`OCR listo: ${added.length} bloque${added.length === 1 ? '' : 's'} editable${added.length === 1 ? '' : 's'}`);
-        } catch (error) {
-            console.error(error);
-            setStatus('OCR fallÃ³. Prueba con un PDF mÃ¡s nÃ­tido.');
-        } finally {
-            state.isOcrRunning = false;
-        }
-    };
 
     function convertToEditableText(placeholder) {
         const item = placeholder.pdfItem;
         const fontSize = placeholder.fontSize;
         const originalColor = placeholder.originalColor || '#000000';
         const bgColor = placeholder.bgColor || { r: 1, g: 1, b: 1, hex: '#ffffff' };
-        
+
         const isBold = placeholder.isBold;
         const isItalic = placeholder.isItalic;
         const fontFamily = placeholder.detectedFont;
         const isFormField = placeholder.isFormField;
-        
-        state.isHistoryProcessing = true; 
-        
+
+        state.isHistoryProcessing = true;
+
         let mask = null;
         if (!isFormField) {
             mask = new fabric.Rect({
                 left: placeholder.left, top: placeholder.top, width: placeholder.width, height: placeholder.height,
-                fill: bgColor.hex, rx: 2, ry: 2, selectable: true, isMask: true, hasControls: true, 
+                fill: bgColor.hex, rx: 2, ry: 2, selectable: true, isMask: true, hasControls: true,
                 transparentCorners: false, cornerColor: '#dc2626', borderColor: '#dc2626', cornerSize: 8,
                 lockRotation: true, strokeWidth: 0, stroke: 'transparent',
                 shadow: new fabric.Shadow({ color: bgColor.hex, blur: 3, offsetX: 0, offsetY: 0 })
@@ -943,10 +784,10 @@
         }
 
         const textObj = new fabric.IText(isFormField ? ' Escribir...' : item.str, {
-            left: placeholder.originalX, 
-            top: placeholder.originalY - (fontSize * 0.05) - (isFormField ? fontSize * 0.2 : 0), 
+            left: placeholder.originalX,
+            top: placeholder.originalY - (fontSize * 0.05) - (isFormField ? fontSize * 0.2 : 0),
             fontSize: fontSize,
-            fontFamily: fontFamily, 
+            fontFamily: fontFamily,
             fontWeight: isBold ? 'bold' : 'normal',
             fontStyle: isItalic ? 'italic' : 'normal',
             fill: isFormField ? '#1e293b' : originalColor,
@@ -957,7 +798,7 @@
         state.canvas.remove(placeholder);
         if (mask) state.canvas.add(mask);
         state.canvas.add(textObj);
-        
+
         state.isHistoryProcessing = false;
         saveHistory();
 
@@ -976,12 +817,12 @@
 
         const colorInput = document.getElementById('setting-color-input');
         const widthInput = document.getElementById('setting-width-input');
-        
+
         if (t === 'draw' || t === 'highlight') {
             state.toolSettings[t].color = colorInput.value;
             state.toolSettings[t].width = parseInt(widthInput.value);
             document.getElementById('setting-width-val').innerText = widthInput.value + 'px';
-            
+
             if (state.canvas && state.canvas.freeDrawingBrush) {
                 state.canvas.freeDrawingBrush.color = state.toolSettings[t].color;
                 state.canvas.freeDrawingBrush.width = state.toolSettings[t].width * state.scale;
@@ -994,21 +835,20 @@
 
     window.toggleTool = (toolName) => {
         state.activeTool = toolName;
-        if (toolName !== 'erase') removeErasePreview();
-        
+
         ui.toolBtns.forEach(btn => {
             if (toolName === null && btn.id === 'tool-cursor') btn.classList.add('active');
             else if (btn.id === `tool-${toolName}`) btn.classList.add('active');
             else btn.classList.remove('active');
         });
-        
+
         ui.settingsPanel.classList.add('hidden');
         document.getElementById('setting-color').classList.add('hidden');
         document.getElementById('setting-width').classList.add('hidden');
 
         if(state.canvas) {
             state.canvas.isDrawingMode = (toolName === 'draw' || toolName === 'highlight');
-            
+
             if (toolName === 'draw') {
                 ui.settingsPanel.classList.remove('hidden');
                 document.getElementById('setting-color').classList.remove('hidden');
@@ -1017,10 +857,10 @@
                 document.getElementById('setting-width-input').value = state.toolSettings.draw.width;
                 document.getElementById('setting-width-input').max = 40;
                 document.getElementById('setting-width-val').innerText = state.toolSettings.draw.width + 'px';
-                
+
                 state.canvas.freeDrawingBrush.color = state.toolSettings.draw.color;
                 state.canvas.freeDrawingBrush.width = state.toolSettings.draw.width * state.scale;
-            } 
+            }
             else if (toolName === 'highlight') {
                 ui.settingsPanel.classList.remove('hidden');
                 document.getElementById('setting-color').classList.remove('hidden');
@@ -1030,7 +870,7 @@
                 document.getElementById('setting-width-input').max = 80;
                 document.getElementById('setting-width-val').innerText = state.toolSettings.highlight.width + 'px';
 
-                state.canvas.freeDrawingBrush.color = state.toolSettings.highlight.color; 
+                state.canvas.freeDrawingBrush.color = state.toolSettings.highlight.color;
                 state.canvas.freeDrawingBrush.width = state.toolSettings.highlight.width * state.scale;
             }
             else if (toolName === 'erase') {
@@ -1040,10 +880,10 @@
                 document.getElementById('setting-width-input').max = 100;
                 document.getElementById('setting-width-val').innerText = state.toolSettings.erase.size + 'px';
             }
-            
+
             state.canvas.discardActiveObject();
             ui.contextToolbar.classList.add('hidden');
-            
+
             state.canvas.forEachObject(obj => {
                 if (obj.isAutoText) {
                     obj.evented = (state.activeTool === null);
@@ -1052,7 +892,7 @@
                     obj.evented = (state.activeTool === null);
                 }
             });
-            
+
             state.canvas.allowTouchScrolling = (state.activeTool === null);
             state.canvas.requestRenderAll();
         }
@@ -1060,9 +900,9 @@
 
     const onCanvasMouseDown = (o) => {
         if (state.activeTool === null || state.activeTool === 'draw' || state.activeTool === 'highlight' || o.target) return;
-        
+
         const pointer = state.canvas.getPointer(o.e);
-        
+
         if (state.activeTool === 'text') {
             const text = new fabric.IText('Nuevo texto', {
                 left: pointer.x, top: pointer.y, fontFamily: 'Helvetica', fill: '#1e293b', fontSize: 16 * state.scale,
@@ -1072,13 +912,13 @@
             state.canvas.setActiveObject(text);
             text.enterEditing();
             text.selectAll();
-            toggleTool(null); 
+            toggleTool(null);
 
         } else if (state.activeTool === 'erase') {
             const bgColor = window.getBackgroundColor(pointer.x, pointer.y);
             const rSize = state.toolSettings.erase.size * state.scale;
-            const box = new fabric.Circle({ 
-                left: pointer.x - rSize, top: pointer.y - rSize, 
+            const box = new fabric.Circle({
+                left: pointer.x - rSize, top: pointer.y - rSize,
                 fill: bgColor.hex, radius: rSize,
                 isMask: true, strokeWidth: 0, stroke: 'transparent',
                 shadow: new fabric.Shadow({ color: bgColor.hex, blur: rSize, offsetX: 0, offsetY: 0 })
@@ -1093,7 +933,7 @@
             ui.contextToolbar.classList.remove('hidden');
             ui.propFont.value = activeObjs[0].fontFamily || 'Helvetica';
             let color = activeObjs[0].fill || '#000000';
-            if(color.length > 7) color = color.substring(0,7); 
+            if(color.length > 7) color = color.substring(0,7);
             ui.propColor.value = color;
             ui.propSize.value = Math.round(activeObjs[0].fontSize / state.scale);
         } else {
@@ -1105,7 +945,7 @@
 
     window.updateTextProp = (property, value) => {
         const activeObjs = state.canvas.getActiveObjects();
-        activeObjs.forEach(obj => { 
+        activeObjs.forEach(obj => {
             if (obj.type === 'i-text') {
                 if (property === 'fontSize') {
                     obj.set(property, parseInt(value) * state.scale);
@@ -1140,28 +980,28 @@
 
         if (e.key === 'Delete' || e.key === 'Backspace') {
             if (activeObject && !isEditing) {
-                e.preventDefault(); 
+                e.preventDefault();
                 window.deleteSelected();
             }
         }
 
         if (e.key.startsWith('Arrow')) {
             if (activeObject && !isEditing) {
-                e.preventDefault(); 
+                e.preventDefault();
                 const step = e.shiftKey ? 5 : 1;
-                
+
                 if (e.key === 'ArrowUp') activeObject.top -= step;
                 if (e.key === 'ArrowDown') activeObject.top += step;
                 if (e.key === 'ArrowLeft') activeObject.left -= step;
                 if (e.key === 'ArrowRight') activeObject.left += step;
-                
+
                 activeObject.setCoords();
                 state.canvas.requestRenderAll();
             } else if (!isEditing) {
                 const container = document.getElementById('workspace-container');
                 if (container && (e.key === 'ArrowUp' || e.key === 'ArrowDown')) {
-                    e.preventDefault(); 
-                    const scrollStep = 80; 
+                    e.preventDefault();
+                    const scrollStep = 80;
                     container.scrollTop += (e.key === 'ArrowDown' ? scrollStep : -scrollStep);
                 }
             }
@@ -1171,18 +1011,18 @@
     // --- MODAL DE EXPORTACIÓN ---
     let originalExportModalHTML = '';
 
-    window.openExportModal = () => { 
+    window.openExportModal = () => {
         const modalContent = document.querySelector('#export-modal > div');
         if (!originalExportModalHTML) {
             originalExportModalHTML = modalContent.innerHTML;
         } else {
             modalContent.innerHTML = originalExportModalHTML;
         }
-        ui.exportModal.classList.remove('hidden'); 
+        ui.exportModal.classList.remove('hidden');
     };
-    
+
     window.closeExportModal = () => { ui.exportModal.classList.add('hidden'); };
-    
+
     window.executeExport = () => {
         const mode = document.querySelector('input[name="export-mode"]:checked').value;
         exportPDF(mode);
@@ -1191,10 +1031,9 @@
     // --- EXPORTACIÓN BLINDADA CON DESCARGA MANUAL GARANTIZADA ---
     window.exportPDF = async (mode = 'hd') => {
         if(!state.pdfBuffer) return;
-        
+
         const modalContent = document.querySelector('#export-modal > div');
-        
-        // Mostrar pantalla de carga interactiva dentro del modal
+
         modalContent.innerHTML = `
             <div class="flex flex-col items-center justify-center py-6 text-center">
                 <i class="ph ph-spinner animate-spin text-5xl text-brand-600 mb-4"></i>
@@ -1203,20 +1042,19 @@
             </div>
         `;
 
-        // Pequeña pausa para permitir que el DOM renderice el spinner
         await new Promise(resolve => setTimeout(resolve, 50));
-        
+
         try {
-            if(state.canvas) state.pageData[state.currentPage] = capturePageState();
-            
+            if(state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
+
             let pdfBytes;
 
             if (mode === 'flat') {
                 const newPdf = await PDFLib.PDFDocument.create();
                 for (let i = 1; i <= state.totalPages; i++) {
                     const page = await state.pdfDoc.getPage(i);
-                    const viewport = page.getViewport({ scale: 1.5 }); 
-                    
+                    const viewport = page.getViewport({ scale: 1.5 });
+
                     const cEl = document.createElement('canvas');
                     cEl.width = Math.round(viewport.width);
                     cEl.height = Math.round(viewport.height);
@@ -1230,7 +1068,7 @@
                         tempEl.width = Math.round(editViewport.width);
                         tempEl.height = Math.round(editViewport.height);
                         const tempFabric = new fabric.StaticCanvas(tempEl, { width: tempEl.width, height: tempEl.height });
-                        
+
                         await new Promise(res => tempFabric.loadFromJSON(state.pageData[i], res));
 
                         tempFabric.setBackgroundImage(null, tempFabric.renderAll.bind(tempFabric));
@@ -1240,7 +1078,7 @@
                         ctx.drawImage(tempFabric.getElement(), 0, 0, editViewport.width, editViewport.height, 0, 0, viewport.width, viewport.height);
                     }
 
-                    const jpegData = cEl.toDataURL('image/jpeg', 0.70); 
+                    const jpegData = cEl.toDataURL('image/jpeg', 0.70);
                     const jpegImage = await newPdf.embedJpg(jpegData);
                     const newPage = newPdf.addPage([viewport.width, viewport.height]);
                     newPage.drawImage(jpegImage, { x: 0, y: 0, width: viewport.width, height: viewport.height });
@@ -1250,14 +1088,14 @@
             } else {
                 const pdfDocLib = await PDFLib.PDFDocument.load(state.pdfBuffer.slice(0));
                 const pages = pdfDocLib.getPages();
-                
+
                 const embeddedFonts = {};
                 const getPdfFont = async (family, style) => {
                     const key = `${family}-${style}`;
                     if (embeddedFonts[key]) return embeddedFonts[key];
-                    
+
                     let stdFont = PDFLib.StandardFonts.Helvetica;
-                    if (family === 'Times New Roman' || family === 'Georgia') {
+                    if (family === 'Times New Roman') {
                         if (style === 'bolditalic') stdFont = PDFLib.StandardFonts.TimesRomanBoldItalic;
                         else if (style === 'bold') stdFont = PDFLib.StandardFonts.TimesRomanBold;
                         else if (style === 'italic') stdFont = PDFLib.StandardFonts.TimesRomanItalic;
@@ -1273,29 +1111,29 @@
                         else if (style === 'italic') stdFont = PDFLib.StandardFonts.HelveticaOblique;
                         else stdFont = PDFLib.StandardFonts.Helvetica;
                     }
-                    
+
                     embeddedFonts[key] = await pdfDocLib.embedFont(stdFont);
                     return embeddedFonts[key];
                 };
 
                 for (const [pageNum, jsonState] of Object.entries(state.pageData)) {
-                    if (!jsonState || !jsonState.objects || jsonState.objects.length === 0) continue; 
-                    
+                    if (!jsonState || !jsonState.objects || jsonState.objects.length === 0) continue;
+
                     const pageIndex = parseInt(pageNum) - 1;
                     const page = pages[pageIndex];
                     const pageHeight = page.getHeight();
-                    
+
                     const cEl = document.createElement('canvas');
                     cEl.width = Math.round(page.getWidth() * state.scale);
                     cEl.height = Math.round(pageHeight * state.scale);
-                    const tempCanvas = new fabric.StaticCanvas(cEl, { 
-                        width: cEl.width, 
-                        height: cEl.height 
+                    const tempCanvas = new fabric.StaticCanvas(cEl, {
+                        width: cEl.width,
+                        height: cEl.height
                     });
 
                     await new Promise(res => tempCanvas.loadFromJSON(jsonState, res));
                     tempCanvas.setBackgroundImage(null, tempCanvas.renderAll.bind(tempCanvas));
-                    
+
                     const objs = tempCanvas.getObjects();
                     const nativeTexts = [];
 
@@ -1305,13 +1143,13 @@
                             tempCanvas.remove(obj);
                         } else if (obj.type === 'i-text') {
                             nativeTexts.push(obj);
-                            obj.visible = false; 
+                            obj.visible = false;
                         }
                     }
-                    
+
                     tempCanvas.renderAll();
                     const hasVisibleRasterObjects = tempCanvas.getObjects().some(o => o.visible);
-                    
+
                     if (hasVisibleRasterObjects) {
                         const exportScale = mode === 'hd' ? (2.0 / state.scale) : (1.0 / state.scale);
                         const pngData = tempCanvas.toDataURL({ format: 'png', multiplier: exportScale });
@@ -1325,7 +1163,7 @@
                         const unscaledTop = textObj.top / state.scale;
                         const unscaledLeft = textObj.left / state.scale;
                         const unscaledFontSize = textObj.fontSize / state.scale;
-                        
+
                         const pdfY = pageHeight - unscaledTop - (unscaledFontSize * 0.78);
 
                         const hexColor = textObj.fill || '#000000';
@@ -1340,7 +1178,7 @@
                         if (isBold && isItalic) style = 'bolditalic';
                         else if (isBold) style = 'bold';
                         else if (isItalic) style = 'italic';
-                        
+
                         const pdfFont = await getPdfFont(family, style);
 
                         const lines = (textObj.text || '').split('\n');
@@ -1365,7 +1203,7 @@
                 }
                 pdfBytes = await pdfDocLib.save();
             }
-            
+
             let downloadName = 'PDF_RODD_Editado.pdf';
             if (state.originalFileName) {
                 const parts = state.originalFileName.split('.');
@@ -1380,7 +1218,6 @@
             const blob = new Blob([pdfBytes], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
 
-            // Intentamos descarga automática
             const link = document.createElement('a');
             link.style.display = 'none';
             link.href = url;
@@ -1389,7 +1226,6 @@
             link.click();
             document.body.removeChild(link);
 
-            // PANTALLA DE DESCARGA GARANTIZADA
             modalContent.innerHTML = `
                 <div class="flex flex-col items-center justify-center py-4 text-center">
                     <i class="ph ph-check-circle text-5xl text-green-500 mb-4"></i>
@@ -1403,7 +1239,7 @@
                     </button>
                 </div>
             `;
-            
+
         } catch(e) {
             console.error(e);
             modalContent.innerHTML = `
@@ -1419,9 +1255,11 @@
         }
     };
 
-    document.addEventListener('touchmove', function(e) { 
+    document.addEventListener('touchmove', function(e) {
         if(!e.target.closest('#workspace-container')) {
-            e.preventDefault(); 
+            e.preventDefault();
         }
     }, { passive: false });
 </script>
+</body>
+</html>
