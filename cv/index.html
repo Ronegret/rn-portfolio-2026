@@ -51,21 +51,38 @@
 
     .toolbar a,
     .toolbar button {
-      min-height: 40px;
+      min-height: 38px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 6px;
       border: 0;
       border-radius: 8px;
-      padding: 9px 14px;
+      padding: 8px 14px;
       color: #fff;
       background: var(--accent);
       font: 700 13px Arial, Helvetica, sans-serif;
       text-decoration: none;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .toolbar .secondary { background: #374151; }
+
+    .back-btn {
+      background: transparent !important;
+      border: 1.5px solid rgba(255,255,255,.28) !important;
+      color: #e2e8f0 !important;
+      font-size: 13px !important;
+      padding: 7px 13px !important;
+      transition: border-color .2s, background .2s;
+    }
+    .back-btn:hover { border-color: rgba(255,255,255,.6) !important; background: rgba(255,255,255,.07) !important; }
+
+    .linkedin-btn {
+      background: #0a66c2 !important;
+    }
+
     .right-group {
       justify-self: end;
       display: flex;
@@ -202,12 +219,17 @@
     .skills li { margin: 0; }
 
     .ats {
-      padding: 8px 10px;
-      border: 1px solid var(--line);
-      background: var(--soft);
-      color: var(--body);
-      font-size: 12.5px;
-      line-height: 1.45;
+      color: transparent;
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0;
+      line-height: 0;
+      overflow: hidden;
+      height: 0;
+      user-select: none;
+      pointer-events: none;
     }
 
     .note {
@@ -256,21 +278,22 @@
       .cv-panel { display: none !important; }
       .cv-panel.active { display: block !important; }
       a, h1, h2, h3, .headline { color: #000 !important; text-decoration: none; }
-      .ats { background: #fff; }
+      .contact a { color: #000 !important; }
+      .ats { display: none !important; }
     }
   </style>
 </head>
 <body>
   <nav class="toolbar" aria-label="Herramientas del CV">
     <div class="toolbar-inner">
-      <button type="button" onclick="downloadCv('ai')">Descargar PDF AI/Product</button>
+      <a class="back-btn" href="/">← Volver al portfolio</a>
       <div class="tabs" role="tablist" aria-label="Versiones del CV">
         <button type="button" class="active" id="tab-ai" onclick="showCv('ai')">AI/Product</button>
         <button type="button" id="tab-ux" onclick="showCv('ux')">UX/UI + Web</button>
       </div>
       <div class="right-group">
-        <a class="secondary" href="/" target="_blank" rel="noopener">Portfolio</a>
-        <button type="button" onclick="downloadCv('ux')">Descargar PDF UX/UI</button>
+        <a class="linkedin-btn" href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">in LinkedIn</a>
+        <button type="button" onclick="downloadCurrent()">⬇ Descargar PDF</button>
       </div>
     </div>
   </nav>
@@ -282,7 +305,7 @@
         <p class="headline">AI Product Designer | Product Designer UX/UI | AI Automation Specialist</p>
         <p class="contact">
           Barcelona, España | +34 653 567 610 | rodrigo.negrete.aros@gmail.com |
-          rodrigonegrete.es | linkedin.com/in/rodrigonegretearos
+          <a href="https://www.rodrigonegrete.es" target="_blank" rel="noopener">rodrigonegrete.es</a> | <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">linkedin.com/in/rodrigonegretearos</a>
         </p>
       </header>
 
@@ -387,7 +410,7 @@
       </section>
 
       <section>
-        <h2>Idiomas, disponibilidad y ATS</h2>
+        <h2>Idiomas y disponibilidad</h2>
         <p>Español nativo | Inglés A2 | Catalán A2 | Disponibilidad inmediata | Barcelona | Remoto, híbrido o presencial | Residencia legal en España</p>
         <p class="ats">Palabras clave ATS: Product Designer, UX/UI Designer, AI Product Designer, Generative AI, AI Automation, Prompt Engineering, Figma, Design Systems, User Research, Prototyping, OpenAI, Claude, Gemini, n8n, Make, Botpress, Vapi, React, WordPress, CRO, Analytics, B2B, SaaS.</p>
       </section>
@@ -399,7 +422,7 @@
         <p class="headline">Product Designer UX/UI | Web Designer | UI Designer with AI</p>
         <p class="contact">
           Barcelona, España | +34 653 567 610 | rodrigo.negrete.aros@gmail.com |
-          rodrigonegrete.es | linkedin.com/in/rodrigonegretearos
+          <a href="https://www.rodrigonegrete.es" target="_blank" rel="noopener">rodrigonegrete.es</a> | <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">linkedin.com/in/rodrigonegretearos</a>
         </p>
       </header>
 
@@ -506,7 +529,7 @@
       </section>
 
       <section>
-        <h2>Idiomas, disponibilidad y ATS</h2>
+        <h2>Idiomas y disponibilidad</h2>
         <p>Español nativo | Inglés A2 | Catalán A2 | Disponibilidad inmediata | Barcelona | Remoto, híbrido o presencial | Residencia legal en España</p>
         <p class="ats">Palabras clave ATS: UX/UI Designer, Product Designer, Web Designer, UI Designer, Figma, Design Systems, Prototyping, Wireframes, User Research, Responsive Design, WordPress, Elementor, Shopify, React, HTML, CSS, CRO, E-commerce, Landing Pages, AI Tools, Automation.</p>
       </section>
@@ -518,6 +541,7 @@
     const tabs = { ai: document.getElementById('tab-ai'), ux: document.getElementById('tab-ux') };
 
     function showCv(type) {
+      activeCv = type;
       Object.keys(panels).forEach((key) => {
         panels[key].classList.toggle('active', key === type);
         tabs[key].classList.toggle('active', key === type);
@@ -531,6 +555,11 @@
     function downloadCv(type) {
       showCv(type);
       setTimeout(() => window.print(), 160);
+    }
+
+    let activeCv = 'ai';
+    function downloadCurrent() {
+      downloadCv(activeCv);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
