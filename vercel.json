@@ -7,14 +7,14 @@
     { "source": "/zodi-bto", "destination": "/zodi-bto/index.html" },
     { "source": "/zodi-bto/", "destination": "/zodi-bto/index.html" },
 
+    { "source": "/pdf-rodd/app", "destination": "/pdf-rodd/app/index.html" },
+    { "source": "/pdf-rodd/app/", "destination": "/pdf-rodd/app/index.html" },
     { "source": "/pdf", "destination": "/pdf-rodd/index.html" },
     { "source": "/pdf/", "destination": "/pdf-rodd/index.html" },
     { "source": "/PDF", "destination": "/pdf-rodd/index.html" },
     { "source": "/PDF/", "destination": "/pdf-rodd/index.html" },
     { "source": "/pdf-rodd", "destination": "/pdf-rodd/index.html" },
     { "source": "/pdf-rodd/", "destination": "/pdf-rodd/index.html" },
-    { "source": "/pdf-rodd/app", "destination": "/pdf-rodd/app/index.html" },
-    { "source": "/pdf-rodd/app/", "destination": "/pdf-rodd/app/index.html" },
 
     { "source": "/aquae", "destination": "/aquae/index.html" },
     { "source": "/aquae/", "destination": "/aquae/index.html" },
