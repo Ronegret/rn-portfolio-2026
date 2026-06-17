@@ -18,6 +18,7 @@ export default defineConfig({
         invitoo: resolve(__dirname, 'invitoo/index.html'),
         tomapoly: resolve(__dirname, 'tomapoly/index.html'),
         dedicalo: resolve(__dirname, 'dedicalo/index.html'),
+        dedicaloPlay: resolve(__dirname, 'dedicalo-play/index.html'),
         cv: resolve(__dirname, 'cv/index.html'),
       },
     },
