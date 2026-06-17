@@ -39,8 +39,8 @@
           <span class="logo-dot"></span>
         </div>
         <p class="eyebrow">Juego musical · UX/UI · IA aplicada · Multijugador</p>
-        <h1>La app musical<br>para jugar<br>con tus amigos.</h1>
-        <p class="lead">Diseñé y construí un juego multijugador donde los jugadores dedican canciones, acumulan puntos y compiten en tiempo real. Naming, identidad, mecánicas, stack técnico y lanzamiento end-to-end.</p>
+        <h1>La música como<br>nunca la<br>habías jugado.</h1>
+        <p class="lead">Adivina canciones, sabotea a tus amigos y gana llegando primero a la meta. Diseñé y construí un juego multijugador de cultura musical — naming, identidad, mecánicas de juego y stack técnico completo end-to-end.</p>
         <div class="hero-actions">
           <a href="#proceso" class="btn primary">Ver proceso de diseño</a>
           <a href="#stack" class="btn secondary">Stack técnico</a>
@@ -94,10 +94,10 @@
 
     <!-- METRICS -->
     <div class="metric-strip rv">
-      <div class="metric-card"><strong>3</strong><span>pasos para jugar</span></div>
+      <div class="metric-card"><strong>3</strong><span>modos de juego</span></div>
+      <div class="metric-card"><strong>4</strong><span>sabotajes distintos</span></div>
+      <div class="metric-card"><strong>+5</strong><span>puntos por acierto</span></div>
       <div class="metric-card"><strong>Real‑time</strong><span>multijugador en vivo</span></div>
-      <div class="metric-card"><strong>Spotify</strong><span>canciones reales</span></div>
-      <div class="metric-card"><strong>IA</strong><span>Suno + GPT‑4o</span></div>
     </div>
 
   </div><!-- /wrap -->
@@ -201,7 +201,7 @@
         <div class="dp-card"><span class="card-num">02</span>
           <div class="card-icon">💡</div>
           <h4>Insight clave</h4>
-          <p>La gente no quiere adivinar canciones genéricas — quiere compartir las suyas. La emoción más fuerte es que alguien adivine tu canción favorita. Ahí estaba la oportunidad.</p>
+          <p>La emoción más fuerte no es adivinar canciones genéricas — es que tu grupo demuestre quién tiene mejor cultura musical. El sabotaje multiplica esa tensión. Ahí estaba la oportunidad.</p>
           <span class="card-tag">Insight</span>
         </div>
         <div class="dp-card"><span class="card-num">03</span>
@@ -239,13 +239,30 @@
       <div class="split rv">
         <div>
           <p class="eyebrow">Mecánicas de juego</p>
-          <h2>Tres pasos. Sin manual. Diversión inmediata.</h2>
+          <h2>Adivina. Sabotea. Gana llegando primero a la meta.</h2>
           <p class="section-sub">Restricción de diseño clara: cualquier persona debe entender cómo funciona antes de que empiece la primera canción. La interfaz es el tutorial.</p>
           <ul class="check-list">
-            <li><strong>Paso 1 — Crear sala:</strong> el anfitrión genera un código PIN único de 6 dígitos y un QR compartible. Sin cuenta para unirse.</li>
-            <li><strong>Paso 2 — Unirse y escuchar:</strong> los jugadores entran con el código, seleccionan una canción para dedicar y la reproducción se sincroniza para todos en tiempo real.</li>
-            <li><strong>Paso 3 — Votar y ganar:</strong> los jugadores votan qué canción prefieren y acumulan puntos. El ranking en vivo mantiene la tensión hasta el final.</li>
+            <li><strong>Paso 1 — Crear sala:</strong> el anfitrión se autentifica con Google, conecta su Spotify Premium y elige una de las 12 playlists integradas. La app genera un PIN de 6 dígitos que comparte con sus amigos.</li>
+            <li><strong>Paso 2 — Escuchar y adivinar:</strong> la música suena en el altavoz o bluetooth del anfitrión. Todos los jugadores — incluido el anfitrión — responden en sus móviles: artista, año o época.</li>
+            <li><strong>Paso 3 — Sabotear y escalar:</strong> acumula puntos (+5 por acierto), activa sabotajes contra el líder y escala posiciones. Gana quien llegue primero a la meta.</li>
           </ul>
+          <div class="grid-3" style="margin-top:1.5rem;gap:.75rem;">
+            <div class="dp-card" style="padding:1.1rem;">
+              <div class="card-icon" style="margin-bottom:.6rem;">🎵</div>
+              <h4 style="font-size:.88rem;">Pulse</h4>
+              <p>¿Quién canta? Adivina el artista antes de que acabe el tiempo.</p>
+            </div>
+            <div class="dp-card" style="padding:1.1rem;">
+              <div class="card-icon" style="margin-bottom:.6rem;">📅</div>
+              <h4 style="font-size:.88rem;">Timeline</h4>
+              <p>Coloca la canción en la línea del tiempo según su año de lanzamiento.</p>
+            </div>
+            <div class="dp-card" style="padding:1.1rem;">
+              <div class="card-icon" style="margin-bottom:.6rem;">💥</div>
+              <h4 style="font-size:.88rem;">Chaos</h4>
+              <p>Preguntas meta sobre el juego mismo. El caos es parte de la estrategia.</p>
+            </div>
+          </div>
         </div>
         <div class="img-frame">
           <img src="/assets/dedicalo-play/hero-how-to-play.png" alt="Cómo jugar a Dedícalo Play en 3 pasos">
@@ -258,89 +275,114 @@
   <hr class="section-divider">
   <section class="spotify-band" id="spotify">
     <div class="wrap">
-      <div class="section-head center rv">
-        <p class="eyebrow" style="color:var(--spotify)">Sincronización Spotify</p>
-        <h2>La canción más honesta es la que ya tienes en tu lista.</h2>
-        <p class="section-sub">La integración con Spotify fue la decisión técnica más importante. No queríamos una base de datos de canciones genéricas — queríamos que cada jugador trajera su música real.</p>
+      <div class="section-head rv">
+        <p class="eyebrow" style="color:var(--spotify)">Integración Spotify</p>
+        <h2>El anfitrión ES el altavoz. Los invitados solo necesitan el PIN.</h2>
+        <p class="section-sub">Solo el anfitrión conecta su cuenta de Spotify Premium. Su móvil — conectado al altavoz o bluetooth — reproduce la música para toda la sala. Los demás jugadores responden las preguntas en sus propios dispositivos sin necesitar Spotify.</p>
       </div>
-      <div class="grid-3 rv" style="margin-bottom:2rem;">
-        <div class="dp-card spotify">
-          <div class="card-icon" style="background:var(--spotify)">🔐</div>
-          <h4>OAuth 2.0 con Spotify</h4>
-          <p>El usuario autoriza el acceso mediante OAuth 2.0. Solo solicitamos permisos mínimos: <code style="color:var(--spotify);font-size:.8em">user-read-currently-playing</code> y <code style="color:var(--spotify);font-size:.8em">user-top-read</code>. Sin credenciales almacenadas.</p>
-          <span class="card-tag green">Seguridad</span>
+
+      <!-- Two-column layout -->
+      <div class="split rv" style="align-items:flex-start;gap:clamp(2rem,4vw,4rem);">
+        <div>
+          <div class="dp-card spotify" style="margin-bottom:1rem;">
+            <div class="card-icon" style="background:var(--spotify)">🎧</div>
+            <h4>Anfitrión = reproductor de la sala</h4>
+            <p>El anfitrión inicia sesión con Google, conecta su Spotify Premium y se convierte en el DJ del grupo. Su dispositivo activa el <strong style="color:var(--spotify)">Spotify Web Playback SDK</strong> — la música sale por su altavoz bluetooth o los altavoces de la habitación.</p>
+            <span class="card-tag green">Host como speaker</span>
+          </div>
+          <div class="dp-card" style="margin-bottom:1rem;">
+            <div class="card-icon">📱</div>
+            <h4>Invitados — solo el PIN, nada más</h4>
+            <p>Los invitados entran con el código PIN de 6 dígitos. Sin cuenta, sin Spotify, sin instalación. Ven las preguntas en su móvil y responden mientras la música suena en la sala.</p>
+            <span class="card-tag">Cero fricción</span>
+          </div>
+          <div class="dp-card spotify">
+            <div class="card-icon" style="background:var(--spotify)">🔐</div>
+            <h4>OAuth PKCE — sin exponer secretos</h4>
+            <p>La autenticación con Spotify usa el flujo PKCE. Sin <code style="color:var(--spotify);font-size:.82em">client_secret</code> en el cliente — solo el anfitrión autoriza una vez y el token se renueva automáticamente.</p>
+            <span class="card-tag green">Seguridad</span>
+          </div>
         </div>
-        <div class="dp-card spotify">
-          <div class="card-icon" style="background:var(--spotify)">🎼</div>
-          <h4>Biblioteca personal</h4>
-          <p>El jugador elige la canción que quiere dedicar desde sus playlists de Spotify. El sistema obtiene el preview de 30 segundos via Spotify Web API y lo sincroniza en sala.</p>
-          <span class="card-tag green">API Integration</span>
-        </div>
-        <div class="dp-card spotify">
-          <div class="card-icon" style="background:var(--spotify)">🔄</div>
-          <h4>Reproducción sincronizada</h4>
-          <p>Todos los jugadores escuchan el mismo fragmento al mismo tiempo. Firebase Realtime Database distribuye el timestamp de inicio con latencia menor a 200ms.</p>
-          <span class="card-tag green">Real-time</span>
+
+        <div>
+          <!-- Playlists integradas -->
+          <p class="eyebrow">Las 12 playlists integradas en la app</p>
+          <p style="color:var(--muted);font-size:.88rem;margin:.4rem 0 1.1rem;line-height:1.6;">El anfitrión elige una de estas playlists antes de crear la sala. No hay biblioteca personal — el catálogo es fijo, curado y sin sorpresas.</p>
+          <div class="grid-2" style="gap:.6rem;">
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🔥 <span style="font-size:.82rem;">Reggaeton</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🌍 <span style="font-size:.82rem;">Hits globales</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎸 <span style="font-size:.82rem;">Rock Latino</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">⚡ <span style="font-size:.82rem;">Mix Latino</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">💃 <span style="font-size:.82rem;">Bailable</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">💜 <span style="font-size:.82rem;">Románticas</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🕺 <span style="font-size:.82rem;">Perreo Clásico</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🇪🇸 <span style="font-size:.82rem;">Temazos ES</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎺 <span style="font-size:.82rem;">Rock y Ska</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎲 <span style="font-size:.82rem;">De Todo</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎉 <span style="font-size:.82rem;">Fiesta Pueblo</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🚀 <span style="font-size:.82rem;">Just Go</span></div>
+          </div>
+          <div class="dp-quote" style="border-color:var(--spotify);background:rgba(29,185,84,.05);margin-top:1.5rem;">
+            "El catálogo curado garantiza calidad musical en cada partida. El anfitrión elige el género que mejor encaja con el grupo — sin improvisar."
+          </div>
         </div>
       </div>
-      <div class="dp-quote rv" style="border-color:var(--spotify);background:rgba(29,185,84,.05);">
-        "Usar la música propia del usuario cambia por completo la dinámica del juego: ya no estás adivinando canciones ajenas, estás defendiendo tu gusto musical frente a tus amigos."
-      </div>
-      <div class="rv">
-        <p class="eyebrow">Flujo de integración</p>
+
+      <div class="rv" style="margin-top:2.5rem;">
+        <p class="eyebrow">Flujo de reproducción</p>
         <div class="flow">
-          <div class="flow-node">Usuario</div>
+          <div class="flow-node hi">Anfitrión elige playlist</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node gr">OAuth Spotify</div>
+          <div class="flow-node gr">Spotify SDK (Premium)</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node">Spotify Web API</div>
-          <div class="flow-arrow">→</div>
-          <div class="flow-node hi">Preview 30s</div>
+          <div class="flow-node">Altavoz / Bluetooth</div>
           <div class="flow-arrow">→</div>
           <div class="flow-node">Firebase RT DB</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node hi">Sala sincronizada</div>
+          <div class="flow-node hi">Preguntas en móviles de invitados</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ══ 6. CANCIONES / SHEETS ══ -->
+  <!-- ══ 6. CATÁLOGO ══ -->
   <hr class="section-divider">
   <section id="canciones">
     <div class="wrap">
       <div class="section-head rv">
         <p class="eyebrow">Catálogo de canciones</p>
-        <h2>Google Sheets como fuente de verdad del catálogo.</h2>
-        <p class="section-sub">Además de Spotify, el juego tiene un catálogo curado. La gestión usa Google Sheets como base de datos colaborativa, sincronizada automáticamente con la app.</p>
+        <h2>Scripts propios para importar canciones reales de Spotify.</h2>
+        <p class="section-sub">El catálogo no usa una base de datos externa ni CMS manual. Un pipeline de scripts Node.js extrae las canciones de playlists públicas de Spotify y las guarda en un JSON local que la app consume directamente.</p>
       </div>
       <div class="split rv">
         <div>
           <ul class="check-list">
-            <li><strong>Estructura del Sheets:</strong> cada fila es una canción con columnas para título, artista, género, década, URL de preview, portada y puntuación editorial.</li>
-            <li><strong>Sincronización automática:</strong> Make detecta cambios en Sheets y actualiza la colección <code style="color:var(--orange);font-size:.88em">songs</code> en Firestore sin intervención manual.</li>
-            <li><strong>Control editorial sin código:</strong> el equipo añade o edita canciones desde Sheets sin tocar el repositorio. El cambio se refleja en menos de 2 minutos.</li>
-            <li><strong>Filtrado por sala:</strong> el anfitrión puede filtrar por género o década — años 80, reggaeton, clásicos — según el tipo de partida.</li>
+            <li><strong>extract-spotify-catalog.mjs:</strong> llama a la Spotify Web API, itera los tracks de cada playlist curada y extrae título, artista, año, portada y URI reproducible.</li>
+            <li><strong>import-scraped-playlists.mjs:</strong> procesa el output del script anterior y genera el archivo <code style="color:var(--orange);font-size:.88em">dedicalo-song-catalog.full.clean.json</code> que se sirve como asset estático.</li>
+            <li><strong>Sin backend en runtime:</strong> el catálogo es un JSON estático servido desde Vercel. Cero coste de base de datos, cero latencia de lectura en partida.</li>
+            <li><strong>Evita repeticiones:</strong> el sistema registra qué canciones se han escuchado en cada sesión y no repite artistas ni tracks en la misma partida.</li>
           </ul>
         </div>
         <div>
           <div class="rv">
-            <p class="eyebrow">Pipeline de datos</p>
+            <p class="eyebrow">Pipeline de importación</p>
             <div class="flow col">
-              <div class="flow-node hi">Google Sheets — catálogo editorial</div>
+              <div class="flow-node gr">Playlists públicas de Spotify</div>
               <div class="flow-arrow">↓</div>
-              <div class="flow-node">Make / n8n — webhook en cambio</div>
+              <div class="flow-node">extract-spotify-catalog.mjs</div>
               <div class="flow-arrow">↓</div>
-              <div class="flow-node">Firebase Firestore — colección songs</div>
+              <div class="flow-node">import-scraped-playlists.mjs</div>
               <div class="flow-arrow">↓</div>
-              <div class="flow-node hi">App actualizada sin redeploy</div>
+              <div class="flow-node hi">dedicalo-song-catalog.json</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-node hi">Asset estático en Vercel → partida</div>
             </div>
           </div>
           <div class="dp-card" style="margin-top:1.25rem;">
-            <div class="card-icon">🤖</div>
-            <h4>GPT-4o para metadatos automáticos</h4>
-            <p>Al añadir una canción, una automatización llama a ChatGPT para generar descripción, mood y etiquetas. Cero trabajo manual de etiquetado.</p>
-            <span class="card-tag">Automatización</span>
+            <div class="card-icon">⚡</div>
+            <h4>Anti-repetición por sesión</h4>
+            <p>sessionStorage registra qué tracks y artistas se han reproducido. Si se agotan, el pool se resetea limpiamente y la partida siempre tiene canciones frescas.</p>
+            <span class="card-tag">UX de juego</span>
           </div>
         </div>
       </div>
@@ -358,52 +400,52 @@
       </div>
       <div class="grid-4 rv">
         <div class="stack-card">
+          <div class="stack-icon">⚛️</div>
+          <div class="stack-name">React + Vite</div>
+          <div class="stack-role">Frontend con React y Vite. Rutas gestionadas con React Router. Build ultrarrápido y HMR en desarrollo. Tailwind CSS para el sistema de estilos.</div>
+          <span class="stack-badge">Frontend</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🎞️</div>
+          <div class="stack-name">Framer Motion</div>
+          <div class="stack-role">Animaciones del vinilo, transiciones de pantalla, efectos de ranking y sabotajes. Todas las animaciones clave usan motion para suavidad a 60fps en móvil.</div>
+          <span class="stack-badge">Animación</span>
+        </div>
+        <div class="stack-card">
           <div class="stack-icon">🔥</div>
-          <div class="stack-name">Firebase</div>
-          <div class="stack-role">Auth, Firestore y Realtime DB. La sincronización multijugador depende de Firebase RT DB. Firestore gestiona perfiles, historial y puntuaciones.</div>
+          <div class="stack-name">Firebase RT DB</div>
+          <div class="stack-role">La sincronización multijugador depende enteramente de Firebase Realtime Database. Estado de sala, rondas, puntuaciones y sabotajes en tiempo real para todos.</div>
           <span class="stack-badge">Core del producto</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🔑</div>
+          <div class="stack-name">Google Sign-In</div>
+          <div class="stack-role">Solo el anfitrión necesita autenticarse via Google. Los invitados entran con un PIN de 6 dígitos sin crear cuenta — fricción mínima para unirse.</div>
+          <span class="stack-badge">Auth</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🎵</div>
+          <div class="stack-name">Spotify Web Playback SDK</div>
+          <div class="stack-role">El dispositivo del anfitrión se convierte en reproductor. Requiere Premium. La música sale por su altavoz/bluetooth para toda la sala. OAuth PKCE sin secreto expuesto.</div>
+          <span class="stack-badge green">Integración clave</span>
         </div>
         <div class="stack-card">
           <div class="stack-icon">▲</div>
           <div class="stack-name">Vercel</div>
-          <div class="stack-role">Despliegue continuo desde GitHub. Cada push genera un preview deployment. Las Edge Functions gestionan endpoints de Spotify sin exponer claves.</div>
-          <span class="stack-badge">Deploy & edge</span>
+          <div class="stack-role">Despliegue continuo desde GitHub. Cada push a main genera un deploy automático en play.dedicalo.es con CDN global y preview URLs por branch.</div>
+          <span class="stack-badge">Deploy</span>
         </div>
         <div class="stack-card">
-          <div class="stack-icon">🎵</div>
-          <div class="stack-name">Spotify Web API</div>
-          <div class="stack-role">OAuth 2.0, endpoints de playlists, tracks y previews de 30 segundos. Fuente principal de las canciones de los jugadores.</div>
-          <span class="stack-badge green">Integración clave</span>
-        </div>
-        <div class="stack-card">
-          <div class="stack-icon">🤖</div>
-          <div class="stack-name">ChatGPT / GPT-4o</div>
-          <div class="stack-role">Generación automática de metadatos de canciones y comentarios dinámicos: frases personalizadas según el resultado de cada ronda.</div>
-          <span class="stack-badge">IA aplicada</span>
+          <div class="stack-icon">📦</div>
+          <div class="stack-name">Catálogo JSON estático</div>
+          <div class="stack-role">Las canciones se pre-importan de playlists públicas con scripts Node.js propios y se sirven como JSON estático desde Vercel. Cero coste de DB en runtime.</div>
+          <span class="stack-badge">Data</span>
         </div>
         <div class="stack-card">
           <div class="stack-icon">🎙️</div>
           <div class="stack-name">Suno AI</div>
-          <div class="stack-role">Canciones originales para el catálogo curado cuando no hay preview en Spotify. También jingles del juego y efectos de transición entre rondas.</div>
+          <div class="stack-role">Generación de jingles originales y efectos sonoros de transición. Audio de identidad del producto creado con IA generativa en minutos.</div>
           <span class="stack-badge">Música IA</span>
-        </div>
-        <div class="stack-card">
-          <div class="stack-icon">⚙️</div>
-          <div class="stack-name">Make</div>
-          <div class="stack-role">Automatizaciones: Google Sheets → Firestore, notificaciones de nuevas partidas y procesamiento asíncrono de metadatos con GPT.</div>
-          <span class="stack-badge">Automatización</span>
-        </div>
-        <div class="stack-card">
-          <div class="stack-icon">📊</div>
-          <div class="stack-name">Google Sheets</div>
-          <div class="stack-role">CMS ligero para el catálogo editorial de canciones. Permite gestionar contenido sin tocar el código. Conectado a Firestore via webhook.</div>
-          <span class="stack-badge">Data source</span>
-        </div>
-        <div class="stack-card">
-          <div class="stack-icon">🌐</div>
-          <div class="stack-name">Antigravity</div>
-          <div class="stack-role">Animaciones de transición entre rondas y efectos del marcador. 60fps fluidos en móvil sin penalización de rendimiento.</div>
-          <span class="stack-badge">Animación</span>
         </div>
       </div>
     </div>
@@ -414,17 +456,17 @@
   <section id="automatizaciones">
     <div class="wrap">
       <div class="section-head rv">
-        <p class="eyebrow">Automatizaciones</p>
-        <h2>El producto funciona solo. El equipo diseña, no opera.</h2>
-        <p class="section-sub">Diseñé el backend operativo para que no requiera intervención manual en las tareas repetitivas. Cada flujo tiene un propósito de negocio medible.</p>
+        <p class="eyebrow">Decisiones técnicas clave</p>
+        <h2>Cada decisión tiene una justificación de producto.</h2>
+        <p class="section-sub">No elegí cada tecnología por tendencia. Cada pieza del stack resuelve un problema real con el menor tiempo de implementación y el mayor impacto en la experiencia de juego.</p>
       </div>
       <div class="steps rv">
-        <div class="step"><div class="step-icon">🗂️</div><h4>Sheets → Firestore</h4><p>Make detecta cambios en el catálogo y sincroniza Firestore automáticamente. El catálogo siempre actualizado sin redeploy.</p></div>
-        <div class="step"><div class="step-icon">🏷️</div><h4>Etiquetado GPT</h4><p>Al añadir canción nueva, Make llama a GPT-4o para generar mood, tags y descripción. Los metadatos se guardan en Sheets y Firestore.</p></div>
-        <div class="step"><div class="step-icon">🔔</div><h4>Notificaciones de partida</h4><p>Cuando una sala alcanza 4 jugadores, se notifica a los canales de difusión del producto con el código para invitar a más.</p></div>
-        <div class="step"><div class="step-icon">📈</div><h4>Métricas automáticas</h4><p>Cada partida registra datos: jugadores, duración, canciones más votadas y puntuaciones. Dashboard sin analytics externas.</p></div>
+        <div class="step"><div class="step-icon">🔄</div><h4>RT DB sobre Firestore</h4><p>Firebase Realtime Database en lugar de Firestore para el estado de sala. En juego multijugador el latency importa más que las queries — RT DB gana aquí.</p></div>
+        <div class="step"><div class="step-icon">🎮</div><h4>PIN sin registro</h4><p>Los invitados entran con un código de 6 dígitos. No hay formulario de registro. Reducir la fricción de entrada fue la decisión de UX más impactante del proyecto.</p></div>
+        <div class="step"><div class="step-icon">📦</div><h4>Catálogo como JSON estático</h4><p>Las canciones se pre-importan y se sirven como un archivo JSON desde Vercel. Cero coste de base de datos en runtime, carga instantánea en partida.</p></div>
+        <div class="step"><div class="step-icon">🛡️</div><h4>PKCE sin client_secret</h4><p>La integración con Spotify usa OAuth PKCE — sin secreto de cliente expuesto. El anfitrión conecta su Premium una vez; el token se renueva automáticamente en sesión.</p></div>
       </div>
-      <div class="dp-quote rv">"Una automatización bien diseñada no solo ahorra tiempo — elimina errores humanos y permite que el producto escale sin contratar operadores."</div>
+      <div class="dp-quote rv">"Las mejores decisiones técnicas no son las más complejas — son las que eliminan problemas enteros de raíz antes de que aparezcan."</div>
     </div>
   </section>
 
@@ -439,7 +481,7 @@
       <div class="grid-4 rv">
         <div class="dp-card"><div class="card-icon">🎨</div><h4>UX/UI Design</h4><p>Investigación, wireframes, sistema de diseño, componentes interactivos y prototipo funcional. Figma como herramienta principal.</p></div>
         <div class="dp-card"><div class="card-icon">🏗️</div><h4>Arquitectura técnica</h4><p>Definición del stack, diseño de Firestore, flujos de datos, endpoints de API y estrategia de despliegue en Vercel.</p></div>
-        <div class="dp-card"><div class="card-icon">🔗</div><h4>Integraciones y APIs</h4><p>Spotify OAuth, Firebase Auth y RT DB, ChatGPT API, Suno para audio generativo y Make para automatizaciones.</p></div>
+        <div class="dp-card"><div class="card-icon">🔗</div><h4>Integraciones y APIs</h4><p>Spotify Web Playback SDK (PKCE), Firebase RT DB, Google Sign-In, scripts de importación de catálogo y Suno para audio generativo.</p></div>
         <div class="dp-card"><div class="card-icon">🚀</div><h4>Lanzamiento y branding</h4><p>Naming, identidad visual, materiales de comunicación, dominio play.dedicalo.es y estrategia de difusión inicial.</p></div>
       </div>
     </div>
@@ -452,7 +494,7 @@
       <div class="final-cta">
         <div>
           <h3>¿Listo para jugar?</h3>
-          <p>Dedícalo Play está en producción en <strong style="color:var(--orange)">play.dedicalo.es</strong>. Crea una sala, invita a tus amigos y descubre quién tiene mejor gusto musical.</p>
+          <p>Dedícalo Play está en producción en <strong style="color:var(--orange)">play.dedicalo.es</strong>. Crea una sala, invita a tus amigos y demuestra quién tiene mejor cultura musical.</p>
         </div>
         <a href="https://play.dedicalo.es" target="_blank" rel="noopener" class="btn primary" style="min-width:160px;justify-content:center;">Jugar ahora →</a>
       </div>
@@ -494,7 +536,7 @@
   function fmt(s){ const m=Math.floor(s/60); return m+':'+(Math.floor(s%60)).toString().padStart(2,'0'); }
 
   function setPlaying(p){
-    disc.classList.toggle('playing', p);
+    disc.classList.toggle('playing', p);   /* glow only — disc always spins */
     needle.classList.toggle('on', p);
     iconPlay.style.display  = p ? 'none' : '';
     iconPause.style.display = p ? ''     : 'none';
