@@ -780,6 +780,38 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   border-color: rgba(239,68,68,.26);
   background: rgba(239,68,68,.1);
 }
+.dedicalo-play-card .bc-img {
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255,107,43,.18), transparent 40%),
+    radial-gradient(circle at 80% 20%, rgba(204,22,36,.14), transparent 38%),
+    #08091a;
+}
+.dedicalo-play-card .bc-img img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+.dedicalo-play-card .bc:hover .bc-img img {
+  transform: scale(1.05);
+}
+.dedicalo-play-tag {
+  background: rgba(255,107,43,0.14);
+  border-color: rgba(255,107,43,0.35);
+  color: #ff7c3a;
+}
+.dedicalo-play-card .bc-m {
+  color: #ff7c3a;
+  border-color: rgba(255,107,43,0.28);
+  background: rgba(255,107,43,0.09);
+}
+[data-theme="editorial"] .dedicalo-play-card .bc-img img,
+[data-theme="saas"] .dedicalo-play-card .bc-img img { filter: grayscale(20%) contrast(1.05); }
+[data-theme="editorial"] .dedicalo-play-card .bc:hover .bc-img img,
+[data-theme="saas"] .dedicalo-play-card .bc:hover .bc-img img { filter: none; }
 .fhid { display: none !important; }
 
 /* LAB Y TIMELINE */
