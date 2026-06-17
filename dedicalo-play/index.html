@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caso de estudio: Dedícalo Play — juego musical multijugador. Naming, paleta de color, UX, sincronización Spotify, Firebase, Suno, automatizaciones y stack técnico completo.">
+  <title>Dedícalo Play | Case Study — Juego Musical UX/UI</title>
+  <link rel="icon" href="/assets/dedicalo-play/icon-app.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/dedicalo-play.css">
+</head>
+<body>
+
+  <div class="eq-bg" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <header class="hero">
+    <nav class="dp-nav">
+      <a href="/#proyectos" class="back-link">Volver al portfolio</a>
+      <a href="https://play.dedicalo.es" target="_blank" rel="noopener" class="live-link">Jugar ahora →</a>
+    </nav>
+
+    <!-- ══ HERO ══ -->
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <img class="brand-logo" src="/assets/dedicalo-play/logo-horizontal.png" alt="Logo de Dedícalo Play">
+        <p class="eyebrow">Juego musical · UX/UI · IA aplicada · Multijugador</p>
+        <h1>La app musical<br>para jugar con tus amigos.</h1>
+        <p class="lead">Diseñé y construí un juego multijugador donde los jugadores dedican canciones, acumulan puntos y compiten en tiempo real. Un producto completo: naming, identidad, mecánicas, stack técnico y lanzamiento.</p>
+        <div class="hero-actions">
+          <a href="#proceso" class="btn primary">Ver proceso de diseño</a>
+          <a href="#stack" class="btn secondary">Stack técnico</a>
+        </div>
+      </div>
+      <div class="hero-img-card rv">
+        <img src="/assets/dedicalo-play/hero-home.png" alt="Dedícalo Play — La app musical para jugar con tus amigos">
+        <div class="hero-badge"><span></span> Live en producción</div>
+      </div>
+    </div>
+
+    <!-- ══ METRICS ══ -->
+    <div class="metric-strip rv">
+      <div><strong>3</strong><span>pasos para crear una partida</span></div>
+      <div><strong>Real-time</strong><span>sincronización multijugador</span></div>
+      <div><strong>Spotify</strong><span>integración de canciones</span></div>
+      <div><strong>IA</strong><span>generación con Suno + GPT</span></div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ══ 1. NOMBRE ══ -->
+    <section class="section" id="nombre">
+      <div class="split rv">
+        <div>
+          <p class="eyebrow">Por qué este nombre</p>
+          <h2>«Dedícalo Play» no es casual — cada palabra tiene peso.</h2>
+          <p>El naming fue el primer reto estratégico. Necesitaba un nombre que:</p>
+          <ul class="check-list">
+            <li><strong>Dedícalo:</strong> mantiene el equity de marca del ecosistema existente. Los usuarios que conocen <a href="/dedicalo/" style="color:var(--orange)">Dedícalo.es</a> (el producto de canciones personalizadas) entienden de inmediato el universo musical. No partimos de cero.</li>
+            <li><strong>Play:</strong> tiene doble significado intencionado — <em>play</em> como reproducir música y <em>play</em> como jugar. Una sola palabra activa los dos pilares del producto: música y entretenimiento social.</li>
+            <li><strong>play.dedicalo.es:</strong> el subdominio refuerza la jerarquía de marca. Es un hijo del ecosistema, no un proyecto ajeno. Esto mejora el SEO de dominio raíz y genera coherencia de marca.</li>
+          </ul>
+          <div class="dp-quote">"El nombre ideal para un producto musical y social no es el que describe lo que hace, sino el que genera la emoción correcta antes de abrirlo."</div>
+        </div>
+        <div class="image-frame">
+          <img src="/assets/dedicalo-play/logo-main.png" alt="Logo principal de Dedícalo Play" style="padding:2rem;background:#05080f;">
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 2. PALETA ══ -->
+    <section class="section band" id="paleta">
+      <div class="section-head rv">
+        <p class="eyebrow">Identidad visual</p>
+        <h2>Una paleta que comunica fiesta, música y competición.</h2>
+        <p>Cada color del sistema tiene una función semántica. No son decisiones estéticas: son decisiones de comunicación. El sistema debía funcionar en pantallas de móvil en ambientes oscuros (discotecas, fiestas, reuniones nocturnas).</p>
+      </div>
+      <div class="palette rv">
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#05080f"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Negro Vinilo</span>
+            <span class="swatch-hex">#05080f</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#ff6b2b"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Naranja Fiesta</span>
+            <span class="swatch-hex">#ff6b2b</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#e0291a"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Rojo Acción</span>
+            <span class="swatch-hex">#e0291a</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#1db954"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Verde Spotify</span>
+            <span class="swatch-hex">#1db954</span>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#f0f4ff; outline:1px solid rgba(255,255,255,.1)"></div>
+          <div class="swatch-info">
+            <span class="swatch-name">Blanco Texto</span>
+            <span class="swatch-hex">#f0f4ff</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cards-grid rv" style="margin-top:2rem;">
+        <div class="dp-card">
+          <div class="dp-card-icon">🎨</div>
+          <strong>Negro como fondo dominante</strong>
+          <p>Refleja el entorno nocturno donde se juega. Maximiza el contraste y reduce la fatiga ocular en partidas largas. El vinilo de fondo refuerza el universo musical.</p>
+          <span class="tag">Contexto de uso</span>
+        </div>
+        <div class="dp-card">
+          <div class="dp-card-icon">🔥</div>
+          <strong>Naranja + Rojo como acción</strong>
+          <p>El naranja (#ff6b2b) activa urgencia sin agresividad. El rojo (#e0291a) señala acciones críticas: contar puntos, eliminar jugador, tiempo límite. La combinación evoca calor y energía musical.</p>
+          <span class="tag">UX emocional</span>
+        </div>
+        <div class="dp-card spotify-card">
+          <div class="dp-card-icon" style="font-size:1.4rem">🎵</div>
+          <strong>Verde Spotify como confianza</strong>
+          <p>Reutilizo el verde de Spotify (#1db954) de forma deliberada. Cuando el usuario ve ese color en el producto, asocia inmediatamente música real, streaming y legitimidad.</p>
+          <span class="tag">Asociación de marca</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 3. PROCESO ══ -->
+    <section class="section" id="proceso">
+      <div class="section-head rv">
+        <p class="eyebrow">Análisis y proceso UX</p>
+        <h2>Primero entendí el espacio. Luego diseñé la solución.</h2>
+        <p>El proceso partió de un benchmark honesto: ¿qué juegos musicales existen, qué los hace adictivos y qué fricción generan? Solo después de entender el espacio competitivo tomé decisiones de diseño.</p>
+      </div>
+
+      <div class="cards-grid rv" style="margin-bottom:3rem;">
+        <div class="dp-card">
+          <span class="card-num">01</span>
+          <div class="dp-card-icon">🔍</div>
+          <strong>Benchmark competitivo</strong>
+          <p>Analicé Kahoot, SongPop, Heardle y Quiz musical de Spotify. Detecté el patrón: todos requieren que el usuario adivine canciones ajenas. Nadie usaba la música propia como mecánica central.</p>
+          <span class="tag">Research</span>
+        </div>
+        <div class="dp-card">
+          <span class="card-num">02</span>
+          <div class="dp-card-icon">💡</div>
+          <strong>Insight clave</strong>
+          <p>La gente no quiere adivinar canciones genéricas — quiere compartir las suyas. La emoción más fuerte en un juego musical es que alguien adivine tu canción favorita. Ahí estaba la oportunidad.</p>
+          <span class="tag">Insight</span>
+        </div>
+        <div class="dp-card">
+          <span class="card-num">03</span>
+          <div class="dp-card-icon">🗺️</div>
+          <strong>Journey map</strong>
+          <p>Mapeé el flujo completo: desde que alguien propone jugar hasta que termina la partida. Identifiqué los 3 puntos de fricción críticos: crear sala, unirse sin cuenta y entender las reglas en segundos.</p>
+          <span class="tag">UX Research</span>
+        </div>
+        <div class="dp-card">
+          <span class="card-num">04</span>
+          <div class="dp-card-icon">⚡</div>
+          <strong>Principio de diseño</strong>
+          <p>Cero fricción en los primeros 30 segundos. El usuario debe poder unirse a una partida activa con solo un código de sala. Sin registro obligatorio en la entrada, sin tutorial largo, sin pantallas de carga.</p>
+          <span class="tag">Decisión UX</span>
+        </div>
+        <div class="dp-card">
+          <span class="card-num">05</span>
+          <div class="dp-card-icon">📱</div>
+          <strong>Mobile-first estricto</strong>
+          <p>El 100% de las partidas se juegan desde el móvil, en entornos ruidosos y con poca atención visual disponible. Cada elemento de UI debía ser funcional con el pulgar, grande y legible con música de fondo.</p>
+          <span class="tag">Contexto</span>
+        </div>
+        <div class="dp-card">
+          <span class="card-num">06</span>
+          <div class="dp-card-icon">🧪</div>
+          <strong>Test con usuarios reales</strong>
+          <p>Probé el prototipo en tres sesiones con grupos reales. El hallazgo más importante: los usuarios no leían instrucciones. Redesigné el flujo para que las reglas se enseñaran jugando, no explicando.</p>
+          <span class="tag">Testing</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 4. CÓMO SE JUEGA ══ -->
+    <section class="section band">
+      <div class="split rv">
+        <div>
+          <p class="eyebrow">Mecánicas de juego</p>
+          <h2>Tres pasos. Sin manual. Diversión inmediata.</h2>
+          <p>El diseño de las mecánicas tuvo una restricción clara: cualquier persona que nunca haya jugado debe entender cómo funciona antes de que empiece la primera canción. La interfaz es el tutorial.</p>
+          <ul class="check-list">
+            <li><strong>Paso 1 — Crear sala:</strong> el anfitrión crea una sala en segundos. El sistema genera un código PIN único de 6 dígitos y un QR compartible. No hace falta cuenta para unirse.</li>
+            <li><strong>Paso 2 — Unirse y escuchar:</strong> los jugadores entran con el código, seleccionan una canción para dedicar y esperan el turno. La canción se reproduce en la sala de forma sincronizada.</li>
+            <li><strong>Paso 3 — Votar y ganar:</strong> los jugadores votan qué canción prefieren y acumulan puntos. El ranking en tiempo real mantiene la tensión durante toda la partida.</li>
+          </ul>
+        </div>
+        <div class="image-frame">
+          <img src="/assets/dedicalo-play/hero-how-to-play.png" alt="Cómo jugar a Dedícalo Play en 3 pasos">
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 5. SPOTIFY ══ -->
+    <section class="spotify-section" id="spotify">
+      <div style="width:min(1160px,calc(100% - 40px));margin:0 auto;">
+        <div class="section-head rv">
+          <p class="eyebrow" style="color:var(--spotify)">Sincronización Spotify</p>
+          <h2>La canción más honesta es la que ya tienes en tu lista.</h2>
+          <p>La integración con Spotify fue la decisión técnica más importante del producto. No queríamos una base de datos de canciones genéricas — queríamos que cada jugador trajera su música real.</p>
+        </div>
+
+        <div class="cards-grid rv" style="margin-bottom:2.5rem;">
+          <div class="dp-card spotify-card">
+            <div class="dp-card-icon">🔐</div>
+            <strong>OAuth 2.0 con Spotify</strong>
+            <p>El usuario autoriza el acceso a su cuenta Spotify mediante OAuth 2.0. Solo solicitamos el permiso <code style="color:var(--spotify);font-size:.82em">user-read-currently-playing</code> y <code style="color:var(--spotify);font-size:.82em">user-top-read</code>. Nunca almacenamos credenciales.</p>
+            <span class="tag">Seguridad</span>
+          </div>
+          <div class="dp-card spotify-card">
+            <div class="dp-card-icon">🎼</div>
+            <strong>Biblioteca personal como fuente</strong>
+            <p>El jugador elige la canción que quiere dedicar directamente desde sus playlists de Spotify. El sistema obtiene el preview de 30 segundos a través de la Spotify Web API y lo sincroniza en la sala.</p>
+            <span class="tag">API Integration</span>
+          </div>
+          <div class="dp-card spotify-card">
+            <div class="dp-card-icon">🔄</div>
+            <strong>Reproducción sincronizada</strong>
+            <p>Todos los jugadores de la sala escuchan el mismo fragmento al mismo tiempo. La sincronización usa Firebase Realtime Database para distribuir el timestamp de inicio con una latencia menor a 200ms.</p>
+            <span class="tag">Real-time</span>
+          </div>
+        </div>
+
+        <div class="dp-quote rv" style="border-color:var(--spotify);background:rgba(29,185,84,.06)">
+          "Usar la música propia del usuario cambia por completo la dinámica del juego: ya no estás adivinando canciones ajenas, estás defendiendo tu gusto musical frente a tus amigos."
+        </div>
+
+        <div class="rv" style="margin-top:2rem;">
+          <p class="eyebrow">Flujo de integración Spotify</p>
+          <div class="flow">
+            <div class="flow-node">Usuario</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node spotify">Login Spotify (OAuth)</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Spotify Web API</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node hi">Preview 30s</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node">Firebase RT DB</div>
+            <div class="flow-arrow">→</div>
+            <div class="flow-node hi">Sala sincronizada</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 6. EXTRACCIÓN CANCIONES ══ -->
+    <section class="section" id="canciones">
+      <div class="section-head rv">
+        <p class="eyebrow">Catálogo de canciones</p>
+        <h2>Google Sheets como fuente de verdad del catálogo.</h2>
+        <p>Además de las canciones de Spotify, el juego cuenta con un catálogo curado de canciones predefinidas. La gestión de este catálogo usa Google Sheets como base de datos colaborativa, sincronizada automáticamente con la aplicación.</p>
+      </div>
+
+      <div class="split rv">
+        <div>
+          <ul class="check-list">
+            <li><strong>Estructura del Sheets:</strong> cada fila es una canción con columnas para título, artista, género, decade, URL de preview, imagen de portada y puntuación editorial.</li>
+            <li><strong>Sincronización automática:</strong> una automatización en Make (Integromat) detecta cambios en el Sheets y actualiza la colección <code style="color:var(--orange);font-size:.88em">songs</code> en Firestore sin intervención manual.</li>
+            <li><strong>Control editorial sin código:</strong> el equipo puede añadir, eliminar o editar canciones desde el Sheets sin tocar el repositorio. El cambio se refleja en el juego en menos de 2 minutos.</li>
+            <li><strong>Filtrado por sala:</strong> el sistema puede filtrar canciones por género o decade según el tipo de partida que configure el anfitrión (años 80, reggaeton, clásicos, etc.).</li>
+          </ul>
+        </div>
+        <div>
+          <div class="rv" style="margin-bottom:1.5rem;">
+            <p class="eyebrow">Pipeline de datos</p>
+            <div class="flow" style="flex-direction:column;align-items:flex-start;">
+              <div class="flow-node hi">Google Sheets (catálogo editorial)</div>
+              <div class="flow-arrow" style="padding-left:.5rem">↓</div>
+              <div class="flow-node">Make / n8n (webhook en cambio)</div>
+              <div class="flow-arrow" style="padding-left:.5rem">↓</div>
+              <div class="flow-node">Firebase Firestore (colección songs)</div>
+              <div class="flow-arrow" style="padding-left:.5rem">↓</div>
+              <div class="flow-node hi">App en tiempo real (sin redeploy)</div>
+            </div>
+          </div>
+          <div class="dp-card" style="margin-top:1rem;">
+            <div class="dp-card-icon">🤖</div>
+            <strong>GPT-4 para generación de metadatos</strong>
+            <p>Cuando se añade una canción nueva al Sheets, una automatización llama a la API de ChatGPT para generar automáticamente la descripción, el mood y las etiquetas de la canción. Cero trabajo manual de etiquetado.</p>
+            <span class="tag">Automatización</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 7. STACK TÉCNICO ══ -->
+    <section class="section dark-section" id="stack">
+      <div style="width:min(1160px,calc(100% - 40px));margin:0 auto;">
+        <div class="section-head rv">
+          <p class="eyebrow">Stack técnico</p>
+          <h2>Herramientas elegidas con criterio, no por moda.</h2>
+          <p>Cada herramienta del stack tiene una justificación de negocio. No usé nada por tendencia: usé lo que resolvía el problema específico con el menor tiempo de implementación y el mayor impacto.</p>
+        </div>
+
+        <div class="stack-grid rv">
+          <div class="stack-card">
+            <div class="stack-icon">🔥</div>
+            <div class="stack-name">Firebase</div>
+            <div class="stack-role">Auth, Firestore y Realtime Database. La sincronización multijugador en tiempo real depende de Firebase RT DB. Firestore gestiona perfiles, historial de partidas y puntuaciones.</div>
+            <span class="stack-badge">Core del producto</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">▲</div>
+            <div class="stack-name">Vercel</div>
+            <div class="stack-role">Despliegue continuo desde GitHub. Cada push a main genera un preview deployment automático. Las Edge Functions gestionan los endpoints de la Spotify API sin exponer claves.</div>
+            <span class="stack-badge">Deploy & edge</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">🎵</div>
+            <div class="stack-name">Spotify Web API</div>
+            <div class="stack-role">Fuente de las canciones de los jugadores. OAuth 2.0 para autenticación, endpoints de playlists y tracks para la biblioteca personal, previews de 30 segundos para reproducción en sala.</div>
+            <span class="stack-badge green">Integración clave</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">🤖</div>
+            <div class="stack-name">ChatGPT / GPT-4o</div>
+            <div class="stack-role">Generación automática de metadatos de canciones (mood, etiquetas, descripción). También se usa para generar comentarios dinámicos del juego: frases personalizadas según el resultado de cada ronda.</div>
+            <span class="stack-badge">IA aplicada</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">🎙️</div>
+            <div class="stack-name">Suno AI</div>
+            <div class="stack-role">Generación de canciones originales para el catálogo curado cuando no hay preview disponible en Spotify. También se usa para crear jingles del propio juego y efectos de transición entre rondas.</div>
+            <span class="stack-badge">Música IA</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">⚙️</div>
+            <div class="stack-name">Make (Integromat)</div>
+            <div class="stack-role">Automatizaciones que conectan Google Sheets → Firestore, notificaciones de nuevas partidas a canales de difusión y procesamiento asíncrono de solicitudes a la API de ChatGPT para metadatos.</div>
+            <span class="stack-badge">Automatización</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">📊</div>
+            <div class="stack-name">Google Sheets</div>
+            <div class="stack-role">Base de datos editorial del catálogo de canciones. Permite al equipo gestionar el contenido sin acceder al código. Actúa como CMS ligero conectado a Firestore via webhook automatizado.</div>
+            <span class="stack-badge">Data source</span>
+          </div>
+          <div class="stack-card">
+            <div class="stack-icon">🌐</div>
+            <div class="stack-name">Antigravity</div>
+            <div class="stack-role">Framework de animaciones utilizado para las transiciones entre rondas y los efectos visuales del marcador. Proporciona animaciones fluidas a 60fps optimizadas para móvil sin penalización de rendimiento.</div>
+            <span class="stack-badge">Animación</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 8. AUTOMATIZACIONES ══ -->
+    <section class="section" id="automatizaciones">
+      <div class="section-head rv">
+        <p class="eyebrow">Automatizaciones</p>
+        <h2>El producto funciona solo. El equipo diseña, no opera manualmente.</h2>
+        <p>Diseñé el backend operativo para que no requiera intervención manual en las tareas repetitivas. Cada flujo de automatización tiene un propósito de negocio medible.</p>
+      </div>
+
+      <div class="process-steps rv">
+        <div class="step">
+          <div class="step-icon">🗂️</div>
+          <strong>Sheets → Firestore</strong>
+          <p>Make detecta cambios en el catálogo de Google Sheets y sincroniza Firestore automáticamente. El catálogo siempre está actualizado sin redeploy.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">🏷️</div>
+          <strong>Etiquetado GPT</strong>
+          <p>Al añadir canción nueva, Make llama a GPT-4o para generar mood, tags y descripción. Los metadatos enriquecidos se guardan de vuelta en Sheets y en Firestore.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">🔔</div>
+          <strong>Notificaciones de partida</strong>
+          <p>Cuando se crea una sala con más de 4 jugadores, se dispara una notificación a los canales de difusión del producto con el código de sala para invitar a más jugadores.</p>
+        </div>
+        <div class="step">
+          <div class="step-icon">📈</div>
+          <strong>Métricas automáticas</strong>
+          <p>Cada partida finalizada registra métricas en una hoja de Sheets: jugadores, duración, canciones más votadas y puntuaciones. Dashboard en tiempo real sin herramientas de analytics externas.</p>
+        </div>
+      </div>
+
+      <div class="dp-quote rv" style="margin-top:2.5rem;">
+        "Una automatización bien diseñada no solo ahorra tiempo — elimina errores humanos y permite que el producto escale sin contratar operadores."
+      </div>
+    </section>
+
+    <!-- ══ 9. ROL ══ -->
+    <section class="section band">
+      <div class="section-head rv">
+        <p class="eyebrow">Mi rol en el proyecto</p>
+        <h2>Diseñé, construí y lancé el producto de forma independiente.</h2>
+      </div>
+      <div class="cards-grid four rv">
+        <div class="dp-card">
+          <div class="dp-card-icon">🎨</div>
+          <strong>UX/UI Design</strong>
+          <p>Investigación, wireframes, sistema de diseño, componentes interactivos y prototipo funcional. Figma como herramienta principal.</p>
+        </div>
+        <div class="dp-card">
+          <div class="dp-card-icon">🏗️</div>
+          <strong>Arquitectura técnica</strong>
+          <p>Definición del stack, diseño de la base de datos Firestore, flujos de datos, endpoints de API y estrategia de despliegue en Vercel.</p>
+        </div>
+        <div class="dp-card">
+          <div class="dp-card-icon">🔗</div>
+          <strong>Integraciones y APIs</strong>
+          <p>Spotify OAuth, Firebase Auth y RT DB, ChatGPT API, Suno para audio generativo y Make para automatización de procesos operativos.</p>
+        </div>
+        <div class="dp-card">
+          <div class="dp-card-icon">🚀</div>
+          <strong>Lanzamiento y branding</strong>
+          <p>Naming, identidad visual, materiales de comunicación, dominio play.dedicalo.es y estrategia de difusión inicial entre comunidades musicales.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 10. CTA ══ -->
+    <section class="section">
+      <div class="final-cta rv">
+        <div>
+          <h3>¿Listo para jugar?</h3>
+          <p>Dedícalo Play está en producción en <strong style="color:var(--orange)">play.dedicalo.es</strong>. Crea una sala, invita a tus amigos y descubre quién tiene mejor gusto musical.</p>
+        </div>
+        <a href="https://play.dedicalo.es" target="_blank" rel="noopener" class="btn primary">Jugar ahora →</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer style="width:min(1160px,calc(100% - 40px));margin:0 auto;padding:3rem 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+    <span style="color:var(--muted);font-size:.88rem;">© 2026 Rodrigo Negrete — Dedícalo Play</span>
+    <div style="display:flex;gap:1rem;">
+      <a href="/#proyectos" class="back-link" style="font-size:11px;">← Volver al portfolio</a>
+      <a href="/dedicalo/" class="back-link" style="font-size:11px;border-color:rgba(255,107,43,.3);color:var(--orange)">Ver Dedícalo original</a>
+    </div>
+  </footer>
+
+  <script>
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); } });
+    }, { threshold: .06, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.rv').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>

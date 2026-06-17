@@ -7,6 +7,9 @@
     { "source": "/zodi-bto", "destination": "/zodi-bto/index.html" },
     { "source": "/zodi-bto/", "destination": "/zodi-bto/index.html" },
 
+    { "source": "/dedicalo-play", "destination": "/dedicalo-play/index.html" },
+    { "source": "/dedicalo-play/", "destination": "/dedicalo-play/index.html" },
+
     { "source": "/pdf", "destination": "/pdf-rodd/index.html" },
     { "source": "/pdf/", "destination": "/pdf-rodd/index.html" },
     { "source": "/PDF", "destination": "/PDF/index.html" },
