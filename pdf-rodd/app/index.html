@@ -343,6 +343,8 @@
         }
     };
 
+    const CANVAS_CUSTOM_PROPS = ['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight', 'originalStr', 'fontSize', 'isBold', 'isItalic', 'detectedFont', 'isFormField'];
+
     const ui = {
         uploadInput: document.getElementById('pdf-upload'),
         uploadZone: document.getElementById('upload-zone'),
@@ -431,7 +433,7 @@
     function saveHistory() {
         if (state.isHistoryProcessing || !state.canvas) return;
         const pageHist = state.pageHistory[state.currentPage];
-        const json = JSON.stringify(state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']));
+        const json = JSON.stringify(state.canvas.toJSON(CANVAS_CUSTOM_PROPS));
 
         if (pageHist.index < pageHist.states.length - 1) {
             pageHist.states.length = pageHist.index + 1;
@@ -459,6 +461,7 @@
                 state.isHistoryProcessing = false;
                 updateHistoryButtons();
                 ui.contextToolbar.classList.add('hidden');
+                reattachAllAutoTextEvents();
             });
         }
     };
@@ -473,6 +476,7 @@
                 state.isHistoryProcessing = false;
                 updateHistoryButtons();
                 ui.contextToolbar.classList.add('hidden');
+                reattachAllAutoTextEvents();
             });
         }
     };
@@ -537,7 +541,7 @@
 
     window.navigatePage = async (offset) => {
         if(state.canvas && !state.isHistoryProcessing) {
-            state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
+            state.pageData[state.currentPage] = state.canvas.toJSON(CANVAS_CUSTOM_PROPS);
         }
         const next = state.currentPage + offset;
         if(next >= 1 && next <= state.totalPages) {
@@ -549,7 +553,7 @@
     window.changeZoom = async (delta) => {
         const newScale = Math.max(0.75, Math.min(2.5, state.scale + delta));
         if (newScale !== state.scale) {
-            if(state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
+            if(state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(CANVAS_CUSTOM_PROPS);
             state.scale = newScale;
             await renderPage();
         }
@@ -656,6 +660,7 @@
                         state.canvas.renderAll();
                         state.isHistoryProcessing = false;
                         if (state.pageHistory[state.currentPage].states.length === 0) saveHistory();
+                        reattachAllAutoTextEvents();
                     });
                 } else {
                     autoCreateInteractiveText(textContent.items, viewport, page);
@@ -676,6 +681,31 @@
             alert('Error al visualizar la página.');
             setStatus('');
         }
+    }
+
+    // --- RE-ADJUNTAR EVENTOS A PLACEHOLDERS ---
+    function reattachPlaceholderEvents(placeholder) {
+        const isFormField = placeholder.isFormField;
+        placeholder.on('mouseover', function() {
+            if (state.activeTool === null) {
+                this.set('fill', isFormField ? 'rgba(37, 99, 235, 0.25)' : 'rgba(220, 38, 38, 0.1)');
+                state.canvas.requestRenderAll();
+            }
+        });
+        placeholder.on('mouseout', function() {
+            this.set('fill', isFormField ? 'rgba(37, 99, 235, 0.1)' : 'rgba(220, 38, 38, 0.0)');
+            state.canvas.requestRenderAll();
+        });
+        placeholder.on('mousedown', () => {
+            if (state.activeTool === null) convertToEditableText(placeholder);
+        });
+    }
+
+    function reattachAllAutoTextEvents() {
+        if (!state.canvas) return;
+        state.canvas.forEachObject(obj => {
+            if (obj.isAutoText) reattachPlaceholderEvents(obj);
+        });
     }
 
     // --- DETECCIÓN INTELIGENTE ---
@@ -733,24 +763,12 @@
                 selectable: false, hasBorders: false, hasControls: false, hoverCursor: 'text',
                 isAutoText: true,
                 isFormField: isFormField,
+                originalStr: str,
                 pdfItem: item, fontSize: fontSize, originalColor: hexColor, bgColor: bgColor,
                 originalX: canvasX, originalY: canvasY, isBold: isBold, isItalic: isItalic, detectedFont: fontFamily
             });
 
-            placeholder.on('mouseover', function() {
-                if (state.activeTool === null) {
-                    this.set('fill', isFormField ? 'rgba(37, 99, 235, 0.25)' : 'rgba(220, 38, 38, 0.1)');
-                    state.canvas.requestRenderAll();
-                }
-            });
-            placeholder.on('mouseout', function() {
-                this.set('fill', isFormField ? 'rgba(37, 99, 235, 0.1)' : 'rgba(220, 38, 38, 0.0)');
-                state.canvas.requestRenderAll();
-            });
-
-            placeholder.on('mousedown', (e) => {
-                if (state.activeTool === null) convertToEditableText(placeholder);
-            });
+            reattachPlaceholderEvents(placeholder);
 
             interactiveBoxes.push(placeholder);
         });
@@ -760,7 +778,7 @@
     }
 
     function convertToEditableText(placeholder) {
-        const item = placeholder.pdfItem;
+        const originalStr = placeholder.originalStr !== undefined ? placeholder.originalStr : (placeholder.pdfItem ? placeholder.pdfItem.str : '');
         const fontSize = placeholder.fontSize;
         const originalColor = placeholder.originalColor || '#000000';
         const bgColor = placeholder.bgColor || { r: 1, g: 1, b: 1, hex: '#ffffff' };
@@ -783,7 +801,7 @@
             });
         }
 
-        const textObj = new fabric.IText(isFormField ? ' Escribir...' : item.str, {
+        const textObj = new fabric.IText(isFormField ? ' Escribir...' : originalStr, {
             left: placeholder.originalX,
             top: placeholder.originalY - (fontSize * 0.05) - (isFormField ? fontSize * 0.2 : 0),
             fontSize: fontSize,
@@ -1045,7 +1063,7 @@
         await new Promise(resolve => setTimeout(resolve, 50));
 
         try {
-            if(state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(['isAutoText', 'originalColor', 'bgColor', 'originalX', 'originalY', 'isMask', 'maskColor', 'isDrawing', 'isHighlight']);
+            if(state.canvas) state.pageData[state.currentPage] = state.canvas.toJSON(CANVAS_CUSTOM_PROPS);
 
             let pdfBytes;
 
