@@ -20,6 +20,7 @@ export default defineConfig({
         dedicalo: resolve(__dirname, 'dedicalo/index.html'),
         dedicaloPlay: resolve(__dirname, 'dedicalo-play/index.html'),
         cv: resolve(__dirname, 'cv/index.html'),
+        deepDetectionDiscovery: resolve(__dirname, 'deep-detection-discovery/index.html'),
       },
     },
   },

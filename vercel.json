@@ -29,6 +29,8 @@
     { "source": "/CCSE/", "destination": "/ccse/index.html" },
     { "source": "/cv", "destination": "/cv/index.html" },
     { "source": "/cv/", "destination": "/cv/index.html" },
+    { "source": "/deep-detection-discovery", "destination": "/deep-detection-discovery/index.html" },
+    { "source": "/deep-detection-discovery/", "destination": "/deep-detection-discovery/index.html" },
     { "source": "/dedicalo", "destination": "/dedicalo/index.html" },
     { "source": "/dedicalo/", "destination": "/dedicalo/index.html" },
     { "source": "/invitoo", "destination": "/invitoo/index.html" },
@@ -59,6 +61,18 @@
       "source": "/assets/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/deep-detection-discovery/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" }
+      ]
+    },
+    {
+      "source": "/deep-detection-discovery",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow, noarchive, nosnippet" }
       ]
     }
   ]
