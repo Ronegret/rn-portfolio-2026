@@ -4,107 +4,64 @@ const STORAGE_KEY = 'deep-detection-discovery-v1';
 
 const steps = [
   {
-    title: 'Información general',
+    title: '1. Contexto inicial',
     fields: [
       { id: 'name', label: 'Nombre', type: 'text', required: true },
       { id: 'role', label: 'Cargo', type: 'text', required: true },
       { id: 'email', label: 'Email', type: 'email', required: true },
       { id: 'description', label: '¿Cómo describirías Deep Detection en una frase?', type: 'textarea', wide: true },
-      { id: 'mainObjective', label: '¿Cuál es el principal objetivo de esta renovación?', type: 'textarea', wide: true },
-      { id: 'clientPerception', label: '¿Qué debería pensar un cliente cuando entre en la nueva web?', type: 'textarea', wide: true },
+      { id: 'mainObjective', label: '¿Cuál es el objetivo principal de esta renovación?', type: 'textarea', wide: true },
     ],
   },
   {
-    title: 'Objetivos',
+    title: '2. Objetivos y éxito',
     fields: [
-      { id: 'objectives', label: 'Objetivos prioritarios', type: 'checkbox', options: ['Mejorar imagen profesional', 'Explicar mejor la tecnología', 'Preparar lanzamiento octubre', 'Diferenciarnos', 'Mejorar experiencia móvil', 'Mejorar navegación', 'Generar confianza', 'Reforzar marca', 'Otro'] },
+      { id: 'objectives', label: '¿Qué objetivos son prioritarios?', type: 'checkbox', options: ['Mejorar imagen profesional', 'Explicar mejor la tecnología', 'Preparar lanzamiento octubre', 'Diferenciarnos', 'Mejorar navegación', 'Generar confianza', 'Reforzar marca', 'Otro'] },
+      { id: 'clientPerception', label: '¿Qué debería pensar un cliente cuando entre en la nueva web?', type: 'textarea', wide: true },
       { id: 'successResult', label: '¿Qué resultado consideraríais un éxito?', type: 'textarea', wide: true },
     ],
   },
   {
-    title: 'Productos',
+    title: '3. Productos y lanzamiento',
     fields: [
       { id: 'mainProducts', label: '¿Cuáles son los productos principales?', type: 'textarea', wide: true },
       { id: 'octoberProducts', label: '¿Qué productos se lanzarán en octubre?', type: 'textarea', wide: true },
-      { id: 'mostImportantProduct', label: '¿Cuál es el más importante?', type: 'textarea', wide: true },
-      { id: 'technologyAdvantages', label: '¿Qué ventajas tiene vuestra tecnología?', type: 'textarea', wide: true },
-      { id: 'hardConcepts', label: '¿Qué conceptos son difíciles de explicar?', type: 'textarea', wide: true },
-      { id: 'essentialContent', label: '¿Qué contenido es imprescindible?', type: 'textarea', wide: true },
+      { id: 'technologyAdvantages', label: '¿Qué ventajas o conceptos técnicos deben quedar claros?', type: 'textarea', wide: true },
+      { id: 'essentialContent', label: '¿Qué contenido es imprescindible para el lanzamiento?', type: 'textarea', wide: true },
     ],
   },
   {
-    title: 'Clientes',
+    title: '4. Clientes y decisión',
     fields: [
       { id: 'idealClient', label: '¿Quién es vuestro cliente ideal?', type: 'textarea', wide: true },
-      { id: 'targetCompanies', label: '¿Qué tipo de empresas queréis atraer?', type: 'textarea', wide: true },
       { id: 'decisionRoles', label: '¿Qué cargos participan en la decisión?', type: 'textarea', wide: true },
-      { id: 'clientQuestions', label: '¿Qué dudas suelen aparecer?', type: 'textarea', wide: true },
-      { id: 'objections', label: '¿Qué objeciones son habituales?', type: 'textarea', wide: true },
+      { id: 'clientQuestions', label: '¿Qué dudas u objeciones suelen aparecer?', type: 'textarea', wide: true },
     ],
   },
   {
-    title: 'Competencia',
+    title: '5. Web actual y material',
     fields: [
-      { id: 'directCompetitors', label: 'Competidores directos', type: 'textarea', wide: true },
-      { id: 'admiredCompanies', label: 'Empresas que admiráis', type: 'textarea', wide: true },
-      { id: 'likedWebsites', label: 'Webs que os gustan', type: 'textarea', wide: true },
-      { id: 'dislikedWebsites', label: 'Webs que no os gustan', type: 'textarea', wide: true },
-      { id: 'whatToSurpass', label: '¿Qué os gustaría superar?', type: 'textarea', wide: true },
-    ],
-  },
-  {
-    title: 'Comunicación',
-    fields: [
-      { id: 'brandAttributes', label: '¿Qué debe transmitir la marca?', type: 'checkbox', options: ['Innovación', 'Precisión', 'Confianza', 'Tecnología', 'Ciencia', 'Simplicidad', 'Liderazgo', 'Industria', 'Cercanía', 'Internacionalización'] },
-      { id: 'idealTone', label: '¿Cómo describiríais el tono ideal?', type: 'textarea', wide: true },
-    ],
-  },
-  {
-    title: 'Web actual',
-    fields: [
-      { id: 'currentWorks', label: '¿Qué funciona bien?', type: 'textarea', wide: true },
-      { id: 'notRepresenting', label: '¿Qué no os representa?', type: 'textarea', wide: true },
-      { id: 'detectedProblems', label: '¿Qué problemas habéis detectado?', type: 'textarea', wide: true },
-      { id: 'importantPages', label: '¿Qué páginas son más importantes?', type: 'textarea', wide: true },
-      { id: 'shouldKeep', label: '¿Qué deberíamos conservar?', type: 'textarea', wide: true },
-      { id: 'shouldImprove', label: '¿Qué deberíamos mejorar?', type: 'textarea', wide: true },
-    ],
-  },
-  {
-    title: 'Idiomas',
-    fields: [
-      { id: 'englishMain', label: '¿El inglés será el idioma principal?', type: 'textarea', wide: true },
-      { id: 'otherLanguages', label: '¿Necesitáis otros idiomas?', type: 'textarea', wide: true },
-      { id: 'futureTranslations', label: '¿Debemos preparar futuras traducciones?', type: 'textarea', wide: true },
-    ],
-  },
-  {
-    title: 'Material disponible',
-    fields: [
+      { id: 'currentWorks', label: '¿Qué funciona bien en la web actual y deberíamos conservar?', type: 'textarea', wide: true },
+      { id: 'shouldImprove', label: '¿Qué no os representa o deberíamos mejorar?', type: 'textarea', wide: true },
+      { id: 'importantPages', label: '¿Qué páginas o contenidos son más importantes?', type: 'textarea', wide: true },
       { id: 'availableAssets', label: 'Material disponible', type: 'checkbox', options: ['Logo', 'Brandbook', 'Fotos', 'Vídeos', 'Renderizados', 'Fichas técnicas', 'Presentaciones', 'Casos de uso', 'Whitepapers', 'Testimonios', 'Otro'] },
     ],
   },
   {
-    title: 'Octubre',
+    title: '6. Marca, tono y referencias',
     fields: [
-      { id: 'octoberReady', label: '¿Qué debe estar listo para octubre?', type: 'textarea', wide: true },
-      { id: 'octoberPresentationProducts', label: '¿Qué productos se presentarán?', type: 'textarea', wide: true },
-      { id: 'launchPriority', label: '¿Qué prioridad tiene el lanzamiento?', type: 'textarea', wide: true },
-      { id: 'firstVersionDate', label: '¿Cuál sería una fecha ideal para una primera versión?', type: 'textarea', wide: true },
+      { id: 'brandAttributes', label: '¿Qué debe transmitir la marca?', type: 'checkbox', options: ['Innovación', 'Precisión', 'Confianza', 'Tecnología', 'Ciencia', 'Simplicidad', 'Liderazgo', 'Industria', 'Cercanía', 'Internacionalización'] },
+      { id: 'idealTone', label: '¿Cómo describiríais el tono ideal?', type: 'textarea', wide: true },
+      { id: 'directCompetitors', label: 'Competidores o empresas de referencia', type: 'textarea', wide: true },
+      { id: 'likedWebsites', label: 'Webs que os gustan o que os gustaría superar', type: 'textarea', wide: true },
     ],
   },
   {
-    title: 'Alcance',
+    title: '7. Alcance y siguiente paso',
     fields: [
       { id: 'scope', label: 'Posible alcance', type: 'checkbox', options: ['Mejoras visuales', 'Rediseño parcial', 'Rediseño completo UX/UI', 'Nueva arquitectura', 'Nueva identidad visual', 'Diseño y desarrollo', 'Todavía por definir'] },
       { id: 'topPriorities', label: '¿Cuáles son las tres prioridades principales?', type: 'textarea', wide: true },
-    ],
-  },
-  {
-    title: 'Comentarios finales',
-    fields: [
       { id: 'importantUnknown', label: '¿Hay algo importante que no hayamos comentado y que deba considerar antes de preparar la propuesta y los futuros diseños?', type: 'textarea', wide: true },
-      { id: 'missingQuestion', label: '¿Hay algo que no hayamos preguntado?', type: 'textarea', wide: true },
       { id: 'expectations', label: '¿Qué expectativas tenéis sobre mi colaboración?', type: 'textarea', wide: true },
       { id: 'idealNextStep', label: '¿Cuál sería el siguiente paso ideal?', type: 'textarea', wide: true },
     ],

@@ -373,6 +373,21 @@ h2 {
   max-width: 860px;
   margin-bottom: 1.4rem;
 }
+.dd-time-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1rem;
+}
+.dd-time-row span {
+  border: 1px solid rgba(0,212,255,.22);
+  border-radius: 999px;
+  padding: .5rem .7rem;
+  color: var(--dd-text);
+  background: rgba(0, 212, 255, .06);
+  font-size: 12px;
+  font-weight: 800;
+}
 .dd-form {
   padding: clamp(1rem, 3vw, 2rem);
 }
@@ -414,7 +429,7 @@ h2 {
   transition: width .35s ease;
 }
 .dd-step {
-  min-height: 430px;
+  min-height: 360px;
   animation: stepIn .32s ease both;
 }
 @keyframes stepIn {
@@ -459,7 +474,7 @@ h2 {
   transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
 }
 .dd-field textarea {
-  min-height: 112px;
+  min-height: 96px;
   resize: vertical;
 }
 .dd-field input:focus,
@@ -564,16 +579,24 @@ h2 {
   }
   .dd-hero {
     min-height: auto;
+    padding-top: 3rem;
   }
   .dd-hero-visual {
     min-height: auto;
   }
   .dd-scan-card {
     max-width: 460px;
+    aspect-ratio: 1 / .78;
   }
   .dd-context-grid,
   .dd-checks {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .dd-field-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -597,9 +620,27 @@ h2 {
     font-size: 10px;
   }
   h1 {
-    font-size: clamp(3rem, 17vw, 4.8rem);
+    font-size: clamp(2.75rem, 15vw, 4.4rem);
   }
-  .dd-field-grid,
+  h2 {
+    font-size: clamp(2rem, 12vw, 3.35rem);
+  }
+  .dd-hero {
+    gap: 1.8rem;
+    padding-top: 2rem;
+  }
+  .dd-lead {
+    font-size: 1.05rem;
+  }
+  .dd-body,
+  .dd-panel p,
+  .dd-important p,
+  .dd-form-intro p {
+    font-size: .96rem;
+  }
+  .dd-scan-card {
+    border-radius: 24px;
+  }
   .dd-context-grid,
   .dd-checks {
     grid-template-columns: 1fr;
@@ -613,6 +654,9 @@ h2 {
   }
   .dd-step {
     min-height: auto;
+  }
+  .dd-field textarea {
+    min-height: 86px;
   }
 }
 
