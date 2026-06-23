@@ -65,21 +65,20 @@ function buildOwnerEmail({ sections, submittedAt }) {
   `;
 }
 
-function buildClientEmail(name) {
+function buildClientEmail({ name, sections }) {
   return `
     <div style="margin:0;padding:0;background:#eef4fb;font-family:Inter,Arial,sans-serif;color:#07111f;">
-      <div style="max-width:680px;margin:0 auto;padding:34px 18px;">
-        <div style="padding:30px;border-radius:24px;background:#07111f;color:#ffffff;">
+      <div style="max-width:860px;margin:0 auto;padding:34px 18px;">
+        <div style="padding:30px;border-radius:24px;background:#07111f;color:#ffffff;margin-bottom:22px;">
           <p style="margin:0 0 8px;color:#00d4ff;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.12em;">Deep Detection Discovery</p>
-          <h1 style="margin:0 0 18px;font-size:30px;line-height:1.15;">Thank you for completing the Discovery Workshop</h1>
-          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">Hello ${escapeHtml(name || 'there')},</p>
-          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">Thank you very much for taking the time to complete the Discovery Workshop.</p>
-          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">I have received your answers correctly and I will review everything carefully to better understand your goals, products and priorities.</p>
-          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">This information will help define the project scope, priorities and next steps in a realistic and structured way.</p>
-          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">If there is any additional information that you believe could be useful for future designs, budget estimations or project planning, please feel free to contact me.</p>
-          <p style="margin:0 0 24px;color:#dfe8f7;line-height:1.7;">Thank you again for your time and trust.</p>
-          <p style="margin:0;color:#ffffff;line-height:1.6;"><strong>Rodrigo Negrete</strong><br>Product Designer · UX/UI · AI<br><a style="color:#00d4ff;" href="https://rodrigonegrete.es">rodrigonegrete.es</a></p>
+          <h1 style="margin:0 0 18px;font-size:30px;line-height:1.15;">Gracias por completar el Discovery Workshop</h1>
+          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">Hola ${escapeHtml(name || 'equipo')},</p>
+          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">Muchas gracias por dedicar tiempo a completar este Discovery. He recibido correctamente vuestras respuestas y las revisaré con detalle para entender mejor objetivos, productos, prioridades y posibles fases del proyecto.</p>
+          <p style="margin:0 0 16px;color:#dfe8f7;line-height:1.7;">Esta información me ayudará a preparar una propuesta más realista, estructurada y alineada con Deep Detection.</p>
+          <p style="margin:0 0 24px;color:#dfe8f7;line-height:1.7;">A continuación dejo una copia de las respuestas enviadas para que también tengáis registro del contexto compartido.</p>
+          <p style="margin:0;color:#ffffff;line-height:1.6;"><strong>Rodrigo Negrete</strong><br>Product Designer · UX/UI · IA aplicada<br><a style="color:#00d4ff;" href="https://rodrigonegrete.es">rodrigonegrete.es</a></p>
         </div>
+        ${renderSections(sections)}
       </div>
     </div>
   `;
@@ -150,8 +149,8 @@ module.exports = async function handler(req, res) {
       apiKey,
       from: fromEmail,
       to: email,
-      subject: 'Thank you for completing the Deep Detection Discovery',
-      html: buildClientEmail(name),
+      subject: 'Gracias por completar el Deep Detection Discovery',
+      html: buildClientEmail({ name, sections }),
       replyTo: toEmail,
     });
 
