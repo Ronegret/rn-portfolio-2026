@@ -114,8 +114,9 @@ module.exports = async function handler(req, res) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.DISCOVERY_TO_EMAIL || 'rodrigo017@gmail.com';
-  const fromEmail = process.env.DISCOVERY_FROM_EMAIL || 'discovery@rodrigonegrete.es';
+  const toEmail = process.env.DISCOVERY_TO_EMAIL || 'rodrigo.negrete.aros@gmail.com';
+  const replyEmail = process.env.DISCOVERY_REPLY_EMAIL || 'rodrigo.negrete.aros@gmail.com';
+  const fromEmail = process.env.DISCOVERY_FROM_EMAIL || 'Rodrigo Negrete <discovery@rodrigonegrete.es>';
 
   if (!apiKey) {
     return res.status(500).json({ error: 'Missing RESEND_API_KEY environment variable.' });
@@ -151,7 +152,7 @@ module.exports = async function handler(req, res) {
       to: email,
       subject: 'Gracias por completar el Deep Detection Discovery',
       html: buildClientEmail({ name, sections }),
-      replyTo: toEmail,
+      replyTo: replyEmail,
     });
 
     return res.status(200).json({ ok: true });

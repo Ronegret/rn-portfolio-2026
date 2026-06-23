@@ -23,9 +23,11 @@ body {
   min-width: 320px;
   color: var(--dd-text);
   background:
-    radial-gradient(circle at 76% 12%, rgba(0, 212, 255, 0.16), transparent 32vw),
-    radial-gradient(circle at 18% 18%, rgba(30, 136, 229, 0.2), transparent 28vw),
-    linear-gradient(135deg, #07111f 0%, #091528 46%, #0e1e36 100%);
+    radial-gradient(circle at 80% 8%, rgba(0, 212, 255, 0.11), transparent 28vw),
+    linear-gradient(90deg, rgba(0, 212, 255, .04) 0 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0, 212, 255, .035) 0 1px, transparent 1px),
+    linear-gradient(135deg, #07111f 0%, #0a1728 42%, #0e1e36 100%);
+  background-size: auto, 72px 72px, 72px 72px, auto;
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
@@ -100,6 +102,16 @@ button, input, textarea { font: inherit; }
   font-weight: 900;
   letter-spacing: -.04em;
 }
+.dd-brand-deep img {
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  border: 1px solid rgba(0, 212, 255, .24);
+  border-radius: 14px;
+  padding: 7px;
+  background: rgba(255,255,255,.95);
+  box-shadow: 0 14px 32px rgba(0,0,0,.22);
+}
 .dd-brand strong,
 .dd-brand small {
   display: block;
@@ -134,7 +146,7 @@ button, input, textarea { font: inherit; }
 }
 .dd-nav-pill span:last-child {
   color: #06101e;
-  background: var(--dd-cyan);
+  background: linear-gradient(135deg, var(--dd-cyan), #7be9ff);
 }
 
 main {
@@ -143,10 +155,10 @@ main {
 }
 
 .dd-hero {
-  min-height: calc(100svh - 80px);
+  min-height: calc(100svh - 84px);
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(320px, .8fr);
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, .9fr) minmax(360px, 1fr);
+  gap: clamp(2rem, 5vw, 4.5rem);
   align-items: center;
   padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
 }
@@ -162,12 +174,12 @@ h1,
 h2 {
   margin: 0;
   color: var(--dd-white);
-  line-height: .98;
-  letter-spacing: -.05em;
+  line-height: 1.02;
+  letter-spacing: -.045em;
 }
 h1 {
-  max-width: 860px;
-  font-size: clamp(3.4rem, 8.2vw, 7.7rem);
+  max-width: 760px;
+  font-size: clamp(3.1rem, 6.4vw, 6.4rem);
 }
 h2 {
   font-size: clamp(2.25rem, 5vw, 4.8rem);
@@ -189,6 +201,19 @@ h2 {
 .dd-body {
   max-width: 820px;
   margin: 1.2rem 0 1.8rem;
+}
+.dd-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+.dd-byline {
+  max-width: 320px;
+  color: var(--dd-muted);
+  font-size: 12px;
+  line-height: 1.5;
 }
 .dd-button {
   min-height: 50px;
@@ -226,6 +251,81 @@ h2 {
   min-height: 520px;
   display: grid;
   place-items: center;
+}
+.dd-command {
+  width: min(100%, 560px);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 28px;
+  padding: clamp(1rem, 2vw, 1.35rem);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.03)),
+    rgba(7,17,31,.62);
+  box-shadow: var(--dd-shadow);
+  backdrop-filter: blur(22px);
+}
+.dd-command-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: .9rem;
+}
+.dd-command-top span,
+.dd-command-grid span {
+  color: var(--dd-muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+.dd-command-top strong,
+.dd-command-grid strong {
+  color: var(--dd-white);
+}
+.dd-xray-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,212,255,.18);
+  border-radius: 22px;
+  aspect-ratio: 16 / 10;
+  background: #06101e;
+}
+.dd-xray-frame img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: .86;
+  filter: saturate(1.05) contrast(1.08);
+}
+.dd-xray-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0,212,255,.16) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0,212,255,.12) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mix-blend-mode: screen;
+  opacity: .32;
+}
+.dd-command-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .7rem;
+  margin-top: .85rem;
+}
+.dd-command-grid div {
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 18px;
+  padding: .9rem;
+  background: rgba(255,255,255,.04);
+}
+.dd-command-grid strong {
+  display: block;
+  margin-top: .35rem;
+  font-size: 13px;
+  line-height: 1.3;
 }
 .dd-scan-card {
   position: relative;
@@ -303,11 +403,45 @@ h2 {
 .dd-section {
   padding: clamp(3.4rem, 7vw, 6rem) 0;
 }
+.dd-insight-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .9rem;
+  padding-top: 0;
+}
+.dd-insight-strip article {
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 22px;
+  padding: clamp(1rem, 2vw, 1.4rem);
+  background:
+    linear-gradient(180deg, rgba(30,136,229,.12), rgba(255,255,255,.035)),
+    rgba(14,30,54,.38);
+}
+.dd-insight-strip span {
+  display: inline-flex;
+  margin-bottom: 1.1rem;
+  color: var(--dd-cyan);
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+.dd-insight-strip strong {
+  display: block;
+  color: var(--dd-white);
+  font-size: 1.05rem;
+}
+.dd-insight-strip p {
+  margin: .45rem 0 0;
+  color: var(--dd-muted);
+  font-size: 13px;
+}
 .dd-two {
   display: grid;
   grid-template-columns: minmax(0, .72fr) minmax(0, 1fr);
   gap: clamp(1.5rem, 4vw, 4rem);
   align-items: start;
+}
+.dd-summary-layout {
+  align-items: center;
 }
 .dd-panel,
 .dd-important,
@@ -367,6 +501,46 @@ h2 {
   background: rgba(255,255,255,.045);
   font-size: 13px;
   font-weight: 700;
+}
+.dd-product-lens {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(320px, .9fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: center;
+}
+.dd-lens-copy p {
+  color: var(--dd-muted);
+}
+.dd-lens-visual {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(0,212,255,.2);
+  border-radius: 28px;
+  background: rgba(7,17,31,.62);
+  box-shadow: var(--dd-shadow);
+}
+.dd-lens-visual img {
+  width: 100%;
+  aspect-ratio: 1.28 / 1;
+  display: block;
+  object-fit: cover;
+  opacity: .9;
+}
+.dd-lens-visual::after {
+  content: "Product lens";
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  padding: .55rem .75rem;
+  color: var(--dd-white);
+  background: rgba(7,17,31,.72);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
 }
 
 .dd-form-intro {
@@ -574,7 +748,8 @@ h2 {
 @media (max-width: 940px) {
   .dd-hero,
   .dd-two,
-  .dd-important {
+  .dd-important,
+  .dd-product-lens {
     grid-template-columns: 1fr;
   }
   .dd-hero {
@@ -587,6 +762,9 @@ h2 {
   .dd-scan-card {
     max-width: 460px;
     aspect-ratio: 1 / .78;
+  }
+  .dd-insight-strip {
+    grid-template-columns: 1fr;
   }
   .dd-context-grid,
   .dd-checks {
@@ -637,6 +815,9 @@ h2 {
   .dd-important p,
   .dd-form-intro p {
     font-size: .96rem;
+  }
+  .dd-command-grid {
+    grid-template-columns: 1fr;
   }
   .dd-scan-card {
     border-radius: 24px;
