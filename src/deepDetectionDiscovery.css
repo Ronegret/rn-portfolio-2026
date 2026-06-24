@@ -14,6 +14,9 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] {
+  display: none !important;
+}
 html {
   scroll-behavior: smooth;
   background: var(--dd-bg);
@@ -268,6 +271,12 @@ h2 {
     rgba(7,17,31,.62);
   box-shadow: var(--dd-shadow);
   backdrop-filter: blur(22px);
+  transition: transform .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+.dd-command:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 212, 255, .32);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, .46), 0 0 40px rgba(0, 212, 255, .08);
 }
 .dd-command-top {
   display: flex;
@@ -422,6 +431,14 @@ h2 {
   background:
     linear-gradient(180deg, rgba(30,136,229,.12), rgba(255,255,255,.035)),
     rgba(14,30,54,.38);
+  transition: transform .28s ease, border-color .28s ease, background .28s ease;
+}
+.dd-insight-strip article:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0,212,255,.28);
+  background:
+    linear-gradient(180deg, rgba(0,212,255,.14), rgba(255,255,255,.045)),
+    rgba(14,30,54,.48);
 }
 .dd-insight-strip span {
   display: inline-flex;
@@ -463,6 +480,15 @@ h2 {
 }
 .dd-panel {
   padding: clamp(1.3rem, 3vw, 2.4rem);
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+.dd-panel:hover,
+.dd-important:hover,
+.dd-form:hover,
+.dd-success-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0,212,255,.24);
+  box-shadow: 0 30px 86px rgba(0, 0, 0, .42), 0 0 34px rgba(0,212,255,.06);
 }
 .dd-checklist {
   display: grid;
@@ -507,6 +533,12 @@ h2 {
   background: rgba(255,255,255,.045);
   font-size: 13px;
   font-weight: 700;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease;
+}
+.dd-context-grid span:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,212,255,.28);
+  background: rgba(0,212,255,.08);
 }
 .dd-product-lens {
   display: grid;
@@ -524,6 +556,11 @@ h2 {
   border-radius: 28px;
   background: rgba(7,17,31,.62);
   box-shadow: var(--dd-shadow);
+  transition: transform .35s ease, border-color .35s ease, filter .35s ease;
+}
+.dd-lens-visual:hover {
+  transform: translateY(-5px) scale(1.01);
+  border-color: rgba(0,212,255,.34);
 }
 .dd-lens-visual img {
   width: 100%;
@@ -729,6 +766,10 @@ h2 {
   box-shadow: 0 0 0 4px rgba(0,212,255,.08);
   background: rgba(7, 17, 31, .82);
 }
+.dd-field input:hover,
+.dd-field textarea:hover {
+  border-color: rgba(0,212,255,.32);
+}
 .dd-error {
   color: #ffb8c4;
   font-size: 12px;
@@ -757,6 +798,16 @@ h2 {
   background: rgba(255,255,255,.04);
   cursor: pointer;
   user-select: none;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.dd-check:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,212,255,.3);
+  background: rgba(0,212,255,.075);
+}
+.dd-check:has(input:checked) {
+  border-color: rgba(0,212,255,.5);
+  background: rgba(0,212,255,.11);
 }
 .dd-check input {
   width: 18px;

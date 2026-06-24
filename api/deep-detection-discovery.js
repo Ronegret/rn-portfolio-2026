@@ -150,7 +150,7 @@ module.exports = async function handler(req, res) {
   const fromEmail = process.env.DISCOVERY_FROM_EMAIL || 'Rodrigo Negrete <discovery@rodrigonegrete.es>';
 
   if (!apiKey) {
-    return res.status(500).json({ error: 'Missing RESEND_API_KEY environment variable.' });
+    return res.status(500).json({ error: 'Falta configurar RESEND_API_KEY en Vercel para poder enviar el formulario por email.' });
   }
 
   const payload = req.body || {};

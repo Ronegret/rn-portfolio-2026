@@ -62,8 +62,8 @@ const steps = [
     fields: [
       { id: 'scope', label: 'Posible alcance', type: 'checkbox', options: ['Mejoras visuales', 'Rediseño parcial', 'Rediseño completo UX/UI', 'Nueva arquitectura', 'Nueva identidad visual', 'Diseño y desarrollo', 'Todavía por definir'] },
       { id: 'topPriorities', label: '¿Cuáles son las tres prioridades principales?', type: 'textarea', wide: true },
-      { id: 'supportPdfDescription', label: 'Si adjuntáis un PDF, ¿qué contiene y por qué es importante?', type: 'textarea', wide: true },
-      { id: 'supportPdf', label: 'PDF opcional de apoyo', type: 'file', accept: 'application/pdf', wide: true },
+      { id: 'supportPdfDescription', label: 'Si adjuntáis un PDF, ¿qué contiene y por qué es importante?', type: 'textarea' },
+      { id: 'supportPdf', label: 'PDF opcional de apoyo', type: 'file', accept: 'application/pdf' },
       { id: 'importantUnknown', label: '¿Hay algo importante que no hayamos comentado y que deba considerar antes de preparar la propuesta y los futuros diseños?', type: 'textarea', wide: true },
       { id: 'expectations', label: '¿Qué expectativas tenéis sobre mi colaboración?', type: 'textarea', wide: true },
       { id: 'idealNextStep', label: '¿Cuál sería el siguiente paso ideal?', type: 'textarea', wide: true },
@@ -153,7 +153,7 @@ function createTextField(field) {
 
 function createFileField(field) {
   const wrap = document.createElement('div');
-  wrap.className = 'dd-field dd-wide dd-file-field';
+  wrap.className = `dd-field${field.wide ? ' dd-wide' : ''} dd-file-field`;
   const meta = selectedAttachment
     ? `<strong>${esc(selectedAttachment.name)}</strong><span>${formatBytes(selectedAttachment.size)}</span>`
     : '<span>PDF opcional, máximo 3 MB</span>';
