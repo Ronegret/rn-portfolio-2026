@@ -161,12 +161,27 @@ main {
 }
 
 .dd-hero {
-  min-height: calc(100svh - 84px);
+  min-height: min(760px, calc(100svh - 84px));
   display: grid;
-  grid-template-columns: minmax(0, .9fr) minmax(360px, 1fr);
-  gap: clamp(2rem, 5vw, 4.5rem);
+  grid-template-columns: minmax(0, .82fr) minmax(360px, 1fr);
+  gap: clamp(2rem, 4.4vw, 4rem);
   align-items: center;
-  padding: clamp(4rem, 8vw, 7rem) 0 clamp(3rem, 6vw, 5rem);
+  padding: clamp(3.3rem, 6vw, 5.5rem) 0 clamp(3rem, 5vw, 4.5rem);
+}
+.dd-hero-copy {
+  position: relative;
+  max-width: 760px;
+  padding-left: clamp(1rem, 2vw, 1.45rem);
+}
+.dd-hero-copy::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .3rem;
+  width: 2px;
+  height: clamp(72px, 8vw, 120px);
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--dd-cyan), rgba(0, 212, 255, 0));
 }
 .dd-eyebrow {
   margin: 0 0 1rem;
@@ -182,22 +197,24 @@ h2 {
   margin: 0;
   font-family: Montserrat, "Open Sans", system-ui, sans-serif;
   color: var(--dd-white);
-  line-height: 1.02;
-  letter-spacing: -.045em;
+  line-height: 1.08;
+  letter-spacing: -.02em;
 }
 h1 {
-  max-width: 760px;
-  font-size: clamp(3.1rem, 6.4vw, 6.4rem);
+  max-width: 700px;
+  font-size: clamp(2.35rem, 4.8vw, 4.8rem);
+  font-weight: 800;
 }
 h2 {
-  font-size: clamp(2.25rem, 5vw, 4.8rem);
+  font-size: clamp(2rem, 4.2vw, 4.1rem);
+  font-weight: 800;
 }
 .dd-lead {
-  max-width: 780px;
-  margin: 1.4rem 0 0;
+  max-width: 660px;
+  margin: 1.1rem 0 0;
   color: var(--dd-white);
-  font-size: clamp(1.15rem, 2.1vw, 1.55rem);
-  line-height: 1.45;
+  font-size: clamp(1.02rem, 1.5vw, 1.28rem);
+  line-height: 1.55;
 }
 .dd-body,
 .dd-panel p,
@@ -921,17 +938,21 @@ h2 {
     font-size: 10px;
   }
   h1 {
-    font-size: clamp(2.75rem, 15vw, 4.4rem);
+    font-size: clamp(2.08rem, 10vw, 3.25rem);
+    line-height: 1.1;
   }
   h2 {
-    font-size: clamp(2rem, 12vw, 3.35rem);
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
   }
   .dd-hero {
     gap: 1.8rem;
     padding-top: 2rem;
   }
+  .dd-hero-copy {
+    padding-left: 1rem;
+  }
   .dd-lead {
-    font-size: 1.05rem;
+    font-size: .98rem;
   }
   .dd-body,
   .dd-panel p,
