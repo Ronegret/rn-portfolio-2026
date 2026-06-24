@@ -1,6 +1,7 @@
 import './deepDetectionDiscovery.css';
 
-const STORAGE_KEY = 'deep-detection-discovery-v1';
+const STORAGE_KEY = 'deep-detection-discovery-v2';
+const MAX_ATTACHMENT_BYTES = 3 * 1024 * 1024;
 
 const steps = [
   {
@@ -9,15 +10,15 @@ const steps = [
       { id: 'name', label: 'Nombre', type: 'text', required: true },
       { id: 'role', label: 'Cargo', type: 'text', required: true },
       { id: 'email', label: 'Email', type: 'email', required: true },
-      { id: 'description', label: '¿Cómo describirías Deep Detection en una frase?', type: 'textarea', wide: true },
+      { id: 'description', label: '¿Cómo describiríais Deep Detection en una frase?', type: 'textarea', wide: true },
       { id: 'mainObjective', label: '¿Cuál es el objetivo principal de esta renovación?', type: 'textarea', wide: true },
     ],
   },
   {
     title: '2. Objetivos y éxito',
     fields: [
-      { id: 'objectives', label: '¿Qué objetivos son prioritarios?', type: 'checkbox', options: ['Mejorar imagen profesional', 'Explicar mejor la tecnología', 'Preparar lanzamiento octubre', 'Diferenciarnos', 'Mejorar navegación', 'Generar confianza', 'Reforzar marca', 'Otro'] },
-      { id: 'clientPerception', label: '¿Qué debería pensar un cliente cuando entre en la nueva web?', type: 'textarea', wide: true },
+      { id: 'objectives', label: '¿Qué objetivos son prioritarios?', type: 'checkbox', options: ['Mejorar imagen profesional', 'Explicar mejor la tecnología', 'Preparar lanzamiento de octubre', 'Diferenciarnos', 'Mejorar navegación', 'Generar confianza', 'Reforzar marca', 'Otro'] },
+      { id: 'clientPerception', label: '¿Qué debería pensar un cliente al entrar en la nueva web?', type: 'textarea', wide: true },
       { id: 'successResult', label: '¿Qué resultado consideraríais un éxito?', type: 'textarea', wide: true },
     ],
   },
@@ -57,10 +58,12 @@ const steps = [
     ],
   },
   {
-    title: '7. Alcance y siguiente paso',
+    title: '7. Alcance, material adicional y siguiente paso',
     fields: [
       { id: 'scope', label: 'Posible alcance', type: 'checkbox', options: ['Mejoras visuales', 'Rediseño parcial', 'Rediseño completo UX/UI', 'Nueva arquitectura', 'Nueva identidad visual', 'Diseño y desarrollo', 'Todavía por definir'] },
       { id: 'topPriorities', label: '¿Cuáles son las tres prioridades principales?', type: 'textarea', wide: true },
+      { id: 'supportPdfDescription', label: 'Si adjuntáis un PDF, ¿qué contiene y por qué es importante?', type: 'textarea', wide: true },
+      { id: 'supportPdf', label: 'PDF opcional de apoyo', type: 'file', accept: 'application/pdf', wide: true },
       { id: 'importantUnknown', label: '¿Hay algo importante que no hayamos comentado y que deba considerar antes de preparar la propuesta y los futuros diseños?', type: 'textarea', wide: true },
       { id: 'expectations', label: '¿Qué expectativas tenéis sobre mi colaboración?', type: 'textarea', wide: true },
       { id: 'idealNextStep', label: '¿Cuál sería el siguiente paso ideal?', type: 'textarea', wide: true },
@@ -70,6 +73,7 @@ const steps = [
 
 let currentStep = 0;
 let state = loadState();
+let selectedAttachment = null;
 
 const form = document.getElementById('deepDiscoveryForm');
 const stepShell = document.getElementById('stepShell');
@@ -91,7 +95,9 @@ function loadState() {
 }
 
 function persist() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const snapshot = { ...state };
+  delete snapshot.supportPdf;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshot));
   saveLabel.textContent = `Guardado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
 }
 
@@ -107,6 +113,21 @@ function esc(value) {
 
 function fieldValue(id) {
   return state[id] || '';
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result || '').split(',')[1] || '');
+    reader.onerror = () => reject(new Error('No se pudo leer el PDF adjunto.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function formatBytes(bytes) {
+  if (!bytes) return '';
+  const mb = bytes / (1024 * 1024);
+  return `${mb.toFixed(mb >= 1 ? 1 : 2)} MB`;
 }
 
 function createTextField(field) {
@@ -126,6 +147,54 @@ function createTextField(field) {
     state[field.id] = control.value;
     persist();
     clearFieldError(field.id);
+  });
+  return wrap;
+}
+
+function createFileField(field) {
+  const wrap = document.createElement('div');
+  wrap.className = 'dd-field dd-wide dd-file-field';
+  const meta = selectedAttachment
+    ? `<strong>${esc(selectedAttachment.name)}</strong><span>${formatBytes(selectedAttachment.size)}</span>`
+    : '<span>PDF opcional, máximo 3 MB</span>';
+  wrap.innerHTML = `
+    <label for="${field.id}">${field.label}</label>
+    <label class="dd-file-drop" for="${field.id}">
+      <input id="${field.id}" name="${field.id}" type="file" accept="${field.accept}" />
+      <span class="dd-file-icon">PDF</span>
+      <span class="dd-file-copy">
+        <strong>Adjuntar material de apoyo</strong>
+        <small>Presentación, briefing, documentación técnica o cualquier PDF que ayude a entender mejor el proyecto.</small>
+      </span>
+    </label>
+    <div class="dd-file-meta" id="${field.id}Meta">${meta}</div>
+    <span class="dd-error" data-error-for="${field.id}"></span>
+  `;
+  const input = wrap.querySelector('input');
+  input.addEventListener('change', () => {
+    const file = input.files?.[0] || null;
+    clearFieldError(field.id);
+    selectedAttachment = null;
+    state.supportPdf = '';
+    if (!file) {
+      wrap.querySelector('.dd-file-meta').innerHTML = '<span>PDF opcional, máximo 3 MB</span>';
+      persist();
+      return;
+    }
+    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+      input.value = '';
+      showFieldError(field.id, 'Solo se pueden adjuntar archivos PDF.');
+      return;
+    }
+    if (file.size > MAX_ATTACHMENT_BYTES) {
+      input.value = '';
+      showFieldError(field.id, 'El PDF debe pesar como máximo 3 MB para poder enviarse correctamente.');
+      return;
+    }
+    selectedAttachment = file;
+    state.supportPdf = `${file.name} (${formatBytes(file.size)})`;
+    wrap.querySelector('.dd-file-meta').innerHTML = `<strong>${esc(file.name)}</strong><span>${formatBytes(file.size)}</span>`;
+    persist();
   });
   return wrap;
 }
@@ -154,6 +223,12 @@ function createCheckboxField(field) {
   return wrap;
 }
 
+function createField(field) {
+  if (field.type === 'checkbox') return createCheckboxField(field);
+  if (field.type === 'file') return createFileField(field);
+  return createTextField(field);
+}
+
 function renderStep() {
   const step = steps[currentStep];
   stepShell.innerHTML = '';
@@ -161,9 +236,7 @@ function renderStep() {
   stepEl.className = 'dd-step';
   stepEl.innerHTML = `<h3>${step.title}</h3><div class="dd-field-grid"></div>`;
   const grid = stepEl.querySelector('.dd-field-grid');
-  step.fields.forEach(field => {
-    grid.appendChild(field.type === 'checkbox' ? createCheckboxField(field) : createTextField(field));
-  });
+  step.fields.forEach(field => grid.appendChild(createField(field)));
   stepShell.appendChild(stepEl);
 
   const progress = ((currentStep + 1) / steps.length) * 100;
@@ -192,7 +265,7 @@ function validateStep() {
     if (!field.required) return;
     const value = String(state[field.id] || '').trim();
     if (!value) {
-      showFieldError(field.id, 'Este campo es necesario para enviar el Discovery.');
+      showFieldError(field.id, 'Este campo es necesario para enviar el discovery.');
       valid = false;
     }
     if (field.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -205,6 +278,16 @@ function validateStep() {
     message.className = 'dd-form-message dd-bad';
   }
   return valid;
+}
+
+async function buildAttachmentPayload() {
+  if (!selectedAttachment) return null;
+  return {
+    filename: selectedAttachment.name,
+    contentType: selectedAttachment.type || 'application/pdf',
+    size: selectedAttachment.size,
+    content: await fileToBase64(selectedAttachment),
+  };
 }
 
 prevButton.addEventListener('click', () => {
@@ -224,31 +307,34 @@ form.addEventListener('submit', async event => {
 
   submitButton.disabled = true;
   prevButton.disabled = true;
-  message.textContent = 'Enviando Discovery de forma segura...';
+  message.textContent = 'Preparando y enviando el discovery de forma segura...';
   message.className = 'dd-form-message';
 
-  const payload = {
-    submittedAt: new Date().toISOString(),
-    honeypot: form.elements.company_website.value,
-    sections: steps.map(step => ({
-      title: step.title,
-      answers: step.fields.map(field => ({
-        id: field.id,
-        label: field.label,
-        value: state[field.id] || (field.type === 'checkbox' ? [] : ''),
-      })),
-    })),
-  };
-
   try {
+    const attachment = await buildAttachmentPayload();
+    const payload = {
+      submittedAt: new Date().toISOString(),
+      honeypot: form.elements.company_website.value,
+      attachment,
+      sections: steps.map(step => ({
+        title: step.title,
+        answers: step.fields.map(field => ({
+          id: field.id,
+          label: field.label,
+          value: state[field.id] || (field.type === 'checkbox' ? [] : ''),
+        })),
+      })),
+    };
+
     const response = await fetch('/api/deep-detection-discovery', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
     const result = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(result.error || 'No se pudo enviar el Discovery.');
+    if (!response.ok) throw new Error(result.error || 'No se pudo enviar el discovery.');
     localStorage.removeItem(STORAGE_KEY);
+    selectedAttachment = null;
     form.hidden = true;
     successPanel.hidden = false;
     successPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });

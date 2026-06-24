@@ -13,7 +13,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100svh;
-  font-family: Inter, system-ui, sans-serif;
+  font-family: "Open Sans", system-ui, sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at 76% 18%, rgba(0, 212, 255, .16), transparent 34vw),
@@ -54,6 +54,7 @@ body {
 }
 h1 {
   margin: 0;
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
   font-size: clamp(2.35rem, 9vw, 4.4rem);
   line-height: 1;
   letter-spacing: -.055em;
@@ -93,6 +94,7 @@ button {
   background: linear-gradient(135deg, var(--cyan), #78eaff);
   cursor: pointer;
   font-weight: 900;
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
   letter-spacing: .04em;
   text-transform: uppercase;
 }

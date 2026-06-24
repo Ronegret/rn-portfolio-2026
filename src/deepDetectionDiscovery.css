@@ -28,13 +28,16 @@ body {
     linear-gradient(180deg, rgba(0, 212, 255, .035) 0 1px, transparent 1px),
     linear-gradient(135deg, #07111f 0%, #0a1728 42%, #0e1e36 100%);
   background-size: auto, 72px 72px, 72px 72px, auto;
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
 }
 
 a { color: inherit; text-decoration: none; }
 button, input, textarea { font: inherit; }
+button, input, textarea, label {
+  font-family: inherit;
+}
 
 .dd-noise {
   position: fixed;
@@ -169,10 +172,12 @@ main {
   font-weight: 900;
   letter-spacing: .14em;
   text-transform: uppercase;
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
 }
 h1,
 h2 {
   margin: 0;
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
   color: var(--dd-white);
   line-height: 1.02;
   letter-spacing: -.045em;
@@ -228,6 +233,7 @@ h2 {
   font-weight: 900;
   letter-spacing: .04em;
   text-transform: uppercase;
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
   transition: transform .25s ease, border-color .25s ease, background .25s ease, opacity .25s ease;
 }
 .dd-button:hover { transform: translateY(-2px); }
@@ -527,7 +533,7 @@ h2 {
   opacity: .9;
 }
 .dd-lens-visual::after {
-  content: "Product lens";
+  content: "Lente de producto";
   position: absolute;
   left: 18px;
   bottom: 18px;
@@ -612,6 +618,7 @@ h2 {
 }
 .dd-step h3 {
   margin: 0 0 1.2rem;
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
   color: var(--dd-white);
   font-size: clamp(1.7rem, 3vw, 2.7rem);
   line-height: 1.08;
@@ -650,6 +657,71 @@ h2 {
 .dd-field textarea {
   min-height: 96px;
   resize: vertical;
+}
+.dd-file-field input[type="file"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.dd-file-drop {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  border: 1px dashed rgba(0,212,255,.45);
+  border-radius: 18px;
+  padding: 1rem;
+  color: var(--dd-text);
+  background:
+    linear-gradient(135deg, rgba(0,212,255,.09), rgba(255,255,255,.035)),
+    rgba(7, 17, 31, .62);
+  cursor: pointer;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease;
+}
+.dd-file-drop:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0,212,255,.78);
+  background:
+    linear-gradient(135deg, rgba(0,212,255,.14), rgba(255,255,255,.05)),
+    rgba(7, 17, 31, .74);
+}
+.dd-file-icon {
+  width: 58px;
+  height: 58px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 16px;
+  color: #04101f;
+  background: linear-gradient(135deg, var(--dd-cyan), #7be9ff);
+  font-family: Montserrat, "Open Sans", system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .06em;
+}
+.dd-file-copy {
+  display: grid;
+  gap: .2rem;
+}
+.dd-file-copy strong {
+  color: var(--dd-white);
+  font-size: .98rem;
+}
+.dd-file-copy small,
+.dd-file-meta {
+  color: var(--dd-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.dd-file-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  align-items: center;
+  min-height: 1.3rem;
+}
+.dd-file-meta strong {
+  color: var(--dd-white);
 }
 .dd-field input:focus,
 .dd-field textarea:focus {
