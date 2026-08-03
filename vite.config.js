@@ -22,6 +22,8 @@ export default defineConfig({
         justEnjoy: resolve(__dirname, 'just-enjoy/index.html'),
         iberdata: resolve(__dirname, 'iberdata/index.html'),
         cv: resolve(__dirname, 'cv/index.html'),
+        deepDetectionAccess: resolve(__dirname, 'deep-detection-access/index.html'),
+        deepDetectionDiscovery: resolve(__dirname, 'deep-detection-discovery/index.html'),
       },
     },
   },
