@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caso de estudio TFM EBIS: Just Enjoy, plataforma de hiperautomatizacion para planificacion de viajes con Next.js, n8n, GPT-4.1, Supabase, Firebase y APIs de viaje.">
+  <title>Just Enjoy | TFM Hiperautomatización y Agentes IA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/ai-master-case.css">
+</head>
+<body class="just-enjoy-page">
+  <nav class="nav">
+    <a href="/#proyectos">Volver al portfolio</a>
+    <a href="https://www.loom.com/share/d6427541f9764c5580b900ef168f33aa" target="_blank" rel="noopener">Ver demo Loom</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="brand-mark brand-wordmark">
+          <img class="brand-mark-img" src="/assets/just-enjoy/je-logo-trim.webp" alt="Logo de Just Enjoy">
+          <div class="brand-text"><span>TFM EBIS · Julio 2026</span></div>
+        </div>
+        <p class="eyebrow">Hiperautomatización · Agentes IA · Travel Tech</p>
+        <h1>Un sistema que convierte preferencias en un plan de viaje accionable.</h1>
+        <p class="lead">Trabajo Final de Máster desarrollado para automatizar el tramo Captación -> Curación de una agencia de viajes. El sistema recoge preferencias, consulta fuentes externas, razona con agentes IA, guarda estado, muestra mapa, genera PDF y permite refinar el plan sin empezar de cero.</p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#workflow">Ver workflow n8n</a>
+          <a class="btn-secondary" href="#stack">Ver stack explicado</a>
+        </div>
+        <div class="brand-proof">
+          <img src="/assets/brand/ebis-logo.webp" alt="EBIS Business Techschool">
+          <span>Máster en Agentes IA e Hiperautomatización de Procesos</span>
+        </div>
+      </div>
+      <figure class="hero-visual brand-stage just-stage">
+        <img class="brand-logo" src="/assets/just-enjoy/je-logo-trim.webp" alt="Logo de Just Enjoy">
+        <img class="float-art art-top" src="/assets/just-enjoy/je-ticket.webp" alt="">
+        <img class="float-art art-bottom" src="/assets/just-enjoy/je-travel.webp" alt="">
+        <img class="float-art art-side" src="/assets/just-enjoy/je-icon.webp" alt="">
+      </figure>
+    </div>
+  </header>
+
+  <div class="metric-strip">
+    <div class="metric"><strong>27</strong><span>nodos en workflow n8n v38</span></div>
+    <div class="metric"><strong>3 min</strong><span>demo end-to-end documentada</span></div>
+    <div class="metric"><strong>~0,18$</strong><span>coste variable estimado por plan</span></div>
+    <div class="metric"><strong>~5x</strong><span>relación ahorro/coste en escenario base</span></div>
+  </div>
+
+  <main>
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Producto diseñado</p>
+            <h2>La evidencia no es solo académica: hay pantallas, flujo y lógica de negocio.</h2>
+          </div>
+          <p>El caso combina UX, automatización, arquitectura y criterio de IA. La interfaz reduce fricción de entrada; n8n orquesta la lógica; los modelos generan y refinan; Supabase y Firebase sostienen persistencia y acceso.</p>
+        </div>
+        <div class="screen-gallery">
+          <article class="screen-card">
+            <img src="/assets/just-enjoy/je-screen-landing.webp" alt="Landing de Just Enjoy">
+            <div><h3>Captación clara</h3><p>Entrada orientada a conversión: destino, fechas, presupuesto y expectativas sin fricción inicial.</p></div>
+          </article>
+          <article class="screen-card">
+            <img src="/assets/just-enjoy/je-screen-wizard.webp" alt="Wizard de preferencias de Just Enjoy">
+            <div><h3>Wizard guiado</h3><p>Formulario por pasos que transforma intención de viaje en un brief estructurado para automatización.</p></div>
+          </article>
+          <article class="screen-card">
+            <img src="/assets/just-enjoy/je-screen-trip.webp" alt="Plan de viaje generado en Just Enjoy">
+            <div><h3>Plan consultable</h3><p>Resultado visual: itinerario, presupuesto, mapa, hotel, vuelo y actividades en una experiencia entendible.</p></div>
+          </article>
+        </div>
+        <div class="case-deep-dive">
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">Documentacion convertida en experiencia</p>
+              <h2>La informacion del TFM ahora se entiende como producto.</h2>
+            </div>
+            <p>En vez de pegar capturas del informe, la pagina traduce la arquitectura, el BPMN, los KPIs y el inventario tecnico a piezas web legibles. El recruiter ve metodo, criterio y ejecucion sin tener que abrir el documento.</p>
+          </div>
+          <div class="travel-blueprint">
+            <article class="blueprint-card main">
+              <img src="/assets/just-enjoy/je-plan.webp" alt="Sistema visual de planificacion de viaje">
+              <div>
+                <span>Mapa del sistema</span>
+                <h3>Del deseo de viajar a un itinerario accionable</h3>
+                <p>Just Enjoy convierte una necesidad abierta en un plan con vuelos, alojamiento, clima, actividades, presupuesto, mapa y PDF. La web lo muestra como una experiencia de producto, no como una entrega academica.</p>
+              </div>
+            </article>
+            <div class="mini-proof-grid">
+              <article><strong>UX</strong><h3>Wizard por pasos</h3><p>Reduce incertidumbre y captura datos utiles para automatizar.</p></article>
+              <article><strong>IA</strong><h3>Agente con herramientas</h3><p>El modelo consulta fuentes externas antes de componer el plan.</p></article>
+              <article><strong>Data</strong><h3>Estado persistente</h3><p>Supabase guarda planes, sesiones, costes y resultado estructurado.</p></article>
+              <article><strong>Growth</strong><h3>Salida vendible</h3><p>Mapa, PDF y propuesta clara para convertir interes en reserva.</p></article>
+            </div>
+          </div>
+          <div class="flow-map travel-flow" aria-label="Flujo funcional del sistema Just Enjoy">
+            <div class="flow-node"><span>01</span><strong>Brief del viajero</strong><p>Destino, fechas, presupuesto, personas, intereses y ritmo del viaje.</p></div>
+            <div class="flow-node"><span>02</span><strong>Validacion</strong><p>El sistema comprueba campos obligatorios antes de llamar al agente.</p></div>
+            <div class="flow-node"><span>03</span><strong>n8n Tools Agent</strong><p>Orquesta llamadas, decisiones, fuentes externas y respuesta final.</p></div>
+            <div class="flow-node"><span>04</span><strong>Fuentes externas</strong><p>Tavily, SerpAPI, Google Places y Open-Meteo enriquecen el resultado.</p></div>
+            <div class="flow-node"><span>05</span><strong>Plan guardado</strong><p>Supabase conserva estado, datos y coste estimado para trazabilidad.</p></div>
+            <div class="flow-node"><span>06</span><strong>Experiencia final</strong><p>Itinerario, mapa, presupuesto, hotel, vuelos, actividades y PDF.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="workflow">
+      <div class="wrap workflow-showcase">
+        <figure class="workflow-shot">
+          <img src="/assets/just-enjoy/je-n8n-workflow.webp" alt="Workflow n8n del planificador de viajes Just Enjoy">
+        </figure>
+        <div class="copy">
+          <p class="eyebrow">Workflow n8n</p>
+          <h2>Un orquestador real, no una demo lineal.</h2>
+          <p>El workflow v38 funciona como columna vertebral: recibe el brief, valida obligatorios, consulta herramientas externas, ejecuta decisiones, persiste el resultado y devuelve una salida estructurada para el portal.</p>
+          <div class="decision-list">
+            <div class="decision"><strong>Entrada controlada</strong><span>Webhook + validación de campos obligatorios antes de llamar a IA.</span></div>
+            <div class="decision"><strong>Agente con herramientas</strong><span>GPT-4.1 trabaja con patrón Tools Agent/ReAct para planificar con fuentes externas.</span></div>
+            <div class="decision"><strong>Ruta de refinamiento</strong><span>GPT-4o-mini permite ajustar un plan existente sin regenerar todo el viaje.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark" id="stack">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Stack explicado</p>
+            <h2>Cada herramienta tiene una razón de negocio y una función dentro del sistema.</h2>
+          </div>
+          <p>La elección tecnológica se planteó como arquitectura modular: frontend, autenticación, persistencia, orquestación, fuentes externas, motor IA y salida documental.</p>
+        </div>
+        <table class="matrix">
+          <thead><tr><th>Capa</th><th>Herramienta</th><th>Uso en Just Enjoy</th><th>Qué demuestra</th></tr></thead>
+          <tbody>
+            <tr><td>Portal</td><td>Next.js 16</td><td>Wizard, cockpit de viaje, rutas protegidas y experiencia responsive.</td><td>Capacidad de pensar UX + implementación.</td></tr>
+            <tr><td>Orquestación</td><td>n8n Cloud</td><td>Workflow de 27 nodos con decisiones, llamadas externas, reintentos y persistencia.</td><td>Hiperautomatización real, no solo prompts.</td></tr>
+            <tr><td>IA principal</td><td>OpenAI GPT-4.1</td><td>Planificador con herramientas para vuelos, hotel, clima, actividades y notas prácticas.</td><td>Diseño de agente con contratos de entrada/salida.</td></tr>
+            <tr><td>Refinamiento</td><td>GPT-4o-mini</td><td>Ajuste de planes existentes para cambios de usuario.</td><td>Eficiencia de coste y experiencia iterativa.</td></tr>
+            <tr><td>Persistencia</td><td>Supabase</td><td>Tabla travel_plans, session_id, estado, coste, destino y datos del plan.</td><td>Modelo de datos y trazabilidad.</td></tr>
+            <tr><td>Acceso</td><td>Firebase Auth</td><td>Protección de rutas y custodia de sesión del usuario.</td><td>Seguridad básica y separación de usuarios.</td></tr>
+            <tr><td>Fuentes</td><td>Tavily, SerpAPI, Google Places, Open-Meteo</td><td>Notas de destino, vuelos, actividades, lugares y clima.</td><td>Uso de datos externos para reducir alucinación.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Como se construyo</p>
+            <h2>Un caso que une UX, marketing, datos y agentes IA.</h2>
+          </div>
+          <p>El proyecto esta explicado como lo revisaria un equipo de producto: problema, experiencia, arquitectura, datos, automatizacion, medicion y aprendizaje. Esto ayuda a posicionar el perfil como diseñador UX/UI con criterio de IA aplicada.</p>
+        </div>
+        <div class="capability-grid travel-capabilities">
+          <article class="capability-card"><span>01</span><h3>Discovery y brief</h3><p>Se tradujeron necesidades de viaje en campos utiles para automatizar: destino, fechas, presupuesto, viajeros, intereses y restricciones.</p></article>
+          <article class="capability-card"><span>02</span><h3>Diseño de wizard</h3><p>La interfaz reduce carga cognitiva y convierte una idea abierta en informacion accionable para un agente.</p></article>
+          <article class="capability-card"><span>03</span><h3>Orquestacion n8n</h3><p>El workflow coordina validaciones, decisiones, llamadas a herramientas, persistencia y salida final.</p></article>
+          <article class="capability-card"><span>04</span><h3>Fuentes externas</h3><p>Tavily, SerpAPI, Google Places y Open-Meteo aportan contexto para vuelos, destino, actividades, lugares y clima.</p></article>
+          <article class="capability-card"><span>05</span><h3>Datos y acceso</h3><p>Supabase guarda planes y estado; Firebase Auth prepara el control de sesiones y rutas protegidas.</p></article>
+          <article class="capability-card"><span>06</span><h3>Marketing de producto</h3><p>El resultado se presenta como una experiencia clara: mapa, presupuesto, itinerario, recomendaciones y PDF exportable.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap split">
+        <div class="copy">
+          <p class="eyebrow">Diseño del proceso</p>
+          <h2>Del formulario a un activo digital consultable.</h2>
+          <p>El sistema no se limita a responder texto. Convierte un brief de usuario en un plan estructurado con costes, itinerario, mapa, hotel, vuelo, actividades, avisos y PDF. El diseño contempla fallos parciales, avisos accionables y límites del prototipo.</p>
+          <div class="stack">
+            <span>Validación</span><span>Fallback</span><span>Mapa</span><span>PDF</span><span>Coste estimado</span><span>RLS futuro</span><span>Roadmap RELEASE</span>
+          </div>
+        </div>
+        <div class="journey-visual" aria-label="Representación visual del sistema Just Enjoy">
+          <img class="journey-main" src="/assets/just-enjoy/je-plan.webp" alt="Panel visual de planificación de viaje">
+          <img class="journey-mini-a" src="/assets/just-enjoy/je-budget.webp" alt="">
+          <img class="journey-mini-b" src="/assets/just-enjoy/je-culture.webp" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Ejemplo de lógica</p>
+            <h2>La IA se usa dentro de reglas, no como caja negra.</h2>
+          </div>
+          <p>El proyecto documenta entradas, salidas, puntos de decisión y estado de sesión. Esta forma de trabajar es clave para perfiles de AI Product y automatización: diseñar el sistema antes de “pedirle cosas” al modelo.</p>
+        </div>
+        <pre class="code-sample"><code>{
+  "session_id": "travel_2026_...",
+  "destination": "Santorini, Greece",
+  "budget_usd": 3500,
+  "travelers_count": 2,
+  "activity_interests": ["culture", "beach", "gastronomy"],
+  "status": "plan_ready",
+  "warnings": ["hotel dentro de presupuesto", "clima consultado en Open-Meteo"],
+  "next_action": <em>"refine_plan | export_pdf | save_trip"</em>
+}</code></pre>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Decisiones UX + IA</p>
+            <h2>Lo que miraría un recruiter senior o un equipo de producto.</h2>
+          </div>
+          <p>El valor del caso está en la conexión entre usuario, negocio, datos y operación. No es una interfaz bonita aislada: es una propuesta de sistema con control, medición y evolución.</p>
+        </div>
+        <div class="evidence">
+          <article class="evidence-card"><strong>BUILD</strong><div><h3>Prototipo operativo</h3><p>Compilación, prueba de humo y demo end-to-end documentada.</p></div></article>
+          <article class="evidence-card"><strong>ROI</strong><div><h3>Business case honesto</h3><p>Costes y ahorro presentados como estimaciones, separando lo medido de lo pendiente.</p></div></article>
+          <article class="evidence-card"><strong>BPMN</strong><div><h3>Proceso reproducible</h3><p>PDD con reglas, gateways, excepciones, entradas, salidas, KPIs e inventario tecnológico.</p></div></article>
+          <article class="evidence-card"><strong>RGPD</strong><div><h3>Riesgo identificado</h3><p>Limitaciones legales y de privacidad tratadas como roadmap antes de producción.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap split reverse">
+        <div class="learning-collage" aria-label="Resumen visual de aprendizajes de Just Enjoy">
+          <img class="learning-main" src="/assets/just-enjoy/je-dashboard.webp" alt="Mockup visual de dashboard de viaje">
+          <img class="learning-mini-a" src="/assets/just-enjoy/je-roi.webp" alt="">
+          <img class="learning-mini-b" src="/assets/just-enjoy/je-ticket.webp" alt="">
+        </div>
+        <div class="copy">
+          <p class="eyebrow">Aprendizajes</p>
+          <h2>La IA aporta valor cuando el proceso está bien diseñado.</h2>
+          <p>El mayor aprendizaje fue que la calidad no depende solo del modelo. Depende de contratos de datos, validación, fuentes externas, coste, trazabilidad, errores recuperables y una interfaz que haga comprensible el resultado.</p>
+          <div class="actions">
+            <a class="btn-primary" href="https://www.loom.com/share/d6427541f9764c5580b900ef168f33aa" target="_blank" rel="noopener">Ver demo Loom</a>
+            <a class="btn-secondary" href="/#proyectos">Volver a proyectos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section dark">
+      <div class="footer-cta">
+        <p class="eyebrow">Qué demuestra este caso</p>
+        <h2>UX, automatización, agentes IA y criterio de negocio en un mismo proyecto.</h2>
+        <p>Just Enjoy refuerza mi posicionamiento para roles de UX/UI con IA aplicada, Product Designer junior-mid, AI Product Designer junior y perfiles de automatización de procesos.</p>
+        <div class="signature">
+          <img src="/assets/just-enjoy/rod.webp" alt="Ilustración de Rodrigo Negrete Aros">
+          <strong>Rodrigo Negrete Aros</strong>
+          <span>UX/UI Designer junior-mid · IA aplicada</span>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

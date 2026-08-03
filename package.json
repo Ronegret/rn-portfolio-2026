@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite --host 127.0.0.1",
     "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
+    "build": "vite build && node scripts/create-sites-worker.mjs",
     "preview": "vite preview --host 127.0.0.1"
   },
   "dependencies": {

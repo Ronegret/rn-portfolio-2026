@@ -19,6 +19,8 @@ export default defineConfig({
         tomapoly: resolve(__dirname, 'tomapoly/index.html'),
         dedicalo: resolve(__dirname, 'dedicalo/index.html'),
         dedicaloPlay: resolve(__dirname, 'dedicalo-play/index.html'),
+        justEnjoy: resolve(__dirname, 'just-enjoy/index.html'),
+        iberdata: resolve(__dirname, 'iberdata/index.html'),
         cv: resolve(__dirname, 'cv/index.html'),
       },
     },
