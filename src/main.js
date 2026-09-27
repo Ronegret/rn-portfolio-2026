@@ -304,6 +304,19 @@ void main(){
     el.addEventListener('mouseleave',()=>setState(''));
   });
 
+  // Cursor-follow spotlight on featured cards (rodd.es inspired senior touch)
+  document.querySelectorAll('.bfeat .bc, .lab-feat').forEach(el=>{
+    el.addEventListener('mousemove',ev=>{
+      const r=el.getBoundingClientRect();
+      el.style.setProperty('--mx',((ev.clientX-r.left)/r.width*100)+'%');
+      el.style.setProperty('--my',((ev.clientY-r.top)/r.height*100)+'%');
+    },{passive:true});
+    el.addEventListener('mouseleave',()=>{
+      el.style.setProperty('--mx','50%');
+      el.style.setProperty('--my','50%');
+    });
+  });
+
   // Click feedback
   document.addEventListener('mousedown',()=>document.body.classList.add('c-click'));
   document.addEventListener('mouseup',()=>document.body.classList.remove('c-click'));

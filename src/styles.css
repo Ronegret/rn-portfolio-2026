@@ -366,10 +366,35 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .nav-links a.act::after, .nav-links a:hover::after { transform: scaleX(1); }
 
 .nav-r { display: flex; align-items: center; gap: 0.75rem; }
-.nav-lang { display: flex; gap: 2px; background: var(--surf); border: 1px solid var(--bord2); border-radius: 100px; padding: 3px; }
-.nlb { font-size: 11px; font-weight: 700; padding: 4px 9px; border-radius: 100px; color: var(--t2); transition: all 0.2s; cursor: pointer; }
-.nlb.on { background: var(--a1); color: var(--bg); }
-.nlb:hover:not(.on) { color: var(--t1); }
+.nav-lang {
+  display: flex; gap: 2px;
+  background: color-mix(in srgb, var(--surf) 78%, transparent);
+  border: 1px solid var(--bord2);
+  border-radius: 100px; padding: 3px;
+  position: relative;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  transition: border-color .3s, background .3s;
+}
+.nav-lang:hover { border-color: color-mix(in srgb, var(--a1) 45%, var(--bord2)); }
+.nlb {
+  font-size: 11px; font-weight: 800; letter-spacing: .04em;
+  padding: 5px 11px; border-radius: 100px;
+  color: var(--t2);
+  transition: color .25s var(--ease), transform .25s var(--ease), background .35s var(--ease);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  font-family: var(--fm, var(--fb));
+}
+.nlb.on {
+  background: linear-gradient(135deg, var(--a1), color-mix(in srgb, var(--a1) 65%, var(--a2, var(--a1))));
+  color: var(--bg);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--a1) 30%, transparent);
+  transform: translateY(-1px);
+}
+.nlb:hover:not(.on) { color: var(--t1); transform: translateY(-1px); }
+.nlb:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
 
 .nav-cta { font-size: 13px; font-weight: 700; padding: 8px 18px; border-radius: 100px; background: var(--a1); color: var(--bg); display: inline-flex; align-items: center; gap: 5px; transition: all 0.25s var(--ease); white-space: nowrap; cursor: pointer; }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 22px var(--a1g); }
@@ -433,15 +458,68 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .wrap { width: 100%; max-width: 1080px; margin-inline: auto; padding-inline: clamp(1.2rem, 5vw, 2.5rem); }
 .sec { padding-block: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--bord); position: relative; overflow: hidden; }
 
-/* 🚀 HERO SECTION CORREGIDA (Cero espacios muertos, anclado al menú) 🚀 */
-#hero { 
-  display: block; /* Quitamos flex centrado */
-  padding-top: 5px; /* Espacio fijo debajo de la barra */
-  padding-bottom: 40px; 
-  padding-inline: clamp(1.2rem, 4vw, 4rem); 
-  position: relative; overflow: hidden; 
-  min-height: auto; /* Quitamos 100vh que creaba el abismo */
+/* 🚀 HERO SECTION — respiración correcta bajo el nav sticky (66px) */
+#hero {
+  display: block;
+  /* Deja siempre aire debajo del nav sticky (~66px de alto) */
+  padding-top: clamp(88px, 10vw, 128px);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  padding-inline: clamp(1.2rem, 4vw, 4rem);
+  position: relative; overflow: hidden;
+  min-height: auto;
   isolation: isolate;
+}
+
+/* Aurora blob background — subtle senior touch (rodd.es inspired) */
+[data-theme="saas"] #hero::before,
+[data-theme="saas"] #hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+  mix-blend-mode: screen;
+  opacity: .55;
+}
+[data-theme="saas"] #hero::before {
+  width: 620px; height: 620px;
+  top: -280px; left: -180px;
+  background: radial-gradient(circle, rgba(124,92,255,.55), transparent 70%);
+  animation: aurora-drift-a 22s ease-in-out infinite alternate;
+}
+[data-theme="saas"] #hero::after {
+  width: 720px; height: 720px;
+  top: 20%; right: -240px;
+  background: radial-gradient(circle, rgba(0,212,255,.42), transparent 70%);
+  animation: aurora-drift-b 26s ease-in-out infinite alternate;
+}
+@keyframes aurora-drift-a {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(60px, 80px) scale(1.15); }
+  100% { transform: translate(-40px, 40px) scale(0.95); }
+}
+@keyframes aurora-drift-b {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(-70px, 100px) scale(1.1); }
+  100% { transform: translate(30px, -30px) scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="saas"] #hero::before,
+  [data-theme="saas"] #hero::after { animation: none; }
+}
+@media (max-width: 640px) {
+  [data-theme="saas"] #hero::before { width: 360px; height: 360px; }
+  [data-theme="saas"] #hero::after { width: 400px; height: 400px; }
+}
+
+/* Grid lines micro-pattern (visible only in saas theme, very subtle) */
+[data-theme="saas"] #hero {
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-position: -1px -1px;
 }
 #lr-canvas {
   position: absolute;
@@ -454,12 +532,12 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   opacity: 0.58;
 }
 .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 4vw, 4rem); width: 100%; max-width: 1280px; margin-inline: auto; align-items: center;}
-@media(min-width: 980px) { 
-  #hero { padding-top: 10px; }
-  .hero-inner { grid-template-columns: 1.2fr 1fr; gap: 4rem; } 
+@media(min-width: 980px) {
+  #hero { padding-top: clamp(96px, 8vw, 120px); }
+  .hero-inner { grid-template-columns: 1.2fr 1fr; gap: 4rem; }
 }
 @media(max-width: 768px) {
-  #hero { padding-top: max(72px, calc(env(safe-area-inset-top) + 64px)); padding-bottom: 22px; }
+  #hero { padding-top: max(96px, calc(env(safe-area-inset-top) + 84px)); padding-bottom: 22px; }
   #lr-canvas { opacity: 0.32; }
   .hero-inner { gap: 1.35rem; }
   .hero-copy,
@@ -781,16 +859,23 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 @media(max-width: 860px) { .bfeat .bc { flex-direction: column; } .bfeat .bc-img { width: 100%; aspect-ratio: 16/9; min-height: auto; } }
 
 /* Aurora hover glow on featured cards — inspired by rodd.es */
+.bfeat .bc {
+  --mx: 50%; --my: 50%;
+}
 .bfeat .bc::before {
   content: "";
   position: absolute; inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: linear-gradient(120deg,
-    rgba(124,92,255,0) 0%,
-    rgba(124,92,255,.55) 40%,
-    rgba(0,212,255,.55) 60%,
-    rgba(255,62,136,0) 100%);
+  background:
+    radial-gradient(180px circle at var(--mx) var(--my),
+      rgba(255,255,255,.9),
+      rgba(255,255,255,0) 55%),
+    linear-gradient(120deg,
+      rgba(124,92,255,0) 0%,
+      rgba(124,92,255,.55) 40%,
+      rgba(0,212,255,.55) 60%,
+      rgba(255,62,136,0) 100%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
           mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -801,6 +886,22 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   z-index: 2;
 }
 .bfeat .bc:hover::before { opacity: 1; }
+
+/* Spotlight follow behind card content — soft glow that tracks cursor */
+.bfeat .bc .bc-bd { position: relative; }
+.bfeat .bc .bc-bd::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(280px circle at var(--mx) var(--my),
+    color-mix(in srgb, var(--a1) 12%, transparent),
+    transparent 60%);
+  opacity: 0;
+  transition: opacity .5s var(--ease);
+  pointer-events: none;
+  z-index: 0;
+}
+.bfeat .bc:hover .bc-bd::before { opacity: 1; }
+.bfeat .bc .bc-bd > * { position: relative; z-index: 1; }
 
 /* Aurora shimmer on featured tags — subtle senior touch */
 .bc-tag-hi {
@@ -934,16 +1035,43 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 
 /* Rodd.es — Biblioteca open source · Aurora palette · real screenshot */
 .rodd-es-card .bc-img {
-  background: #08090f;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(124,92,255,.32), transparent 45%),
+    radial-gradient(circle at 82% 100%, rgba(0,212,255,.22), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255,62,136,.08), transparent 60%),
+    #050510;
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1rem, 2.5vw, 2rem);
 }
+/* Show the full 1200x630 hero without cropping */
+.rodd-es-card .bc-img img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(124,92,255,.24);
+  transition: transform .7s var(--ease), box-shadow .5s, filter .5s;
+  filter: saturate(1.05);
+}
+.rodd-es-card .bc:hover .bc-img img {
+  transform: scale(1.035) translateY(-2px);
+  box-shadow: 0 28px 80px rgba(124,92,255,.4), 0 0 0 1px rgba(124,92,255,.5);
+  filter: saturate(1.15) brightness(1.03);
+}
+/* Aurora glow overlay on hover */
 .rodd-es-card .bc-img::after {
   content: "";
   position: absolute; inset: 0;
   background:
-    radial-gradient(circle at 20% 0%, rgba(124,92,255,.28), transparent 45%),
-    radial-gradient(circle at 85% 100%, rgba(0,212,255,.22), transparent 50%);
+    radial-gradient(circle at 20% 0%, rgba(124,92,255,.35), transparent 45%),
+    radial-gradient(circle at 85% 100%, rgba(0,212,255,.28), transparent 50%);
   mix-blend-mode: screen;
   pointer-events: none;
   opacity: 0;
@@ -951,20 +1079,6 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   z-index: 1;
 }
 .rodd-es-card .bc:hover .bc-img::after { opacity: 1; }
-.rodd-es-card .bc-img img {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  max-height: none;
-  object-fit: cover;
-  object-position: center;
-  transition: transform .7s var(--ease), filter .5s;
-  filter: saturate(1) brightness(.98);
-}
-.rodd-es-card .bc:hover .bc-img img {
-  transform: scale(1.04);
-  filter: saturate(1.1) brightness(1.05);
-}
 .rodd-es-card .bc-m {
   color: #7c5cff;
   border-color: rgba(124,92,255,.34);
@@ -990,6 +1104,11 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 }
 .rodd-es-card .bc:hover::after { opacity: .35; }
 .rodd-es-card .bc > * { position: relative; z-index: 2; }
+/* On mobile the bfeat stacks: force sensible aspect ratio */
+@media(max-width: 860px) {
+  .rodd-es-card .bc-img { padding: 1rem; min-height: auto; aspect-ratio: 1200/630; }
+  .rodd-es-card .bc-img img { max-height: none; }
+}
 .dedicalo-play-card .bc-img {
   background:
     radial-gradient(circle at 20% 50%, rgba(255,107,43,.18), transparent 40%),
