@@ -762,9 +762,65 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .bc-link { font-size: 11px; font-weight: 800; color: var(--a1); text-transform: uppercase; letter-spacing: 0.12em; display: inline-flex; align-items: center; gap: 5px; margin-top: auto; transition: gap 0.3s var(--ease); cursor: pointer; }
 .bc:hover .bc-link { gap: 11px; }
 .bfeat { grid-column: 1 / -1; }
-.bfeat .bc { flex-direction: row; }
+.bfeat .bc { flex-direction: row; position: relative; }
 .bfeat .bc-img { width: 44%; aspect-ratio: auto; min-height: 240px; }
 @media(max-width: 860px) { .bfeat .bc { flex-direction: column; } .bfeat .bc-img { width: 100%; aspect-ratio: 16/9; min-height: auto; } }
+
+/* Aurora hover glow on featured cards — inspired by rodd.es */
+.bfeat .bc::before {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(120deg,
+    rgba(124,92,255,0) 0%,
+    rgba(124,92,255,.55) 40%,
+    rgba(0,212,255,.55) 60%,
+    rgba(255,62,136,0) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .55s var(--ease);
+  pointer-events: none;
+  z-index: 2;
+}
+.bfeat .bc:hover::before { opacity: 1; }
+
+/* Aurora shimmer on featured tags — subtle senior touch */
+.bc-tag-hi {
+  position: relative; overflow: hidden;
+  background-size: 200% 100%;
+  animation: bc-tag-shimmer 6s ease-in-out infinite;
+}
+@keyframes bc-tag-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+/* Aurora shine sweep across certificate buttons — signals value */
+.edu-cert { position: relative; overflow: hidden; }
+.edu-cert::after {
+  content: "";
+  position: absolute; top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(120deg,
+    transparent 0%,
+    color-mix(in srgb, var(--a1) 45%, transparent) 50%,
+    transparent 100%);
+  transform: skewX(-18deg);
+  pointer-events: none;
+  animation: edu-cert-sweep 4.5s ease-in-out infinite;
+}
+@keyframes edu-cert-sweep {
+  0%,   20% { left: -60%; }
+  60%, 100% { left: 130%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bc-tag-hi, .edu-cert::after { animation: none; }
+  .bfeat .bc::before { transition: none; }
+}
 .zodi-feature .bc-img {
   background:
     radial-gradient(circle at 30% 20%, rgba(184,255,23,0.22), transparent 32%),
@@ -860,6 +916,33 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   color: #ef4444;
   border-color: rgba(239,68,68,.26);
   background: rgba(239,68,68,.1);
+}
+
+/* Rodd.es — Biblioteca open source · Aurora palette */
+.rodd-es-card .bc-img {
+  background:
+    radial-gradient(circle at 18% 0, rgba(124,92,255,.32), transparent 42%),
+    radial-gradient(circle at 82% 80%, rgba(0,212,255,.22), transparent 48%),
+    radial-gradient(circle at 50% 50%, rgba(255,62,136,.12), transparent 60%),
+    #08090f;
+}
+.rodd-es-card .bc-img img {
+  width: 88%;
+  height: 82%;
+  max-width: none;
+  max-height: none;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 40px rgba(124,92,255,.42));
+  transition: transform .5s var(--ease), filter .4s;
+}
+.rodd-es-card .bc:hover .bc-img img {
+  transform: scale(1.05) rotate(-1deg);
+  filter: drop-shadow(0 28px 52px rgba(124,92,255,.6));
+}
+.rodd-es-card .bc-m {
+  color: #7c5cff;
+  border-color: rgba(124,92,255,.34);
+  background: rgba(124,92,255,.12);
 }
 .dedicalo-play-card .bc-img {
   background:
@@ -1000,9 +1083,34 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .edu.open .edu-chv { background: color-mix(in srgb, var(--a1) 11%, transparent); border-color: var(--a1); }
 .edu.open .edu-chv svg { stroke: var(--a1); transform: rotate(180deg); }
 .edu-bd { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1); border-top: 0px solid var(--bord); }
-.edu.open .edu-bd { max-height: 180px; border-top-width: 1px; }
+.edu.open .edu-bd { max-height: 380px; border-top-width: 1px; }
 .edu-bi { padding: 0.6rem 1.1rem; }
 .edu-desc { font-size: 12.5px; color: var(--t2); line-height: 1.65; }
+.edu-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .7rem; }
+.edu-cert {
+  display: inline-flex; align-items: center; gap: .4rem;
+  font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  padding: .45rem .8rem; border-radius: 100px;
+  background: color-mix(in srgb, var(--a1) 13%, transparent);
+  color: var(--a1);
+  border: 1px solid color-mix(in srgb, var(--a1) 30%, transparent);
+  text-decoration: none;
+  transition: background .25s var(--ease), transform .25s var(--ease), color .25s;
+}
+.edu-cert:hover {
+  background: color-mix(in srgb, var(--a1) 22%, transparent);
+  transform: translateY(-1px);
+}
+.edu-cert svg { flex-shrink: 0; }
+.edu-cert-alt {
+  background: transparent;
+  color: var(--t2);
+  border-color: var(--bord2);
+}
+.edu-cert-alt:hover {
+  background: var(--bg3);
+  color: var(--t1);
+}
 
 .validation-head {
   display: grid;

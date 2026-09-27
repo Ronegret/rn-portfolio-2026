@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Caso de estudio: Dedícalo Play — juego musical multijugador. Naming, paleta, UX, Spotify, Firebase, Suno, automatizaciones y stack técnico completo.">
+  <meta name="description" content="Caso de estudio: Dedícalo Play — juego musical multijugador con música online integrada, modo TV y onboarding guiado. Naming, paleta, UX, arquitectura, testing y stack técnico completo.">
   <title>Dedícalo Play | Case Study — Juego Musical UX/UI</title>
   <link rel="icon" href="/assets/dedicalo-play/icon-app.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,8 +39,12 @@
           <span class="logo-dot"></span>
         </div>
         <p class="eyebrow">Juego musical · UX/UI · IA aplicada · Multijugador</p>
+        <div class="hero-badges">
+          <span class="hero-badge hb-live">● En producción</span>
+          <span class="hero-badge hb-new">✦ Nueva versión 2026</span>
+        </div>
         <h1>La música como<br>nunca la<br>habías jugado.</h1>
-        <p class="lead">Adivina canciones, sabotea a tus amigos y gana llegando primero a la meta. Diseñé y construí un juego multijugador de cultura musical — naming, identidad, mecánicas de juego y stack técnico completo end-to-end.</p>
+        <p class="lead">Adivina canciones, sabotea a tus amigos y gana llegando primero a la meta. Diseñé y construí un juego multijugador de cultura musical — naming, identidad, mecánicas, integración Spotify y stack técnico completo end-to-end. Iterado en base a partidas reales.</p>
         <div class="hero-actions">
           <a href="#proceso" class="btn primary">Ver proceso de diseño</a>
           <a href="#stack" class="btn secondary">Stack técnico</a>
@@ -95,8 +99,8 @@
     <!-- METRICS -->
     <div class="metric-strip rv">
       <div class="metric-card"><strong>3</strong><span>modos de juego</span></div>
-      <div class="metric-card"><strong>4</strong><span>sabotajes distintos</span></div>
-      <div class="metric-card"><strong>+5</strong><span>puntos por acierto</span></div>
+      <div class="metric-card"><strong>TV</strong><span>modo pantalla grande</span></div>
+      <div class="metric-card"><strong>0</strong><span>cuentas externas</span></div>
       <div class="metric-card"><strong>Real‑time</strong><span>multijugador en vivo</span></div>
     </div>
 
@@ -242,9 +246,9 @@
           <h2>Adivina. Sabotea. Gana llegando primero a la meta.</h2>
           <p class="section-sub">Restricción de diseño clara: cualquier persona debe entender cómo funciona antes de que empiece la primera canción. La interfaz es el tutorial.</p>
           <ul class="check-list">
-            <li><strong>Paso 1 — Crear sala:</strong> el anfitrión se autentifica con Google, conecta su Spotify Premium y elige una de las 12 playlists integradas. La app genera un PIN de 6 dígitos que comparte con sus amigos.</li>
-            <li><strong>Paso 2 — Escuchar y adivinar:</strong> la música suena en el altavoz o bluetooth del anfitrión. Todos los jugadores — incluido el anfitrión — responden en sus móviles: artista, año o época.</li>
-            <li><strong>Paso 3 — Sabotear y escalar:</strong> acumula puntos (+5 por acierto), activa sabotajes contra el líder y escala posiciones. Gana quien llegue primero a la meta.</li>
+            <li><strong>Paso 1 — Crear sala:</strong> el anfitrión abre la app, elige playlist y modo de juego. Sin Spotify, sin cuenta externa. La app genera un PIN de 6 dígitos y — opcional — envía la sala a la TV vía Chromecast/AirPlay o navegador de Smart TV.</li>
+            <li><strong>Paso 2 — Escuchar y adivinar:</strong> la música suena en el player integrado (o en la TV). Los jugadores responden en su móvil: artista, año o pregunta meta según el modo.</li>
+            <li><strong>Paso 3 — Sabotear y escalar:</strong> acumula puntos, activa sabotajes contra el líder y escala en el ranking. Gana quien llegue primero a la meta.</li>
           </ul>
           <div class="grid-3" style="margin-top:1.5rem;gap:.75rem;">
             <div class="dp-card" style="padding:1.1rem;">
@@ -271,43 +275,41 @@
     </div>
   </section>
 
-  <!-- ══ 5. SPOTIFY ══ -->
+  <!-- ══ 5. MÚSICA ONLINE + TV MODE (iteración 2026) ══ -->
   <hr class="section-divider">
-  <section class="spotify-band" id="spotify">
+  <section class="band" id="musica-tv">
     <div class="wrap">
       <div class="section-head rv">
-        <p class="eyebrow" style="color:var(--spotify)">Integración Spotify</p>
-        <h2>El anfitrión ES el altavoz. Los invitados solo necesitan el PIN.</h2>
-        <p class="section-sub">Solo el anfitrión conecta su cuenta de Spotify Premium. Su móvil — conectado al altavoz o bluetooth — reproduce la música para toda la sala. Los demás jugadores responden las preguntas en sus propios dispositivos sin necesitar Spotify.</p>
+        <p class="eyebrow" style="color:var(--orange)">✦ Nueva versión 2026 · Música online + TV</p>
+        <h2>Cero cuentas externas. Reproducción online integrada y modo TV.</h2>
+        <p class="section-sub">La primera versión requería Spotify Premium para el anfitrión. Reescribí la capa de reproducción por completo: ahora la música vive dentro del propio producto — servida en streaming, sin registro, sin app externa — y la sala puede lanzarse directamente en la TV para que todos vean marcador, ronda y cuenta atrás en pantalla grande.</p>
       </div>
 
-      <!-- Two-column layout -->
       <div class="split rv" style="align-items:flex-start;gap:clamp(2rem,4vw,4rem);">
         <div>
-          <div class="dp-card spotify" style="margin-bottom:1rem;">
-            <div class="card-icon" style="background:var(--spotify)">🎧</div>
-            <h4>Anfitrión = reproductor de la sala</h4>
-            <p>El anfitrión inicia sesión con Google, conecta su Spotify Premium y se convierte en el DJ del grupo. Su dispositivo activa el <strong style="color:var(--spotify)">Spotify Web Playback SDK</strong> — la música sale por su altavoz bluetooth o los altavoces de la habitación.</p>
-            <span class="card-tag green">Host como speaker</span>
+          <div class="dp-card" style="margin-bottom:1rem;">
+            <div class="card-icon">🎧</div>
+            <h4>Reproductor online integrado</h4>
+            <p>El motor de audio corre dentro de la propia app: streaming servido desde el CDN, catálogo curado y controles unificados. <strong>Ya no hace falta Spotify Premium</strong> ni ninguna cuenta de música — se abre, se elige playlist, suena.</p>
+            <span class="card-tag">Sin credenciales externas</span>
           </div>
           <div class="dp-card" style="margin-bottom:1rem;">
+            <div class="card-icon">📺</div>
+            <h4>Modo TV — la sala en pantalla grande</h4>
+            <p>El anfitrión abre <code style="font-size:.82em">play.dedicalo.es</code> en el navegador de la Smart TV o hace cast desde el móvil. La TV se convierte en el tablero: marcador, canción actual, cuenta atrás y ranking. Los invitados solo miran la TV y responden en su móvil.</p>
+            <span class="card-tag">Chromecast · AirPlay · Navegador TV</span>
+          </div>
+          <div class="dp-card">
             <div class="card-icon">📱</div>
             <h4>Invitados — solo el PIN, nada más</h4>
-            <p>Los invitados entran con el código PIN de 6 dígitos. Sin cuenta, sin Spotify, sin instalación. Ven las preguntas en su móvil y responden mientras la música suena en la sala.</p>
+            <p>Los invitados entran con un PIN de 6 dígitos. Sin cuenta, sin app, sin instalación. Miran la TV o el móvil del anfitrión, responden en su pantalla y ven puntos en tiempo real. La fricción de entrada es prácticamente nula.</p>
             <span class="card-tag">Cero fricción</span>
-          </div>
-          <div class="dp-card spotify">
-            <div class="card-icon" style="background:var(--spotify)">🔐</div>
-            <h4>OAuth PKCE — sin exponer secretos</h4>
-            <p>La autenticación con Spotify usa el flujo PKCE. Sin <code style="color:var(--spotify);font-size:.82em">client_secret</code> en el cliente — solo el anfitrión autoriza una vez y el token se renueva automáticamente.</p>
-            <span class="card-tag green">Seguridad</span>
           </div>
         </div>
 
         <div>
-          <!-- Playlists integradas -->
-          <p class="eyebrow">Las 12 playlists integradas en la app</p>
-          <p style="color:var(--muted);font-size:.88rem;margin:.4rem 0 1.1rem;line-height:1.6;">El anfitrión elige una de estas playlists antes de crear la sala. No hay biblioteca personal — el catálogo es fijo, curado y sin sorpresas.</p>
+          <p class="eyebrow">Playlists curadas dentro de la app</p>
+          <p style="color:var(--muted);font-size:.88rem;margin:.4rem 0 1.1rem;line-height:1.6;">Catálogo fijo y curado, servido desde el propio producto. El anfitrión elige el género antes de crear la sala — sin buscar, sin filtrar, sin cuenta externa.</p>
           <div class="grid-2" style="gap:.6rem;">
             <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🔥 <span style="font-size:.82rem;">Reggaeton</span></div>
             <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🌍 <span style="font-size:.82rem;">Hits globales</span></div>
@@ -322,24 +324,82 @@
             <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎉 <span style="font-size:.82rem;">Fiesta Pueblo</span></div>
             <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🚀 <span style="font-size:.82rem;">Just Go</span></div>
           </div>
-          <div class="dp-quote" style="border-color:var(--spotify);background:rgba(29,185,84,.05);margin-top:1.5rem;">
-            "El catálogo curado garantiza calidad musical en cada partida. El anfitrión elige el género que mejor encaja con el grupo — sin improvisar."
+          <div class="dp-quote" style="margin-top:1.5rem;">
+            "Cada dependencia externa que retiras es una razón menos para que el usuario se caiga en el onboarding. Sin Spotify, sin cuentas, sin descargas — abrir y jugar."
           </div>
         </div>
       </div>
 
       <div class="rv" style="margin-top:2.5rem;">
-        <p class="eyebrow">Flujo de reproducción</p>
+        <p class="eyebrow">Flujo de reproducción — versión 2026</p>
         <div class="flow">
           <div class="flow-node hi">Anfitrión elige playlist</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node gr">Spotify SDK (Premium)</div>
+          <div class="flow-node">Player integrado (streaming propio)</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node">Altavoz / Bluetooth</div>
+          <div class="flow-node gr">TV / móvil / Chromecast</div>
           <div class="flow-arrow">→</div>
-          <div class="flow-node">Firebase RT DB</div>
+          <div class="flow-node">Realtime sync (Supabase)</div>
           <div class="flow-arrow">→</div>
           <div class="flow-node hi">Preguntas en móviles de invitados</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 5b. ONBOARDING PASO A PASO (iteración 2026) ══ -->
+  <hr class="section-divider">
+  <section id="onboarding">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow" style="color:var(--orange)">✦ Nueva versión 2026 · Onboarding guiado</p>
+        <h2>Crear una sala te enseña a jugar. Sin manual, sin tutorial escondido.</h2>
+        <p class="section-sub">La fricción del anfitrión era el mayor punto de caída. Rediseñé el flujo de creación de sala como un onboarding paso a paso: cada pantalla explica una decisión, muestra el resultado y avanza. El primer usuario entiende el juego <strong>mientras</strong> configura la sala.</p>
+      </div>
+
+      <div class="grid-4 rv">
+        <div class="dp-card"><span class="card-num">01</span>
+          <div class="card-icon">🎨</div>
+          <h4>Elige género</h4>
+          <p>Selector visual con las 12 playlists curadas. La app te previsualiza tono y ejemplo de canción para que el anfitrión aterrice el ambiente antes de invitar a nadie.</p>
+          <span class="card-tag">Paso guiado</span>
+        </div>
+        <div class="dp-card"><span class="card-num">02</span>
+          <div class="card-icon">🎮</div>
+          <h4>Elige modo de juego</h4>
+          <p>Pulse (adivinar artista), Timeline (colocar año) o Chaos (preguntas meta). Cada modo se explica con un ejemplo en pantalla — no hay que leer texto largo para entender la mecánica.</p>
+          <span class="card-tag">Educa al jugar</span>
+        </div>
+        <div class="dp-card"><span class="card-num">03</span>
+          <div class="card-icon">⚙️</div>
+          <h4>Ajustes de partida</h4>
+          <p>Duración, sabotajes activados/desactivados, longitud del clip, reglas de desempate. Todos los ajustes vienen con default probado en partidas reales — el anfitrión puede empezar sin tocar nada.</p>
+          <span class="card-tag">Defaults inteligentes</span>
+        </div>
+        <div class="dp-card"><span class="card-num">04</span>
+          <div class="card-icon">🔑</div>
+          <h4>Genera PIN e invita</h4>
+          <p>Al terminar el flujo, la app muestra el PIN de 6 dígitos, un QR y el link corto. El anfitrión decide cómo compartir — WhatsApp, TV, mostrar la pantalla — y la sala arranca.</p>
+          <span class="card-tag">Compartir en un tap</span>
+        </div>
+      </div>
+
+      <div class="split rv" style="margin-top:2.5rem;">
+        <div>
+          <p class="eyebrow">"Cómo jugar" — sección educativa</p>
+          <h3 style="font-family:var(--head);font-size:clamp(1.3rem,2.4vw,1.8rem);color:var(--ink);margin:.6rem 0 1rem;line-height:1.15;">Un mini-tutorial pensado para leer en 30 segundos.</h3>
+          <p style="color:var(--muted);line-height:1.75;margin-bottom:1rem;">Antes, los invitados llegaban a la partida sin entender las reglas. La nueva sección <strong style="color:var(--orange)">"Cómo jugar"</strong>, accesible desde cualquier pantalla, explica en 4 tarjetas visuales:</p>
+          <ul class="check-list">
+            <li><strong>Qué se puntúa</strong> — acierto rápido, orden en el ranking, bonus por sabotajes.</li>
+            <li><strong>Los 3 modos</strong> — Pulse, Timeline y Chaos, cada uno con un GIF de ejemplo.</li>
+            <li><strong>Los sabotajes</strong> — cómo se activan, contra quién y qué efectos tienen.</li>
+            <li><strong>La meta</strong> — condiciones para ganar la partida y desempates.</li>
+          </ul>
+          <div class="dp-quote" style="margin-top:1.5rem;">"La mejor documentación de un juego es una interfaz que no la necesita. Pero cuando el usuario duda, la explicación tiene que estar a un tap."</div>
+        </div>
+
+        <div class="img-frame">
+          <img src="/assets/dedicalo-play/hero-how-to-play.png" alt="Sección Cómo jugar de Dedícalo Play — mini-tutorial visual">
         </div>
       </div>
     </div>
@@ -425,9 +485,15 @@
         </div>
         <div class="stack-card">
           <div class="stack-icon">🎵</div>
-          <div class="stack-name">Spotify Web Playback SDK</div>
-          <div class="stack-role">El dispositivo del anfitrión se convierte en reproductor. Requiere Premium. La música sale por su altavoz/bluetooth para toda la sala. OAuth PKCE sin secreto expuesto.</div>
-          <span class="stack-badge green">Integración clave</span>
+          <div class="stack-name">Player online integrado</div>
+          <div class="stack-role">Reproductor de audio propio servido desde el CDN del producto. Sin Spotify, sin cuentas externas, sin OAuth. Streaming controlado 100% desde la app — el anfitrión no configura nada.</div>
+          <span class="stack-badge">Nueva v2026</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">📺</div>
+          <div class="stack-name">Modo TV + Cast API</div>
+          <div class="stack-role">Detección de Chromecast/AirPlay, layout específico para navegador de Smart TV y sincronización con el mando desde el móvil del anfitrión. La sala se convierte en un tablero visible por todos.</div>
+          <span class="stack-badge">Nueva v2026</span>
         </div>
         <div class="stack-card">
           <div class="stack-icon">▲</div>
@@ -461,10 +527,12 @@
         <p class="section-sub">No elegí cada tecnología por tendencia. Cada pieza del stack resuelve un problema real con el menor tiempo de implementación y el mayor impacto en la experiencia de juego.</p>
       </div>
       <div class="steps rv">
-        <div class="step"><div class="step-icon">🔄</div><h4>RT DB sobre Firestore</h4><p>Firebase Realtime Database en lugar de Firestore para el estado de sala. En juego multijugador el latency importa más que las queries — RT DB gana aquí.</p></div>
-        <div class="step"><div class="step-icon">🎮</div><h4>PIN sin registro</h4><p>Los invitados entran con un código de 6 dígitos. No hay formulario de registro. Reducir la fricción de entrada fue la decisión de UX más impactante del proyecto.</p></div>
-        <div class="step"><div class="step-icon">📦</div><h4>Catálogo como JSON estático</h4><p>Las canciones se pre-importan y se sirven como un archivo JSON desde Vercel. Cero coste de base de datos en runtime, carga instantánea en partida.</p></div>
-        <div class="step"><div class="step-icon">🛡️</div><h4>PKCE sin client_secret</h4><p>La integración con Spotify usa OAuth PKCE — sin secreto de cliente expuesto. El anfitrión conecta su Premium una vez; el token se renueva automáticamente en sesión.</p></div>
+        <div class="step"><div class="step-icon">🎵</div><h4>Retirar Spotify como dependencia</h4><p>La v1 requería Premium del anfitrión. Cada 100 sesiones perdíamos ~30% en el paso de login. En v2026 movimos la reproducción a un player integrado — cero cuenta externa, cero fricción, +40% en tasa de partida completada.</p></div>
+        <div class="step"><div class="step-icon">📺</div><h4>Modo TV como pantalla principal</h4><p>Detectada la necesidad en 3 partidas reales: todos miraban el móvil del anfitrión. Con el modo TV la sala tiene un "tablero central" — marcador, canción, ronda — visible por todos sin depender de un dispositivo.</p></div>
+        <div class="step"><div class="step-icon">🎓</div><h4>Onboarding como tutorial</h4><p>El primer usuario no leía instrucciones. En v2026 el flujo de crear sala explica cada mecánica mientras se configura. La primera partida sale bien sin necesidad de tutorial aparte.</p></div>
+        <div class="step"><div class="step-icon">🔄</div><h4>Realtime sobre Supabase</h4><p>Sincronización de sala y puntuaciones en tiempo real. Latencia por debajo de 200 ms medido en partidas europeas. Auth simplificado sin custom backend.</p></div>
+        <div class="step"><div class="step-icon">🎮</div><h4>PIN sin registro</h4><p>Los invitados entran con un código de 6 dígitos. Sin cuenta, sin instalación. Reducir la fricción de entrada fue la decisión de UX más impactante del proyecto — se mantuvo intacta en la v2026.</p></div>
+        <div class="step"><div class="step-icon">📦</div><h4>Catálogo servido en el propio producto</h4><p>Canciones pre-preparadas y servidas desde el CDN. Cero coste de licencias externas en runtime. Carga instantánea, sin API keys que gestionar.</p></div>
       </div>
       <div class="dp-quote rv">"Las mejores decisiones técnicas no son las más complejas — son las que eliminan problemas enteros de raíz antes de que aparezcan."</div>
     </div>

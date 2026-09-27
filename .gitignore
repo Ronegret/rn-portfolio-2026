@@ -5,3 +5,8 @@ dist/
 .env.local
 
 .vercel
+
+# working scratch folders (local only)
+tmp/
+zodi-chat/
+
