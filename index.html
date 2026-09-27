@@ -65,36 +65,22 @@
 
 <a href="#hero" class="skip-link">Saltar al contenido principal</a>
 
-<!-- PRELOADER — entrada tipo rodd.es adaptada al portfolio (estilos inline críticos para asegurar visibilidad) -->
-<div id="preloader" aria-hidden="true" style="position:fixed;inset:0;z-index:100000;background:#08090f;overflow:hidden;">
-  <div class="pl-top" style="position:absolute;left:0;right:0;top:0;height:50%;background:#08090f;z-index:2;"></div>
-  <div class="pl-bottom" style="position:absolute;left:0;right:0;bottom:0;height:50%;background:#08090f;z-index:2;"></div>
-  <div class="pl-halo"></div>
-  <div class="pl-grain"></div>
-  <div class="pl-meta pl-meta-tl"><span>RODRIGO&nbsp;NEGRETE · BARCELONA</span></div>
-  <div class="pl-meta pl-meta-tr"><span>AI&nbsp;PRODUCT&nbsp;DESIGNER · 2026</span></div>
-  <div class="pl-center" style="position:absolute;inset:0;display:grid;place-items:center;z-index:5;">
-    <h1 class="pl-title" aria-label="Rodrigo Negrete" style="display:flex;align-items:flex-end;flex-wrap:wrap;justify-content:center;gap:.28em;color:#fff;font-family:'Outfit',sans-serif;font-weight:800;line-height:.95;letter-spacing:-.04em;font-size:clamp(2.4rem,7.5vw,6rem);margin:0;padding:0 1rem;">
-      <span class="pl-word pl-word-1"><span class="pl-mask"><span class="pl-char">R</span></span><span class="pl-mask"><span class="pl-char">o</span></span><span class="pl-mask"><span class="pl-char">d</span></span><span class="pl-mask"><span class="pl-char">r</span></span><span class="pl-mask"><span class="pl-char">i</span></span><span class="pl-mask"><span class="pl-char">g</span></span><span class="pl-mask"><span class="pl-char">o</span></span></span>
-      <span class="pl-word pl-word-2"><span class="pl-mask"><span class="pl-char">N</span></span><span class="pl-mask"><span class="pl-char">e</span></span><span class="pl-mask"><span class="pl-char">g</span></span><span class="pl-mask"><span class="pl-char">r</span></span><span class="pl-mask"><span class="pl-char">e</span></span><span class="pl-mask"><span class="pl-char">t</span></span><span class="pl-mask"><span class="pl-char">e</span></span></span>
-      <span class="pl-dot" id="pl-dot"></span>
+<!-- PRELOADER — intro minimalista y profesional (~2s) -->
+<div id="preloader" aria-hidden="true">
+  <div class="pl-meta pl-meta-tl">Rodrigo Negrete · Barcelona</div>
+  <div class="pl-meta pl-meta-tr">AI Product Designer · 2026</div>
+  <div class="pl-center">
+    <h1 class="pl-name" aria-label="Rodrigo Negrete">
+      <span class="pl-first">Rodrigo</span><span class="pl-space">&nbsp;</span><span class="pl-last">Negrete</span><span class="pl-dot"></span>
     </h1>
-    <p class="pl-sub"><span>Bienvenido al portfolio</span></p>
+    <p class="pl-line" aria-hidden="true"></p>
   </div>
-  <div class="pl-beam" id="pl-beam"></div>
-  <div class="pl-meta pl-meta-bl"><span>© 2026 · Portfolio</span></div>
-  <div class="pl-meta pl-meta-br">
-    <span class="pl-skip">Click o tecla para saltar</span>
-    <span class="pl-count" id="pl-count">000</span>
-  </div>
+  <div class="pl-meta pl-meta-bl">© 2026 · Portfolio</div>
+  <div class="pl-meta pl-meta-br"><span class="pl-count" id="pl-count">00</span></div>
 </div>
-<style>
-  /* Critical-inline: si el CSS externo falla, garantiza que el preloader se vea */
-  html.pl-ready #preloader { visibility: visible !important; opacity: 1 !important; }
-</style>
 <script>
-  /* Marca el html como pl-ready ANTES de que cargue nada — evita FOUC del preloader */
-  document.documentElement.classList.add('pl-locked','pl-ready');
+  /* Bloquear scroll durante el preloader para evitar salto */
+  document.documentElement.classList.add('pl-locked');
 </script>
 
 <div class="lang-curtain" id="lang-curtain" aria-hidden="true">

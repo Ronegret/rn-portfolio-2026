@@ -9,10 +9,11 @@ let LANG = 'es';
   const pl = document.getElementById('preloader');
   if(!pl) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Query ?intro=0 fuerza saltar (solo para debugging); si no, SIEMPRE se muestra
+  // Query ?intro=0 fuerza saltar (solo para debug); si no, SIEMPRE se muestra
   const params = new URLSearchParams(location.search);
   if(params.get('intro') === '0'){
     pl.remove();
+    document.documentElement.classList.remove('pl-locked');
     return;
   }
   // Limpiar keys antiguas que ya no usamos
@@ -21,57 +22,40 @@ let LANG = 'es';
   document.documentElement.classList.add('pl-locked');
   document.body.classList.add('pl-locked');
 
-  // Counter 000 -> 100
+  // Counter 00 -> 99 durante la linea de progreso (1.6s)
   const counter = document.getElementById('pl-count');
-  const totalMs = reduced ? 400 : 3700;
-  const startMs = reduced ? 0 : 100;
+  const totalMs = reduced ? 300 : 1600;
+  const startMs = reduced ? 0 : 150;
   const t0 = performance.now();
   function tick(now){
     const p = Math.min(1, Math.max(0, (now - t0 - startMs) / totalMs));
-    if(counter) counter.textContent = String(Math.round(p * 100)).padStart(3,'0');
+    if(counter) counter.textContent = String(Math.round(p * 99)).padStart(2,'0');
     if(p < 1) requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 
-  // Timeline coreografiada:
-  // 1. Hold: se ven las letras, dot brilla — 4s
-  // 2. pl-fade: letras y dot empiezan a salir (dot hace burst)
-  // 3. pl-split: cortinas se disuelven, halo se expande cubriendo la pantalla,
-  //    fondo aurora del hero aparece por debajo
-  // 4. pl-done: preloader fade final revelando el hero completo
+  // Timeline minimalista:
+  // 1. Aparecen los metadatos y el nombre (0-1s)
+  // 2. Línea de progreso llena en 1.6s
+  // 3. Hold breve (200ms) para que el ojo aterrice
+  // 4. Fade out completo (500ms) revelando el portfolio
+  // Total: ~2.3s
   let done = false;
-  let faded = false;
   function finish(){
     if(done) return; done = true;
-    pl.classList.add('pl-done');
+    pl.classList.add('pl-out');
     document.documentElement.classList.remove('pl-locked');
     document.body.classList.remove('pl-locked');
-    // Esperar a que termine la transición de opacity antes de esconderlo
     setTimeout(()=>{
       pl.classList.add('pl-gone');
       pl.remove();
-    }, 900);
+    }, 550);
   }
-  function playFadeAndSplit(){
-    if(faded) return; faded = true;
-    pl.classList.add('pl-fade');
-    // Split (halo expand + cortinas dissolve) empieza casi enseguida — hace overlap
-    // con las letras saliendo para que la transición sea continua
-    setTimeout(()=> pl.classList.add('pl-split'), reduced ? 60 : 250);
-    // Finish llama a pl-done que hace fade out global del preloader entero
-    setTimeout(finish, reduced ? 500 : 1600);
-  }
-  const holdMs = reduced ? 400 : 4000;
-  setTimeout(playFadeAndSplit, holdMs);
+  const holdMs = reduced ? 400 : 2000;
+  setTimeout(finish, holdMs);
 
-  function skip(){
-    if(done) return;
-    if(!faded){
-      faded = true;
-      pl.classList.add('pl-fade','pl-split');
-      setTimeout(finish, 700);
-    }
-  }
+  // Skip con click o tecla
+  function skip(){ if(!done) finish(); }
   pl.addEventListener('pointerdown', skip);
   window.addEventListener('keydown', e=>{
     if(e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip();
