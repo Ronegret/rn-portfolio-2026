@@ -33,7 +33,12 @@ let LANG = 'es';
   }
   requestAnimationFrame(tick);
 
-  // Timeline
+  // Timeline coreografiada:
+  // 1. Hold: se ven las letras, dot brilla — 4s
+  // 2. pl-fade: letras y dot empiezan a salir (dot hace burst)
+  // 3. pl-split: cortinas se disuelven, halo se expande cubriendo la pantalla,
+  //    fondo aurora del hero aparece por debajo
+  // 4. pl-done: preloader fade final revelando el hero completo
   let done = false;
   let faded = false;
   function finish(){
@@ -41,14 +46,20 @@ let LANG = 'es';
     pl.classList.add('pl-done');
     document.documentElement.classList.remove('pl-locked');
     document.body.classList.remove('pl-locked');
-    setTimeout(()=>{ pl.remove(); }, 200);
+    // Esperar a que termine la transición de opacity antes de esconderlo
+    setTimeout(()=>{
+      pl.classList.add('pl-gone');
+      pl.remove();
+    }, 900);
   }
   function playFadeAndSplit(){
     if(faded) return; faded = true;
     pl.classList.add('pl-fade');
-    // Dot travels to center visually — CSS handles the fade
-    setTimeout(()=> pl.classList.add('pl-split'), reduced ? 100 : 380);
-    setTimeout(finish, reduced ? 700 : 2400);
+    // Split (halo expand + cortinas dissolve) empieza casi enseguida — hace overlap
+    // con las letras saliendo para que la transición sea continua
+    setTimeout(()=> pl.classList.add('pl-split'), reduced ? 60 : 250);
+    // Finish llama a pl-done que hace fade out global del preloader entero
+    setTimeout(finish, reduced ? 500 : 1600);
   }
   const holdMs = reduced ? 400 : 4000;
   setTimeout(playFadeAndSplit, holdMs);
@@ -58,7 +69,7 @@ let LANG = 'es';
     if(!faded){
       faded = true;
       pl.classList.add('pl-fade','pl-split');
-      setTimeout(finish, 600);
+      setTimeout(finish, 700);
     }
   }
   pl.addEventListener('pointerdown', skip);

@@ -111,49 +111,92 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
   position: fixed; inset: 0; z-index: 100000;
   overflow: hidden;
   pointer-events: auto;
-  background: var(--bg);
+  background: #08090f;
   display: block;
+  transition: opacity .8s cubic-bezier(.22,1,.36,1);
 }
-#preloader.pl-done { pointer-events: none; visibility: hidden; }
+#preloader.pl-done {
+  pointer-events: none;
+  opacity: 0;
+}
+#preloader.pl-gone { visibility: hidden; }
 
+/* Cortinas — ahora un solo fondo unificado que se disuelve (no split) */
 .pl-top, .pl-bottom {
   position: absolute; left: 0; right: 0;
   height: 50%;
-  background: var(--bg);
-  transform: translateY(0);
-  will-change: transform;
+  background: #08090f;
   z-index: 2;
 }
 .pl-top { top: 0; }
 .pl-top::after {
-  content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 220px;
-  background: radial-gradient(90% 120% at 50% 100%, rgba(109, 92, 245, .35), transparent 62%);
+  content: ""; position: absolute; inset-inline: 0; bottom: 0; height: 320px;
+  background: radial-gradient(90% 120% at 50% 100%, rgba(109, 92, 245, .28), transparent 62%);
   pointer-events: none;
 }
 .pl-bottom { bottom: 0; }
 .pl-bottom::before {
-  content: ""; position: absolute; inset-inline: 0; top: 0; height: 220px;
-  background: radial-gradient(90% 120% at 50% 0%, rgba(61, 231, 255, .28), transparent 62%);
+  content: ""; position: absolute; inset-inline: 0; top: 0; height: 320px;
+  background: radial-gradient(90% 120% at 50% 0%, rgba(61, 231, 255, .22), transparent 62%);
   pointer-events: none;
 }
-#preloader.pl-split .pl-top    { animation: pl-split-top 1.1s cubic-bezier(.87,0,.13,1) forwards; }
-#preloader.pl-split .pl-bottom { animation: pl-split-bot 1.1s cubic-bezier(.87,0,.13,1) forwards; }
-@keyframes pl-split-top { to { transform: translateY(-100%); } }
-@keyframes pl-split-bot { to { transform: translateY(100%);  } }
+/* Salida: en vez de split, ambas mitades se fusionan con fade */
+#preloader.pl-split .pl-top,
+#preloader.pl-split .pl-bottom {
+  animation: pl-panel-dissolve 1.1s cubic-bezier(.87,0,.13,1) .1s forwards;
+}
+@keyframes pl-panel-dissolve {
+  to { opacity: 0; }
+}
 
+/* Halo central: pulsa durante el hold y se EXPANDE cubriendo la pantalla
+   en la salida — se convierte en el fondo aurora del hero (continuidad visual) */
 .pl-halo {
   position: absolute; left: 50%; top: 50%;
   width: 60vmin; height: 60vmin;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(91, 70, 210, .32), transparent 65%);
+  background: radial-gradient(circle,
+    rgba(139, 123, 255, .55) 0%,
+    rgba(91, 70, 210, .35) 30%,
+    rgba(61, 231, 255, .18) 55%,
+    transparent 75%);
   pointer-events: none;
-  animation: pl-halo-pulse 4s ease-in-out infinite alternate;
+  animation: pl-halo-pulse 3.6s ease-in-out infinite alternate;
   z-index: 3;
+  will-change: transform, opacity;
 }
 @keyframes pl-halo-pulse {
-  from { transform: translate(-50%, -50%) scale(.94); opacity: .8; }
-  to   { transform: translate(-50%, -50%) scale(1.06); opacity: 1; }
+  from { transform: translate(-50%, -50%) scale(.94); opacity: .85; }
+  to   { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}
+/* Al salir, el halo se EXPANDE llenando toda la pantalla y se desvanece.
+   Esto crea la ilusión de que el aurora del hero "sale" del preloader. */
+#preloader.pl-split .pl-halo {
+  animation: pl-halo-expand 1.3s cubic-bezier(.22,1,.36,1) forwards;
+}
+@keyframes pl-halo-expand {
+  0%   { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  60%  { transform: translate(-50%, -50%) scale(4); opacity: .7; }
+  100% { transform: translate(-50%, -50%) scale(6); opacity: 0; }
+}
+
+/* Un segundo halo enorme que sale ANTES de que se disuelvan las cortinas
+   para que se vea aurora del hero por debajo */
+#preloader.pl-split::before {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 45% at 15% 0%, rgba(124,92,255,.35), transparent 60%),
+    radial-gradient(50% 40% at 90% 10%, rgba(0,212,255,.28), transparent 60%),
+    radial-gradient(70% 50% at 50% 100%, rgba(255,62,136,.14), transparent 60%);
+  opacity: 0;
+  animation: pl-hero-preview .8s .5s ease-out forwards;
+  z-index: 1;
+  pointer-events: none;
+}
+@keyframes pl-hero-preview {
+  to { opacity: 1; }
 }
 .pl-grain {
   position: absolute; inset: 0;
@@ -214,18 +257,15 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
 .pl-word { display: inline-flex; }
 /* "Rodrigo" — blanco puro */
 .pl-word-1 .pl-char { color: #ffffff; }
-/* "Negrete" — gradient violeta → cian aplicado A CADA letra (el background-clip
-   no se propaga por el padre cuando los hijos tienen transform propio) */
+/* "Negrete" — color sólido violeta claro brillante con glow.
+   Se descarta el gradient text (background-clip:text combinado con la
+   animación deja las letras invisibles en muchos navegadores). */
 .pl-word-2 .pl-char {
-  /* Fallback color sólido si el background-clip falla en el navegador */
-  color: #a493ff;
-  background: linear-gradient(120deg, #7c5cff 0%, #a493ff 45%, #3de7ff 100%);
-  -webkit-background-clip: text;
-          background-clip: text;
-  -webkit-text-fill-color: transparent;
-          text-fill-color: transparent;
-  /* Animación SIN blur — el filter blur combinado con background-clip:text
-     hace que las letras desaparezcan en la mayoria de navegadores */
+  color: #c9beff;
+  text-shadow:
+    0 0 10px rgba(139, 123, 255, .65),
+    0 0 24px rgba(109, 92, 245, .40),
+    0 0 48px rgba(61, 231, 255, .22);
   animation: pl-word2-char-in 1.1s cubic-bezier(.16,1,.3,1) forwards !important;
 }
 @keyframes pl-word2-char-in {
@@ -233,10 +273,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
   to   { transform: translateY(0);    opacity: 1; }
 }
 #preloader.pl-fade .pl-word-2 .pl-char {
-  animation: pl-word2-char-out .55s cubic-bezier(.55,0,.65,.15) forwards !important;
+  animation: pl-word2-char-out .6s cubic-bezier(.55,0,.65,.15) forwards !important;
 }
 @keyframes pl-word2-char-out {
-  to { transform: translateY(-20%); opacity: 0; }
+  to { transform: translateY(-30%) scale(.85); opacity: 0; text-shadow: 0 0 30px rgba(139,123,255,.9); }
 }
 .pl-mask {
   display: inline-block;
@@ -271,9 +311,9 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
 @keyframes pl-char-in {
   to { transform: translateY(0); filter: blur(0); opacity: 1; }
 }
-#preloader.pl-fade .pl-char { animation: pl-char-out .55s cubic-bezier(.55,0,.65,.15) forwards; }
+#preloader.pl-fade .pl-char { animation: pl-char-out .6s cubic-bezier(.55,0,.65,.15) forwards; }
 @keyframes pl-char-out {
-  to { transform: translateY(-20%); filter: blur(8px); opacity: 0; }
+  to { transform: translateY(-30%) scale(.85); filter: blur(6px); opacity: 0; }
 }
 .pl-dot {
   display: inline-block;
@@ -291,10 +331,13 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
 }
 @keyframes pl-dot-in { to { transform: scale(1); opacity: 1; } }
 @keyframes pl-dot-blink { 50% { opacity: .12; } }
-#preloader.pl-fade .pl-dot { animation: pl-dot-out .8s cubic-bezier(.87,0,.13,1) forwards; }
-@keyframes pl-dot-out {
-  70% { transform: scale(1); }
-  100% { transform: scale(.4); opacity: 0; }
+/* En la salida el dot hace un "burst": crece grande y se desvanece, dejando la sensación
+   de que su energía se transforma en el aurora del hero */
+#preloader.pl-fade .pl-dot { animation: pl-dot-burst 1.1s cubic-bezier(.16,1,.3,1) forwards; }
+@keyframes pl-dot-burst {
+  0%   { transform: scale(1);   opacity: 1; box-shadow: 0 0 .5em rgba(109,92,245,.8), 0 0 1em rgba(61,231,255,.35); }
+  40%  { transform: scale(2.6); opacity: .8; box-shadow: 0 0 3em rgba(109,92,245,.9), 0 0 6em rgba(61,231,255,.6); }
+  100% { transform: scale(8);   opacity: 0; box-shadow: 0 0 8em rgba(109,92,245,0),   0 0 16em rgba(61,231,255,0); }
 }
 .pl-sub {
   position: absolute;
@@ -332,12 +375,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
   pointer-events: none;
   z-index: 6;
 }
-#preloader.pl-split .pl-beam {
-  animation: pl-beam-in .8s cubic-bezier(.16,1,.3,1) forwards,
-             pl-beam-stretch .9s .55s cubic-bezier(.55,0,.65,1) forwards;
+/* Beam de luz sutil al pasar del hold al split — se expande y se desvanece
+   rápido, dejando espacio al dot burst y al halo expand como protagonistas */
+#preloader.pl-fade .pl-beam {
+  animation: pl-beam-flash .9s cubic-bezier(.55,0,.65,1) forwards;
 }
-@keyframes pl-beam-in    { to { opacity: 1; transform: translateY(-50%) scaleX(1); } }
-@keyframes pl-beam-stretch { to { transform: translateY(-50%) scaleX(1) scaleY(6); opacity: 0; } }
+@keyframes pl-beam-flash {
+  0%  { opacity: 0; transform: translateY(-50%) scaleX(0);   }
+  40% { opacity: .9; transform: translateY(-50%) scaleX(1);  }
+  100%{ opacity: 0; transform: translateY(-50%) scaleX(1.2); }
+}
 @media (prefers-reduced-motion: reduce) {
   #preloader * { animation-duration: .01ms !important; animation-delay: 0s !important; }
 }
