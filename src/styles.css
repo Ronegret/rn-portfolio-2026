@@ -93,7 +93,19 @@ a, button { text-decoration: none; color: inherit; cursor: pointer; background: 
 ul, ol { list-style: none; }
 img { display: block; max-width: 100%; }
 :focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; border-radius: 4px; }
-@media(prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
+@media(prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+/* Skip link — a11y quick nav for keyboard/screen-reader users */
+.skip-link {
+  position: absolute; top: -100px; left: 12px; z-index: 1000;
+  padding: .7rem 1.1rem; border-radius: 100px;
+  background: var(--a1); color: var(--bg);
+  font-size: 13px; font-weight: 800; letter-spacing: .04em;
+  text-decoration: none;
+  transition: top .25s var(--ease);
+}
+.skip-link:focus { top: 12px; outline: 2px solid var(--t1); outline-offset: 3px; }
 
 .tag, .eyebrow, .cstat-l, .sc-ttl, .bc-link, .tl-dates, .curr-pill, .tl-tag, .edu-b, .tc-n, .nav-links a, .lab-tag {
   font-family: var(--fm, var(--fb));
@@ -706,9 +718,11 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .fb:hover { color: var(--t1); border-color: var(--t1); }
 .fb.on { background: var(--a1); color: var(--bg); border-color: var(--a1); }
 
-.bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(0.8rem, 1.5vw, 1.2rem); grid-auto-flow: dense; }
-@media(max-width: 860px) { .bento { grid-template-columns: repeat(2, 1fr); } }
-@media(max-width: 540px) { .bento { grid-template-columns: 1fr; } }
+.bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 1.8vw, 1.5rem); grid-auto-flow: dense; }
+@media(max-width: 860px) { .bento { grid-template-columns: repeat(2, 1fr); gap: clamp(0.9rem, 2vw, 1.2rem); } }
+@media(max-width: 540px) { .bento { grid-template-columns: 1fr; gap: 1rem; } }
+/* Breathing room between consecutive featured (bfeat) cards */
+.bento .bfeat + .bfeat { margin-top: clamp(.4rem, 1vw, .8rem); }
 .bc { display: flex; flex-direction: column; height: 100%; text-decoration: none; color: inherit; cursor: pointer; }
 .bc-img { width: 100%; aspect-ratio: 16/9; background: var(--bg3); overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--bord); position: relative; z-index: 1; }
 .bc-img img { max-width: 90%; max-height: 90%; object-fit: contain; }
@@ -918,32 +932,64 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   background: rgba(239,68,68,.1);
 }
 
-/* Rodd.es — Biblioteca open source · Aurora palette */
+/* Rodd.es — Biblioteca open source · Aurora palette · real screenshot */
 .rodd-es-card .bc-img {
-  background:
-    radial-gradient(circle at 18% 0, rgba(124,92,255,.32), transparent 42%),
-    radial-gradient(circle at 82% 80%, rgba(0,212,255,.22), transparent 48%),
-    radial-gradient(circle at 50% 50%, rgba(255,62,136,.12), transparent 60%),
-    #08090f;
+  background: #08090f;
+  position: relative;
+  overflow: hidden;
 }
+.rodd-es-card .bc-img::after {
+  content: "";
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 20% 0%, rgba(124,92,255,.28), transparent 45%),
+    radial-gradient(circle at 85% 100%, rgba(0,212,255,.22), transparent 50%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .55s var(--ease);
+  z-index: 1;
+}
+.rodd-es-card .bc:hover .bc-img::after { opacity: 1; }
 .rodd-es-card .bc-img img {
-  width: 88%;
-  height: 82%;
+  width: 100%;
+  height: 100%;
   max-width: none;
   max-height: none;
-  object-fit: contain;
-  filter: drop-shadow(0 22px 40px rgba(124,92,255,.42));
-  transition: transform .5s var(--ease), filter .4s;
+  object-fit: cover;
+  object-position: center;
+  transition: transform .7s var(--ease), filter .5s;
+  filter: saturate(1) brightness(.98);
 }
 .rodd-es-card .bc:hover .bc-img img {
-  transform: scale(1.05) rotate(-1deg);
-  filter: drop-shadow(0 28px 52px rgba(124,92,255,.6));
+  transform: scale(1.04);
+  filter: saturate(1.1) brightness(1.05);
 }
 .rodd-es-card .bc-m {
   color: #7c5cff;
   border-color: rgba(124,92,255,.34);
   background: rgba(124,92,255,.12);
 }
+/* Aurora border sweep specifically for the flagship rodd.es card */
+.rodd-es-card .bc { position: relative; overflow: hidden; }
+.rodd-es-card .bc::after {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  background: conic-gradient(from 180deg at 50% 50%,
+    rgba(124,92,255,0) 0deg,
+    rgba(124,92,255,.7) 90deg,
+    rgba(0,212,255,.7) 180deg,
+    rgba(255,62,136,.5) 270deg,
+    rgba(124,92,255,0) 360deg);
+  filter: blur(30px);
+  opacity: 0;
+  transition: opacity .8s var(--ease);
+  pointer-events: none;
+  z-index: 0;
+}
+.rodd-es-card .bc:hover::after { opacity: .35; }
+.rodd-es-card .bc > * { position: relative; z-index: 2; }
 .dedicalo-play-card .bc-img {
   background:
     radial-gradient(circle at 20% 50%, rgba(255,107,43,.18), transparent 40%),
@@ -1086,7 +1132,11 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .edu.open .edu-bd { max-height: 380px; border-top-width: 1px; }
 .edu-bi { padding: 0.6rem 1.1rem; }
 .edu-desc { font-size: 12.5px; color: var(--t2); line-height: 1.65; }
-.edu-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .7rem; }
+.edu-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+@media (max-width: 480px) {
+  .edu-actions { flex-direction: column; align-items: stretch; }
+  .edu-actions .edu-cert { justify-content: center; width: 100%; }
+}
 .edu-cert {
   display: inline-flex; align-items: center; gap: .4rem;
   font-size: 11px; font-weight: 700; letter-spacing: .02em;
