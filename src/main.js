@@ -408,7 +408,8 @@ void main(){
 })();
 
 /* ═══════════════════════════════════════
-   CURSOR MULTI-ESTADO
+   CURSOR LIGERO — dot rápido + halo on-hover únicamente
+   (el anillo perseguidor causaba lag; ahora solo se activa sobre CTAs)
 ═══════════════════════════════════════ */
 (()=>{
   if(window.innerWidth<=1024||matchMedia('(pointer:coarse)').matches) return;
@@ -416,37 +417,33 @@ void main(){
   const curR=document.getElementById('cur-r');
   if(!cur||!curR) return;
 
-  // Label dinámico dentro del anillo
   const lbl=document.createElement('span');
   lbl.id='cur-label';
   curR.appendChild(lbl);
 
   document.body.classList.add('has-custom-cursor');
 
-  let cx=0,cy=0,rx=0,ry=0;
-  let animRId=null;
-
-  function animR(){
-    const dx=cx-rx, dy=cy-ry;
-    rx+=dx*.1; ry+=dy*.1;
-    curR.style.transform=`translate(calc(${rx}px - 50%),calc(${ry}px - 50%))`;
-    if(Math.abs(dx)>.05||Math.abs(dy)>.05){
-      animRId=requestAnimationFrame(animR);
+  // Un solo rAF loop, transform-based, sin reflow
+  let mx=0,my=0,rx=0,ry=0,ticking=false;
+  function tick(){
+    // Ease del halo (más rápido que antes: 0.28 en vez de 0.1)
+    rx += (mx - rx) * 0.28;
+    ry += (my - ry) * 0.28;
+    cur.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
+    curR.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+    if(Math.abs(mx-rx) > .1 || Math.abs(my-ry) > .1){
+      requestAnimationFrame(tick);
     } else {
-      rx=cx; ry=cy;
-      animRId=null;
+      ticking = false;
     }
   }
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if(!ticking){ ticking = true; requestAnimationFrame(tick); }
+  }, {passive:true});
+  document.addEventListener('mouseleave', ()=>{ cur.style.opacity='0'; curR.style.opacity='0'; });
+  document.addEventListener('mouseenter', ()=>{ cur.style.opacity=''; curR.style.opacity=''; });
 
-  document.addEventListener('mousemove',e=>{
-    cx=e.clientX; cy=e.clientY;
-    cur.style.left=cx+'px'; cur.style.top=cy+'px';
-    if(!animRId) animRId=requestAnimationFrame(animR);
-  },{passive:true});
-  document.addEventListener('mouseleave',()=>{ cur.style.opacity='0'; curR.style.opacity='0'; });
-  document.addEventListener('mouseenter',()=>{ cur.style.opacity=''; curR.style.opacity=''; });
-
-  // Gestión de estados
   const CUR_STATES=['cur-btn','cur-card'];
   function setState(s,label=''){
     CUR_STATES.forEach(c=>document.body.classList.remove(c));
@@ -454,37 +451,43 @@ void main(){
     lbl.textContent=label;
   }
 
-  // Interactivos: nav links, botones, filtros, acordeones, dock
-  document.querySelectorAll([
-    'button:not(.bc):not(.lab-card)','.nav-cta','.btn-p','.btn-s',
-    '.dk','.tc','.fb','.nlb','.mlb','.sc-hd','.tl-hd','.edu-hd',
-    '.bc-link','.tli','#fcta','#mob-x','#ham','.nav-links a'
-  ].join(',')).forEach(el=>{
-    el.addEventListener('mouseenter',()=>setState('cur-btn'));
-    el.addEventListener('mouseleave',()=>setState(''));
+  // Delegación de eventos: un solo listener global, escala mejor que N listeners por elemento
+  const BTN_SELECTOR = 'button:not(.bc):not(.lab-card),.nav-cta,.btn-p,.btn-s,.dk,.tc,.fb,.nlb,.mlb,.sc-hd,.tl-hd,.edu-hd,.bc-link,.tli,#fcta,#mob-x,#ham,.nav-links a,.lang-trigger,.lang-opt,.edu-cert,.cert-lb-btn,.cert-lb-close-btn';
+  const CARD_SELECTOR = '.bc,.lab-card,.lab-feat,.pcard';
+
+  let currentHover = null;
+  document.addEventListener('mouseover', e => {
+    const btn = e.target.closest(BTN_SELECTOR);
+    const card = !btn ? e.target.closest(CARD_SELECTOR) : null;
+    const t = btn || card;
+    if(t === currentHover) return;
+    currentHover = t;
+    if(btn) setState('cur-btn');
+    else if(card){
+      const isSite = card.classList.contains('lab-feat');
+      setState('cur-card', isSite ? 'Visitar →' : 'Ver →');
+    } else setState('');
   });
 
-  // Tarjetas: anillo grande + etiqueta contextual
-  document.querySelectorAll('.bc,.lab-card,.lab-feat,.pcard').forEach(el=>{
-    const isSite=el.classList.contains('lab-feat');
-    el.addEventListener('mouseenter',()=>setState('cur-card', isSite?'Visitar →':'Ver →'));
-    el.addEventListener('mouseleave',()=>setState(''));
-  });
-
-  // Cursor-follow spotlight on featured cards (rodd.es inspired senior touch)
-  document.querySelectorAll('.bfeat .bc, .lab-feat').forEach(el=>{
-    el.addEventListener('mousemove',ev=>{
-      const r=el.getBoundingClientRect();
-      el.style.setProperty('--mx',((ev.clientX-r.left)/r.width*100)+'%');
-      el.style.setProperty('--my',((ev.clientY-r.top)/r.height*100)+'%');
-    },{passive:true});
-    el.addEventListener('mouseleave',()=>{
+  // Cursor-follow spotlight en tarjetas destacadas — usa delegación
+  const spotlightCards = document.querySelectorAll('.bfeat .bc, .lab-feat');
+  spotlightCards.forEach(el => {
+    let raf = 0;
+    el.addEventListener('mousemove', ev => {
+      if(raf) return;
+      raf = requestAnimationFrame(() => {
+        const r = el.getBoundingClientRect();
+        el.style.setProperty('--mx', ((ev.clientX-r.left)/r.width*100)+'%');
+        el.style.setProperty('--my', ((ev.clientY-r.top)/r.height*100)+'%');
+        raf = 0;
+      });
+    }, {passive:true});
+    el.addEventListener('mouseleave', () => {
       el.style.setProperty('--mx','50%');
       el.style.setProperty('--my','50%');
     });
   });
 
-  // Click feedback
   document.addEventListener('mousedown',()=>document.body.classList.add('c-click'));
   document.addEventListener('mouseup',()=>document.body.classList.remove('c-click'));
 

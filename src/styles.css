@@ -225,27 +225,28 @@ body.flashing #camera-flash { opacity: 1; transition: opacity 0.05s ease-in; }
    CURSORES (Invisibles en Móvil)
 ═══════════════════════════════════════ */
 /* ─── CURSOR BASE ─────────────────────────────────────── */
+/* ─── CURSOR LIGERO ─── el transform lo mueve JS, sin transition en transform ─── */
 #cur, #cur-r {
-  position: fixed; z-index: 999999; pointer-events: none;
+  position: fixed; top: 0; left: 0;
+  z-index: 999999; pointer-events: none;
   will-change: transform;
 }
-#cur { transform: translate(-50%,-50%); }
-#cur-r { left: 0; top: 0; }
 body:not(.has-custom-cursor) #cur,
 body:not(.has-custom-cursor) #cur-r { display: none !important; }
+body.has-custom-cursor { cursor: auto; }
 
 #cur {
-  width: 9px; height: 9px; border-radius: 50%;
-  background: var(--a1); mix-blend-mode: difference;
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--a1);
   transition: width .18s var(--ease), height .18s var(--ease),
-              border-radius .18s var(--ease), opacity .15s, transform .18s var(--ease);
+              background .2s, opacity .15s;
 }
 #cur-r {
   width: 34px; height: 34px; border-radius: 50%;
-  border: 1.5px solid var(--a1); opacity: .45;
+  border: 1.5px solid var(--a1); opacity: 0;
   display: flex; align-items: center; justify-content: center;
-  transition: width .32s var(--ease), height .32s var(--ease),
-              opacity .28s, background .25s, border-color .25s;
+  transition: width .28s var(--ease), height .28s var(--ease),
+              opacity .22s, background .22s, border-color .22s;
 }
 
 /* Label dentro del anillo */
@@ -259,24 +260,23 @@ body:not(.has-custom-cursor) #cur-r { display: none !important; }
 }
 
 /* ─── ESTADO: cursor sobre interactivo ────────────────── */
-body.cur-btn #cur { transform: translate(-50%,-50%) scale(.45); opacity: .3; }
-body.cur-btn #cur-r { width: 50px; height: 50px; opacity: .6; background: color-mix(in srgb, var(--a1) 7%, transparent); }
+body.cur-btn #cur { width: 4px; height: 4px; opacity: .4; }
+body.cur-btn #cur-r { width: 44px; height: 44px; opacity: .55; background: color-mix(in srgb, var(--a1) 8%, transparent); }
 
 /* ─── ESTADO: cursor sobre tarjeta ───────────────────── */
-body.cur-card #cur { transform: translate(-50%,-50%) scale(0); opacity: 0; }
-body.cur-card #cur-r { width: 78px; height: 78px; opacity: .5; }
+body.cur-card #cur { opacity: 0; }
+body.cur-card #cur-r { width: 72px; height: 72px; opacity: .5; }
 body.cur-card #cur-label { opacity: 1; }
 
 /* ─── ESTADO: click ───────────────────────────────────── */
-body.c-click #cur { transform: translate(-50%,-50%) scale(1.6); }
-body.c-click #cur-r { width: 22px; height: 22px; opacity: .9; transition-duration: .1s; }
+body.c-click #cur { width: 11px; height: 11px; }
+body.c-click #cur-r { opacity: .8; transition-duration: .1s; }
 
-/* ─── TEMA: SAAS (solo anillo, difference blend) ──────── */
-[data-theme="saas"] #cur { display: none; }
-[data-theme="saas"] #cur-r { width: 32px; height: 32px; background: #fff; border: none; opacity: .85; mix-blend-mode: difference; }
-[data-theme="saas"] body.cur-btn #cur-r { width: 54px; height: 54px; }
-[data-theme="saas"] body.cur-card #cur-r { width: 82px; height: 82px; opacity: .75; }
-[data-theme="saas"] body.c-click #cur-r { width: 18px; height: 18px; }
+/* ─── TEMA: SAAS (dot y ring sin blend-mode costoso) ──── */
+[data-theme="saas"] #cur { background: var(--a1); }
+[data-theme="saas"] #cur-r { border-color: color-mix(in srgb, var(--a1) 60%, #fff); background: transparent; }
+[data-theme="saas"] body.cur-btn #cur-r { opacity: .6; }
+[data-theme="saas"] body.cur-card #cur-r { opacity: .5; }
 [data-theme="saas"] #cur-label { color: #fff; mix-blend-mode: difference; }
 
 /* ─── TEMA: EDITORIAL (solo punto, multiply) ──────────── */
