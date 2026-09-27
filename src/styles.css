@@ -865,10 +865,12 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 @media(max-width: 979px) { .pcard-wrap { display: flex; justify-content: center; margin-top: 1rem;} }
 
 @media(max-width: 768px) {
-  .tag-row { gap: 0.42rem; margin-bottom: 0.75rem; }
+  .tag-row { gap: 0.42rem; margin-bottom: 0.7rem; }
   .tag { font-size: 10px; padding: 4px 9px; }
-  .hero-eyebrow { font-size: 10px; letter-spacing: 0; line-height: 1.35; margin-bottom: 0.55rem; }
-  .hero-h { font-size: clamp(2.2rem, 10vw, 2.9rem); line-height: 1; margin-bottom: 0.75rem; }
+  /* En móvil solo mostramos "Disponible" + "Barcelona · Remoto" — se elimina el 3er tag "Full-time · Freelance" para ganar aire */
+  .tag-row .tag:nth-child(3) { display: none; }
+  .hero-eyebrow { font-size: 10px; letter-spacing: 0; line-height: 1.35; margin-bottom: 0.6rem; }
+  .hero-h { font-size: clamp(2.4rem, 11vw, 3.2rem); line-height: 1; margin-bottom: 0.75rem; letter-spacing: -.02em; }
   .hero-sub { font-size: 14px; line-height: 1.55; margin-bottom: 1rem; }
   .vp-list { gap: 0.4rem; margin-bottom: 1rem; }
   .vp { padding: 0.6rem 0.75rem; font-size: 12.4px; line-height: 1.4; }
@@ -876,6 +878,8 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   .vp .vp-desc { display: none; }
   .vp strong { color: var(--t1); }
   .cta-row { gap: 0.5rem; margin-bottom: 1rem; }
+  /* El botón de música es secundario — se oculta en móvil para no saturar */
+  .cta-row .btn-music { display: none; }
   .trust { gap: 0.4rem 0.7rem; font-size: 11.5px; }
   .cstats { margin-bottom: 0.75rem; }
 }
@@ -891,19 +895,27 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   }
   .vp-list { flex-direction: row; flex-wrap: wrap; gap: .35rem; margin-bottom: 1rem; }
   .vp {
-    padding: .38rem .65rem;
+    padding: .42rem .75rem;
     font-size: 11.5px;
     border-radius: 100px;
     flex: 0 0 auto;
     background: color-mix(in srgb, var(--surf) 82%, transparent) !important;
     border: 1px solid var(--bord2) !important;
     line-height: 1.2;
+    animation: none !important;
+    transform: none !important;
   }
+  .vp:hover { transform: none; box-shadow: none; }
   .vp .vp-ic { font-size: 11px; margin-right: 4px; }
   .trust { justify-content: center; text-align: center; }
   .trust .tdot { display: inline-block; }
-  /* Ocultar el 3er trust en pantallas muy pequeñas */
-  .trust > :nth-last-child(-n+2):nth-child(n+5) { display: none; }
+  /* En móviles muy pequeños ocultamos el 3er CTA (CV) — deja el WhatsApp visible */
+  .cta-row .btn-s:nth-of-type(2) { display: none; }
+}
+
+/* Refuerzo: solo mostrar los 2 primeros tags en móviles muy pequeños */
+@media (max-width: 400px) {
+  .tag-row .tag:nth-child(n+3) { display: none; }
 }
 
 @media(max-width: 480px) {

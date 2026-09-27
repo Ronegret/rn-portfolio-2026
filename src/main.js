@@ -2,6 +2,70 @@ import { T } from './content.js';
 
 let LANG = 'es';
 
+/* ═══════════════════════════════════════
+   PRELOADER — entrada tipo rodd.es (una vez por sesión)
+═══════════════════════════════════════ */
+(()=>{
+  const pl = document.getElementById('preloader');
+  if(!pl) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const seen = (()=>{ try { return sessionStorage.getItem('pl_seen') === '1'; } catch(e){ return false; } })();
+
+  if(seen){
+    pl.remove();
+    return;
+  }
+  try { sessionStorage.setItem('pl_seen','1'); } catch(e){}
+
+  document.documentElement.classList.add('pl-locked');
+  document.body.classList.add('pl-locked');
+
+  // Counter 000 -> 100
+  const counter = document.getElementById('pl-count');
+  const totalMs = reduced ? 400 : 2600;
+  const startMs = reduced ? 0 : 100;
+  const t0 = performance.now();
+  function tick(now){
+    const p = Math.min(1, Math.max(0, (now - t0 - startMs) / totalMs));
+    if(counter) counter.textContent = String(Math.round(p * 100)).padStart(3,'0');
+    if(p < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  // Timeline
+  let done = false;
+  let faded = false;
+  function finish(){
+    if(done) return; done = true;
+    pl.classList.add('pl-done');
+    document.documentElement.classList.remove('pl-locked');
+    document.body.classList.remove('pl-locked');
+    setTimeout(()=>{ pl.remove(); }, 200);
+  }
+  function playFadeAndSplit(){
+    if(faded) return; faded = true;
+    pl.classList.add('pl-fade');
+    // Dot travels to center visually — CSS handles the fade
+    setTimeout(()=> pl.classList.add('pl-split'), reduced ? 100 : 380);
+    setTimeout(finish, reduced ? 700 : 2400);
+  }
+  const holdMs = reduced ? 400 : 2900;
+  setTimeout(playFadeAndSplit, holdMs);
+
+  function skip(){
+    if(done) return;
+    if(!faded){
+      faded = true;
+      pl.classList.add('pl-fade','pl-split');
+      setTimeout(finish, 600);
+    }
+  }
+  pl.addEventListener('pointerdown', skip);
+  window.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip();
+  });
+})();
+
 function applyLang(l){
   LANG=l;
   const t=T[l];
