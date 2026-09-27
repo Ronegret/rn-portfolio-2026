@@ -23,7 +23,7 @@ let LANG = 'es';
 
   // Counter 000 -> 100
   const counter = document.getElementById('pl-count');
-  const totalMs = reduced ? 400 : 2600;
+  const totalMs = reduced ? 400 : 3700;
   const startMs = reduced ? 0 : 100;
   const t0 = performance.now();
   function tick(now){
@@ -50,7 +50,7 @@ let LANG = 'es';
     setTimeout(()=> pl.classList.add('pl-split'), reduced ? 100 : 380);
     setTimeout(finish, reduced ? 700 : 2400);
   }
-  const holdMs = reduced ? 400 : 2900;
+  const holdMs = reduced ? 400 : 4000;
   setTimeout(playFadeAndSplit, holdMs);
 
   function skip(){

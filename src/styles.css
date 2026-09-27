@@ -197,51 +197,81 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
   z-index: 5;
 }
 .pl-title {
-  display: flex; align-items: flex-end;
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: .28em;
   font-family: var(--fd);
-  font-weight: 700;
-  line-height: .8;
-  letter-spacing: -.07em;
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -.04em;
   color: #fff;
-  font-size: clamp(6rem, 26vw, 20rem);
+  font-size: clamp(2.4rem, 7.5vw, 6rem);
   margin: 0;
+  padding: 0 1rem;
+}
+.pl-word { display: inline-flex; }
+/* "Rodrigo" — blanco puro */
+.pl-word-1 { color: #ffffff; }
+/* "Negrete" — gradient violeta → cian, la firma del portfolio */
+.pl-word-2 {
+  background: linear-gradient(120deg, #7c5cff 0%, #8b7bff 40%, #3de7ff 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
 }
 .pl-mask {
   display: inline-block;
   overflow-x: visible;
   overflow-y: clip;
-  padding-inline: .04em;
-  margin-inline: -.04em;
-  padding-bottom: .06em;
+  padding-bottom: .12em;
+  margin-bottom: -.12em;
 }
 .pl-char {
   display: inline-block;
   transform: translateY(110%);
-  filter: blur(12px);
+  filter: blur(10px);
   opacity: 0;
   will-change: transform, filter, opacity;
-  animation: pl-char-in 1.3s .25s cubic-bezier(.16,1,.3,1) forwards;
+  animation: pl-char-in 1.1s cubic-bezier(.16,1,.3,1) forwards;
 }
-.pl-mask:nth-of-type(2) .pl-char { animation-delay: .34s; }
+/* Stagger de las letras: primero "Rodrigo" (7 letras), luego "Negrete" (7 letras) */
+.pl-word-1 .pl-mask:nth-child(1) .pl-char { animation-delay: 0.18s; }
+.pl-word-1 .pl-mask:nth-child(2) .pl-char { animation-delay: 0.24s; }
+.pl-word-1 .pl-mask:nth-child(3) .pl-char { animation-delay: 0.30s; }
+.pl-word-1 .pl-mask:nth-child(4) .pl-char { animation-delay: 0.36s; }
+.pl-word-1 .pl-mask:nth-child(5) .pl-char { animation-delay: 0.42s; }
+.pl-word-1 .pl-mask:nth-child(6) .pl-char { animation-delay: 0.48s; }
+.pl-word-1 .pl-mask:nth-child(7) .pl-char { animation-delay: 0.54s; }
+.pl-word-2 .pl-mask:nth-child(1) .pl-char { animation-delay: 0.64s; }
+.pl-word-2 .pl-mask:nth-child(2) .pl-char { animation-delay: 0.70s; }
+.pl-word-2 .pl-mask:nth-child(3) .pl-char { animation-delay: 0.76s; }
+.pl-word-2 .pl-mask:nth-child(4) .pl-char { animation-delay: 0.82s; }
+.pl-word-2 .pl-mask:nth-child(5) .pl-char { animation-delay: 0.88s; }
+.pl-word-2 .pl-mask:nth-child(6) .pl-char { animation-delay: 0.94s; }
+.pl-word-2 .pl-mask:nth-child(7) .pl-char { animation-delay: 1.00s; }
 @keyframes pl-char-in {
   to { transform: translateY(0); filter: blur(0); opacity: 1; }
 }
-#preloader.pl-fade .pl-char { animation: pl-char-out .6s cubic-bezier(.55,0,.65,.15) forwards; }
+#preloader.pl-fade .pl-char { animation: pl-char-out .55s cubic-bezier(.55,0,.65,.15) forwards; }
 @keyframes pl-char-out {
-  to { transform: translateY(-20%); filter: blur(10px); opacity: 0; }
+  to { transform: translateY(-20%); filter: blur(8px); opacity: 0; }
 }
 .pl-dot {
   display: inline-block;
-  aspect-ratio: 1; width: .19em;
-  margin-left: .05em; margin-bottom: .07em;
+  aspect-ratio: 1; width: .22em;
+  margin-left: .06em; margin-bottom: .1em;
   border-radius: 50%;
   background: linear-gradient(135deg, #6d5cf5 0%, #8B7BFF 45%, #3DE7FF 100%);
-  box-shadow: 0 0 .4em rgba(109, 92, 245, .7);
+  box-shadow: 0 0 .5em rgba(109, 92, 245, .8), 0 0 1em rgba(61, 231, 255, .35);
   transform: scale(0);
   opacity: 0;
-  animation: pl-dot-in .6s 1.05s cubic-bezier(.34,1.7,.64,1) forwards,
-             pl-dot-blink .22s 1.55s steps(1) 5;
+  animation: pl-dot-in .6s 1.9s cubic-bezier(.34,1.7,.64,1) forwards,
+             pl-dot-blink .24s 2.5s steps(1) 5;
   will-change: transform;
+  align-self: flex-end;
 }
 @keyframes pl-dot-in { to { transform: scale(1); opacity: 1; } }
 @keyframes pl-dot-blink { 50% { opacity: .12; } }
