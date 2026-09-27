@@ -9,9 +9,11 @@ let LANG = 'es';
   const pl = document.getElementById('preloader');
   if(!pl) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Mostrar solo 1 vez cada 4 horas para que se vea en visitas repetidas del mismo día
-  const TTL = 4 * 60 * 60 * 1000;
-  const seenAt = (()=>{ try { return parseInt(localStorage.getItem('pl_seen_at') || '0', 10); } catch(e){ return 0; } })();
+  // Mostrar en cada visita si ha pasado más de 30 min (para verlo en pruebas y revisitas)
+  const TTL = 30 * 60 * 1000;
+  // Nueva key v3: invalidar la flag anterior para que todos vean el nuevo diseño
+  const KEY = 'pl_seen_v3';
+  const seenAt = (()=>{ try { return parseInt(localStorage.getItem(KEY) || '0', 10); } catch(e){ return 0; } })();
   const now = Date.now();
   const seen = seenAt && (now - seenAt) < TTL;
   // Query ?intro=1 fuerza mostrar; ?intro=0 fuerza saltar
@@ -23,7 +25,9 @@ let LANG = 'es';
     pl.remove();
     return;
   }
-  try { localStorage.setItem('pl_seen_at', String(now)); } catch(e){}
+  // Limpiar keys antiguas
+  try { localStorage.removeItem('pl_seen_at'); localStorage.removeItem('pl_seen_v2'); sessionStorage.removeItem('pl_seen'); } catch(e){}
+  try { localStorage.setItem(KEY, String(now)); } catch(e){}
 
   document.documentElement.classList.add('pl-locked');
   document.body.classList.add('pl-locked');
