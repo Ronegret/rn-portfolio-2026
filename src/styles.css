@@ -80,18 +80,26 @@ html {
   -webkit-text-size-adjust: 100%;
   font-size: 16px;
   overflow-y: scroll;
+  overflow-x: clip;
   scrollbar-gutter: stable;
 }
 body {
   background: var(--bg); color: var(--t1); font-family: var(--fb);
-  -webkit-font-smoothing: antialiased; overflow-x: hidden; overflow-y: auto;
+  -webkit-font-smoothing: antialiased; overflow-x: clip; overflow-y: auto;
   touch-action: pan-y;
   transition: background 0.5s var(--ease), color 0.4s;
   cursor: auto;
+  min-width: 320px;
 }
 a, button { text-decoration: none; color: inherit; cursor: pointer; background: none; border: none; font-family: inherit; }
 ul, ol { list-style: none; }
-img { display: block; max-width: 100%; }
+img { display: block; max-width: 100%; height: auto; }
+
+/* No horizontal scroll under any circumstance — safety net */
+* { min-width: 0; }
+img, video, iframe, canvas { max-width: 100%; }
+/* Long words / URLs break instead of pushing layout */
+p, li, h1, h2, h3, h4, h5, h6, span, a, blockquote { overflow-wrap: anywhere; word-break: normal; }
 :focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; border-radius: 4px; }
 a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
 @media(prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
@@ -2156,6 +2164,7 @@ footer.fx-footer {
   line-height: 1;
   user-select: none;
   pointer-events: none;
+  width: 100%;
   mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 30%, #000 70%, transparent 100%);
 }
@@ -2163,10 +2172,11 @@ footer.fx-footer {
   display: block;
   font-family: var(--fd);
   font-weight: 900;
-  font-size: clamp(3rem, 15vw, 12rem);
+  font-size: clamp(2.4rem, 14vw, 12rem);
   letter-spacing: -.045em;
   line-height: .9;
   text-align: center;
+  white-space: nowrap;
   background: linear-gradient(180deg, color-mix(in srgb, var(--t1) 24%, transparent) 0%, transparent 100%);
   -webkit-background-clip: text;
           background-clip: text;
@@ -2175,6 +2185,34 @@ footer.fx-footer {
   transition: transform .5s var(--ease);
 }
 footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
+@media (max-width: 640px) {
+  .fx-wordmark span { font-size: clamp(1.9rem, 13vw, 3.5rem); letter-spacing: -.03em; }
+}
+
+/* Footer mobile refinements */
+@media (max-width: 720px) {
+  .fx-brand-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.5rem;
+    padding-bottom: 2rem;
+  }
+  .fx-cta {
+    align-self: stretch;
+    justify-content: center;
+    padding: 1rem 1.2rem;
+  }
+  .fx-brand-block { flex: 1 1 auto; }
+  .fx-tag { max-width: none; }
+  .fx-social { justify-content: flex-start; }
+}
+@media (max-width: 520px) {
+  .fx-brand { font-size: clamp(1.9rem, 9vw, 2.8rem); }
+  .fx-cta { font-size: .92rem; }
+  .fx-glow { width: 500px; height: 500px; opacity: .4; }
+  .fx-cols { padding: 1.75rem 0; gap: 1.75rem; }
+  .fx-lnk { padding: .5rem 0; font-size: 13px; }
+}
 
 /* Theme-specific tweaks — mantiene el estilo en los 5 sistemas */
 [data-theme="editorial"] .fx-glow { opacity: .28; }
