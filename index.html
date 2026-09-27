@@ -65,16 +65,16 @@
 
 <a href="#hero" class="skip-link">Saltar al contenido principal</a>
 
-<!-- PRELOADER — entrada tipo rodd.es adaptada al portfolio -->
-<div id="preloader" aria-hidden="true">
-  <div class="pl-top"></div>
-  <div class="pl-bottom"></div>
+<!-- PRELOADER — entrada tipo rodd.es adaptada al portfolio (estilos inline críticos para asegurar visibilidad) -->
+<div id="preloader" aria-hidden="true" style="position:fixed;inset:0;z-index:100000;background:#08090f;overflow:hidden;">
+  <div class="pl-top" style="position:absolute;left:0;right:0;top:0;height:50%;background:#08090f;z-index:2;"></div>
+  <div class="pl-bottom" style="position:absolute;left:0;right:0;bottom:0;height:50%;background:#08090f;z-index:2;"></div>
   <div class="pl-halo"></div>
   <div class="pl-grain"></div>
   <div class="pl-meta pl-meta-tl"><span>RODRIGO&nbsp;NEGRETE · BARCELONA</span></div>
   <div class="pl-meta pl-meta-tr"><span>AI&nbsp;PRODUCT&nbsp;DESIGNER · 2026</span></div>
-  <div class="pl-center">
-    <h1 class="pl-title" aria-label="Rodrigo Negrete">
+  <div class="pl-center" style="position:absolute;inset:0;display:grid;place-items:center;z-index:5;">
+    <h1 class="pl-title" aria-label="Rodrigo Negrete" style="display:flex;align-items:flex-end;color:#fff;font-family:'Outfit',sans-serif;font-weight:700;line-height:.8;letter-spacing:-.07em;font-size:clamp(6rem,26vw,20rem);margin:0;">
       <span class="pl-mask"><span class="pl-char">R</span></span>
       <span class="pl-mask"><span class="pl-char">N</span></span>
       <span class="pl-dot" id="pl-dot"></span>
@@ -88,6 +88,14 @@
     <span class="pl-count" id="pl-count">000</span>
   </div>
 </div>
+<style>
+  /* Critical-inline: si el CSS externo falla, garantiza que el preloader se vea */
+  html.pl-ready #preloader { visibility: visible !important; opacity: 1 !important; }
+</style>
+<script>
+  /* Marca el html como pl-ready ANTES de que cargue nada — evita FOUC del preloader */
+  document.documentElement.classList.add('pl-locked','pl-ready');
+</script>
 
 <div class="lang-curtain" id="lang-curtain" aria-hidden="true">
   <div class="lang-curtain-top"></div>

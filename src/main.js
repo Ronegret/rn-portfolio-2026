@@ -9,25 +9,14 @@ let LANG = 'es';
   const pl = document.getElementById('preloader');
   if(!pl) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  // Mostrar en cada visita si ha pasado más de 30 min (para verlo en pruebas y revisitas)
-  const TTL = 30 * 60 * 1000;
-  // Nueva key v3: invalidar la flag anterior para que todos vean el nuevo diseño
-  const KEY = 'pl_seen_v3';
-  const seenAt = (()=>{ try { return parseInt(localStorage.getItem(KEY) || '0', 10); } catch(e){ return 0; } })();
-  const now = Date.now();
-  const seen = seenAt && (now - seenAt) < TTL;
-  // Query ?intro=1 fuerza mostrar; ?intro=0 fuerza saltar
+  // Query ?intro=0 fuerza saltar (solo para debugging); si no, SIEMPRE se muestra
   const params = new URLSearchParams(location.search);
-  const forceShow = params.get('intro') === '1';
-  const forceSkip = params.get('intro') === '0';
-
-  if((seen && !forceShow) || forceSkip){
+  if(params.get('intro') === '0'){
     pl.remove();
     return;
   }
-  // Limpiar keys antiguas
-  try { localStorage.removeItem('pl_seen_at'); localStorage.removeItem('pl_seen_v2'); sessionStorage.removeItem('pl_seen'); } catch(e){}
-  try { localStorage.setItem(KEY, String(now)); } catch(e){}
+  // Limpiar keys antiguas que ya no usamos
+  try { localStorage.removeItem('pl_seen_at'); localStorage.removeItem('pl_seen_v2'); localStorage.removeItem('pl_seen_v3'); sessionStorage.removeItem('pl_seen'); } catch(e){}
 
   document.documentElement.classList.add('pl-locked');
   document.body.classList.add('pl-locked');
