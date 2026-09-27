@@ -14,12 +14,71 @@ function applyLang(l){
     b.classList.toggle('on',b.dataset.lang===l);
   });
   document.documentElement.lang=l;
+  // Re-split hero title chars after translation (preserves char animation)
+  if(typeof window.__splitAll === 'function') window.__splitAll();
+}
+
+const LANG_NAMES = { es:'Español', ca:'Català', en:'English' };
+
+function playLangCurtain(lang){
+  const c = document.getElementById('lang-curtain');
+  const label = document.getElementById('lang-curtain-label');
+  if(!c || !label) return applyLang(lang);
+  label.textContent = LANG_NAMES[lang] || lang.toUpperCase();
+  c.classList.remove('open'); c.classList.add('active','close');
+  // Apply lang mid-curtain (when both panels meet)
+  window.setTimeout(()=>{
+    applyLang(lang);
+    const trg = document.getElementById('lang-code');
+    if(trg) trg.textContent = lang.toUpperCase();
+    document.querySelectorAll('.lang-opt').forEach(o=>{
+      const on = o.dataset.lang === lang;
+      o.classList.toggle('on', on);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+  }, 380);
+  window.setTimeout(()=>{
+    c.classList.remove('close'); c.classList.add('open');
+  }, 780);
+  window.setTimeout(()=>{
+    c.classList.remove('active','open');
+  }, 1500);
 }
 
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-lang]');
-  if(b){e.preventDefault();applyLang(b.dataset.lang);}
+  if(b){
+    e.preventDefault();
+    const l = b.dataset.lang;
+    // Close dropdown if open
+    const sw = document.getElementById('lang-switch');
+    sw?.classList.remove('open');
+    const trg = document.getElementById('lang-trigger');
+    trg?.setAttribute('aria-expanded','false');
+    if(l !== LANG) playLangCurtain(l);
+    else applyLang(l);
+  }
 });
+
+// Toggle dropdown
+(()=>{
+  const sw = document.getElementById('lang-switch');
+  const trg = document.getElementById('lang-trigger');
+  if(!sw || !trg) return;
+  trg.addEventListener('click', e=>{
+    e.stopPropagation();
+    const isOpen = sw.classList.toggle('open');
+    trg.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  document.addEventListener('click', e=>{
+    if(!sw.contains(e.target)){ sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); }
+  });
+  document.addEventListener('keydown', e=>{
+    if(e.key === 'Escape' && sw.classList.contains('open')){
+      sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); trg.focus();
+    }
+  });
+})();
 
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"], a[href^="/#"]');
@@ -35,6 +94,114 @@ document.addEventListener('click', e => {
 });
 
 applyLang(LANG);
+
+/* ═══════════════════════════════════════
+   SPLIT-TEXT — anima chars del título del hero (rodd.es style)
+   Re-splitea tras cada cambio de idioma para no romper la traducción
+═══════════════════════════════════════ */
+(()=>{
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function splitOne(el){
+    if(el.classList.contains('split-chars')) return;
+    const raw = el.innerHTML;
+    const parts = raw.split(/(<br\s*\/?\s*>)/i);
+    let out = '';
+    parts.forEach(p=>{
+      if(/^<br/i.test(p)){ out += p; return; }
+      const words = p.split(/(\s+)/);
+      words.forEach(w=>{
+        if(/^\s+$/.test(w)){ out += ' '; return; }
+        if(!w) return;
+        out += '<span class="sc-word">' + w.split('').map(c=>`<span class="sc-char">${c === ' ' ? '&nbsp;' : c}</span>`).join('') + '</span>';
+      });
+    });
+    el.innerHTML = out;
+    el.classList.add('split-chars');
+    const chars = el.querySelectorAll('.sc-char');
+    chars.forEach((c,i)=>{ c.style.transitionDelay = (Math.min(i,40) * 22) + 'ms'; });
+    if(reduced) el.classList.add('vis');
+  }
+  function splitAll(){
+    // Hero title spans only (safe scope — no data-i inside translation cycles)
+    document.querySelectorAll('#hero-title span[data-i]').forEach(splitOne);
+    // Auto-reveal chars right away for the hero
+    requestAnimationFrame(()=>{
+      document.querySelectorAll('#hero-title .split-chars').forEach(sc=>sc.classList.add('vis'));
+    });
+  }
+  window.__splitAll = splitAll;
+  splitAll();
+})();
+
+/* ═══════════════════════════════════════
+   CERTIFICATE LIGHTBOX — abre PDFs en horizontal fullscreen
+═══════════════════════════════════════ */
+(()=>{
+  const lb = document.getElementById('cert-lightbox');
+  if(!lb) return;
+  const iframe = lb.querySelector('#cert-lb-iframe');
+  const title = lb.querySelector('#cert-lb-title');
+  const badge = lb.querySelector('#cert-lb-badge');
+  const dl = lb.querySelector('#cert-lb-download');
+  const ext = lb.querySelector('#cert-lb-openext');
+  const closeBtn = lb.querySelector('#cert-lb-close');
+
+  const META = {
+    'Certificado%20EBIS%20IA': { badge: '★ Máster · 10/10', title: 'Máster en Agentes de IA e Hiperautomatización de Procesos · EBIS' },
+    'Neoland': { badge: 'Bootcamp UX/UI · 600h', title: 'Bootcamp UX/UI Design — Professional Track · Neoland Madrid' },
+    'Duoc': { badge: 'Formación técnica', title: 'Desarrollo Web Multimedia y Administración Digital · CIPSA · Duoc UC' },
+  };
+
+  function keyFromUrl(url){
+    const clean = decodeURIComponent(url.split('/').pop() || '').replace(/\.pdf$/i,'');
+    const cleanEnc = url.split('/').pop().replace(/\.pdf$/i,'');
+    return META[cleanEnc] ? cleanEnc : (META[clean] ? clean : null);
+  }
+
+  function openCert(url, ctx){
+    lb.classList.remove('cert-lb-error');
+    const key = keyFromUrl(url);
+    const meta = key && META[key];
+    badge.textContent = (meta && meta.badge) || (ctx && ctx.badge) || 'Certificado';
+    title.textContent = (meta && meta.title) || (ctx && ctx.title) || 'Certificado';
+    dl.href = url;
+    ext.href = url;
+    // Force landscape-friendly page fitting
+    iframe.src = url + '#view=FitH&toolbar=1&navpanes=0';
+    if(typeof lb.showModal === 'function') lb.showModal();
+    else lb.setAttribute('open','');
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function closeCert(){
+    if(typeof lb.close === 'function') lb.close();
+    else lb.removeAttribute('open');
+    iframe.src = 'about:blank';
+    document.documentElement.style.overflow = '';
+  }
+
+  document.addEventListener('click', e=>{
+    const a = e.target.closest('a.edu-cert');
+    if(!a) return;
+    // Skip external verification (blockchain) button
+    if(a.classList.contains('edu-cert-alt')) return;
+    const url = a.getAttribute('href') || '';
+    if(!/\.pdf(\?|#|$)/i.test(url)) return;
+    e.preventDefault();
+    const context = {
+      title: a.querySelector('span')?.textContent?.trim() || null,
+    };
+    openCert(url, context);
+  });
+
+  closeBtn?.addEventListener('click', closeCert);
+  lb.addEventListener('click', e=>{
+    // click on backdrop closes
+    if(e.target === lb) closeCert();
+  });
+  lb.addEventListener('cancel', e=>{ e.preventDefault(); closeCert(); });
+  iframe.addEventListener('error', ()=> lb.classList.add('cert-lb-error'));
+})();
 
 /* ═══════════════════════════════════════
    LIGHT RAYS — WebGL via OGL

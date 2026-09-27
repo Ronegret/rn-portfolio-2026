@@ -45,6 +45,13 @@
     { "source": "/pdf-rodd/app", "destination": "/PDF/index.html" },
     { "source": "/pdf-rodd/app/", "destination": "/PDF/index.html" },
 
+    { "source": "/rodd-es", "destination": "/rodd-es/index.html" },
+    { "source": "/rodd-es/", "destination": "/rodd-es/index.html" },
+    { "source": "/rodd", "destination": "/rodd-es/index.html" },
+    { "source": "/rodd/", "destination": "/rodd-es/index.html" },
+    { "source": "/Rodd", "destination": "/rodd-es/index.html" },
+    { "source": "/Rodd/", "destination": "/rodd-es/index.html" },
+
     { "source": "/aquae", "destination": "/aquae/index.html" },
     { "source": "/aquae/", "destination": "/aquae/index.html" },
     { "source": "/Aquae", "destination": "/aquae/index.html" },

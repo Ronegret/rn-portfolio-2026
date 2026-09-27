@@ -65,6 +65,13 @@
 
 <a href="#hero" class="skip-link">Saltar al contenido principal</a>
 
+<div class="lang-curtain" id="lang-curtain" aria-hidden="true">
+  <div class="lang-curtain-top"></div>
+  <div class="lang-curtain-bot"></div>
+  <div class="lang-curtain-beam"></div>
+  <div class="lang-curtain-label" id="lang-curtain-label">Español</div>
+</div>
+
 <div id="cur"></div>
 <div id="cur-r"></div>
 <div id="prog"></div>
@@ -108,10 +115,32 @@
     <li><a href="#contacto" data-i="nav_contact">Contacto</a></li>
   </ul>
   <div class="nav-r">
-    <div class="nav-lang">
-      <button class="nlb on" data-lang="es">ES</button>
-      <button class="nlb" data-lang="ca">CA</button>
-      <button class="nlb" data-lang="en">EN</button>
+    <div class="lang-switch" id="lang-switch">
+      <button type="button" class="lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Cambiar idioma">
+        <svg class="lang-globe" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span class="lang-code" id="lang-code">ES</span>
+        <svg class="lang-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      <div class="lang-panel" id="lang-panel" role="listbox" aria-label="Idiomas disponibles">
+        <p class="lang-panel-h">Idioma <span class="lang-dot"></span></p>
+        <button type="button" class="lang-opt on" data-lang="es" role="option" aria-selected="true">
+          <span class="lang-opt-code">ES</span>
+          <span class="lang-opt-name">Español</span>
+          <span class="lang-opt-check"></span>
+        </button>
+        <button type="button" class="lang-opt" data-lang="ca" role="option" aria-selected="false">
+          <span class="lang-opt-code">CA</span>
+          <span class="lang-opt-name">Català</span>
+          <span class="lang-opt-check"></span>
+        </button>
+        <button type="button" class="lang-opt" data-lang="en" role="option" aria-selected="false">
+          <span class="lang-opt-code">EN</span>
+          <span class="lang-opt-name">English</span>
+          <span class="lang-opt-check"></span>
+        </button>
+      </div>
     </div>
     <a href="mailto:rodrigo.negrete.aros@gmail.com" class="nav-cta trigger-flash" data-i="nav_cta">Hablemos →</a>
   </div>
@@ -155,7 +184,7 @@
         <span class="tag" data-i="tag_remote">Barcelona · Remoto</span>
         <span class="tag" data-i="tag_mode">Full-time · Freelance</span>
       </div>
-      <span class="hero-eyebrow rv">AI Product Designer · UX/UI + Automatización IA</span>
+      <span class="hero-eyebrow rv shiny-text" data-shiny>AI Product Designer · UX/UI + Automatización IA</span>
       <h1 class="hero-h rv" data-d="1" id="hero-title">
         <span data-i="hero_h1">Diseño flujos,<br>interfaces y</span><br>
         <em data-i="hero_h2">automatizaciones.</em>
@@ -813,18 +842,33 @@
         <div class="edu-hd">
           <span class="edu-b edu-done">2022</span>
           <div class="edu-m">
-            <div class="edu-title" data-i="e4_t">Desarrollo Web Multimedia & Administración Digital</div>
-            <div class="edu-school">Cipsa.net · Duoc UC</div>
+            <div class="edu-title" data-i="e4_t">Diseño Web Multimedia y Marketing Digital</div>
+            <div class="edu-school">CIPSA.NET · Barcelona · 2020–2022</div>
           </div>
           <div class="edu-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         </div>
         <div class="edu-bd">
           <div class="edu-bi">
-            <p class="edu-desc" data-i="e4_d">Front-end development, Digital Marketing, SEO/SEM y gestión financiera corporativa aplicada a negocios digitales.</p>
+            <p class="edu-desc" data-i="e4_d">Front-end development, HTML/CSS/JS, WordPress, Digital Marketing, SEO/SEM y fundamentos de UX aplicados a negocios digitales.</p>
+          </div>
+        </div>
+      </div>
+      <div class="edu rv" data-d="5">
+        <div class="edu-hd">
+          <span class="edu-b edu-done">2016</span>
+          <div class="edu-m">
+            <div class="edu-title" data-i="e5_t">Técnico en Administración Financiera</div>
+            <div class="edu-school">Instituto Profesional Duoc UC · Santiago, Chile · 2014–2016</div>
+          </div>
+          <div class="edu-chv"><svg viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="edu-bd">
+          <div class="edu-bi">
+            <p class="edu-desc" data-i="e5_d">Título Técnico de Nivel Superior. Contabilidad, gestión financiera, análisis de estados financieros y administración de operaciones. Base de business acumen que aplico hoy diseñando producto B2B con IA.</p>
             <div class="edu-actions">
               <a href="/assets/legacy/Duoc.pdf" target="_blank" rel="noopener" class="edu-cert">
                 <svg viewBox="0 0 24 24" fill="none" width="12" height="12" aria-hidden="true"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m8 12 3 3 5-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                <span data-i="e4_cert">Ver certificado (PDF)</span>
+                <span data-i="e5_cert">Ver certificado (PDF)</span>
               </a>
             </div>
           </div>
@@ -987,6 +1031,34 @@
     </button>
   </div>
 </div>
+
+<!-- Certificate Lightbox — abre PDFs de EBIS/Neoland/DUOC en horizontal a pantalla completa -->
+<dialog id="cert-lightbox" class="cert-lb" aria-labelledby="cert-lb-title">
+  <div class="cert-lb-inner">
+    <div class="cert-lb-head">
+      <div class="cert-lb-meta">
+        <span class="cert-lb-badge" id="cert-lb-badge">Certificado</span>
+        <h3 id="cert-lb-title">Título del certificado</h3>
+      </div>
+      <div class="cert-lb-actions">
+        <a id="cert-lb-download" href="#" download class="cert-lb-btn cert-lb-btn-alt">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <span>Descargar PDF</span>
+        </a>
+        <button type="button" id="cert-lb-close" class="cert-lb-btn cert-lb-close-btn" aria-label="Cerrar">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="cert-lb-frame">
+      <iframe id="cert-lb-iframe" title="Vista previa del certificado" src="" loading="lazy"></iframe>
+      <div class="cert-lb-fallback">
+        <p>Si el certificado no se carga, ábrelo en una pestaña nueva:</p>
+        <a id="cert-lb-openext" href="#" target="_blank" rel="noopener" class="cert-lb-btn">Abrir en pestaña nueva ↗</a>
+      </div>
+    </div>
+  </div>
+</dialog>
 
 <script type="module" src="./src/main.js"></script>
 </body>
