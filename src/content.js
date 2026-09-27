@@ -77,7 +77,13 @@
     contact_ey:'Contacto',contact_h:'¿Hablamos de una<br><em>oportunidad real?</em>',
     contact_sub:'Disponible para roles de AI Product Designer, Product Designer con IA, AI Automation Specialist o Design Technologist. Barcelona o remoto EU.',
     cta_email:'✉ Enviar email',phone_l:'Teléfono',
-    foot_made:'Construido con HTML/CSS/JS vanilla. Sin frameworks. Sin plantillas.'
+    foot_made:'Construido con HTML/CSS/JS vanilla. Sin frameworks. Sin plantillas.',
+    foot_status:'Disponible ahora · Barcelona · Remoto EU',
+    foot_role:'AI Product Designer · UX/UI + Automatización IA',
+    foot_cta:'Iniciar conversación',
+    foot_nav_h:'Navegación',
+    foot_proj_h:'Proyectos destacados',
+    foot_contact_h:'Contacto directo'
   },
   ca:{
     nav_about:'Sobre mi',nav_stack:'Stack',nav_projects:'Projectes',nav_lab:'Lab',nav_career:'Trajectòria',nav_contact:'Contacte',
@@ -157,7 +163,13 @@
     contact_ey:'Contacte',contact_h:'Construïm alguna cosa<br><em>que marqui la diferència?</em>',
     contact_sub:'Disponible per a rols d’AI Product Designer, Product Designer amb IA, AI Automation Specialist o Design Technologist. Barcelona o remot EU.',
     cta_email:'✉ Enviar email',phone_l:'Telèfon',
-    foot_made:'Construït amb HTML/CSS/JS vanilla. Sense frameworks. Sense plantilles.'
+    foot_made:'Construït amb HTML/CSS/JS vanilla. Sense frameworks. Sense plantilles.',
+    foot_status:'Disponible ara · Barcelona · Remot EU',
+    foot_role:'AI Product Designer · UX/UI + Automatització IA',
+    foot_cta:'Iniciar conversa',
+    foot_nav_h:'Navegació',
+    foot_proj_h:'Projectes destacats',
+    foot_contact_h:'Contacte directe'
   },
   en:{
     nav_about:'About',nav_stack:'Stack',nav_projects:'Projects',nav_lab:'Lab',nav_career:'Career',nav_contact:'Contact',
@@ -237,7 +249,13 @@
     contact_ey:'Contact',contact_h:'Shall we build something<br><em>that makes a difference?</em>',
     contact_sub:'Available for AI Product Designer, Product Designer with AI, AI Automation Specialist or Design Technologist roles. Barcelona or remote EU.',
     cta_email:'✉ Send email',phone_l:'Phone',
-    foot_made:'Built with vanilla HTML/CSS/JS. No frameworks. No templates.'
+    foot_made:'Built with vanilla HTML/CSS/JS. No frameworks. No templates.',
+    foot_status:'Available now · Barcelona · Remote EU',
+    foot_role:'AI Product Designer · UX/UI + AI Automation',
+    foot_cta:'Start conversation',
+    foot_nav_h:'Navigation',
+    foot_proj_h:'Featured projects',
+    foot_contact_h:'Direct contact'
   }
 };
 
