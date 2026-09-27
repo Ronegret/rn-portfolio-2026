@@ -9,13 +9,21 @@ let LANG = 'es';
   const pl = document.getElementById('preloader');
   if(!pl) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const seen = (()=>{ try { return sessionStorage.getItem('pl_seen') === '1'; } catch(e){ return false; } })();
+  // Mostrar solo 1 vez cada 4 horas para que se vea en visitas repetidas del mismo día
+  const TTL = 4 * 60 * 60 * 1000;
+  const seenAt = (()=>{ try { return parseInt(localStorage.getItem('pl_seen_at') || '0', 10); } catch(e){ return 0; } })();
+  const now = Date.now();
+  const seen = seenAt && (now - seenAt) < TTL;
+  // Query ?intro=1 fuerza mostrar; ?intro=0 fuerza saltar
+  const params = new URLSearchParams(location.search);
+  const forceShow = params.get('intro') === '1';
+  const forceSkip = params.get('intro') === '0';
 
-  if(seen){
+  if((seen && !forceShow) || forceSkip){
     pl.remove();
     return;
   }
-  try { sessionStorage.setItem('pl_seen','1'); } catch(e){}
+  try { localStorage.setItem('pl_seen_at', String(now)); } catch(e){}
 
   document.documentElement.classList.add('pl-locked');
   document.body.classList.add('pl-locked');

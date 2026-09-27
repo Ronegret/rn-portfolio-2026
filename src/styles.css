@@ -831,7 +831,21 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 @keyframes status-sheen { 0%, 58% { transform: translateX(-110%); } 85%, 100% { transform: translateX(110%); } }
 @keyframes live-dot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(.72); opacity: .72; } }
 @keyframes hero-card-in { from { opacity: 0; transform: translateY(12px); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
-.hero-h { font-family: var(--fd); font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 400; line-height: 0.95; letter-spacing: 0; margin-bottom: 1.2rem; transition: font-family 0.5s, font-size 0.4s; }
+.hero-h {
+  font-family: var(--fd);
+  font-size: clamp(2.6rem, 6.8vw, 5.4rem);
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -.015em;
+  margin-bottom: 1.2rem;
+  transition: font-family 0.5s, font-size 0.4s;
+  /* Impide que palabras largas como "automatizaciones" se partan a mitad */
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
+  -webkit-hyphens: none;
+}
+.hero-h em, .hero-h strong, .hero-h span { overflow-wrap: normal; word-break: keep-all; hyphens: none; -webkit-hyphens: none; }
 .hero-eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--a1); margin-bottom: 0.8rem; display: block; transition: color 0.4s; }
 .hero-sub { font-size: clamp(15px, 1.1rem, 18px); color: var(--t2); line-height: 1.72; max-width: 56ch; margin-bottom: 1.5rem; }
 .hero-sub strong { color: var(--t1); font-weight: 600; }
