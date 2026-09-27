@@ -11,6 +11,7 @@ export default defineConfig({
         zodiBto: resolve(__dirname, 'zodi-bto/index.html'),
         pdfRodd: resolve(__dirname, 'pdf-rodd/index.html'),
         pdfEditor: resolve(__dirname, 'PDF/index.html'),
+        roddEs: resolve(__dirname, 'rodd-es/index.html'),
         ccse: resolve(__dirname, 'ccse/index.html'),
         paratumundo: resolve(__dirname, 'paratumundo/index.html'),
         teAtiendo: resolve(__dirname, 'te-atiendo/index.html'),
