@@ -156,6 +156,190 @@ document.addEventListener('click', e => {
 applyLang(LANG);
 
 /* ═══════════════════════════════════════
+   CURSOR SWITCH — Normal / Fluido / Mira (rodd.es inspired)
+═══════════════════════════════════════ */
+(()=>{
+  const sw = document.getElementById('cur-switch');
+  const trg = document.getElementById('cur-trigger');
+  const panel = document.getElementById('cur-panel');
+  const canvas = document.getElementById('fluid-canvas');
+  if(!sw || !trg || !panel) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Restore preference
+  let mode = (()=>{ try { return localStorage.getItem('cursor_mode') || 'normal'; } catch(e){ return 'normal'; } })();
+  if(!['normal','fluido','mira'].includes(mode)) mode = 'normal';
+  if(reduced) mode = 'normal';
+
+  function setMode(m){
+    mode = m;
+    document.body.setAttribute('data-cursor', m);
+    try { localStorage.setItem('cursor_mode', m); } catch(e){}
+    panel.querySelectorAll('.cur-opt').forEach(o=>{
+      const on = o.dataset.cur === m;
+      o.classList.toggle('on', on);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if(m === 'fluido') startFluid();
+    else stopFluid();
+  }
+  setMode(mode);
+
+  // Dropdown toggle
+  trg.addEventListener('click', e=>{
+    e.stopPropagation();
+    const open = sw.classList.toggle('open');
+    trg.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', e=>{
+    if(!sw.contains(e.target)){ sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); }
+  });
+  panel.querySelectorAll('.cur-opt').forEach(o=>{
+    o.addEventListener('click', ()=>{
+      setMode(o.dataset.cur);
+      sw.classList.remove('open');
+      trg.setAttribute('aria-expanded','false');
+    });
+  });
+
+  // Crosshair (modo mira): actualiza --mx/--my del body con la posición del ratón
+  document.addEventListener('mousemove', e=>{
+    if(mode !== 'mira') return;
+    document.body.style.setProperty('--mx', e.clientX + 'px');
+    document.body.style.setProperty('--my', e.clientY + 'px');
+  }, { passive: true });
+
+  /* ── Efecto FLUIDO (canvas 2D trail glow) ─────────────
+     Ligero (~2 KB), respeta colores del tema activo. */
+  let fluidRaf = null;
+  let particles = [];
+  let ctx = null;
+  let W = 0, H = 0, dpr = 1;
+  let lastX = 0, lastY = 0, hasLast = false;
+
+  function readThemeColors(){
+    const cs = getComputedStyle(document.documentElement);
+    const c1 = cs.getPropertyValue('--a1').trim() || '#7c5cff';
+    const c2 = cs.getPropertyValue('--a2').trim() || '#00d4ff';
+    const c3 = cs.getPropertyValue('--a3').trim() || c2;
+    return [c1, c2, c3].filter(Boolean);
+  }
+  let THEME_COLORS = readThemeColors();
+
+  // Reactualiza colores cuando cambia el tema
+  const themeObs = new MutationObserver(()=>{ THEME_COLORS = readThemeColors(); });
+  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  function resizeCanvas(){
+    if(!canvas) return;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx = canvas.getContext('2d');
+    if(ctx) ctx.scale(dpr, dpr);
+  }
+
+  function spawnParticles(x, y, vx, vy){
+    const speed = Math.hypot(vx, vy);
+    const count = Math.min(6, 1 + Math.floor(speed / 4));
+    for(let i = 0; i < count; i++){
+      const color = THEME_COLORS[Math.floor(Math.random() * THEME_COLORS.length)];
+      const angle = Math.atan2(vy, vx) + (Math.random() - .5) * .8;
+      const s = 1 + Math.random() * (speed * .3);
+      particles.push({
+        x: x + (Math.random() - .5) * 6,
+        y: y + (Math.random() - .5) * 6,
+        vx: Math.cos(angle) * s * .6 + (Math.random() - .5) * 1.5,
+        vy: Math.sin(angle) * s * .6 + (Math.random() - .5) * 1.5,
+        life: 1,
+        decay: .015 + Math.random() * .02,
+        r: 22 + Math.random() * 28,
+        color,
+      });
+    }
+    // Trunca si crece demasiado
+    if(particles.length > 240) particles = particles.slice(-240);
+  }
+
+  function drawFluid(){
+    if(!ctx){ fluidRaf = requestAnimationFrame(drawFluid); return; }
+    // Fade sutil para dejar rastro
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,.08)';
+    ctx.fillRect(0, 0, W, H);
+
+    ctx.globalCompositeOperation = 'lighter';
+    for(let i = particles.length - 1; i >= 0; i--){
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= .96;
+      p.vy *= .96;
+      p.life -= p.decay;
+      if(p.life <= 0){ particles.splice(i, 1); continue; }
+      const alpha = Math.max(0, Math.min(1, p.life));
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * p.life);
+      g.addColorStop(0, hexWithAlpha(p.color, .55 * alpha));
+      g.addColorStop(.5, hexWithAlpha(p.color, .18 * alpha));
+      g.addColorStop(1, hexWithAlpha(p.color, 0));
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    fluidRaf = requestAnimationFrame(drawFluid);
+  }
+
+  function hexWithAlpha(color, a){
+    // Acepta #rgb, #rrggbb o cualquier color CSS válido → devuelve rgba(...)
+    if(color.startsWith('#')){
+      let c = color.slice(1);
+      if(c.length === 3) c = c.split('').map(x=>x+x).join('');
+      const r = parseInt(c.slice(0,2), 16);
+      const g = parseInt(c.slice(2,4), 16);
+      const b = parseInt(c.slice(4,6), 16);
+      return `rgba(${r},${g},${b},${a})`;
+    }
+    // Fallback: aplica alpha con color-mix si el navegador lo soporta
+    return color;
+  }
+
+  function onMove(e){
+    if(mode !== 'fluido' || !ctx) return;
+    const x = e.clientX;
+    const y = e.clientY;
+    let vx = 0, vy = 0;
+    if(hasLast){
+      vx = x - lastX;
+      vy = y - lastY;
+    }
+    spawnParticles(x, y, vx, vy);
+    lastX = x; lastY = y; hasLast = true;
+  }
+
+  function startFluid(){
+    if(!canvas) return;
+    resizeCanvas();
+    THEME_COLORS = readThemeColors();
+    hasLast = false;
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    window.addEventListener('mousemove', onMove, { passive: true });
+    if(!fluidRaf) fluidRaf = requestAnimationFrame(drawFluid);
+  }
+  function stopFluid(){
+    if(fluidRaf){ cancelAnimationFrame(fluidRaf); fluidRaf = null; }
+    window.removeEventListener('resize', resizeCanvas);
+    window.removeEventListener('mousemove', onMove);
+    particles = [];
+    if(ctx) ctx.clearRect(0, 0, W, H);
+  }
+})();
+
+/* ═══════════════════════════════════════
    NAV PILL — píldora que se desliza (rodd.es style)
 ═══════════════════════════════════════ */
 (()=>{

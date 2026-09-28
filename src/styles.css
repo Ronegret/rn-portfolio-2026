@@ -662,6 +662,142 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .nlb:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
 
 /* ══════════════════════════════════════════
+   FLUID CURSOR CANVAS — trail glow que reacciona al mouse
+════════════════════════════════════════════ */
+#fluid-canvas {
+  position: fixed; inset: 0;
+  width: 100vw; height: 100vh;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0;
+  transition: opacity .3s ease-out;
+  mix-blend-mode: screen;
+}
+body[data-cursor="fluido"] #fluid-canvas { opacity: 1; }
+
+/* En modo mira, ocultamos el cursor clásico y mostramos el crosshair */
+body[data-cursor="mira"] #cur,
+body[data-cursor="mira"] #cur-r { display: none !important; }
+body[data-cursor="mira"] {
+  cursor: crosshair;
+}
+body[data-cursor="mira"]::before,
+body[data-cursor="mira"]::after {
+  content: "";
+  position: fixed;
+  background: var(--a1);
+  pointer-events: none;
+  z-index: 999998;
+  opacity: .5;
+  mix-blend-mode: difference;
+}
+body[data-cursor="mira"]::before {
+  left: 0; right: 0; height: 1px;
+  top: var(--my, 50vh);
+}
+body[data-cursor="mira"]::after {
+  top: 0; bottom: 0; width: 1px;
+  left: var(--mx, 50vw);
+}
+
+/* Modo fluido: escondemos el dot clásico pero mostramos el ring */
+body[data-cursor="fluido"] #cur { opacity: .3; }
+
+/* Modo normal (default) es el cursor clásico dot + halo ya existente */
+
+/* ══════════════════════════════════════════
+   CURSOR SWITCH — dropdown al lado del lang switch
+════════════════════════════════════════════ */
+.cur-switch { position: relative; }
+.cur-trigger {
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem .8rem;
+  border-radius: 100px;
+  background: color-mix(in srgb, var(--surf) 78%, transparent);
+  border: 1px solid var(--bord2);
+  color: var(--t2);
+  cursor: pointer;
+  font-family: var(--fm, var(--fb));
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  backdrop-filter: blur(10px) saturate(140%);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  transition: border-color .3s, background .3s, color .25s;
+}
+.cur-trigger:hover { border-color: color-mix(in srgb, var(--a1) 50%, var(--bord2)); color: var(--t1); }
+.cur-trigger[aria-expanded="true"] {
+  border-color: var(--a1);
+  color: var(--t1);
+  background: color-mix(in srgb, var(--a1) 8%, var(--surf));
+}
+.cur-trigger .cur-ic { transition: transform .5s cubic-bezier(.34,1.5,.64,1); }
+.cur-trigger:hover .cur-ic { transform: rotate(-14deg) scale(1.1); }
+.cur-trigger .lang-chev { transition: transform .3s var(--ease); opacity: .6; }
+.cur-trigger[aria-expanded="true"] .lang-chev { transform: rotate(180deg); opacity: 1; }
+.cur-trigger:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
+
+.cur-panel {
+  position: absolute; top: calc(100% + 8px); right: 0;
+  min-width: 200px;
+  padding: 8px;
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--bg2, var(--bg)) 92%, transparent);
+  border: 1px solid var(--bord2);
+  box-shadow: 0 20px 60px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.03);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  transform-origin: top right;
+  opacity: 0; transform: translateY(-6px) scale(.96);
+  filter: blur(6px);
+  pointer-events: none;
+  transition: opacity .28s var(--ease), transform .28s var(--ease), filter .28s var(--ease);
+  z-index: 999;
+}
+.cur-switch.open .cur-panel {
+  opacity: 1; transform: translateY(0) scale(1);
+  filter: blur(0);
+  pointer-events: auto;
+}
+.cur-opt {
+  display: flex; align-items: center; gap: .7rem;
+  width: 100%;
+  padding: .55rem .75rem;
+  border-radius: 10px;
+  color: var(--t2);
+  cursor: pointer;
+  font-family: var(--fb);
+  font-size: 13px; font-weight: 500;
+  text-align: left;
+  transition: color .2s, background .25s var(--ease);
+  transform: translateX(8px); opacity: 0;
+  animation: lang-opt-in .35s var(--ease) forwards;
+  border: 0;
+  background: transparent;
+}
+.cur-switch.open .cur-opt:nth-child(2) { animation-delay: .06s; }
+.cur-switch.open .cur-opt:nth-child(3) { animation-delay: .10s; }
+.cur-switch.open .cur-opt:nth-child(4) { animation-delay: .14s; }
+.cur-switch:not(.open) .cur-opt { animation: none; transform: translateX(8px); opacity: 0; }
+.cur-opt:hover, .cur-opt:focus-visible {
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.03));
+  color: var(--t1);
+  outline: none;
+}
+.cur-opt-name { flex: 1; }
+.cur-opt-check {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--a1);
+  box-shadow: 0 0 8px currentColor;
+  opacity: 0; transform: scale(0);
+  transition: opacity .3s, transform .35s var(--ease);
+  color: var(--a1);
+}
+.cur-opt.on .cur-opt-check { opacity: 1; transform: scale(1); }
+.cur-opt.on { color: var(--t1); }
+@media (max-width: 900px) {
+  .cur-switch { display: none; }
+}
+
+/* ══════════════════════════════════════════
    LANG SWITCH — rodd.es inspired dropdown
 ════════════════════════════════════════════ */
 .lang-switch { position: relative; }
