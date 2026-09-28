@@ -661,20 +661,6 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
 .nlb:hover:not(.on) { color: var(--t1); transform: translateY(-1px); }
 .nlb:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
 
-/* ══════════════════════════════════════════
-   FLUID CURSOR CANVAS — trail glow que reacciona al mouse
-════════════════════════════════════════════ */
-#fluid-canvas {
-  position: fixed; inset: 0;
-  width: 100vw; height: 100vh;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0;
-  transition: opacity .4s ease-out;
-  /* webgl-fluid ya rinde con transparencia; sin blend-mode el humo se ve más limpio */
-}
-body[data-cursor="fluido"] #fluid-canvas { opacity: 1; }
-
 /* En modo mira, ocultamos el cursor clásico y mostramos el crosshair */
 body[data-cursor="mira"] #cur,
 body[data-cursor="mira"] #cur-r { display: none !important; }
@@ -699,9 +685,6 @@ body[data-cursor="mira"]::after {
   top: 0; bottom: 0; width: 1px;
   left: var(--mx, 50vw);
 }
-
-/* Modo fluido: escondemos el dot clásico pero mostramos el ring */
-body[data-cursor="fluido"] #cur { opacity: .3; }
 
 /* Modo normal (default) es el cursor clásico dot + halo ya existente */
 

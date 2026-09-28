@@ -1,5 +1,4 @@
 import { T } from './content.js';
-import { startSplashCursor } from './splash-cursor.js';
 
 let LANG = 'es';
 
@@ -157,72 +156,17 @@ document.addEventListener('click', e => {
 applyLang(LANG);
 
 /* ═══════════════════════════════════════
-   CURSOR SWITCH — Normal / Fluido / Mira (rodd.es inspired)
+   CURSOR SWITCH — Normal / Mira
 ═══════════════════════════════════════ */
 try {
 (()=>{
   const sw = document.getElementById('cur-switch');
   const trg = document.getElementById('cur-trigger');
   const panel = document.getElementById('cur-panel');
-  const canvas = document.getElementById('fluid-canvas');
   if(!sw || !trg || !panel) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Efecto FLUIDO — port vanilla del SplashCursor.tsx de rodd-web (mismo
-  // motor de fluid simulation con shaders GLSL y Navier-Stokes).
   let mode = 'normal';
-  let fluidStarted = false;
-  let fluidStopFn = null;
-
-  function hexToRgb01(hex){
-    let c = hex.replace('#','').trim();
-    if(c.length === 3) c = c.split('').map(x=>x+x).join('');
-    return {
-      r: parseInt(c.slice(0,2), 16) / 255,
-      g: parseInt(c.slice(2,4), 16) / 255,
-      b: parseInt(c.slice(4,6), 16) / 255,
-    };
-  }
-
-  function readThemeColors(){
-    const cs = getComputedStyle(document.documentElement);
-    const raw = ['--a1','--a2','--a3']
-      .map(v => cs.getPropertyValue(v).trim())
-      .filter(Boolean)
-      .filter(v => v.startsWith('#'));
-    if(raw.length === 0) return [{r:0.49,g:0.36,b:1},{r:0,g:0.83,b:1}];
-    return raw.map(hexToRgb01);
-  }
-
-  function startFluid(){
-    if(!canvas || fluidStarted) return;
-    try {
-      fluidStopFn = startSplashCursor(canvas, {
-        SIM_RESOLUTION: 128,
-        DYE_RESOLUTION: 1440,
-        DENSITY_DISSIPATION: 3.5,
-        VELOCITY_DISSIPATION: 2,
-        PRESSURE: 0.1,
-        PRESSURE_ITERATIONS: 20,
-        CURL: 3,
-        SPLAT_RADIUS: 0.2,
-        SPLAT_FORCE: 6000,
-        SHADING: true,
-        COLOR_UPDATE_SPEED: 10,
-        BACK_COLOR: { r: 0.5, g: 0, b: 0 },
-        TRANSPARENT: true,
-        RAINBOW_MODE: true,
-      });
-      fluidStarted = true;
-    } catch(e){
-      console.warn('[fluid] init error:', e);
-    }
-  }
-
-  function stopFluid(){
-    // Simplemente CSS opacity controla la visibilidad; el motor sigue
-    // corriendo en segundo plano para evitar reinit al volver a Fluido
-  }
 
   function setMode(m){
     mode = m;
@@ -233,15 +177,12 @@ try {
       o.classList.toggle('on', on);
       o.setAttribute('aria-selected', on ? 'true' : 'false');
     });
-    if(m === 'fluido') startFluid();
-    else stopFluid();
   }
 
-  // Init mode from localStorage (or 'normal')
   let initial = 'normal';
   try {
     const saved = localStorage.getItem('cursor_mode');
-    if(saved && ['normal','fluido','mira'].includes(saved)) initial = saved;
+    if(saved && ['normal','mira'].includes(saved)) initial = saved;
   } catch(e){}
   if(reduced) initial = 'normal';
   setMode(initial);
