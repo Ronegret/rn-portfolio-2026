@@ -670,8 +670,8 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   pointer-events: none;
   z-index: 9998;
   opacity: 0;
-  transition: opacity .3s ease-out;
-  mix-blend-mode: screen;
+  transition: opacity .4s ease-out;
+  /* webgl-fluid ya rinde con transparencia; sin blend-mode el humo se ve más limpio */
 }
 body[data-cursor="fluido"] #fluid-canvas { opacity: 1; }
 

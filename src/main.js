@@ -167,134 +167,105 @@ try {
   if(!sw || !trg || !panel) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Variables del efecto FLUIDO — declaradas ANTES de setMode() para evitar
-  // ReferenceError por TDZ (temporal dead zone) al llamar stopFluid al init
-  let fluidRaf = null;
-  let particles = [];
-  let ctx = null;
-  let W = 0, H = 0, dpr = 1;
-  let lastX = 0, lastY = 0, hasLast = false;
+  // Efecto FLUIDO — usa la librería webgl-fluid de Pavel Dobryakov cargada
+  // por CDN (misma tecnología que rodd.es SplashCursor: shaders GLSL con
+  // Navier-Stokes, splats de tinta que se comportan como humo real).
   let mode = 'normal';
+  let fluidStarted = false;
+
+  function hexToRgb01(hex){
+    let c = hex.replace('#','').trim();
+    if(c.length === 3) c = c.split('').map(x=>x+x).join('');
+    return {
+      r: parseInt(c.slice(0,2), 16) / 255,
+      g: parseInt(c.slice(2,4), 16) / 255,
+      b: parseInt(c.slice(4,6), 16) / 255,
+    };
+  }
 
   function readThemeColors(){
     const cs = getComputedStyle(document.documentElement);
-    const c1 = cs.getPropertyValue('--a1').trim() || '#7c5cff';
-    const c2 = cs.getPropertyValue('--a2').trim() || '#00d4ff';
-    const c3 = cs.getPropertyValue('--a3').trim() || c2;
-    return [c1, c2, c3].filter(Boolean);
-  }
-  let THEME_COLORS = readThemeColors();
-
-  // Reactualiza colores cuando cambia el tema
-  const themeObs = new MutationObserver(()=>{ THEME_COLORS = readThemeColors(); });
-  themeObs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-
-  function resizeCanvas(){
-    if(!canvas) return;
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
-    W = window.innerWidth;
-    H = window.innerHeight;
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    canvas.style.width = W + 'px';
-    canvas.style.height = H + 'px';
-    ctx = canvas.getContext('2d');
-    if(ctx) ctx.scale(dpr, dpr);
-  }
-
-  function spawnParticles(x, y, vx, vy){
-    const speed = Math.hypot(vx, vy);
-    const count = Math.min(6, 1 + Math.floor(speed / 4));
-    for(let i = 0; i < count; i++){
-      const color = THEME_COLORS[Math.floor(Math.random() * THEME_COLORS.length)];
-      const angle = Math.atan2(vy, vx) + (Math.random() - .5) * .8;
-      const s = 1 + Math.random() * (speed * .3);
-      particles.push({
-        x: x + (Math.random() - .5) * 6,
-        y: y + (Math.random() - .5) * 6,
-        vx: Math.cos(angle) * s * .6 + (Math.random() - .5) * 1.5,
-        vy: Math.sin(angle) * s * .6 + (Math.random() - .5) * 1.5,
-        life: 1,
-        decay: .015 + Math.random() * .02,
-        r: 22 + Math.random() * 28,
-        color,
-      });
-    }
-    // Trunca si crece demasiado
-    if(particles.length > 240) particles = particles.slice(-240);
-  }
-
-  function drawFluid(){
-    if(!ctx){ fluidRaf = requestAnimationFrame(drawFluid); return; }
-    // Fade sutil para dejar rastro
-    ctx.globalCompositeOperation = 'destination-out';
-    ctx.fillStyle = 'rgba(0,0,0,.08)';
-    ctx.fillRect(0, 0, W, H);
-
-    ctx.globalCompositeOperation = 'lighter';
-    for(let i = particles.length - 1; i >= 0; i--){
-      const p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vx *= .96;
-      p.vy *= .96;
-      p.life -= p.decay;
-      if(p.life <= 0){ particles.splice(i, 1); continue; }
-      const alpha = Math.max(0, Math.min(1, p.life));
-      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * p.life);
-      g.addColorStop(0, hexWithAlpha(p.color, .55 * alpha));
-      g.addColorStop(.5, hexWithAlpha(p.color, .18 * alpha));
-      g.addColorStop(1, hexWithAlpha(p.color, 0));
-      ctx.fillStyle = g;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
-      ctx.fill();
-    }
-    fluidRaf = requestAnimationFrame(drawFluid);
-  }
-
-  function hexWithAlpha(color, a){
-    // Acepta #rgb, #rrggbb o cualquier color CSS válido → devuelve rgba(...)
-    if(color.startsWith('#')){
-      let c = color.slice(1);
-      if(c.length === 3) c = c.split('').map(x=>x+x).join('');
-      const r = parseInt(c.slice(0,2), 16);
-      const g = parseInt(c.slice(2,4), 16);
-      const b = parseInt(c.slice(4,6), 16);
-      return `rgba(${r},${g},${b},${a})`;
-    }
-    // Fallback: aplica alpha con color-mix si el navegador lo soporta
-    return color;
-  }
-
-  function onMove(e){
-    if(mode !== 'fluido' || !ctx) return;
-    const x = e.clientX;
-    const y = e.clientY;
-    let vx = 0, vy = 0;
-    if(hasLast){
-      vx = x - lastX;
-      vy = y - lastY;
-    }
-    spawnParticles(x, y, vx, vy);
-    lastX = x; lastY = y; hasLast = true;
+    const raw = ['--a1','--a2','--a3']
+      .map(v => cs.getPropertyValue(v).trim())
+      .filter(Boolean)
+      .filter(v => v.startsWith('#'));
+    if(raw.length === 0) return [{r:0.49,g:0.36,b:1},{r:0,g:0.83,b:1}];
+    return raw.map(hexToRgb01);
   }
 
   function startFluid(){
-    if(!canvas) return;
-    resizeCanvas();
-    THEME_COLORS = readThemeColors();
-    hasLast = false;
-    window.addEventListener('resize', resizeCanvas, { passive: true });
-    window.addEventListener('mousemove', onMove, { passive: true });
-    if(!fluidRaf) fluidRaf = requestAnimationFrame(drawFluid);
+    if(!canvas || fluidStarted) return;
+    if(typeof window.webglFluid !== 'function' && typeof window.WebGLFluid !== 'function'){
+      // Aún no cargó el CDN — reintenta
+      setTimeout(startFluid, 200);
+      return;
+    }
+    const runner = window.webglFluid || window.WebGLFluid;
+    try {
+      runner(canvas, {
+        IMMEDIATE: true,
+        TRIGGER: 'hover',
+        SIM_RESOLUTION: 128,
+        DYE_RESOLUTION: 1024,
+        DENSITY_DISSIPATION: 3.2,
+        VELOCITY_DISSIPATION: 2,
+        PRESSURE: 0.8,
+        PRESSURE_ITERATIONS: 20,
+        CURL: 30,
+        SPLAT_RADIUS: 0.18,
+        SPLAT_FORCE: 5000,
+        SHADING: true,
+        COLORFUL: true,
+        COLOR_UPDATE_SPEED: 8,
+        BACK_COLOR: { r: 0, g: 0, b: 0 },
+        TRANSPARENT: true,
+        BLOOM: true,
+        BLOOM_ITERATIONS: 8,
+        BLOOM_RESOLUTION: 256,
+        BLOOM_INTENSITY: 0.8,
+        BLOOM_THRESHOLD: 0.6,
+        BLOOM_SOFT_KNEE: 0.7,
+        SUNRAYS: true,
+        SUNRAYS_RESOLUTION: 196,
+        SUNRAYS_WEIGHT: 1.0,
+      });
+      fluidStarted = true;
+
+      // Puente de eventos: webgl-fluid escucha en el canvas, pero el canvas
+      // tiene pointer-events:none para no bloquear clicks del portfolio.
+      // Redispatchamos los eventos globales al canvas para que el fluid los reciba.
+      const forwardEvent = (e) => {
+        if(mode !== 'fluido' || !canvas) return;
+        try {
+          let clone;
+          if(e instanceof MouseEvent){
+            clone = new MouseEvent(e.type, {
+              bubbles: false, cancelable: true,
+              clientX: e.clientX, clientY: e.clientY,
+              screenX: e.screenX, screenY: e.screenY,
+              button: e.button, buttons: e.buttons,
+              view: window,
+            });
+          } else if(e instanceof TouchEvent){
+            // TouchEvent constructor no soportado en algunos navegadores;
+            // solo forwardeamos mouse events (suficiente para desktop hover)
+            return;
+          } else return;
+          canvas.dispatchEvent(clone);
+        } catch(err) { /* silent */ }
+      };
+      ['mousemove','mousedown','mouseup'].forEach(evt => {
+        window.addEventListener(evt, forwardEvent, { passive: true });
+      });
+    } catch(e){
+      console.warn('[fluid] init error:', e);
+    }
   }
+
+  // No hay destroy oficial en webgl-fluid. Simplemente ocultamos el canvas.
+  // Se mantiene running detrás porque el usuario probablemente volverá a Fluido.
   function stopFluid(){
-    if(fluidRaf){ cancelAnimationFrame(fluidRaf); fluidRaf = null; }
-    window.removeEventListener('resize', resizeCanvas);
-    window.removeEventListener('mousemove', onMove);
-    particles = [];
-    if(ctx) ctx.clearRect(0, 0, W, H);
+    /* controlled via CSS opacity by body[data-cursor] attribute */
   }
 
   function setMode(m){
