@@ -158,6 +158,7 @@ applyLang(LANG);
 /* ═══════════════════════════════════════
    CURSOR SWITCH — Normal / Fluido / Mira (rodd.es inspired)
 ═══════════════════════════════════════ */
+try {
 (()=>{
   const sw = document.getElementById('cur-switch');
   const trg = document.getElementById('cur-trigger');
@@ -166,56 +167,14 @@ applyLang(LANG);
   if(!sw || !trg || !panel) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Restore preference
-  let mode = (()=>{ try { return localStorage.getItem('cursor_mode') || 'normal'; } catch(e){ return 'normal'; } })();
-  if(!['normal','fluido','mira'].includes(mode)) mode = 'normal';
-  if(reduced) mode = 'normal';
-
-  function setMode(m){
-    mode = m;
-    document.body.setAttribute('data-cursor', m);
-    try { localStorage.setItem('cursor_mode', m); } catch(e){}
-    panel.querySelectorAll('.cur-opt').forEach(o=>{
-      const on = o.dataset.cur === m;
-      o.classList.toggle('on', on);
-      o.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-    if(m === 'fluido') startFluid();
-    else stopFluid();
-  }
-  setMode(mode);
-
-  // Dropdown toggle
-  trg.addEventListener('click', e=>{
-    e.stopPropagation();
-    const open = sw.classList.toggle('open');
-    trg.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  document.addEventListener('click', e=>{
-    if(!sw.contains(e.target)){ sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); }
-  });
-  panel.querySelectorAll('.cur-opt').forEach(o=>{
-    o.addEventListener('click', ()=>{
-      setMode(o.dataset.cur);
-      sw.classList.remove('open');
-      trg.setAttribute('aria-expanded','false');
-    });
-  });
-
-  // Crosshair (modo mira): actualiza --mx/--my del body con la posición del ratón
-  document.addEventListener('mousemove', e=>{
-    if(mode !== 'mira') return;
-    document.body.style.setProperty('--mx', e.clientX + 'px');
-    document.body.style.setProperty('--my', e.clientY + 'px');
-  }, { passive: true });
-
-  /* ── Efecto FLUIDO (canvas 2D trail glow) ─────────────
-     Ligero (~2 KB), respeta colores del tema activo. */
+  // Variables del efecto FLUIDO — declaradas ANTES de setMode() para evitar
+  // ReferenceError por TDZ (temporal dead zone) al llamar stopFluid al init
   let fluidRaf = null;
   let particles = [];
   let ctx = null;
   let W = 0, H = 0, dpr = 1;
   let lastX = 0, lastY = 0, hasLast = false;
+  let mode = 'normal';
 
   function readThemeColors(){
     const cs = getComputedStyle(document.documentElement);
@@ -337,7 +296,56 @@ applyLang(LANG);
     particles = [];
     if(ctx) ctx.clearRect(0, 0, W, H);
   }
+
+  function setMode(m){
+    mode = m;
+    document.body.setAttribute('data-cursor', m);
+    try { localStorage.setItem('cursor_mode', m); } catch(e){}
+    panel.querySelectorAll('.cur-opt').forEach(o=>{
+      const on = o.dataset.cur === m;
+      o.classList.toggle('on', on);
+      o.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    if(m === 'fluido') startFluid();
+    else stopFluid();
+  }
+
+  // Init mode from localStorage (or 'normal')
+  let initial = 'normal';
+  try {
+    const saved = localStorage.getItem('cursor_mode');
+    if(saved && ['normal','fluido','mira'].includes(saved)) initial = saved;
+  } catch(e){}
+  if(reduced) initial = 'normal';
+  setMode(initial);
+
+  // Dropdown toggle
+  trg.addEventListener('click', e=>{
+    e.stopPropagation();
+    const open = sw.classList.toggle('open');
+    trg.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.addEventListener('click', e=>{
+    if(!sw.contains(e.target)){ sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); }
+  });
+  panel.querySelectorAll('.cur-opt').forEach(o=>{
+    o.addEventListener('click', ()=>{
+      setMode(o.dataset.cur);
+      sw.classList.remove('open');
+      trg.setAttribute('aria-expanded','false');
+    });
+  });
+
+  // Crosshair (modo mira): actualiza --mx/--my del body con la posición del ratón
+  document.addEventListener('mousemove', e=>{
+    if(mode !== 'mira') return;
+    document.body.style.setProperty('--mx', e.clientX + 'px');
+    document.body.style.setProperty('--my', e.clientY + 'px');
+  }, { passive: true });
 })();
+} catch(err) {
+  console.warn('[cursor-switch] init failed:', err);
+}
 
 /* ═══════════════════════════════════════
    NAV PILL — píldora que se desliza (rodd.es style)
