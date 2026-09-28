@@ -1,4 +1,5 @@
 import { T } from './content.js';
+import { startSplashCursor } from './splash-cursor.js';
 
 let LANG = 'es';
 
@@ -167,11 +168,11 @@ try {
   if(!sw || !trg || !panel) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Efecto FLUIDO — usa la librería webgl-fluid de Pavel Dobryakov cargada
-  // por CDN (misma tecnología que rodd.es SplashCursor: shaders GLSL con
-  // Navier-Stokes, splats de tinta que se comportan como humo real).
+  // Efecto FLUIDO — port vanilla del SplashCursor.tsx de rodd-web (mismo
+  // motor de fluid simulation con shaders GLSL y Navier-Stokes).
   let mode = 'normal';
   let fluidStarted = false;
+  let fluidStopFn = null;
 
   function hexToRgb01(hex){
     let c = hex.replace('#','').trim();
@@ -195,77 +196,32 @@ try {
 
   function startFluid(){
     if(!canvas || fluidStarted) return;
-    if(typeof window.webglFluid !== 'function' && typeof window.WebGLFluid !== 'function'){
-      // Aún no cargó el CDN — reintenta
-      setTimeout(startFluid, 200);
-      return;
-    }
-    const runner = window.webglFluid || window.WebGLFluid;
     try {
-      runner(canvas, {
-        IMMEDIATE: true,
-        TRIGGER: 'hover',
+      fluidStopFn = startSplashCursor(canvas, {
         SIM_RESOLUTION: 128,
-        DYE_RESOLUTION: 1024,
-        DENSITY_DISSIPATION: 3.2,
+        DYE_RESOLUTION: 1440,
+        DENSITY_DISSIPATION: 3.5,
         VELOCITY_DISSIPATION: 2,
-        PRESSURE: 0.8,
+        PRESSURE: 0.1,
         PRESSURE_ITERATIONS: 20,
-        CURL: 30,
-        SPLAT_RADIUS: 0.18,
-        SPLAT_FORCE: 5000,
+        CURL: 3,
+        SPLAT_RADIUS: 0.2,
+        SPLAT_FORCE: 6000,
         SHADING: true,
-        COLORFUL: true,
-        COLOR_UPDATE_SPEED: 8,
-        BACK_COLOR: { r: 0, g: 0, b: 0 },
+        COLOR_UPDATE_SPEED: 10,
+        BACK_COLOR: { r: 0.5, g: 0, b: 0 },
         TRANSPARENT: true,
-        BLOOM: true,
-        BLOOM_ITERATIONS: 8,
-        BLOOM_RESOLUTION: 256,
-        BLOOM_INTENSITY: 0.8,
-        BLOOM_THRESHOLD: 0.6,
-        BLOOM_SOFT_KNEE: 0.7,
-        SUNRAYS: true,
-        SUNRAYS_RESOLUTION: 196,
-        SUNRAYS_WEIGHT: 1.0,
+        RAINBOW_MODE: true,
       });
       fluidStarted = true;
-
-      // Puente de eventos: webgl-fluid escucha en el canvas, pero el canvas
-      // tiene pointer-events:none para no bloquear clicks del portfolio.
-      // Redispatchamos los eventos globales al canvas para que el fluid los reciba.
-      const forwardEvent = (e) => {
-        if(mode !== 'fluido' || !canvas) return;
-        try {
-          let clone;
-          if(e instanceof MouseEvent){
-            clone = new MouseEvent(e.type, {
-              bubbles: false, cancelable: true,
-              clientX: e.clientX, clientY: e.clientY,
-              screenX: e.screenX, screenY: e.screenY,
-              button: e.button, buttons: e.buttons,
-              view: window,
-            });
-          } else if(e instanceof TouchEvent){
-            // TouchEvent constructor no soportado en algunos navegadores;
-            // solo forwardeamos mouse events (suficiente para desktop hover)
-            return;
-          } else return;
-          canvas.dispatchEvent(clone);
-        } catch(err) { /* silent */ }
-      };
-      ['mousemove','mousedown','mouseup'].forEach(evt => {
-        window.addEventListener(evt, forwardEvent, { passive: true });
-      });
     } catch(e){
       console.warn('[fluid] init error:', e);
     }
   }
 
-  // No hay destroy oficial en webgl-fluid. Simplemente ocultamos el canvas.
-  // Se mantiene running detrás porque el usuario probablemente volverá a Fluido.
   function stopFluid(){
-    /* controlled via CSS opacity by body[data-cursor] attribute */
+    // Simplemente CSS opacity controla la visibilidad; el motor sigue
+    // corriendo en segundo plano para evitar reinit al volver a Fluido
   }
 
   function setMode(m){
