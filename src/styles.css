@@ -549,11 +549,84 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); } 
 }
 
-.nav-links { display: flex; gap: clamp(1rem, 2vw, 2.5rem); align-items: center; }
-.nav-links a { font-size: 13px; font-weight: 600; color: var(--t2); position: relative; padding: 0.25rem 0; transition: color 0.2s; cursor: pointer; }
-.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1.5px; background: var(--a1); transform: scaleX(0); transition: transform 0.3s var(--ease); transform-origin: left; }
-.nav-links a:hover, .nav-links a.act { color: var(--t1); }
-.nav-links a.act::after, .nav-links a:hover::after { transform: scaleX(1); }
+/* PillNav inspirado en rodd.es: contenedor glass + píldora que se desliza */
+.nav-links {
+  display: flex; align-items: center;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  background: transparent;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
+  position: relative;
+  transition: border-color .45s var(--ease), background .45s var(--ease), backdrop-filter .45s;
+}
+/* Cuando el nav está scrolled, el pill nav coge el fondo glass */
+#nav.scrolled .nav-links {
+  border-color: color-mix(in srgb, var(--t1) 8%, transparent);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+}
+.nav-links li { list-style: none; }
+.nav-links a {
+  position: relative;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600;
+  color: var(--t3);
+  padding: 8px 14px;
+  border-radius: 100px;
+  transition: color .3s var(--ease);
+  cursor: pointer;
+  z-index: 2;
+}
+.nav-links a:hover,
+.nav-links a.act,
+.nav-links a[data-hover="1"] { color: var(--t1); }
+
+/* Píldora glass que se desliza siguiendo hover/active — el JS actualiza
+   --pill-x, --pill-w y opacity */
+.nav-pill {
+  position: absolute;
+  top: 4px; height: calc(100% - 8px);
+  left: 0;
+  width: 0;
+  border-radius: 100px;
+  background: linear-gradient(180deg,
+    color-mix(in srgb, var(--t1) 12%, transparent),
+    color-mix(in srgb, var(--t1) 4%, transparent));
+  border: 1px solid color-mix(in srgb, var(--t1) 10%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--t1) 15%, transparent),
+    0 0 20px color-mix(in srgb, var(--a1) 22%, transparent);
+  transform: translateX(var(--pill-x, 0));
+  width: var(--pill-w, 0);
+  opacity: var(--pill-o, 0);
+  transition: transform .42s cubic-bezier(.34,1.2,.64,1),
+              width .42s cubic-bezier(.34,1.2,.64,1),
+              opacity .3s ease-out;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dot activo (visible sólo en la sección activa por scroll spy) */
+.nav-adot {
+  display: inline-block;
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--a1);
+  box-shadow: 0 0 8px var(--a1);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity .3s, transform .3s cubic-bezier(.34,1.7,.64,1);
+}
+.nav-links a.act .nav-adot { opacity: 1; transform: scale(1); }
+
+/* En temas sin theme=saas, quitar el glow violeta del pill */
+[data-theme="editorial"] .nav-pill { box-shadow: inset 0 1px 0 color-mix(in srgb, var(--t1) 15%, transparent); }
+[data-theme="diario"] .nav-pill { box-shadow: inset 0 1px 0 color-mix(in srgb, var(--t1) 15%, transparent); }
 
 .nav-r { display: flex; align-items: center; gap: 0.75rem; }
 
@@ -1813,21 +1886,10 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   .cert-lb-btn svg { margin: 0; }
 }
 
-/* Ping dot for the "Disponible ahora" badge — rodd.es style live indicator */
-.avail-tag,
-[data-i="avail_tag"] {
+/* Ping halo animado en el logo-dot del chip "Disponible ahora" — solo halo,
+   no un dot extra (para evitar el doble punto verde) */
+.status-available .logo-dot {
   position: relative;
-  padding-left: 1.5rem !important;
-}
-.avail-tag::before,
-[data-i="avail_tag"]::before {
-  content: "";
-  position: absolute;
-  left: 0.7rem; top: 50%;
-  width: 8px; height: 8px;
-  margin-top: -4px;
-  border-radius: 50%;
-  background: #22c55e;
   box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
   animation: ping-live 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
@@ -1837,7 +1899,7 @@ body.has-custom-cursor [role="button"], body.has-custom-cursor label { cursor: n
   100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .avail-tag::before, [data-i="avail_tag"]::before { animation: none; }
+  .status-available .logo-dot { animation: none; }
 }
 .edu-cert {
   display: inline-flex; align-items: center; gap: .4rem;

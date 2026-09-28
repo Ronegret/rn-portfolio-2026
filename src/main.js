@@ -156,6 +156,89 @@ document.addEventListener('click', e => {
 applyLang(LANG);
 
 /* ═══════════════════════════════════════
+   NAV PILL — píldora que se desliza (rodd.es style)
+═══════════════════════════════════════ */
+(()=>{
+  const nav = document.getElementById('nav-links');
+  const pill = document.getElementById('nav-pill');
+  if(!nav || !pill) return;
+  const links = Array.from(nav.querySelectorAll('a'));
+  if(!links.length) return;
+
+  let activeEl = null;
+
+  function moveTo(el, showPill){
+    if(!el){ pill.style.setProperty('--pill-o', '0'); return; }
+    const navRect = nav.getBoundingClientRect();
+    const elRect = el.getBoundingClientRect();
+    pill.style.setProperty('--pill-x', (elRect.left - navRect.left) + 'px');
+    pill.style.setProperty('--pill-w', elRect.width + 'px');
+    pill.style.setProperty('--pill-o', showPill ? '1' : '0');
+  }
+
+  function hoveredOrActive(){
+    return links.find(l => l.dataset.hover === '1') || activeEl;
+  }
+
+  links.forEach(l=>{
+    l.addEventListener('mouseenter', ()=>{
+      links.forEach(x=>x.removeAttribute('data-hover'));
+      l.setAttribute('data-hover', '1');
+      moveTo(l, true);
+    });
+    l.addEventListener('focus', ()=>{
+      links.forEach(x=>x.removeAttribute('data-hover'));
+      l.setAttribute('data-hover', '1');
+      moveTo(l, true);
+    });
+  });
+  nav.addEventListener('mouseleave', ()=>{
+    links.forEach(x=>x.removeAttribute('data-hover'));
+    if(activeEl) moveTo(activeEl, true);
+    else pill.style.setProperty('--pill-o', '0');
+  });
+
+  // Scroll spy: marca .act al link cuyo #id está más arriba en el viewport
+  const sections = links
+    .map(l => ({ link: l, sec: document.querySelector(l.getAttribute('href')) }))
+    .filter(x => x.sec);
+
+  function updateActive(){
+    const y = window.scrollY + window.innerHeight * 0.35;
+    let curr = null;
+    for(const s of sections){
+      const top = s.sec.getBoundingClientRect().top + window.scrollY;
+      if(top <= y) curr = s;
+    }
+    const newActive = curr ? curr.link : null;
+    if(newActive === activeEl) return;
+    if(activeEl) activeEl.classList.remove('act');
+    activeEl = newActive;
+    if(activeEl) activeEl.classList.add('act');
+    if(!hoveredOrActive() || !links.some(l=>l.dataset.hover === '1')){
+      if(activeEl) moveTo(activeEl, true);
+    }
+  }
+
+  // Scrolled state para activar backdrop-blur en el pill nav
+  const navEl = document.getElementById('nav');
+  function onScroll(){
+    if(navEl){
+      const s = window.scrollY > 40;
+      navEl.classList.toggle('scrolled', s);
+    }
+    updateActive();
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', ()=>{
+    const t = hoveredOrActive();
+    if(t) moveTo(t, true);
+  });
+  // Inicial
+  requestAnimationFrame(()=>{ onScroll(); });
+})();
+
+/* ═══════════════════════════════════════
    SPLIT-TEXT — anima chars del título del hero (rodd.es style)
    Re-splitea tras cada cambio de idioma para no romper la traducción
 ═══════════════════════════════════════ */
