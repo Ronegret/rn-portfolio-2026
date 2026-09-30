@@ -52,6 +52,13 @@
     { "source": "/Rodd", "destination": "/rodd-es/index.html" },
     { "source": "/Rodd/", "destination": "/rodd-es/index.html" },
 
+    { "source": "/aem", "destination": "/aem/index.html" },
+    { "source": "/aem/", "destination": "/aem/index.html" },
+    { "source": "/AEM", "destination": "/aem/index.html" },
+    { "source": "/AEM/", "destination": "/aem/index.html" },
+    { "source": "/algo-entre-manos", "destination": "/aem/index.html" },
+    { "source": "/algo-entre-manos/", "destination": "/aem/index.html" },
+
     { "source": "/aquae", "destination": "/aquae/index.html" },
     { "source": "/aquae/", "destination": "/aquae/index.html" },
     { "source": "/Aquae", "destination": "/aquae/index.html" },

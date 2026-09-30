@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>AEM Planner — Un sistema operativo para bodas · Caso de estudio · Rodrigo Negrete</title>
+<meta name="description" content="Caso de estudio del portal AEM Planner para Algo Entre Manos (Wedding + Events): investigación UX, diseño de producto, sistema de diseño, uso de IA y desarrollo end-to-end de una herramienta que tres personas usan de pie, en una finca sin cobertura, el único día que no se puede repetir.">
+<meta name="theme-color" content="#4e6359">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://rodrigonegrete.es/aem/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="AEM Planner — Un sistema operativo para bodas · Rodrigo Negrete">
+<meta property="og:description" content="Cómo diseñé y construí una app web para wedding planners que abre sin cobertura, sincroniza sola y trabaja para tres personas a la vez. Research UX, IA aplicada y desarrollo end-to-end.">
+<meta property="og:image" content="/assets/aem/logo-neon-aem.jpg">
+<meta property="og:url" content="https://rodrigonegrete.es/aem/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --tinta:#4e6359;
+  --tinta-honda:#33463d;
+  --mostaza:#e2e735;
+  --crema:#f0f0e6;
+  --papel:#faf9f4;
+  --texto:#24231d;
+  --suave:#747164;
+  --linea:#dcdcc9;
+  --alerta:#a84f42;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  color:var(--texto);
+  background:var(--papel);
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+strong{color:var(--tinta-honda);font-weight:700}
+
+/* ── Franja superior verde+mostaza igual que el informe ─────── */
+.franja-top{
+  position:fixed;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--tinta) 0 62%,var(--mostaza) 62% 100%);
+  z-index:100;
+}
+
+/* ── Barra volver ─────────────────────────────────────────── */
+.barra{
+  position:fixed;top:16px;left:16px;right:16px;z-index:99;
+  display:flex;justify-content:space-between;align-items:center;
+  pointer-events:none;
+}
+.barra > *{pointer-events:auto}
+.volver{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.55rem 1rem;border-radius:999px;
+  background:rgba(255,255,255,.9);backdrop-filter:blur(10px);
+  border:1px solid var(--linea);color:var(--tinta-honda);
+  font-size:.85rem;font-weight:500;letter-spacing:.02em;
+  transition:transform .3s var(--ease),background .3s;
+}
+.volver:hover{transform:translateX(-3px);background:#fff}
+.demo-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.55rem 1rem;border-radius:999px;
+  background:var(--tinta);color:#fff;
+  font-size:.85rem;font-weight:500;letter-spacing:.02em;
+  transition:transform .3s var(--ease),background .3s;
+  border:1px solid var(--tinta);
+}
+.demo-cta:hover{background:var(--tinta-honda);transform:translateY(-1px)}
+.demo-cta::after{content:"→";transition:transform .3s var(--ease)}
+.demo-cta:hover::after{transform:translateX(3px)}
+
+/* ── Hero portada ───────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  background:var(--crema);
+  padding:120px 24px 60px;
+  position:relative;
+  display:flex;flex-direction:column;justify-content:center;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;inset:24px;
+  border:1px solid var(--linea);
+  pointer-events:none;
+}
+.hero-cont{
+  max-width:1100px;margin:0 auto;width:100%;
+  padding:40px 30px;
+  position:relative;z-index:2;
+}
+.hero-eyebrow{
+  color:var(--tinta);font-size:.75rem;font-weight:700;
+  letter-spacing:.32em;text-transform:uppercase;
+  margin-bottom:32px;
+}
+.hero h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;
+  font-size:clamp(2.4rem,6vw,4.5rem);
+  line-height:1.05;letter-spacing:.005em;
+  color:var(--texto);
+  margin-bottom:20px;
+}
+.hero h1 em{
+  display:block;font-style:italic;color:var(--tinta);
+  font-size:.65em;margin-top:14px;
+  font-weight:400;
+}
+.hero-linea{
+  width:80px;height:3px;background:var(--mostaza);
+  margin:32px 0;
+}
+.hero-sub{
+  max-width:640px;font-size:1.15rem;line-height:1.7;
+  color:var(--suave);
+}
+.hero-marca{
+  margin-top:56px;
+  width:180px;height:auto;opacity:.85;
+}
+.hero-datos{
+  margin-top:64px;padding-top:32px;
+  border-top:1px solid var(--linea);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
+  max-width:900px;
+}
+.hero-datos div span{
+  display:block;color:var(--tinta);font-size:.68rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;margin-bottom:8px;
+}
+.hero-datos div b{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-size:1.15rem;line-height:1.3;
+}
+
+/* ── Secciones ──────────────────────────────────────────── */
+.seccion{
+  max-width:960px;margin:0 auto;
+  padding:110px 24px;
+  border-bottom:1px solid var(--linea);
+}
+.sec-num{
+  display:block;color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.sec-eyebrow{
+  display:block;color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:6px;
+}
+.sec-h{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;
+  font-size:clamp(1.9rem,4vw,3rem);
+  line-height:1.15;
+  color:var(--texto);
+  margin-bottom:40px;
+  max-width:720px;
+}
+.entradilla{
+  font-size:1.15rem;line-height:1.7;color:var(--tinta-honda);
+  padding-left:18px;border-left:3px solid var(--mostaza);
+  margin-bottom:36px;max-width:680px;
+}
+.seccion h3{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:600;font-size:1.5rem;
+  color:var(--tinta-honda);
+  margin:44px 0 16px;
+}
+.seccion h4{
+  font-size:.8rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tinta);
+  margin:28px 0 10px;
+}
+.seccion p{
+  margin-bottom:16px;font-size:1rem;line-height:1.75;
+  max-width:680px;
+}
+.seccion ul,.seccion ol{
+  margin:0 0 20px 24px;max-width:680px;
+}
+.seccion li{
+  margin-bottom:10px;line-height:1.7;
+}
+
+/* ── Bloques comunes ───────────────────────────────────── */
+.cifras{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  margin:36px 0;
+}
+.cifra{
+  padding:22px 18px;background:var(--papel);
+  border:1px solid var(--linea);text-align:center;
+  transition:transform .3s var(--ease),border-color .3s;
+}
+.cifra:hover{transform:translateY(-3px);border-color:var(--tinta)}
+.cifra b{
+  display:block;font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-size:2rem;color:var(--tinta);
+}
+.cifra span{
+  display:block;margin-top:8px;color:var(--suave);
+  font-size:.78rem;line-height:1.45;
+}
+
+/* Perfiles */
+.tabla{
+  width:100%;border-collapse:collapse;margin:24px 0;
+  font-size:.94rem;
+}
+.tabla th{
+  padding:14px 12px;background:var(--tinta);color:#fff;
+  text-align:left;font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.tabla td{
+  padding:14px 12px;border-bottom:1px solid var(--linea);
+  vertical-align:top;line-height:1.55;
+}
+.tabla tbody tr:nth-child(even) td{background:var(--papel)}
+
+/* Casos hallazgo */
+.caso{
+  margin:32px 0;padding:28px 32px;
+  border:1px solid var(--linea);background:#fff;
+  transition:border-color .3s,box-shadow .3s;
+}
+.caso:hover{
+  border-color:var(--tinta);
+  box-shadow:0 12px 40px rgba(78,99,89,.08);
+}
+.caso-cab{
+  display:flex;align-items:baseline;gap:12px;margin-bottom:16px;
+  flex-wrap:wrap;
+}
+.caso-cab i{
+  padding:4px 12px;border-radius:999px;background:var(--tinta);
+  color:#fff;font-style:normal;font-size:.68rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.caso-cab h3{
+  margin:0;font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:600;font-size:1.4rem;color:var(--texto);
+}
+.caso dl{
+  margin:0;display:grid;grid-template-columns:120px 1fr;gap:8px 20px;
+}
+.caso dt{
+  color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding-top:4px;
+}
+.caso dd{
+  margin:0;font-size:.98rem;line-height:1.65;
+}
+.dato{color:var(--tinta);font-weight:700}
+
+/* Evidencia técnica */
+.evidencia{
+  margin:20px 0;padding:16px 20px;background:var(--papel);
+  border-left:3px solid var(--tinta);
+  font-family:"SF Mono","Courier New",monospace;
+  font-size:.82rem;line-height:1.7;color:var(--tinta-honda);
+  white-space:pre-wrap;overflow-x:auto;
+}
+
+.aviso{
+  margin:32px 0;padding:22px 26px;background:#fdfbe8;
+  border:1px solid #e4e0a8;
+}
+.aviso b{
+  display:block;margin-bottom:8px;color:#6b6410;font-size:.78rem;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.aviso p{margin:0;font-size:.95rem;max-width:none}
+
+/* Cita destacada */
+.cita{
+  background:var(--tinta);color:#fff;padding:80px 40px;
+  margin:0;text-align:center;
+}
+.cita blockquote{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-style:italic;
+  font-size:clamp(1.5rem,3vw,2rem);
+  line-height:1.5;max-width:800px;margin:0 auto 32px;
+}
+.cita cite{
+  display:inline-block;font-size:.75rem;font-style:normal;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--mostaza);
+}
+
+/* Galería */
+.galeria{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;margin:40px 0;
+}
+.galeria img{
+  width:100%;aspect-ratio:1/1;object-fit:cover;
+  border-radius:2px;transition:transform .5s var(--ease);
+}
+.galeria a{overflow:hidden;display:block;border-radius:2px}
+.galeria a:hover img{transform:scale(1.04)}
+
+/* Hero pieza destacada */
+.pieza{
+  margin:44px 0;position:relative;
+}
+.pieza img{
+  width:100%;aspect-ratio:16/9;object-fit:cover;
+  border:1px solid var(--linea);
+}
+.pieza-txt{
+  margin-top:12px;font-size:.85rem;color:var(--suave);
+  font-style:italic;
+}
+
+/* Demo destacada */
+.demo-sec{
+  background:var(--crema);
+  padding:100px 24px;text-align:center;
+}
+.demo-sec .sec-h{margin:0 auto 24px}
+.demo-sec p{margin:0 auto 32px;max-width:600px;color:var(--suave)}
+.demo-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:16px 32px;background:var(--tinta);color:#fff;
+  border-radius:0;border:1px solid var(--tinta);
+  font-weight:600;font-size:1rem;letter-spacing:.02em;
+  transition:transform .3s var(--ease),background .3s;
+}
+.demo-btn:hover{background:var(--tinta-honda);transform:translateY(-2px)}
+.demo-btn::after{content:"↗"}
+
+/* Footer */
+footer{
+  background:var(--tinta-honda);color:rgba(255,255,255,.75);
+  padding:60px 24px;text-align:center;
+}
+footer .aem-firma{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:1.5rem;color:#fff;margin-bottom:12px;
+  font-style:italic;
+}
+footer a{color:var(--mostaza);border-bottom:1px solid rgba(226,231,53,.4)}
+footer a:hover{border-bottom-color:var(--mostaza)}
+
+/* Reveal animation */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv.on{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:720px){
+  .hero{padding:100px 20px 50px}
+  .hero::before{inset:12px}
+  .hero-cont{padding:24px 16px}
+  .hero-datos{grid-template-columns:1fr 1fr;gap:24px}
+  .seccion{padding:70px 20px}
+  .cifras{grid-template-columns:1fr 1fr}
+  .caso{padding:20px 20px}
+  .caso dl{grid-template-columns:1fr}
+  .caso dt{padding-top:0;margin-top:12px}
+  .galeria{grid-template-columns:1fr 1fr;gap:8px}
+  .cita{padding:60px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="franja-top"></div>
+
+<div class="barra">
+  <a href="/" class="volver">← Portfolio</a>
+  <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-cta">Ver demo en vivo</a>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-cont">
+    <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
+    <h1>
+      AEM Planner
+      <em>Un sistema operativo para bodas</em>
+    </h1>
+    <div class="hero-linea"></div>
+    <p class="hero-sub">
+      Cómo diseñé y construí una herramienta que tres personas usan de pie,
+      en una finca sin cobertura, el único día que no se puede repetir.
+    </p>
+    <img src="/assets/aem/aem-logotipo.svg" alt="Algo Entre Manos — Wedding + Events" class="hero-marca">
+    <div class="hero-datos">
+      <div><span>Cliente</span><b>Algo Entre Manos<br>Wedding + Events</b></div>
+      <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
+      <div><span>Periodo</span><b>2026<br>En producción</b></div>
+      <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener" style="color:var(--tinta);text-decoration:underline">aem.rodd.es</a></b></div>
+    </div>
+  </div>
+</header>
+
+<!-- 01 · RESUMEN -->
+<section class="seccion rv">
+  <span class="sec-num">01 · Resumen</span>
+  <h2 class="sec-h">Qué es y qué resolvía</h2>
+
+  <p class="entradilla">
+    Algo Entre Manos coordina bodas en Barcelona y Girona. Tres personas,
+    entre ocho y doce bodas al año, y toda la operación repartida entre
+    WhatsApp, hojas de cálculo y el calendario del móvil de una de ellas.
+    El encargo no fue «haznos una app»: fue dejar de perder cosas.
+  </p>
+
+  <h3>El problema real</h3>
+  <p>
+    Una boda no es un proyecto grande, son doscientos detalles pequeños que
+    solo importan una tarde. Quién es celíaco. Quién no se puede sentar al
+    lado de quién. A qué hora llega el autocar. Si las chuches del candy bar
+    están pedidas o solo habladas. Ninguno de esos datos es complejo; lo
+    difícil es que estén todos, en el mismo sitio, y que los vean las tres
+    personas a la vez.
+  </p>
+  <p>
+    Lo que fallaba no era la falta de herramientas, era que había demasiadas.
+    El timing en un PDF, los invitados en un Excel, las alergias en un audio
+    de WhatsApp, el contrato en un correo de hace ocho meses. Cada cambio
+    obligaba a avisar a las otras dos, y el aviso se perdía.
+  </p>
+
+  <h3>El resultado</h3>
+  <div class="cifras">
+    <div class="cifra"><b>1</b><span>sitio para toda la boda, en lugar de cinco</span></div>
+    <div class="cifra"><b>3</b><span>personas trabajando a la vez, viendo lo mismo</span></div>
+    <div class="cifra"><b>0</b><span>instalación: se abre en el navegador</span></div>
+    <div class="cifra"><b>44px</b><span>mínimo en todo lo que se toca con el dedo</span></div>
+  </div>
+
+  <p>
+    Una aplicación web que funciona en móvil, tablet y ordenador, se instala
+    en la pantalla de inicio como si fuera nativa, <strong>sigue abriendo sin
+    cobertura</strong> y sincroniza sola en cuanto vuelve la señal. Con portal
+    privado para cada pareja, generación de contratos, presupuesto por plazos,
+    plano de mesas y dossieres imprimibles con la identidad del estudio.
+  </p>
+</section>
+
+<!-- 02 · CONTEXTO -->
+<section class="seccion rv">
+  <span class="sec-num">02 · Contexto</span>
+  <h2 class="sec-h">Quién lo usa, y dónde</h2>
+
+  <p class="entradilla">
+    Casi todas las decisiones de este producto salen de una sola observación:
+    la herramienta no se usa sentada en una mesa. Se usa de pie, con una mano,
+    al sol, con prisa y con alguien hablándote.
+  </p>
+
+  <h3>Tres perfiles, tres necesidades distintas</h3>
+  <table class="tabla">
+    <thead>
+      <tr><th style="width:26%">Quién</th><th>Qué necesita</th><th style="width:26%">Dónde lo usa</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Administradora</td><td>Ver el estado de todas las bodas de un vistazo, el dinero y los contratos</td><td>Ordenador, oficina</td></tr>
+      <tr><td>Coordinadora</td><td>Cerrar proveedores, montar el plano de mesas, repasar el timing</td><td>Portátil y tablet</td></tr>
+      <tr><td>Asistente</td><td>Marcar cosas hechas durante el día de la boda</td><td>Móvil, de pie, en la finca</td></tr>
+      <tr><td>La pareja</td><td>Ver su boda sin ver nada interno ni de otras bodas</td><td>Móvil, en el sofá</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Las tres restricciones que marcaron el diseño</h3>
+
+  <h4>1 · No hay cobertura donde más falta hace</h4>
+  <p>
+    Las fincas del Empordà y el Maresme tienen dos rayas de señal. El día de
+    la boda no se puede recargar la página «a ver si ahora va». La aplicación
+    tenía que abrir y funcionar sin red, guardar lo que se apunte y subirlo
+    cuando vuelva la conexión. Eso condiciona la arquitectura entera, no es
+    una mejora que se añade al final.
+  </p>
+
+  <h4>2 · El día de la boda no se repite</h4>
+  <p>
+    Un error en una herramienta de oficina se corrige mañana. Aquí no hay
+    mañana. Eso cambia el criterio de diseño: ante la duda, la aplicación
+    tiene que <strong>fallar de forma ruidosa y explicarse</strong>, nunca
+    quedarse callada haciendo como que todo va bien.
+  </p>
+
+  <h4>3 · Hay datos de salud</h4>
+  <p>
+    Las alergias de los invitados son datos de salud bajo el RGPD. No es una
+    columna más de una tabla: obliga a pensar quién los ve, cuánto tiempo se
+    guardan y qué pasa si el archivo acaba donde no debe. Se trató desde el
+    primer día, no como un trámite al final.
+  </p>
+
+  <div class="aviso">
+    <b>Sobre el alcance de mi papel</b>
+    <p>
+      Este proyecto lo diseñé y lo construí yo: investigación, arquitectura
+      de información, interfaz, sistema de diseño y desarrollo. Las decisiones
+      de negocio —qué se cobra, cómo se factura, qué ve la pareja— son del
+      estudio. En más de un punto discrepé y me equivocaba yo; queda anotado
+      donde ocurrió.
+    </p>
+  </div>
+</section>
+
+<!-- 03 · MÉTODO -->
+<section class="seccion rv">
+  <span class="sec-num">03 · Método</span>
+  <h2 class="sec-h">Medir en vez de opinar</h2>
+
+  <p class="entradilla">
+    La mayoría de los problemas de este proyecto no se veían mirando la
+    pantalla. Se veían midiéndola. Cambiar «creo que ese botón es pequeño»
+    por «ese botón mide 34×34 y la zona que responde al dedo también» es lo
+    que hizo que las revisiones dejaran de ser una cuestión de gusto.
+  </p>
+
+  <h3>Auditoría automatizada en navegador real</h3>
+  <p>
+    Monté un banco de pruebas que abre la aplicación en móvil, tablet y
+    escritorio, entra, recorre las secciones y comprueba cosas concretas:
+  </p>
+  <ul>
+    <li><strong>Textos que se pisan.</strong> Para cada texto se toma su rectángulo real —no el de la caja que lo contiene— y se pregunta al navegador qué elemento está encima de ese punto. Si no es él mismo, algo lo tapa.</li>
+    <li><strong>Zonas táctiles.</strong> No se mide el botón: se prueba punto por punto alrededor hasta dónde sigue respondiendo. Es lo que toca el dedo, que no siempre coincide con lo que se ve.</li>
+    <li><strong>Contenido atrapado.</strong> Al final de cada página se comprueba que no quede nada pulsable debajo de la barra fija.</li>
+    <li><strong>Arranque.</strong> Que la aplicación pinte algo, en los tres tamaños, sin errores ni peticiones fallidas.</li>
+  </ul>
+
+  <h3>IA como herramienta de exploración, no de decisión</h3>
+  <p>
+    Claude y GPT me ayudaron a acelerar la parte mecánica: convertir
+    conversaciones con el equipo en flujos de usuario, generar variantes de
+    microcopy en tono editorial, plantear casos límite que no se me hubieran
+    ocurrido a la primera. La decisión de qué se queda y qué se descarta
+    sigue siendo humana, medida contra el uso real. La IA acorta el camino;
+    no reemplaza el criterio.
+  </p>
+
+  <h3>Por qué importa la diferencia</h3>
+  <p>
+    Un ejemplo de este proyecto. Para que el botón de menú de cada boda fuese
+    fácil de acertar con el dedo se le añadió un margen sensible invisible de
+    6&nbsp;px alrededor. Visualmente, perfecto. Medido, otra cosa:
+  </p>
+  <div class="evidencia">botón ⋮        44×44
+zona real     34×34   ← el margen no llegaba
+punto (151,683) → responde el botón que está en (721,984)</div>
+  <p>
+    El margen estaba mal anclado y, en vez de rodear el botón, formaba una
+    capa transparente del tamaño de media pantalla que interceptaba los
+    toques de todo lo que había debajo. Solo en móvil y tablet.
+    <strong>Ninguna revisión visual lo habría encontrado</strong>: no se ve
+    nada raro, simplemente hay sitios donde tocar no hace nada.
+  </p>
+
+  <h3>El límite del método</h3>
+  <p>
+    Medir no lo encuentra todo, y conviene decirlo. El hallazgo más serio de
+    todo el proyecto —nombres de parejas reales impresos dentro de las
+    fotografías— no lo detecta ninguna prueba automática. Hizo falta abrir
+    las veintiuna imágenes y mirarlas. Las herramientas quitan trabajo
+    mecánico; no sustituyen a mirar.
+  </p>
+</section>
+
+<!-- 04 · HALLAZGOS 1 -->
+<section class="seccion rv">
+  <span class="sec-num">04 · Hallazgos y decisiones</span>
+  <h2 class="sec-h">Cuando el fallo no se ve</h2>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Datos</i><h3>«La aplicación está vacía»</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>El equipo abría la herramienta y no había ninguna boda. Ni un error, ni una pantalla rota: vacía.</dd>
+      <dt>Causa</dt>
+      <dd>Los datos iniciales pesaban <span class="dato">6,44&nbsp;MB</span> y el navegador solo guarda unos 5. Al no caber, se perdía el guardado entero. Y sin bodas no hay rincones, ni proveedores, ni se puede agendar una reunión: un problema de <em>tamaño</em> se manifestaba como «esto no funciona».</dd>
+      <dt>Decisión</dt>
+      <dd>Las fotos salieron del estado y pasaron a ser archivos con su ruta. Los datos bajaron de 3,76&nbsp;MB a <span class="dato">0,13&nbsp;MB</span>. Además, si algún día no cabe, ahora suelta lastre por orden —primero las fotos, nunca los datos— y avisa.</dd>
+      <dt>Lección</dt>
+      <dd>Un límite técnico se había convertido en un mensaje de producto equivocado. El usuario no puede deducir «no cabe» de una pantalla en blanco.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Confianza</i><h3>Un indicador que mentía</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>El panel anunciaba «3 bodas activas» cuando las tres ya se habían celebrado.</dd>
+      <dt>Causa</dt>
+      <dd>El contador solo miraba el texto del estado, que se queda en «En preparación» para siempre, e ignoraba la fecha. La ficha de cada boda sí ponía «Celebrada»: la aplicación se contradecía a sí misma.</dd>
+      <dt>Decisión</dt>
+      <dd>Usar el criterio que ya existía y era correcto. El contador pasó a decir la verdad, con el desglose de cuántas se han celebrado.</dd>
+      <dt>Lección</dt>
+      <dd>Un indicador que miente una vez deja de mirarse, y con él todo el panel. La precisión de una cifra no es un detalle: es la razón por la que alguien vuelve a mirarla.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Silencio</i><h3>Trabajar sin red y no saberlo</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>La base de datos dejó de responder. La aplicación siguió funcionando con total normalidad, guardando en el propio móvil, sin decir nada.</dd>
+      <dt>Causa</dt>
+      <dd>El aviso existía, pero vivía dentro de Ajustes, donde nadie entra mientras trabaja. La única señal de guardado en pantalla era un «✓» que se pintaba igual estuviera la nube arriba o abajo.</dd>
+      <dt>Decisión</dt>
+      <dd>Franja fija bajo la barra superior, en todas las pantallas, que solo aparece cuando hay algo que contar: si no se ha conectado nunca o cuántos cambios quedan sin subir, con la hora de la última subida real y <strong>dejando claro que no se pierde nada</strong>.</dd>
+      <dt>Lección</dt>
+      <dd>Tres personas podían pasarse el día apuntando cosas que las otras dos no verían nunca, y enterarse la víspera de la boda. El coste de no avisar no era técnico.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 05 · HALLAZGOS 2 -->
+<section class="seccion rv">
+  <span class="sec-num">05 · Hallazgos y decisiones</span>
+  <h2 class="sec-h">Diseñar para el dedo y para el día</h2>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Táctil</i><h3>El botón que se veía pero no se podía tocar</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>La ✕ de borrar una foto medía 34×34 en móvil. Tenía un margen invisible para llegar a 44, pero no funcionaba.</dd>
+      <dt>Causa</dt>
+      <dd>Vive dentro del marco redondeado de la miniatura, que recorta todo lo que se sale. Ese recorte se comía el margen.</dd>
+      <dt>Decisión</dt>
+      <dd>Agrandar el botón de verdad a 44×44 y mantener el círculo oscuro pequeño con un borde transparente. Mismo aspecto, dedo que acierta.</dd>
+      <dt>Estado</dt>
+      <dd>Medido tras el cambio: <span class="dato">ningún control</span> por debajo de 44×44 en móvil.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Proceso</i><h3>Una nota no es un sí o un no</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>Cada rincón de una boda —el candy bar, el photocall, el seating— tenía un campo de notas. Cada persona borraba lo que había escrito la anterior.</dd>
+      <dt>Observación</dt>
+      <dd>El seguimiento de un rincón no es un estado, es una secuencia en el tiempo, y normalmente la hacen personas distintas: hay que comprar las chuches → están pedidas → han llegado.</dd>
+      <dt>Decisión</dt>
+      <dd>Un hilo de apuntes con quién, cuándo y qué. Cambiar el estado deja su propio apunte sin escribir nada, que es el 90&nbsp;% de lo que hay que contar. Y se sacaron a la pestaña de Tareas: lo que hace falta la víspera es la lista de la compra de toda la boda de un vistazo, no entrar rincón por rincón.</dd>
+      <dt>Regla</dt>
+      <dd>Esto no lo ve la pareja. Es información de trabajo del equipo.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Cliente</i><h3>Cuando quien manda tiene razón</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>El presupuesto se divide en A (facturado) y B (no facturado), y la pareja lo ve en su portal. Propuse ocultárselo: me parecía ruido contable y una fuente de preguntas incómodas.</dd>
+      <dt>Respuesta</dt>
+      <dd>El estudio lo mantuvo. Esa división es cómo se trabaja en el sector, la pareja la conoce desde la primera reunión y esconderla genera más desconfianza que enseñarla.</dd>
+      <dt>Decisión</dt>
+      <dd>Se mantuvo, y se rediseñó la presentación para que se entienda sin explicación: dos bloques claros, con lo pagado y lo pendiente, en vez de una tabla contable.</dd>
+      <dt>Lección</dt>
+      <dd>El diseñador conoce la interfaz; el cliente conoce su oficio. Cuando chocan, la carga de la prueba la tiene el diseñador.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 06 · SISTEMA VISUAL -->
+<section class="seccion rv">
+  <span class="sec-num">06 · Sistema</span>
+  <h2 class="sec-h">La marca, puesta a trabajar</h2>
+
+  <p class="entradilla">
+    La identidad de Algo Entre Manos es editorial y serena: dos tipografías,
+    verde salvia y un acento mostaza. Trasladarla a una herramienta operativa
+    obliga a resolver algo que un catálogo no tiene: densidad de información.
+  </p>
+
+  <div class="galeria">
+    <a href="/assets/aem/mesa-floral.jpg" target="_blank"><img src="/assets/aem/mesa-floral.jpg" alt="Mesa decorada con flores"></a>
+    <a href="/assets/aem/arco-bosque.jpg" target="_blank"><img src="/assets/aem/arco-bosque.jpg" alt="Arco de ceremonia en el bosque"></a>
+    <a href="/assets/aem/petal-bar.jpg" target="_blank"><img src="/assets/aem/petal-bar.jpg" alt="Bar de pétalos"></a>
+    <a href="/assets/aem/ceremonia-montana.jpg" target="_blank"><img src="/assets/aem/ceremonia-montana.jpg" alt="Ceremonia en la montaña"></a>
+    <a href="/assets/aem/seaside-arco.jpg" target="_blank"><img src="/assets/aem/seaside-arco.jpg" alt="Arco frente al mar"></a>
+    <a href="/assets/aem/petalos-jaula.jpg" target="_blank"><img src="/assets/aem/petalos-jaula.jpg" alt="Detalle de pétalos y jaula"></a>
+  </div>
+
+  <h3>Tipografía</h3>
+  <p>
+    Dos familias, las de la marca. <strong>Italiana</strong> para titulares,
+    que solo existe en un peso, y <strong>DM&nbsp;Sans</strong> para todo lo
+    demás. Las cifras van siempre en DM&nbsp;Sans: Italiana no tiene peso
+    suficiente para un número, y en esta herramienta los números son lo que
+    se lee de lejos.
+  </p>
+
+  <h3>Espaciado</h3>
+  <p>
+    Antes cada bloque llevaba su relleno a ojo —18, 14, 12, 16, 22— y algunos
+    ninguno. El texto pegado al borde no es un detalle estético: es lo que
+    hace que una pantalla llena de datos se lea como un amasijo en vez de
+    como información. Se redujo a cinco valores y todo sale de ahí.
+  </p>
+
+  <h3>Accesibilidad, como requisito y no como repaso</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:44%">Decisión</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>44×44 mínimo en pantallas táctiles</td><td>Por debajo, con el dedo se falla el objetivo o se pulsa el de al lado. Medido, no estimado.</td></tr>
+      <tr><td>Enlace «Saltar al contenido»</td><td>Con lector de pantalla, no hay que recorrer once entradas de menú en cada pantalla.</td></tr>
+      <tr><td>Foco atrapado en los diálogos</td><td>Y devuelto al botón que lo abrió al cerrar.</td></tr>
+      <tr><td>Nunca solo color</td><td>Los estados llevan texto o forma además del tono.</td></tr>
+      <tr><td>Se respeta «menos movimiento»</td><td>Quien lo pide no recibe el vídeo de bienvenida a pantalla completa.</td></tr>
+      <tr><td>Deshacer en lo destructivo</td><td>Borrar algo da unos segundos para recuperarlo, en su posición original de la lista.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 07 · PRIVACIDAD -->
+<section class="seccion rv">
+  <span class="sec-num">07 · Privacidad</span>
+  <h2 class="sec-h">Lo que cuesta publicar un trabajo real</h2>
+
+  <p class="entradilla">
+    Para poder enseñar este proyecto hizo falta construir una segunda versión:
+    la misma aplicación, con todos los datos inventados. El ejercicio fue más
+    revelador de lo previsto, porque obligó a hacer inventario de dónde
+    estaban realmente los datos personales.
+  </p>
+
+  <h3>Lo que apareció al buscar en serio</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:44%">Qué</th><th>Dónde estaba</th></tr></thead>
+    <tbody>
+      <tr><td>DNI, número de cuenta, nombre legal completo y domicilio</td><td>En la plantilla de contrato, dentro del código</td></tr>
+      <tr><td>144 invitados con sus alergias</td><td>Datos de salud, en los datos de ejemplo</td></tr>
+      <tr><td>Tres móviles del equipo y un correo personal</td><td>En el estado por defecto</td></tr>
+      <tr><td>Razón social y domicilio del responsable</td><td>Visibles en el pie del acceso y en la sección legal</td></tr>
+      <tr><td>El nombre de una compañera</td><td>Repartido por once archivos: manual, portal, documentos y ajustes</td></tr>
+      <tr><td>Una boda real entera</td><td>En un archivo que no cargaba nadie, pero que se publicaba igual</td></tr>
+    </tbody>
+  </table>
+
+  <h3>El hallazgo que ninguna herramienta encuentra</h3>
+  <p>
+    Siete fotografías tenían el problema <strong>dentro de la imagen</strong>.
+    Cuatro llevaban impreso en la señalética el nombre completo de una pareja
+    y la fecha de su boda, en letra perfectamente legible. Otra ponía los
+    nombres de otra pareja distinta, y se usaba de fondo de la barra lateral,
+    es decir, en todas las pantallas. La última mostraba a los novios con
+    <strong>una veintena de invitados de cara</strong>.
+  </p>
+  <p>
+    Ninguna búsqueda de texto detecta eso. Se encontró abriendo las veintiuna
+    imágenes del proyecto y mirándolas una a una. El cliente había pedido
+    mantenerlas; se retiraron igualmente, porque publicar caras de terceros
+    que no han dado permiso pesa más que una preferencia estética.
+  </p>
+
+  <div class="evidencia">✓ DNI · ✓ IBAN · ✓ nombre legal · ✓ razón social · ✓ domicilio
+✓ teléfonos (3) · ✓ correo personal · ✓ dominio del cliente
+✓ parejas reales (3) · ✓ equipo real (3) · ✓ credenciales (4)
+✓ fotos identificables (22 imágenes revisadas)
+
+═══ LIMPIO: nada real en el paquete ═══</div>
+
+  <div class="aviso">
+    <b>Decisión de producto</b>
+    <p>
+      La demostración conserva la identidad de Algo Entre Manos —es trabajo
+      hecho para un cliente real y tiene sentido que se vea— pero lleva una
+      franja fija en todas las pantallas advirtiendo de que los datos son
+      inventados. Sin botón de cerrar: si se pudiera cerrar, se cerraría en
+      el primer minuto y ya no lo vería nadie más.
+    </p>
+  </div>
+</section>
+
+<!-- 08 · RESULTADOS -->
+<section class="seccion rv">
+  <span class="sec-num">08 · Resultados</span>
+  <h2 class="sec-h">Qué funciona, y qué no</h2>
+
+  <h3>Comprobado</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:34%">Qué se comprobó</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>Trabajo simultáneo</td><td>Tres personas en la misma boda, en tres navegadores. Una crea una tarea y las otras dos la ven <strong>sin recargar</strong>.</td></tr>
+      <tr><td>Nadie pisa a nadie</td><td>Si dos guardan a la vez, la segunda no sobrescribe: se trae la versión de la otra y avisa.</td></tr>
+      <tr><td>Sin conexión</td><td>La aplicación abre igual y lo apuntado se sube solo al volver la señal.</td></tr>
+      <tr><td>Tres tamaños</td><td>Móvil, tablet y escritorio: arranca, se recorren todas las secciones, ningún texto se pisa, sin errores.</td></tr>
+      <tr><td>Zonas táctiles</td><td>Ningún control por debajo de 44×44 en móvil.</td></tr>
+      <tr><td>Peso</td><td>Los datos bajaron de 3,76&nbsp;MB a 0,13&nbsp;MB. El vídeo de móvil, de 2.316&nbsp;KB a 1.578&nbsp;KB sin perder calidad.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Lo que queda pendiente</h3>
+  <ol>
+    <li><strong>Cola de cambios sin conexión</strong> con reintento y resolución de conflictos más allá del control de versión actual, y copias automáticas verificadas.</li>
+    <li><strong>Navegación del portal en móvil.</strong> Ocho apartados en horizontal de los que se ven tres.</li>
+    <li><strong>Plano de mesas en móvil.</strong> Hoy es una zona grande y desplazable donde es fácil perder la orientación. Necesita pantalla completa, autoajuste y zoom con dos dedos.</li>
+    <li><strong>El panel debería empezar por las excepciones</strong> —pagos vencidos, invitados sin mesa, alergias por validar— y no por las cifras generales.</li>
+    <li><strong>Separar bodas reales, de referencia y de demostración</strong> con claridad dentro de la propia herramienta.</li>
+    <li><strong>Contraste y jerarquía de encabezados</strong>, y revisar los estados que todavía dependen demasiado del color.</li>
+  </ol>
+</section>
+
+<!-- CITA -->
+<section class="cita rv">
+  <blockquote>
+    Lo que hace difícil una herramienta como ésta no es lo que tiene que
+    hacer. Es lo que no se puede permitir hacer mal el único día que importa.
+  </blockquote>
+  <cite>Rodrigo Negrete · Product designer</cite>
+</section>
+
+<!-- DEMO -->
+<section class="demo-sec rv">
+  <span class="sec-eyebrow">Demo en vivo</span>
+  <h2 class="sec-h">Pruébalo con datos inventados</h2>
+  <p>
+    Versión publicable con la misma interfaz, sin ninguna credencial ni dato
+    real. Funciona contra el navegador de quien la visita.
+  </p>
+  <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-btn">Abrir aem.rodd.es</a>
+  <p style="margin-top:36px">
+    <a href="/assets/aem/AEM-Planner-Informe-UX.pdf" target="_blank" rel="noopener" style="color:var(--tinta);border-bottom:1px solid var(--linea);font-size:.9rem">↓ Descargar informe completo (PDF · 12 páginas)</a>
+  </p>
+</section>
+
+<footer>
+  <div class="aem-firma">Algo Entre Manos</div>
+  <p style="font-size:.85rem">
+    Diseño de producto, sistema visual y desarrollo por <a href="/">Rodrigo Negrete</a>.
+    <br>
+    Vuelve al <a href="/">portfolio completo</a>.
+  </p>
+</footer>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>

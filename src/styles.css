@@ -1727,6 +1727,70 @@ body[data-cursor="mira"]::after {
   .rodd-es-card .bc-img { padding: 1rem; min-height: auto; aspect-ratio: 1200/630; }
   .rodd-es-card .bc-img img { max-height: none; }
 }
+/* AEM Planner — Algo Entre Manos · Editorial + verde salvia + mostaza */
+.aem-card .bc-img {
+  background:
+    radial-gradient(circle at 20% 20%, rgba(226,231,53,.14), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(78,99,89,.18), transparent 55%),
+    #f0f0e6;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+.aem-card .bc-img::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(78,99,89,.18);
+  pointer-events: none;
+  z-index: 0;
+}
+.aem-card .bc-img::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4e6359 0 62%, #e2e735 62% 100%);
+  z-index: 2;
+}
+.aem-card .bc-img img {
+  width: 62%;
+  max-width: 260px;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  transition: transform .6s var(--ease), filter .5s;
+  filter: drop-shadow(0 6px 24px rgba(78,99,89,.16));
+  position: relative;
+  z-index: 1;
+}
+.aem-card .bc:hover .bc-img img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 12px 40px rgba(78,99,89,.28));
+}
+.aem-tag-hi {
+  background: #4e6359 !important;
+  color: #fff !important;
+  border-color: #4e6359 !important;
+}
+.aem-tag {
+  background: rgba(78,99,89,.08) !important;
+  color: #33463d !important;
+  border-color: rgba(78,99,89,.24) !important;
+}
+.aem-card .bc-m {
+  color: #4e6359;
+  border-color: rgba(78,99,89,.28);
+  background: rgba(226,231,53,.10);
+}
+@media(max-width: 860px) {
+  .aem-card .bc-img { padding: 1.2rem; min-height: auto; aspect-ratio: 1200/630; }
+  .aem-card .bc-img img { width: 55%; max-width: 200px; }
+}
+
 .dedicalo-play-card .bc-img {
   background:
     radial-gradient(circle at 20% 50%, rgba(255,107,43,.18), transparent 40%),
