@@ -387,7 +387,64 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .tab-info li{font-size:.94rem;margin-bottom:8px}
 .tab-info li strong{color:var(--tinta-honda)}
 
-/* Mockup base */
+/* Screenshot real wrap */
+.mock-wrap{
+  position:relative;
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(51,70,61,.22),0 0 0 1px rgba(78,99,89,.1);
+  transition:transform .5s var(--ease),box-shadow .5s;
+  background:#faf9f4;
+  aspect-ratio:1800/1125;
+}
+.mock-wrap:hover{
+  transform:translateY(-6px) rotate(-.4deg);
+  box-shadow:0 40px 100px rgba(51,70,61,.3),0 0 0 1px rgba(78,99,89,.18);
+}
+.mock-wrap::before{
+  content:"";position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--tinta) 0 62%,var(--mostaza) 62% 100%);
+  z-index:2;
+}
+.mock-wrap::after{
+  content:"";position:absolute;inset:0;
+  box-shadow:inset 0 0 60px rgba(78,99,89,.04);
+  pointer-events:none;z-index:1;
+}
+.mock-img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;
+}
+
+/* Landing editorial */
+.landing-wrap{
+  max-width:1100px;margin:80px auto 0;padding:0 24px;
+  display:grid;grid-template-columns:1fr 1.5fr;gap:40px;
+  align-items:center;
+}
+.landing-info h3{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-size:2rem;color:var(--texto);
+  margin:12px 0 16px;
+}
+.landing-info h3 em{color:var(--tinta);font-style:italic}
+.landing-info p{font-size:1rem;color:var(--suave);line-height:1.7}
+.landing-img{
+  width:100%;height:auto;
+  border-radius:12px;
+  box-shadow:0 24px 60px rgba(51,70,61,.2),0 0 0 1px rgba(78,99,89,.1);
+  transition:transform .5s var(--ease),box-shadow .5s;
+}
+.landing-img:hover{
+  transform:scale(1.015);
+  box-shadow:0 32px 80px rgba(51,70,61,.28),0 0 0 1px rgba(78,99,89,.18);
+}
+@media(max-width:900px){
+  .landing-wrap{grid-template-columns:1fr;gap:28px}
+}
+
+/* Mockup base (legacy — unused but keep for safety) */
 .mock{
   background:#fff;border-radius:12px;overflow:hidden;
   box-shadow:0 30px 80px rgba(51,70,61,.18),0 0 0 1px rgba(78,99,89,.08);
@@ -844,10 +901,11 @@ footer a:hover{border-bottom-color:var(--mostaza)}
 
   <div class="tabs" role="tablist">
     <button class="tab-btn on" data-tab="panel" role="tab"><span class="tab-num">01</span>Panel</button>
-    <button class="tab-btn" data-tab="portal" role="tab"><span class="tab-num">02</span>Portal novios</button>
+    <button class="tab-btn" data-tab="bodas" role="tab"><span class="tab-num">02</span>Bodas</button>
     <button class="tab-btn" data-tab="mesas" role="tab"><span class="tab-num">03</span>Plano de mesas</button>
-    <button class="tab-btn" data-tab="contrato" role="tab"><span class="tab-num">04</span>Contrato</button>
-    <button class="tab-btn" data-tab="pagos" role="tab"><span class="tab-num">05</span>Presupuesto y pagos</button>
+    <button class="tab-btn" data-tab="pagos" role="tab"><span class="tab-num">04</span>Presupuesto y pagos</button>
+    <button class="tab-btn" data-tab="contrato" role="tab"><span class="tab-num">05</span>Contrato</button>
+    <button class="tab-btn" data-tab="portal" role="tab"><span class="tab-num">06</span>Portal novios</button>
   </div>
 
   <div class="tab-panels">
@@ -856,154 +914,106 @@ footer a:hover{border-bottom-color:var(--mostaza)}
       <div class="tab-info">
         <h3>Panel del <em>equipo</em></h3>
         <p class="tab-lead">
-          Lo que se ve al abrir la app: el estado real de todas las bodas
-          activas, con las excepciones que hacen falta a las nueve de la
-          mañana.
+          Lo que se ve al abrir la app: estado real de todas las bodas
+          activas, tareas de hoy, resumen general y distribución del
+          presupuesto.
         </p>
         <p>
           Aquí conviven las tres personas del estudio: administradora,
-          coordinadora y asistente. Cada una ve lo mismo pero prioriza
-          distinto — el filtro y los avisos se adaptan al rol. La franja
-          amarilla superior aparece <strong>solo cuando hay cambios sin
-          subir</strong>: si no dice nada, es que todo está sincronizado.
+          coordinadora y asistente. Cada boda muestra su porcentaje de
+          preparación con una barra editorial — <strong>Ainhoa &amp; Diego al
+          83&nbsp;%, Lucía &amp; Martín al 67&nbsp;%, Clara &amp; Tomás
+          celebrada al 92&nbsp;%</strong>. La franja superior solo aparece
+          si hay cambios sin subir.
         </p>
         <ul>
-          <li><strong>Vista rápida</strong> · bodas activas, esta semana, próxima, finalizadas.</li>
-          <li><strong>Alertas por boda</strong> · pagos vencidos, invitados sin mesa, alergias por validar.</li>
-          <li><strong>Multiusuario en tiempo real</strong> · si otra crea una tarea, aparece sin recargar.</li>
+          <li><strong>Próximas bodas</strong> con etiqueta de estado (semana, en preparación, finalizada) y foto real.</li>
+          <li><strong>Tareas de hoy</strong> por boda, ordenadas por urgencia.</li>
+          <li><strong>Distribución del presupuesto</strong> con gráfico donut: catering, espacio, floral, foto, vídeo, música.</li>
         </ul>
       </div>
-      <div class="mock mock-panel">
-        <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="mock-url">aem.rodd.es · Panel</span></div>
-        <div class="mp-header">
-          <div class="mp-title"><small>AEM Planner</small>Panel del equipo</div>
-          <div class="mp-avatar">N</div>
-        </div>
-        <div class="mp-syncbar">2 cambios sin subir · última sincronización hace 6 min</div>
-        <div class="mp-body">
-          <div class="mp-stats">
-            <div class="mp-stat"><b>3</b><span>Activas</span></div>
-            <div class="mp-stat"><b>1</b><span>Esta semana</span></div>
-            <div class="mp-stat"><b>144</b><span>Invitados</span></div>
-          </div>
-          <div class="mp-list">
-            <div class="mp-item">
-              <div class="mp-couple">Ainhoa & Diego</div>
-              <div class="mp-date">17 oct</div>
-              <div class="mp-state week">Semana</div>
-            </div>
-            <div class="mp-item">
-              <div class="mp-couple">Lucía & Martín</div>
-              <div class="mp-date">22 may 2027</div>
-              <div class="mp-state">Preparación</div>
-            </div>
-            <div class="mp-item">
-              <div class="mp-couple">Clara & Tomás</div>
-              <div class="mp-date">20 jun</div>
-              <div class="mp-state done">Celebrada</div>
-            </div>
-          </div>
-        </div>
+      <div class="mock-wrap">
+        <img src="/assets/aem/screens/desktop-dashboard.webp" alt="Panel de AEM Planner mostrando próximas bodas, tareas de hoy, resumen general con gráfico de evolución y distribución del presupuesto por categoría" class="mock-img" loading="lazy">
       </div>
     </div>
 
-    <!-- PORTAL -->
-    <div class="tab-panel" data-panel="portal">
+    <!-- BODAS -->
+    <div class="tab-panel" data-panel="bodas">
       <div class="tab-info">
-        <h3>Portal privado de la <em>pareja</em></h3>
+        <h3>Listado de <em>bodas</em></h3>
         <p class="tab-lead">
-          Cada boda tiene su propio portal, con clave. La pareja entra desde
-          el sofá y ve su boda — ni una interna, ni una de otra pareja.
+          Toda la operación en una pantalla. Cada boda es una tarjeta con
+          cover propia, fecha, estado, invitados, tareas pendientes y
+          progreso.
         </p>
         <p>
-          Aquí la marca respira: portada personalizada, tipografía editorial,
-          y ocho apartados que cuentan la boda por dentro sin abrumar. El
-          contrato, el presupuesto y los rincones (candy bar, photocall,
-          seating) están accesibles pero el foco lo marca la cronología.
+          Buscador por pareja, lugar o responsable y filtro por estado. El
+          equipo abre una boda en un clic y entra directamente a su
+          workspace completo. Se pueden duplicar bodas enteras como plantilla
+          para arrancar más rápido.
         </p>
         <ul>
-          <li><strong>Acceso separado</strong> · cada pareja con clave propia, no ve nada del resto.</li>
-          <li><strong>Sin ver lo interno</strong> · las notas del equipo y el margen operativo no se cruzan aquí.</li>
-          <li><strong>Rincones visuales</strong> · fotografías de referencia para decidir juntos.</li>
+          <li><strong>Cards editoriales</strong> con el nombre de la pareja en Cormorant.</li>
+          <li><strong>Contador de días</strong> hasta el enlace (o «Celebrada»).</li>
+          <li><strong>Barra de preparación</strong> + atajos a tareas y «Wedding Day».</li>
         </ul>
       </div>
-      <div class="mock mock-portal">
-        <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="mock-url">aem.rodd.es/portal · Ainhoa & Diego</span></div>
-        <div class="portal-cover" style="background-image:url('/assets/aem/petal-bar.jpg')">
-          <div class="portal-couple">Ainhoa &amp; Diego<span class="portal-date">17 · Octubre · Empordà</span></div>
-        </div>
-        <div class="portal-nav">
-          <span class="on">Inicio</span>
-          <span>Cronología</span>
-          <span>Invitados</span>
-          <span>Presupuesto</span>
-          <span>Rincones</span>
-          <span>Documentos</span>
-        </div>
-        <div class="portal-body">
-          <div class="portal-block">
-            <b>Ceremonia · 17:30</b>
-            <small>Masía Can Llobet · Palamós — coordinación 15:00</small>
-          </div>
-          <div class="portal-block">
-            <b>Presupuesto</b>
-            <small>7 300&nbsp;€ pagados de 11 200&nbsp;€ · próximo plazo 15 sep</small>
-          </div>
-          <div class="portal-block">
-            <b>Rincones definidos</b>
-            <small>Candy bar · Photocall · Seating plan · Petal bar</small>
-          </div>
-        </div>
+      <div class="mock-wrap">
+        <img src="/assets/aem/screens/desktop-bodas.webp" alt="Pantalla de bodas de AEM Planner con tres cards: Ainhoa y Diego, Lucía y Martín, Clara y Tomás, con fechas, estados y progreso" class="mock-img" loading="lazy">
       </div>
     </div>
 
     <!-- MESAS -->
     <div class="tab-panel" data-panel="mesas">
       <div class="tab-info">
-        <h3>Plano de mesas <em>editable</em></h3>
+        <h3>Plano del salón <em>interactivo</em></h3>
         <p class="tab-lead">
-          Mesas redondas y rectangulares que se arrastran, invitados que se
-          asignan con un clic y validaciones que evitan lo evidente: sentar
-          juntos a quienes no se hablan.
+          Mesas redondas que se mueven, se renombran y se asignan invitado
+          por invitado. Con contador en vivo de confirmados, pendientes y
+          plazas libres.
         </p>
         <p>
-          El plano importa las alergias del listado de invitados, así que el
-          catering imprime la carta correcta de cada mesa. Las mesas se
-          etiquetan por rol (novios, familia, amigos) y el sistema avisa si
-          alguien queda sin asignar antes de imprimir.
+          Cada mesa muestra su ocupación (10/10 completa, 8/10 pocas plazas,
+          vacía). Hay botones de <strong>asignación automática</strong>,
+          exportar lista para el catering e imprimir seating editorial. En la
+          barra lateral derecha se abren los detalles de cada mesa al
+          seleccionarla.
         </p>
         <ul>
-          <li><strong>Drag & drop</strong> · reordenar por posición real en la sala.</li>
-          <li><strong>Alergias visibles</strong> · icono por mesa si algún invitado tiene restricción.</li>
-          <li><strong>Impresión limpia</strong> · versión imprimible con nombres, mesa y menú por invitado.</li>
+          <li><strong>Codificación por color</strong> — verde completa, amarillo pocas plazas, blanco libre.</li>
+          <li><strong>Alergias vinculadas</strong> al listado de invitados para el menú del catering.</li>
+          <li><strong>Vista wedding planner</strong> vs. vista novios para que cada rol vea lo que necesita.</li>
         </ul>
       </div>
-      <div class="mock mock-mesas">
-        <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="mock-url">aem.rodd.es/mesas · Ainhoa & Diego</span></div>
-        <div class="mp-header">
-          <div class="mp-title"><small>Plano de mesas</small>144 invitados · 16 mesas</div>
-          <div class="mp-avatar">14/16</div>
-        </div>
-        <div class="venue">
-          <div class="venue-grid">
-            <div class="mesa principal">Novios<small>10</small></div>
-            <div class="mesa full">M2<small>10/10</small></div>
-            <div class="mesa full">M3<small>10/10</small></div>
-            <div class="mesa">M4<small>8/10</small></div>
-            <div class="mesa full">M5<small>10/10</small></div>
-            <div class="mesa full">M6<small>10/10</small></div>
-            <div class="mesa">M7<small>9/10</small></div>
-            <div class="mesa full">M8<small>10/10</small></div>
-            <div class="mesa full">M9<small>10/10</small></div>
-            <div class="mesa full">M10<small>10/10</small></div>
-            <div class="mesa">M11<small>6/10</small></div>
-            <div class="mesa pending">M12<small>—</small></div>
-            <div class="mesa full">M13<small>8/8</small></div>
-            <div class="mesa full">M14<small>8/8</small></div>
-            <div class="mesa pending">M15<small>—</small></div>
-            <div class="mesa pending">M16<small>—</small></div>
-          </div>
-        </div>
+      <div class="mock-wrap">
+        <img src="/assets/aem/screens/desktop-boda-mesas.webp" alt="Plano de mesas interactivo con mesa Presidencial, Olivo, Romero y stats de 52 invitados confirmados, 5 mesas creadas, 1 plaza libre" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <!-- PAGOS -->
+    <div class="tab-panel" data-panel="pagos">
+      <div class="tab-info">
+        <h3>Presupuesto por <em>bloques A / B</em></h3>
+        <p class="tab-lead">
+          El dinero de la boda visto desde dos ángulos: <strong>A —
+          facturado</strong> (con factura e IVA) y <strong>B — no
+          facturado</strong> (efectivo y acuerdos directos). Sin tablas
+          contables, con el margen y los pagos realizados a la vista.
+        </p>
+        <p>
+          Cada partida reúne presupuesto, reserva, segundo pago, restante,
+          vencimientos y justificantes. El sistema avisa cuando se acerca un
+          plazo o cuando una partida sobrepasa el objetivo. La pareja ve una
+          versión limpia en su portal.
+        </p>
+        <ul>
+          <li><strong>Objetivo global</strong> + contratado hasta ahora + margen que queda.</li>
+          <li><strong>Comprobantes</strong> subidos por partida (factura, Bizum, transferencia).</li>
+          <li><strong>Evolución visual</strong> del gasto por partida en el tiempo.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/aem/screens/desktop-presupuesto.webp" alt="Presupuesto de la boda Ainhoa y Diego: 29.500€ objetivo, 27.650€ contratado, bloque A facturado 26.951€ (97%), bloque B no facturado 699€ (3%)" class="mock-img" loading="lazy">
       </div>
     </div>
 
@@ -1012,84 +1022,68 @@ footer a:hover{border-bottom-color:var(--mostaza)}
       <div class="tab-info">
         <h3>Generador de <em>contratos</em></h3>
         <p class="tab-lead">
-          Un contrato editorial que la pareja recibe en PDF, con la identidad
-          de AEM y las cláusulas ya cerradas. Se rellena solo con los datos
-          de la boda que están en el sistema.
+          Un contrato editorial que la pareja recibe en PDF con la identidad
+          de AEM. Se rellena solo con los datos de la boda que están en el
+          sistema: pareja, fecha, finca, importe, forma de pago.
         </p>
         <p>
           Se compone en el navegador con la misma tipografía de la marca,
           exporta a PDF limpio para firmar y queda registrado en el portal
-          privado. El equipo controla las variables (importes, fechas, forma
-          de pago) sin tocar plantillas ni Word.
+          privado. El equipo controla las variables sin tocar plantillas ni
+          Word.
         </p>
         <ul>
-          <li><strong>Portada editorial</strong> · Cormorant + DM Sans, misma paleta que el estudio.</li>
-          <li><strong>Datos autocompletados</strong> · pareja, fecha, importe, IBAN, plazos.</li>
-          <li><strong>Imprimible fiel</strong> · PDF con márgenes y cortes revisados a la impresión real.</li>
+          <li><strong>Portada editorial</strong> con los nombres y la fecha en Cormorant Garamond.</li>
+          <li><strong>Autocompletado</strong> desde la ficha de la boda.</li>
+          <li><strong>Impresión fiel</strong> a la paleta y márgenes de la marca.</li>
         </ul>
       </div>
-      <div class="mock mock-contrato">
-        <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="mock-url">aem.rodd.es/contrato · Ainhoa & Diego</span></div>
-        <div class="contrato-page">
-          <h4>Contrato de prestación de servicios</h4>
-          <div class="contrato-titulo">Boda Ainhoa &amp; Diego</div>
-          <p style="font-style:italic;color:var(--suave)">17 de octubre — Empordà, Girona</p>
-          <div class="contrato-meta">
-            <div><b>Fecha</b>17 · 10 · 2026</div>
-            <div><b>Invitados previstos</b>144</div>
-            <div><b>Servicio</b>Coordinación integral</div>
-            <div><b>Importe total</b>11 200,00 €</div>
-          </div>
-          <p>Por la presente, Algo Entre Manos SL se compromete a la coordinación integral del evento nupcial, incluyendo la gestión de proveedores, cronograma, plano de mesas, seating, y la asistencia física los días previos y el día del enlace.</p>
-          <p>El importe se abonará en tres plazos: reserva (30%), a 60 días vista (40%) y el resto una semana antes del enlace.</p>
-        </div>
+      <div class="mock-wrap">
+        <img src="/assets/aem/screens/desktop-contrato.webp" alt="Pantalla de contrato de la boda Ainhoa y Diego con datos autocompletados: cláusulas, importes, forma de pago y descarga en PDF" class="mock-img" loading="lazy">
       </div>
     </div>
 
-    <!-- PAGOS -->
-    <div class="tab-panel" data-panel="pagos">
+    <!-- PORTAL -->
+    <div class="tab-panel" data-panel="portal">
       <div class="tab-info">
-        <h3>Presupuesto y <em>pagos por plazos</em></h3>
+        <h3>Portal privado de la <em>pareja</em></h3>
         <p class="tab-lead">
-          El dinero de la boda visto desde dos ángulos: el interno del equipo
-          (facturado / no facturado) y el que ve la pareja (pagado / pendiente).
-          Sin tablas contables.
+          Cada boda tiene su propio portal con URL única y clave. La pareja
+          entra desde el sofá y ve su boda — ni una interna, ni una de otra
+          pareja.
         </p>
         <p>
-          Cada plazo tiene fecha, importe y estado. El sistema avisa cuando
-          se acerca uno y marca en rojo si vence sin registrar el pago. La
-          pareja ve una versión limpia; el equipo ve el desglose real.
+          Portada personalizada con foto de la boda, cuenta atrás, y siete
+          apartados: Resumen, Invitados, Mesas, Rincones, Presupuesto,
+          Proveedores, Plan y Detalles. Transparencia total con los números
+          — <em>«Estas son las mismas cifras que llevamos nosotras. No hay
+          dos cuentas.»</em>
         </p>
         <ul>
-          <li><strong>Plazos automáticos</strong> · calculados desde la firma del contrato.</li>
-          <li><strong>Alertas de vencimiento</strong> · 7 días antes, día D, y vencido.</li>
-          <li><strong>División A / B</strong> · facturado y no facturado, con explicación clara.</li>
+          <li><strong>Acceso separado</strong> con clave propia por boda.</li>
+          <li><strong>Sin ver lo interno</strong> — las notas del equipo y márgenes no se cruzan aquí.</li>
+          <li><strong>Modo «ver como novios»</strong> para que el equipo compruebe exactamente lo que ve la pareja.</li>
         </ul>
       </div>
-      <div class="mock mock-pagos">
-        <div class="mock-bar"><span class="mock-dot r"></span><span class="mock-dot y"></span><span class="mock-dot g"></span><span class="mock-url">aem.rodd.es/presupuesto · Ainhoa & Diego</span></div>
-        <div class="pagos-body">
-          <div class="pagos-hero">
-            <span class="pagos-lbl">Total contrato</span>
-            <div class="pagos-sum">11 200,00 €</div>
-            <div class="pagos-progress"><span></span></div>
-            <div style="margin-top:8px;font-size:.7rem;color:rgba(255,255,255,.85)">7 300&nbsp;€ pagados · 3 900&nbsp;€ pendientes</div>
-          </div>
-          <div class="plazo">
-            <div><b>Reserva · 30%</b><small>Firma del contrato · 12 feb 2026</small></div>
-            <span class="plazo-tag paid">Pagado</span>
-          </div>
-          <div class="plazo">
-            <div><b>Segundo plazo · 40%</b><small>60 días vista · 12 abr 2026</small></div>
-            <span class="plazo-tag paid">Pagado</span>
-          </div>
-          <div class="plazo">
-            <div><b>Tercer plazo · 30%</b><small>7 días antes · 10 oct 2026</small></div>
-            <span class="plazo-tag next">Próximo</span>
-          </div>
-        </div>
+      <div class="mock-wrap">
+        <img src="/assets/aem/screens/desktop-portal.webp" alt="Portal privado de la pareja Ainhoa y Diego: portada con foto de la boda, 16 días hasta el enlace, siete apartados y resumen del gran día" class="mock-img" loading="lazy">
       </div>
     </div>
+  </div>
+
+  <!-- Login editorial -->
+  <div class="landing-wrap">
+    <div class="landing-info">
+      <span class="sec-eyebrow">Puerta de entrada</span>
+      <h3>Login <em>editorial</em></h3>
+      <p>
+        La primera pantalla cuenta la propuesta antes de pedir credenciales.
+        Imagen real de boda de AEM a la izquierda, acceso tipográfico a la
+        derecha, con instrucciones de acceso de prueba a la vista — porque
+        esto es un portfolio, no una producción real.
+      </p>
+    </div>
+    <img src="/assets/aem/screens/desktop-landing.webp" alt="Login de AEM Planner con imagen de boda, lema Cada boda bajo control, y acceso de prueba admin / admin" class="landing-img" loading="lazy">
   </div>
 </section>
 
