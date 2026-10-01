@@ -88,7 +88,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .demo-cta:hover::after{transform:translate(2px,-2px)}
 
 /* ═══════════════════════════════════════
-   HERO — imagen real + overlay + marca
+   HERO — imagen editorial + marca central + texto a la izquierda
 ═══════════════════════════════════════ */
 .hero{
   position:relative;
@@ -96,34 +96,43 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   padding:120px 24px 60px;
   display:flex;flex-direction:column;justify-content:center;
   overflow:hidden;
-  color:#fff;
+  color:var(--tinta-honda);
 }
 .hero-bg{
   position:absolute;inset:0;z-index:0;
 }
 .hero-bg img{
-  width:100%;height:100%;object-fit:cover;
-  animation:heroZoom 20s ease-in-out infinite alternate;
+  width:100%;height:100%;object-fit:cover;object-position:center;
+  animation:heroZoom 24s ease-in-out infinite alternate;
 }
 @keyframes heroZoom{
   from{transform:scale(1)}
-  to{transform:scale(1.08)}
+  to{transform:scale(1.06)}
 }
+/* Degradado blanco-crema desde la izquierda que mejora legibilidad
+   del texto sin tapar el logo central ni los elementos florales */
 .hero-bg::after{
   content:"";position:absolute;inset:0;
-  background:
-    linear-gradient(180deg,rgba(51,70,61,.55) 0%,rgba(51,70,61,.85) 100%),
-    linear-gradient(135deg,rgba(78,99,89,.5),transparent 60%);
+  background:linear-gradient(90deg,
+    rgba(240,240,230,.92) 0%,
+    rgba(240,240,230,.75) 28%,
+    rgba(240,240,230,.3) 48%,
+    rgba(240,240,230,0) 60%);
 }
 .hero-cont{
   position:relative;z-index:2;
   max-width:1100px;margin:0 auto;width:100%;
   padding:20px 30px;
+  /* El texto se queda a la izquierda — el logo del fondo respira a la derecha */
+  max-width:min(1100px, 100%);
+}
+.hero-wrap{
+  max-width:580px;
 }
 .hero-eyebrow{
-  color:var(--mostaza);font-size:.72rem;font-weight:700;
+  color:var(--tinta);font-size:.72rem;font-weight:700;
   letter-spacing:.34em;text-transform:uppercase;
-  margin-bottom:32px;
+  margin-bottom:28px;
   display:inline-flex;align-items:center;gap:12px;
 }
 .hero-eyebrow::before{
@@ -132,71 +141,81 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .hero h1{
   font-family:"Cormorant Garamond",Georgia,serif;
   font-weight:400;
-  font-size:clamp(2.8rem,7vw,5.5rem);
-  line-height:1;letter-spacing:.005em;
-  color:#fff;
+  font-size:clamp(2.6rem,6vw,4.8rem);
+  line-height:1.02;letter-spacing:.005em;
+  color:var(--tinta-honda);
   margin-bottom:20px;
 }
 .hero h1 em{
   display:block;font-style:italic;
-  color:var(--mostaza-suave);
-  font-size:.58em;margin-top:16px;font-weight:400;
+  color:var(--tinta);
+  font-size:.56em;margin-top:14px;font-weight:400;
 }
 .hero-linea{
-  width:80px;height:3px;background:var(--mostaza);
-  margin:32px 0;
+  width:72px;height:3px;background:var(--mostaza);
+  margin:28px 0;
 }
 .hero-sub{
-  max-width:640px;font-size:1.18rem;line-height:1.7;
-  color:rgba(255,255,255,.9);
+  max-width:520px;font-size:1.12rem;line-height:1.7;
+  color:var(--tinta-honda);
 }
 .hero-brand{
   display:inline-flex;flex-direction:column;
-  margin-top:48px;padding:20px 24px;
-  background:rgba(255,255,255,.08);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.16);
-  border-radius:2px;
+  margin-top:40px;padding:16px 22px;
+  background:rgba(255,255,255,.78);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(78,99,89,.16);
+  border-radius:3px;
+  box-shadow:0 8px 24px rgba(51,70,61,.08);
 }
 .hero-brand .cliente-linea{
   font-family:"Cormorant Garamond",Georgia,serif;
-  font-style:italic;font-size:1.4rem;color:#fff;
+  font-style:italic;font-size:1.3rem;color:var(--tinta-honda);
 }
 .hero-brand .cliente-tag{
-  color:var(--mostaza);font-size:.68rem;font-weight:700;
+  color:var(--tinta);font-size:.66rem;font-weight:700;
   letter-spacing:.32em;text-transform:uppercase;
   margin-top:6px;padding-top:6px;
-  border-top:1px solid rgba(226,231,53,.4);
+  border-top:1px solid rgba(78,99,89,.26);
 }
 .hero-datos{
-  margin-top:56px;padding-top:32px;
-  border-top:1px solid rgba(255,255,255,.16);
-  display:grid;grid-template-columns:repeat(4,1fr);gap:32px;
-  max-width:900px;
+  margin-top:44px;padding-top:28px;
+  border-top:1px solid rgba(78,99,89,.22);
+  display:grid;grid-template-columns:repeat(2,1fr);gap:22px 32px;
+  max-width:580px;
 }
 .hero-datos div span{
-  display:block;color:var(--mostaza);font-size:.66rem;font-weight:700;
-  letter-spacing:.18em;text-transform:uppercase;margin-bottom:8px;
+  display:block;color:var(--tinta);font-size:.64rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;
 }
 .hero-datos div b{
   font-family:"Cormorant Garamond",Georgia,serif;
-  font-weight:400;font-size:1.15rem;line-height:1.35;color:#fff;
+  font-weight:400;font-size:1.08rem;line-height:1.35;color:var(--tinta-honda);
 }
-.hero-datos a{color:var(--mostaza);border-bottom:1px solid rgba(226,231,53,.4)}
+.hero-datos a{color:var(--tinta);border-bottom:1px solid rgba(78,99,89,.32)}
 .hero-scroll{
-  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-  z-index:3;color:rgba(255,255,255,.6);
-  font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:3;color:var(--tinta);
+  font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;
   display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:.7;
 }
 .hero-scroll::after{
   content:"";display:block;width:1px;height:36px;
-  background:linear-gradient(180deg,var(--mostaza),transparent);
+  background:linear-gradient(180deg,var(--tinta),transparent);
   animation:scrollDown 2s ease-in-out infinite;
 }
 @keyframes scrollDown{
   0%,100%{opacity:.3;transform:scaleY(.6)}
   50%{opacity:1;transform:scaleY(1)}
+}
+@media(max-width:900px){
+  .hero-bg::after{
+    background:linear-gradient(180deg,
+      rgba(240,240,230,.75) 0%,
+      rgba(240,240,230,.9) 40%,
+      rgba(240,240,230,.95) 100%);
+  }
 }
 
 /* ═══════════════════════════════════════
@@ -814,28 +833,26 @@ footer a:hover{border-bottom-color:var(--mostaza)}
 <!-- HERO -->
 <header class="hero">
   <div class="hero-bg">
-    <img src="/assets/aem/mesa-floral.jpg" alt="Mesa floral de boda Algo Entre Manos">
+    <img src="/assets/aem/planneraem-hero.webp" alt="Hero editorial de AEM Planner — Algo Entre Manos Wedding + Events, con logotipo central, eucalipto, flores de novia y anillos de boda">
   </div>
   <div class="hero-cont">
-    <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
-    <h1>
-      AEM Planner
-      <em>Un sistema operativo para bodas</em>
-    </h1>
-    <div class="hero-linea"></div>
-    <p class="hero-sub">
-      Cómo diseñé y construí una herramienta que tres personas usan de pie,
-      en una finca sin cobertura, el único día que no se puede repetir.
-    </p>
-    <div class="hero-brand">
-      <span class="cliente-linea">Algo Entre Manos</span>
-      <span class="cliente-tag">Wedding + Events</span>
-    </div>
-    <div class="hero-datos">
-      <div><span>Cliente</span><b>Algo Entre Manos<br>Barcelona · Girona</b></div>
-      <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
-      <div><span>Periodo</span><b>2026<br>En producción</b></div>
-      <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
+    <div class="hero-wrap">
+      <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
+      <h1>
+        AEM Planner
+        <em>Un sistema operativo para bodas</em>
+      </h1>
+      <div class="hero-linea"></div>
+      <p class="hero-sub">
+        Cómo diseñé y construí una herramienta que tres personas usan de pie,
+        en una finca sin cobertura, el único día que no se puede repetir.
+      </p>
+      <div class="hero-datos">
+        <div><span>Cliente</span><b>Algo Entre Manos<br>Barcelona · Girona</b></div>
+        <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
+        <div><span>Periodo</span><b>2026<br>En producción</b></div>
+        <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
+      </div>
     </div>
   </div>
   <div class="hero-scroll">Baja para ver el caso</div>
