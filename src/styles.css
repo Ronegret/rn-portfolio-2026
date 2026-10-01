@@ -1727,45 +1727,22 @@ body[data-cursor="mira"]::after {
   .rodd-es-card .bc-img { padding: 1rem; min-height: auto; aspect-ratio: 1200/630; }
   .rodd-es-card .bc-img img { max-height: none; }
 }
-/* AEM Planner — Algo Entre Manos · Screenshot real + logo flotante */
+/* AEM Planner — Algo Entre Manos · Hero editorial con 3 móviles */
 .aem-card .bc-img {
   position: relative;
   overflow: hidden;
-  background: #faf9f4;
-  padding: clamp(1.2rem, 2.5vw, 2rem);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: #f0f0e6;
   min-height: 340px;
 }
 .aem-card .bc-img > img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
-  box-shadow:
-    0 20px 50px rgba(51,70,61,.18),
-    0 0 0 1px rgba(78,99,89,.1);
-  transition: transform .7s var(--ease), box-shadow .5s;
-  position: relative;
-  z-index: 1;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 1s var(--ease), filter .6s;
 }
 .aem-card .bc:hover .bc-img > img {
-  transform: scale(1.03) translateY(-4px);
-  box-shadow:
-    0 30px 70px rgba(51,70,61,.28),
-    0 0 0 1px rgba(78,99,89,.18);
-}
-.aem-card .bc-img::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 15% 85%, rgba(226,231,53,.18), transparent 50%),
-    radial-gradient(circle at 85% 15%, rgba(78,99,89,.12), transparent 55%);
-  z-index: 0;
+  transform: scale(1.045);
 }
 .aem-card .bc-img::after {
   content: "";
@@ -1773,29 +1750,7 @@ body[data-cursor="mira"]::after {
   top: 0; left: 0; right: 0;
   height: 4px;
   background: linear-gradient(90deg, #4e6359 0 62%, #e2e735 62% 100%);
-  z-index: 3;
-}
-.aem-badge-wrap {
-  position: absolute;
-  top: clamp(1.4rem, 3vw, 2.2rem);
-  left: clamp(1.4rem, 3vw, 2.2rem);
-  padding: 12px 18px;
-  background: rgba(255,255,255,.96);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(78,99,89,.14);
-  border-radius: 4px;
-  box-shadow: 0 8px 24px rgba(51,70,61,.14);
   z-index: 2;
-  transition: transform .4s var(--ease);
-}
-.aem-card .bc:hover .aem-badge-wrap {
-  transform: translateY(-2px) rotate(-1deg);
-  background: #fff;
-}
-.aem-logo-sm {
-  display: block;
-  width: 90px;
-  height: auto;
 }
 .aem-tag-hi {
   background: #4e6359 !important;
@@ -1813,9 +1768,7 @@ body[data-cursor="mira"]::after {
   background: rgba(226,231,53,.10);
 }
 @media(max-width: 860px) {
-  .aem-card .bc-img { min-height: 240px; aspect-ratio: 1200/630; padding: 1rem; }
-  .aem-logo-sm { width: 70px; }
-  .aem-badge-wrap { top: 1rem; left: 1rem; padding: 8px 14px; }
+  .aem-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
 }
 
 .dedicalo-play-card .bc-img {
