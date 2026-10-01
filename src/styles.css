@@ -1651,45 +1651,40 @@ body[data-cursor="mira"]::after {
   background: rgba(239,68,68,.1);
 }
 
-/* Rodd.es — Biblioteca open source · Aurora palette · real screenshot */
+/* Rodd.es — Biblioteca open source · hero editorial fullbleed */
 .rodd-es-card .bc-img {
-  background:
-    radial-gradient(circle at 18% 0%, rgba(124,92,255,.32), transparent 45%),
-    radial-gradient(circle at 82% 100%, rgba(0,212,255,.22), transparent 50%),
-    radial-gradient(circle at 50% 50%, rgba(255,62,136,.08), transparent 60%),
-    #050510;
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(1rem, 2.5vw, 2rem);
+  background: #050510;
+  min-height: 340px;
+  border: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  display: block;
 }
-/* Show the full 1200x630 hero without cropping */
-.rodd-es-card .bc-img img {
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(124,92,255,.24);
-  transition: transform .7s var(--ease), box-shadow .5s, filter .5s;
-  filter: saturate(1.05);
+.rodd-es-card .bc-img > img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  filter: none !important;
+  transition: transform 1s var(--ease);
 }
-.rodd-es-card .bc:hover .bc-img img {
-  transform: scale(1.035) translateY(-2px);
-  box-shadow: 0 28px 80px rgba(124,92,255,.4), 0 0 0 1px rgba(124,92,255,.5);
-  filter: saturate(1.15) brightness(1.03);
+.rodd-es-card .bc:hover .bc-img > img {
+  transform: scale(1.045) !important;
+  filter: none !important;
 }
 /* Aurora glow overlay on hover */
 .rodd-es-card .bc-img::after {
   content: "";
   position: absolute; inset: 0;
   background:
-    radial-gradient(circle at 20% 0%, rgba(124,92,255,.35), transparent 45%),
-    radial-gradient(circle at 85% 100%, rgba(0,212,255,.28), transparent 50%);
+    radial-gradient(circle at 20% 0%, rgba(124,92,255,.3), transparent 45%),
+    radial-gradient(circle at 85% 100%, rgba(0,212,255,.22), transparent 50%);
   mix-blend-mode: screen;
   pointer-events: none;
   opacity: 0;
@@ -1722,10 +1717,8 @@ body[data-cursor="mira"]::after {
 }
 .rodd-es-card .bc:hover::after { opacity: .35; }
 .rodd-es-card .bc > * { position: relative; z-index: 2; }
-/* On mobile the bfeat stacks: force sensible aspect ratio */
 @media(max-width: 860px) {
-  .rodd-es-card .bc-img { padding: 1rem; min-height: auto; aspect-ratio: 1200/630; }
-  .rodd-es-card .bc-img img { max-height: none; }
+  .rodd-es-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
 }
 /* AEM Planner — Algo Entre Manos · Hero editorial con 3 móviles */
 .aem-card .bc-img {
@@ -1733,16 +1726,26 @@ body[data-cursor="mira"]::after {
   overflow: hidden;
   background: #f0f0e6;
   min-height: 340px;
+  border: 0 !important;
+  border-right: 0 !important;
+  border-bottom: 0 !important;
+  display: block;
 }
 .aem-card .bc-img > img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 1s var(--ease), filter .6s;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  filter: none !important;
+  transition: transform 1s var(--ease);
 }
 .aem-card .bc:hover .bc-img > img {
-  transform: scale(1.045);
+  transform: scale(1.045) !important;
+  filter: none !important;
 }
 .aem-card .bc-img::after {
   content: "";
