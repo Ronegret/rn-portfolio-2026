@@ -88,87 +88,111 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .demo-cta:hover::after{transform:translate(2px,-2px)}
 
 /* ═══════════════════════════════════════
-   HERO — split: texto limpio a la izquierda, poster a la derecha
+   HERO — centrado vertical, título arriba + poster enmarcado abajo
 ═══════════════════════════════════════ */
 .hero{
   position:relative;
   min-height:100vh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  padding:140px 24px 100px;
   background:var(--papel);
   color:var(--tinta-honda);
+  text-align:center;
   overflow:hidden;
 }
-.hero-text{
+/* elementos decorativos de fondo muy sutiles */
+.hero::before,
+.hero::after{
+  content:"";position:absolute;
+  width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle, rgba(226,231,53,.08), transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+.hero::before{top:-120px;left:-120px}
+.hero::after{
+  bottom:-140px;right:-140px;
+  background:radial-gradient(circle, rgba(78,99,89,.08), transparent 60%);
+}
+.hero-top{
   position:relative;z-index:2;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:120px 48px 80px clamp(32px, 6vw, 80px);
-  background:var(--papel);
-}
-/* línea vertical mostaza divisoria */
-.hero-text::after{
-  content:"";position:absolute;
-  top:120px;bottom:80px;right:0;
-  width:1px;background:var(--linea);
-}
-.hero-wrap{max-width:560px;width:100%}
-.hero-media{
-  position:relative;
-  overflow:hidden;
-  background:#f0f0e6;
-}
-.hero-media img{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:cover;object-position:center;
-  animation:heroZoom 26s ease-in-out infinite alternate;
-}
-@keyframes heroZoom{
-  from{transform:scale(1)}
-  to{transform:scale(1.05)}
-}
-/* Franja vertical mostaza en el borde izquierdo del lado imagen */
-.hero-media::before{
-  content:"";position:absolute;
-  top:0;left:0;width:4px;height:100%;
-  background:linear-gradient(180deg, var(--tinta) 0 55%, var(--mostaza) 55% 100%);
-  z-index:3;
+  max-width:760px;width:100%;
+  margin-bottom:56px;
 }
 .hero-eyebrow{
   color:var(--tinta);font-size:.72rem;font-weight:700;
   letter-spacing:.34em;text-transform:uppercase;
-  margin-bottom:28px;
+  margin-bottom:24px;
   display:inline-flex;align-items:center;gap:12px;
 }
-.hero-eyebrow::before{
+.hero-eyebrow::before,
+.hero-eyebrow::after{
   content:"";width:32px;height:1px;background:var(--mostaza);
 }
 .hero h1{
   font-family:"Cormorant Garamond",Georgia,serif;
   font-weight:400;
-  font-size:clamp(2.4rem,4.6vw,4rem);
+  font-size:clamp(2.6rem,5.2vw,4.4rem);
   line-height:1.02;letter-spacing:.005em;
   color:var(--tinta-honda);
-  margin-bottom:16px;
+  margin:0 auto 16px;
+  max-width:720px;
 }
 .hero h1 em{
   display:block;font-style:italic;
   color:var(--tinta);
-  font-size:.58em;margin-top:12px;font-weight:400;
+  font-size:.56em;margin-top:14px;font-weight:400;
 }
 .hero-linea{
   width:72px;height:3px;background:var(--mostaza);
-  margin:24px 0;
+  margin:28px auto;
 }
 .hero-sub{
-  max-width:520px;font-size:1.08rem;line-height:1.65;
+  max-width:560px;margin:0 auto;
+  font-size:1.08rem;line-height:1.65;
   color:var(--tinta-honda);
 }
+/* Poster enmarcado tipo postal/polaroid */
+.hero-media{
+  position:relative;z-index:2;
+  width:min(620px, 92%);
+  padding:14px;
+  background:#fff;
+  border:1px solid rgba(78,99,89,.14);
+  box-shadow:
+    0 2px 6px rgba(51,70,61,.06),
+    0 24px 60px rgba(51,70,61,.18),
+    0 0 0 1px rgba(78,99,89,.04);
+  transform:rotate(-.6deg);
+  transition:transform .5s var(--ease), box-shadow .5s;
+}
+.hero-media:hover{
+  transform:rotate(0deg) translateY(-4px);
+  box-shadow:
+    0 2px 6px rgba(51,70,61,.08),
+    0 36px 80px rgba(51,70,61,.26),
+    0 0 0 1px rgba(78,99,89,.08);
+}
+.hero-media::before{
+  content:"";position:absolute;
+  top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg, var(--tinta) 0 62%, var(--mostaza) 62% 100%);
+  z-index:3;
+}
+.hero-media img{
+  display:block;width:100%;height:auto;
+  object-fit:cover;
+  aspect-ratio:1485/855;
+}
+/* Datos del proyecto fuera del marco, centrados abajo */
 .hero-datos{
-  margin-top:40px;padding-top:28px;
-  border-top:1px solid rgba(78,99,89,.22);
-  display:grid;grid-template-columns:repeat(2,1fr);gap:20px 28px;
-  max-width:520px;
+  position:relative;z-index:2;
+  margin-top:48px;padding-top:28px;
+  border-top:1px solid rgba(78,99,89,.2);
+  display:grid;grid-template-columns:repeat(4,auto);gap:36px;
+  max-width:720px;width:100%;
+  text-align:center;
 }
 .hero-datos div span{
   display:block;color:var(--tinta);font-size:.64rem;font-weight:700;
@@ -176,41 +200,30 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 .hero-datos div b{
   font-family:"Cormorant Garamond",Georgia,serif;
-  font-weight:400;font-size:1.04rem;line-height:1.35;color:var(--tinta-honda);
+  font-weight:400;font-size:1.02rem;line-height:1.35;color:var(--tinta-honda);
 }
 .hero-datos a{color:var(--tinta);border-bottom:1px solid rgba(78,99,89,.32)}
 .hero-scroll{
-  position:absolute;bottom:28px;left:clamp(32px, 6vw, 80px);
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
   z-index:3;color:var(--tinta);
   font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
-  display:flex;align-items:center;gap:10px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
   opacity:.6;
 }
 .hero-scroll::after{
-  content:"";display:block;width:36px;height:1px;
-  background:linear-gradient(90deg,var(--tinta),transparent);
-  animation:scrollRight 2s ease-in-out infinite;
+  content:"";display:block;width:1px;height:36px;
+  background:linear-gradient(180deg,var(--tinta),transparent);
+  animation:scrollDown 2s ease-in-out infinite;
 }
-@keyframes scrollRight{
-  0%,100%{opacity:.3;transform:scaleX(.6)}
-  50%{opacity:1;transform:scaleX(1)}
+@keyframes scrollDown{
+  0%,100%{opacity:.3;transform:scaleY(.6)}
+  50%{opacity:1;transform:scaleY(1)}
 }
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr;min-height:auto}
-  .hero-media{
-    order:-1;
-    min-height:280px;
-    aspect-ratio:16/10;
-  }
-  .hero-media::before{
-    width:100%;height:4px;
-    background:linear-gradient(90deg, var(--tinta) 0 62%, var(--mostaza) 62% 100%);
-  }
-  .hero-text{
-    padding:60px 24px 80px;
-  }
-  .hero-text::after{display:none}
-  .hero-scroll{left:24px}
+@media(max-width:720px){
+  .hero{padding:100px 20px 100px}
+  .hero-top{margin-bottom:40px}
+  .hero-datos{grid-template-columns:1fr 1fr;gap:20px 24px;text-align:left;max-width:420px}
+  .hero-media{transform:none}
 }
 
 /* ═══════════════════════════════════════
@@ -825,32 +838,33 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-cta">Ver demo en vivo</a>
 </div>
 
-<!-- HERO SPLIT -->
+<!-- HERO CENTRADO -->
 <header class="hero">
-  <div class="hero-text">
-    <div class="hero-wrap">
-      <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
-      <h1>
-        AEM Planner
-        <em>Un sistema operativo para bodas</em>
-      </h1>
-      <div class="hero-linea"></div>
-      <p class="hero-sub">
-        Cómo diseñé y construí una herramienta que tres personas usan de pie,
-        en una finca sin cobertura, el único día que no se puede repetir.
-      </p>
-      <div class="hero-datos">
-        <div><span>Cliente</span><b>Algo Entre Manos<br>Barcelona · Girona</b></div>
-        <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
-        <div><span>Periodo</span><b>2026<br>En producción</b></div>
-        <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
-      </div>
-    </div>
-    <div class="hero-scroll">Baja para ver el caso</div>
+  <div class="hero-top">
+    <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
+    <h1>
+      AEM Planner
+      <em>Un sistema operativo para bodas</em>
+    </h1>
+    <div class="hero-linea"></div>
+    <p class="hero-sub">
+      Cómo diseñé y construí una herramienta que tres personas usan de pie,
+      en una finca sin cobertura, el único día que no se puede repetir.
+    </p>
   </div>
+
   <div class="hero-media">
     <img src="/assets/aem/planneraem-hero.webp" alt="Poster editorial de AEM Planner — Algo Entre Manos Wedding + Events, con logotipo central, eucalipto, flores de novia y anillos de boda">
   </div>
+
+  <div class="hero-datos">
+    <div><span>Cliente</span><b>Algo Entre Manos<br>Barcelona · Girona</b></div>
+    <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
+    <div><span>Periodo</span><b>2026<br>En producción</b></div>
+    <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
+  </div>
+
+  <div class="hero-scroll">Baja para ver el caso</div>
 </header>
 
 <!-- 01 · RESUMEN -->
