@@ -1729,24 +1729,30 @@ body[data-cursor="mira"]::after {
 }
 /* AEM Planner — Algo Entre Manos · Editorial + verde salvia + mostaza */
 .aem-card .bc-img {
-  background:
-    radial-gradient(circle at 20% 20%, rgba(226,231,53,.14), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(78,99,89,.18), transparent 55%),
-    #f0f0e6;
   position: relative;
   overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(1.5rem, 4vw, 3rem);
+  background: #4e6359;
+  min-height: 340px;
+}
+.aem-card .bc-img > img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center;
+  transition: transform 1.2s var(--ease), filter .6s;
+  filter: saturate(.85) brightness(.72);
+}
+.aem-card .bc:hover .bc-img > img {
+  transform: scale(1.06);
+  filter: saturate(1) brightness(.78);
 }
 .aem-card .bc-img::before {
   content: "";
-  position: absolute;
-  inset: 12px;
-  border: 1px solid rgba(78,99,89,.18);
-  pointer-events: none;
-  z-index: 0;
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(78,99,89,.35) 0%, rgba(51,70,61,.72) 100%),
+    linear-gradient(135deg, rgba(78,99,89,.4) 0%, transparent 60%);
+  z-index: 1;
+  transition: opacity .5s var(--ease);
 }
 .aem-card .bc-img::after {
   content: "";
@@ -1754,22 +1760,60 @@ body[data-cursor="mira"]::after {
   top: 0; left: 0; right: 0;
   height: 4px;
   background: linear-gradient(90deg, #4e6359 0 62%, #e2e735 62% 100%);
-  z-index: 2;
+  z-index: 4;
 }
-.aem-card .bc-img img {
-  width: 62%;
-  max-width: 260px;
-  height: auto;
-  object-fit: contain;
-  object-position: center;
-  transition: transform .6s var(--ease), filter .5s;
-  filter: drop-shadow(0 6px 24px rgba(78,99,89,.16));
-  position: relative;
-  z-index: 1;
+.aem-overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  z-index: 3;
+  pointer-events: none;
 }
-.aem-card .bc:hover .bc-img img {
-  transform: scale(1.05);
-  filter: drop-shadow(0 12px 40px rgba(78,99,89,.28));
+.aem-logo-wrap {
+  display: flex; flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.aem-brand-line {
+  font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  line-height: 1;
+  color: #fff;
+  letter-spacing: .01em;
+  text-shadow: 0 2px 20px rgba(0,0,0,.3);
+}
+.aem-brand-tag {
+  color: #e2e735;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  padding-top: 6px;
+  border-top: 1px solid rgba(226,231,53,.4);
+  margin-top: 8px;
+}
+.aem-badge {
+  align-self: flex-end;
+  padding: 8px 16px;
+  background: rgba(255,255,255,.14);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  transition: transform .4s var(--ease), background .4s;
+}
+.aem-card .bc:hover .aem-badge {
+  transform: translateY(-2px);
+  background: rgba(226,231,53,.9);
+  color: #33463d;
+  border-color: #e2e735;
 }
 .aem-tag-hi {
   background: #4e6359 !important;
@@ -1787,8 +1831,8 @@ body[data-cursor="mira"]::after {
   background: rgba(226,231,53,.10);
 }
 @media(max-width: 860px) {
-  .aem-card .bc-img { padding: 1.2rem; min-height: auto; aspect-ratio: 1200/630; }
-  .aem-card .bc-img img { width: 55%; max-width: 200px; }
+  .aem-card .bc-img { min-height: 260px; aspect-ratio: 1200/630; }
+  .aem-brand-line { font-size: 1.6rem; }
 }
 
 .dedicalo-play-card .bc-img {
