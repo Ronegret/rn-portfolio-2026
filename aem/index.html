@@ -88,46 +88,51 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .demo-cta:hover::after{transform:translate(2px,-2px)}
 
 /* ═══════════════════════════════════════
-   HERO — imagen editorial + marca central + texto a la izquierda
+   HERO — split: texto limpio a la izquierda, poster a la derecha
 ═══════════════════════════════════════ */
 .hero{
   position:relative;
   min-height:100vh;
-  padding:120px 24px 60px;
-  display:flex;flex-direction:column;justify-content:center;
-  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:var(--papel);
   color:var(--tinta-honda);
+  overflow:hidden;
 }
-.hero-bg{
-  position:absolute;inset:0;z-index:0;
+.hero-text{
+  position:relative;z-index:2;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:120px 48px 80px clamp(32px, 6vw, 80px);
+  background:var(--papel);
 }
-.hero-bg img{
-  width:100%;height:100%;object-fit:cover;object-position:center;
-  animation:heroZoom 24s ease-in-out infinite alternate;
+/* línea vertical mostaza divisoria */
+.hero-text::after{
+  content:"";position:absolute;
+  top:120px;bottom:80px;right:0;
+  width:1px;background:var(--linea);
+}
+.hero-wrap{max-width:560px;width:100%}
+.hero-media{
+  position:relative;
+  overflow:hidden;
+  background:#f0f0e6;
+}
+.hero-media img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;object-position:center;
+  animation:heroZoom 26s ease-in-out infinite alternate;
 }
 @keyframes heroZoom{
   from{transform:scale(1)}
-  to{transform:scale(1.06)}
+  to{transform:scale(1.05)}
 }
-/* Degradado blanco-crema desde la izquierda que mejora legibilidad
-   del texto sin tapar el logo central ni los elementos florales */
-.hero-bg::after{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(90deg,
-    rgba(240,240,230,.92) 0%,
-    rgba(240,240,230,.75) 28%,
-    rgba(240,240,230,.3) 48%,
-    rgba(240,240,230,0) 60%);
-}
-.hero-cont{
-  position:relative;z-index:2;
-  max-width:1100px;margin:0 auto;width:100%;
-  padding:20px 30px;
-  /* El texto se queda a la izquierda — el logo del fondo respira a la derecha */
-  max-width:min(1100px, 100%);
-}
-.hero-wrap{
-  max-width:580px;
+/* Franja vertical mostaza en el borde izquierdo del lado imagen */
+.hero-media::before{
+  content:"";position:absolute;
+  top:0;left:0;width:4px;height:100%;
+  background:linear-gradient(180deg, var(--tinta) 0 55%, var(--mostaza) 55% 100%);
+  z-index:3;
 }
 .hero-eyebrow{
   color:var(--tinta);font-size:.72rem;font-weight:700;
@@ -141,48 +146,29 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .hero h1{
   font-family:"Cormorant Garamond",Georgia,serif;
   font-weight:400;
-  font-size:clamp(2.6rem,6vw,4.8rem);
+  font-size:clamp(2.4rem,4.6vw,4rem);
   line-height:1.02;letter-spacing:.005em;
   color:var(--tinta-honda);
-  margin-bottom:20px;
+  margin-bottom:16px;
 }
 .hero h1 em{
   display:block;font-style:italic;
   color:var(--tinta);
-  font-size:.56em;margin-top:14px;font-weight:400;
+  font-size:.58em;margin-top:12px;font-weight:400;
 }
 .hero-linea{
   width:72px;height:3px;background:var(--mostaza);
-  margin:28px 0;
+  margin:24px 0;
 }
 .hero-sub{
-  max-width:520px;font-size:1.12rem;line-height:1.7;
+  max-width:520px;font-size:1.08rem;line-height:1.65;
   color:var(--tinta-honda);
 }
-.hero-brand{
-  display:inline-flex;flex-direction:column;
-  margin-top:40px;padding:16px 22px;
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(78,99,89,.16);
-  border-radius:3px;
-  box-shadow:0 8px 24px rgba(51,70,61,.08);
-}
-.hero-brand .cliente-linea{
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-style:italic;font-size:1.3rem;color:var(--tinta-honda);
-}
-.hero-brand .cliente-tag{
-  color:var(--tinta);font-size:.66rem;font-weight:700;
-  letter-spacing:.32em;text-transform:uppercase;
-  margin-top:6px;padding-top:6px;
-  border-top:1px solid rgba(78,99,89,.26);
-}
 .hero-datos{
-  margin-top:44px;padding-top:28px;
+  margin-top:40px;padding-top:28px;
   border-top:1px solid rgba(78,99,89,.22);
-  display:grid;grid-template-columns:repeat(2,1fr);gap:22px 32px;
-  max-width:580px;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:20px 28px;
+  max-width:520px;
 }
 .hero-datos div span{
   display:block;color:var(--tinta);font-size:.64rem;font-weight:700;
@@ -190,32 +176,41 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 .hero-datos div b{
   font-family:"Cormorant Garamond",Georgia,serif;
-  font-weight:400;font-size:1.08rem;line-height:1.35;color:var(--tinta-honda);
+  font-weight:400;font-size:1.04rem;line-height:1.35;color:var(--tinta-honda);
 }
 .hero-datos a{color:var(--tinta);border-bottom:1px solid rgba(78,99,89,.32)}
 .hero-scroll{
-  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  position:absolute;bottom:28px;left:clamp(32px, 6vw, 80px);
   z-index:3;color:var(--tinta);
-  font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;
-  display:flex;flex-direction:column;align-items:center;gap:10px;
-  opacity:.7;
+  font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+  display:flex;align-items:center;gap:10px;
+  opacity:.6;
 }
 .hero-scroll::after{
-  content:"";display:block;width:1px;height:36px;
-  background:linear-gradient(180deg,var(--tinta),transparent);
-  animation:scrollDown 2s ease-in-out infinite;
+  content:"";display:block;width:36px;height:1px;
+  background:linear-gradient(90deg,var(--tinta),transparent);
+  animation:scrollRight 2s ease-in-out infinite;
 }
-@keyframes scrollDown{
-  0%,100%{opacity:.3;transform:scaleY(.6)}
-  50%{opacity:1;transform:scaleY(1)}
+@keyframes scrollRight{
+  0%,100%{opacity:.3;transform:scaleX(.6)}
+  50%{opacity:1;transform:scaleX(1)}
 }
 @media(max-width:900px){
-  .hero-bg::after{
-    background:linear-gradient(180deg,
-      rgba(240,240,230,.75) 0%,
-      rgba(240,240,230,.9) 40%,
-      rgba(240,240,230,.95) 100%);
+  .hero{grid-template-columns:1fr;min-height:auto}
+  .hero-media{
+    order:-1;
+    min-height:280px;
+    aspect-ratio:16/10;
   }
+  .hero-media::before{
+    width:100%;height:4px;
+    background:linear-gradient(90deg, var(--tinta) 0 62%, var(--mostaza) 62% 100%);
+  }
+  .hero-text{
+    padding:60px 24px 80px;
+  }
+  .hero-text::after{display:none}
+  .hero-scroll{left:24px}
 }
 
 /* ═══════════════════════════════════════
@@ -830,12 +825,9 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-cta">Ver demo en vivo</a>
 </div>
 
-<!-- HERO -->
+<!-- HERO SPLIT -->
 <header class="hero">
-  <div class="hero-bg">
-    <img src="/assets/aem/planneraem-hero.webp" alt="Hero editorial de AEM Planner — Algo Entre Manos Wedding + Events, con logotipo central, eucalipto, flores de novia y anillos de boda">
-  </div>
-  <div class="hero-cont">
+  <div class="hero-text">
     <div class="hero-wrap">
       <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
       <h1>
@@ -854,8 +846,11 @@ footer a:hover{border-bottom-color:var(--mostaza)}
         <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
       </div>
     </div>
+    <div class="hero-scroll">Baja para ver el caso</div>
   </div>
-  <div class="hero-scroll">Baja para ver el caso</div>
+  <div class="hero-media">
+    <img src="/assets/aem/planneraem-hero.webp" alt="Poster editorial de AEM Planner — Algo Entre Manos Wedding + Events, con logotipo central, eucalipto, flores de novia y anillos de boda">
+  </div>
 </header>
 
 <!-- 01 · RESUMEN -->
