@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="CV de Rodrigo Negrete Aros, AI Product Designer con foco en UX/UI y automatización IA. Máster en Agentes de IA e Hiperautomatización por EBIS Business Techschool. +17 años negocio B2B. Barcelona, España o remoto EU.">
-  <title>CV Rodrigo Negrete Aros | AI Product Designer · UX/UI + Automatización IA</title>
+  <meta name="description" content="CV de Rodrigo Negrete Aros — AI Product Designer con foco en UX/UI, Design Systems, GenAI aplicada y automatización de procesos. Máster en Agentes de IA e Hiperautomatización por EBIS Business Techschool. Barcelona, España · Remoto EU.">
+  <title>CV Rodrigo Negrete Aros — AI Product Designer | UX/UI | GenAI & Automation</title>
   <style>
     :root {
-      --ink: #111827;
-      --body: #374151;
-      --muted: #6b7280;
-      --line: #d1d5db;
-      --soft: #f3f4f6;
+      --ink: #0f172a;
+      --body: #334155;
+      --muted: #64748b;
+      --line: #cbd5e1;
+      --soft: #f1f5f9;
       --paper: #ffffff;
-      --accent: #1d4ed8;
+      --accent: #1e3a8a;
       --accent-2: #0f766e;
       --bg: #e5e7eb;
     }
@@ -24,9 +24,10 @@
       margin: 0;
       background: var(--bg);
       color: var(--body);
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
       font-size: 14px;
-      line-height: 1.45;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
     }
 
     a { color: inherit; }
@@ -79,15 +80,15 @@
     }
     .back-btn:hover { border-color: rgba(255,255,255,.6) !important; background: rgba(255,255,255,.07) !important; }
 
-    .linkedin-btn {
-      background: #0a66c2 !important;
-    }
+    .linkedin-btn { background: #0a66c2 !important; }
+    .github-btn { background: #24292f !important; }
 
     .right-group {
       justify-self: end;
       display: flex;
       gap: 8px;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .tabs {
@@ -104,7 +105,7 @@
       border-radius: 999px;
       background: transparent;
       color: #cbd5e1;
-      padding-inline: 12px;
+      padding-inline: 14px;
     }
 
     .tabs button.active {
@@ -117,7 +118,7 @@
       max-width: calc(100vw - 24px);
       min-height: 297mm;
       margin: 18px auto;
-      padding: 14mm 16mm;
+      padding: 14mm 15mm;
       background: var(--paper);
       box-shadow: 0 14px 34px rgba(17,24,39,.16);
     }
@@ -125,45 +126,52 @@
     .cv-panel { display: none; }
     .cv-panel.active { display: block; }
 
+    /* HEADER */
     header {
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       border-bottom: 2px solid var(--ink);
     }
 
-    h1, h2, h3, p, ul, li { font-family: Arial, Helvetica, sans-serif; }
+    h1, h2, h3, h4, p, ul, li {
+      font-family: 'Inter', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
 
     h1 {
       margin: 0 0 4px;
       color: var(--ink);
-      font-size: 31px;
+      font-size: 30px;
       line-height: 1.05;
-      font-weight: 700;
-      letter-spacing: 0;
+      font-weight: 800;
+      letter-spacing: -0.01em;
     }
 
     .headline {
-      margin: 0 0 8px;
+      margin: 0 0 10px;
       color: var(--accent);
-      font-size: 15.5px;
+      font-size: 15px;
       font-weight: 700;
+      letter-spacing: 0;
     }
 
     .contact {
       margin: 0;
       color: var(--body);
-      font-size: 12.8px;
-      line-height: 1.55;
+      font-size: 12.5px;
+      line-height: 1.6;
     }
+    .contact a { color: var(--accent); text-decoration: none; font-weight: 500; }
+    .contact a:hover { text-decoration: underline; }
+    .contact .dot { color: var(--muted); margin: 0 6px; }
 
-    section { margin-top: 12px; }
+    section { margin-top: 16px; }
 
     h2 {
-      margin: 0 0 6px;
-      padding-bottom: 3px;
+      margin: 0 0 8px;
+      padding-bottom: 4px;
       border-bottom: 1px solid var(--line);
       color: var(--ink);
-      font-size: 14px;
-      letter-spacing: .5px;
+      font-size: 12.5px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
       font-weight: 700;
     }
@@ -171,77 +179,156 @@
     h3 {
       margin: 0;
       color: var(--ink);
-      font-size: 13.8px;
+      font-size: 14px;
       font-weight: 700;
+    }
+
+    .summary p {
+      margin: 0;
+      font-size: 13.2px;
+      line-height: 1.55;
+      color: var(--body);
     }
 
     p {
       margin: 0 0 6px;
       color: var(--body);
-      font-size: 13.4px;
-      line-height: 1.45;
+      font-size: 13.2px;
+      line-height: 1.5;
     }
 
     ul {
-      margin: 4px 0 0 18px;
+      margin: 6px 0 0 18px;
       padding: 0;
     }
 
     li {
       margin-bottom: 3px;
       color: var(--body);
-      font-size: 13.2px;
-      line-height: 1.43;
+      font-size: 13px;
+      line-height: 1.45;
     }
+    li strong { color: var(--ink); font-weight: 700; }
 
     .meta {
-      margin: 1px 0 4px;
+      margin: 2px 0 4px;
       color: var(--muted);
-      font-size: 12.7px;
-      font-weight: 700;
+      font-size: 12.4px;
+      font-weight: 600;
+    }
+
+    .job-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 2px;
+    }
+    .job-head h3 { flex: 1 1 auto; }
+    .job-dates {
+      color: var(--muted);
+      font-size: 12.3px;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     .block {
-      margin-bottom: 9px;
+      margin-bottom: 10px;
       break-inside: avoid;
       page-break-inside: avoid;
     }
 
-    .skills {
+    /* IMPACT CARDS */
+    .impact {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px 18px;
-      margin: 0;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 6px 0 0;
       padding: 0;
       list-style: none;
     }
-
-    .skills li { margin: 0; }
-
-    .ats {
-      color: transparent;
-      background: transparent;
-      border: none;
-      padding: 0;
+    .impact li {
       margin: 0;
-      font-size: 0;
-      line-height: 0;
-      overflow: hidden;
-      height: 0;
-      user-select: none;
-      pointer-events: none;
+      padding: 10px 10px;
+      border-left: 3px solid var(--accent);
+      background: var(--soft);
+      font-size: 12.4px;
+      line-height: 1.4;
+    }
+    .impact b {
+      display: block;
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 3px;
+    }
+
+    /* SKILLS */
+    .skills-group {
+      margin-bottom: 7px;
+    }
+    .skills-group h4 {
+      display: inline-block;
+      margin: 0 8px 0 0;
+      font-size: 12.4px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+    .skills-group .items {
+      display: inline;
+      font-size: 12.8px;
+      color: var(--body);
+      line-height: 1.55;
+    }
+
+    /* EDUCATION ONE COLUMN */
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .edu-item .edu-left { flex: 1; }
+    .edu-item h3 { font-size: 13.5px; }
+    .edu-item .meta { margin: 1px 0; }
+    .edu-item .edu-right {
+      color: var(--muted);
+      font-size: 12.3px;
+      font-weight: 600;
+      white-space: nowrap;
     }
 
     .note {
       color: var(--muted);
-      font-size: 12.6px;
+      font-size: 12.3px;
     }
 
-    .two-col {
+    .languages {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 4px 0 0;
+      padding: 0;
+      list-style: none;
     }
+    .languages li {
+      margin: 0;
+      padding: 6px 10px;
+      background: var(--soft);
+      font-size: 12.8px;
+      border-radius: 3px;
+    }
+    .languages li b { color: var(--ink); font-weight: 700; }
+
+    .avail-line {
+      margin-top: 8px;
+      font-size: 12.5px;
+      color: var(--body);
+    }
+    .avail-line strong { color: var(--ink); }
 
     @media (max-width: 760px) {
       body { background: #fff; }
@@ -255,17 +342,24 @@
         max-width: 100%;
         min-height: auto;
         margin: 0;
-        padding: 18px;
+        padding: 20px;
         box-shadow: none;
       }
-      h1 { font-size: 26px; }
-      .headline { font-size: 14px; }
-      .skills, .two-col { grid-template-columns: 1fr; }
+      h1 { font-size: 24px; }
+      .headline { font-size: 13.5px; }
+      .impact { grid-template-columns: 1fr 1fr; }
+      .languages { grid-template-columns: 1fr; }
+      .edu-item { flex-direction: column; align-items: stretch; gap: 2px; }
     }
 
     @media print {
-      @page { size: A4; margin: 8mm; }
-      body { background: #fff; color: #000; font-size: 9pt; }
+      @page { size: A4; margin: 10mm 12mm; }
+      body {
+        background: #fff;
+        color: #000;
+        font-size: 10pt;
+        font-family: 'Arial', Helvetica, sans-serif;
+      }
       .toolbar { display: none !important; }
       .page {
         width: auto;
@@ -275,24 +369,28 @@
         padding: 0;
         box-shadow: none;
       }
-      header { padding-bottom: 7px; }
-      h1 { font-size: 24px; margin-bottom: 3px; }
-      .headline { font-size: 12.5px; margin-bottom: 5px; }
-      .contact { font-size: 10.3px; line-height: 1.35; }
-      section { margin-top: 7px; }
-      h2 { font-size: 11.3px; margin-bottom: 4px; padding-bottom: 2px; }
-      h3 { font-size: 11.4px; }
-      p { font-size: 10.7px; line-height: 1.32; margin-bottom: 3px; }
-      ul { margin-top: 2px; margin-left: 15px; }
-      li { font-size: 10.5px; line-height: 1.28; margin-bottom: 1px; }
-      .meta { font-size: 10.2px; margin-bottom: 2px; }
-      .block { margin-bottom: 5px; }
-      .skills { gap: 2px 14px; }
+      header { padding-bottom: 8px; }
+      h1 { font-size: 22pt; color: #000 !important; margin-bottom: 3px; }
+      .headline { font-size: 11.5pt; color: #1e3a8a !important; margin-bottom: 6px; }
+      .contact { font-size: 9pt; line-height: 1.4; }
+      .contact a { color: #000 !important; text-decoration: none; }
+      section { margin-top: 10px; }
+      h2 { font-size: 10pt; letter-spacing: 1px; margin-bottom: 5px; padding-bottom: 2px; }
+      h3 { font-size: 11pt; color: #000 !important; }
+      p, li { font-size: 9.4pt; line-height: 1.35; margin-bottom: 2px; }
+      .meta, .job-dates, .edu-item .edu-right, .note { font-size: 9pt; }
+      .block { margin-bottom: 6px; }
+      .summary p { font-size: 9.5pt; line-height: 1.4; }
+      .impact { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+      .impact li { font-size: 8.8pt; padding: 5px 7px; border-left-width: 2px; }
+      .impact b { font-size: 13pt; }
+      .skills-group .items { font-size: 9.3pt; }
+      .languages { gap: 6px; }
+      .languages li { font-size: 9pt; padding: 4px 7px; }
+      ul { margin-top: 2px; margin-left: 14px; }
       .cv-panel { display: none !important; }
       .cv-panel.active { display: block !important; }
-      a, h1, h2, h3, .headline { color: #000 !important; text-decoration: none; }
-      .contact a { color: #000 !important; }
-      .ats { display: none !important; }
+      a { color: #000 !important; text-decoration: none; }
     }
   </style>
 </head>
@@ -301,298 +399,429 @@
     <div class="toolbar-inner">
       <a class="back-btn" href="/">← Volver al portfolio</a>
       <div class="tabs" role="tablist" aria-label="Versiones del CV">
-        <button type="button" class="active" id="tab-ai" onclick="showCv('ai')">AI/Product</button>
-        <button type="button" id="tab-ux" onclick="showCv('ux')">UX/UI + Web</button>
+        <button type="button" class="active" id="tab-ai" onclick="showCv('ai')">AI Product</button>
+        <button type="button" id="tab-ux" onclick="showCv('ux')">Automation / IA</button>
       </div>
       <div class="right-group">
         <a class="linkedin-btn" href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">in LinkedIn</a>
+        <a class="github-btn" href="https://github.com/Ronegret" target="_blank" rel="noopener">⌨ GitHub</a>
         <button type="button" onclick="downloadCurrent()">⬇ Descargar PDF</button>
       </div>
     </div>
   </nav>
 
   <main class="page">
+
+    <!-- ═══════════════════════════════════════
+         CV AI PRODUCT DESIGNER
+    ═══════════════════════════════════════ -->
     <article class="cv-panel active" id="cv-ai">
       <header>
         <h1>Rodrigo Negrete Aros</h1>
-        <p class="headline">AI Product Designer · UX/UI + Automatización IA</p>
+        <p class="headline">AI Product Designer | UX/UI | Design Systems | GenAI &amp; Automation</p>
         <p class="contact">
-          Barcelona, España · Remoto EU | +34 653 567 610 | rodrigo.negrete.aros@gmail.com |
-          <a href="https://www.rodrigonegrete.es" target="_blank" rel="noopener">rodrigonegrete.es</a> | <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">linkedin.com/in/rodrigonegretearos</a>
+          Barcelona, España <span class="dot">·</span> Disponible en remoto EU
+          <span class="dot">|</span> +34 653 567 610
+          <span class="dot">|</span> <a href="mailto:rodrigo.negrete.aros@gmail.com">rodrigo.negrete.aros@gmail.com</a>
+          <br>
+          <a href="https://www.rodrigonegrete.es" target="_blank" rel="noopener">rodrigonegrete.es</a>
+          <span class="dot">·</span> <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">linkedin.com/in/rodrigonegretearos</a>
+          <span class="dot">·</span> <a href="https://github.com/Ronegret" target="_blank" rel="noopener">github.com/Ronegret</a>
         </p>
       </header>
 
-      <section>
+      <section class="summary">
         <h2>Perfil profesional</h2>
-        <p>AI Product Designer con base en Barcelona, especializado en producto digital, UX/UI, IA aplicada y automatización de procesos. Combino Máster en Agentes de IA e Hiperautomatización por EBIS Business Techschool con +17 años previos gestionando cuentas corporativas B2B y operaciones enterprise. Traduzco problemas de negocio en flujos claros, interfaces funcionales y agentes IA en producción. Busco incorporarme como AI Product Designer, Product Designer o AI Automation Specialist en equipo de producto en España o remoto para equipos EU.</p>
+        <p>AI Product Designer con sólida base en UX/UI, Design Systems e IA aplicada. Combino Máster en Agentes de IA e Hiperautomatización (EBIS Business Techschool) y Bootcamp UX/UI (Neoland, 600h) con 17 años previos en gestión de cuentas B2B enterprise. Diseño productos digitales end-to-end — research, arquitectura de información, interfaz, sistema visual y desarrollo — e integro agentes conversacionales, LLM, RAG y automatizaciones Make / n8n en producción. Casos reales con clientes y proyectos propios: AEM Planner (wedding-tech en producción), Rodd.es (biblioteca open source multilingüe de 287 recursos), ZODI (AI product PWA), Just Enjoy (hiperautomatización de viajes), Iberdata (Centro de Excelencia IA).</p>
       </section>
 
       <section>
-        <h2>Competencias clave</h2>
-        <ul class="skills">
-          <li>AI Product Design, Product Discovery, User Research, Usability Testing</li>
-          <li>Diseño de interacción, arquitectura de información, wireframing, prototipado</li>
-          <li>Design Systems, design tokens, Figma, handoff a desarrollo</li>
-          <li>IA generativa, LLM, Prompt Engineering, RAG, agentes conversacionales</li>
-          <li>Automatización de procesos: Make, n8n, Botpress, Vapi, integración de APIs</li>
-          <li>Frontend aplicado: HTML, CSS, JavaScript, React, Tailwind, WordPress</li>
-          <li>Analytics y medición: GA4, Hotjar, Excel avanzado, Power BI</li>
-          <li>Business acumen B2B enterprise, gestión de stakeholders y KPIs</li>
-          <li>Metodologías Agile, Lean UX, Design Thinking</li>
+        <h2>Impacto clave</h2>
+        <ul class="impact">
+          <li><b>287</b>recursos open source publicados en Rodd.es (7 idiomas nativos)</li>
+          <li><b>-96%</b>peso de datos en AEM Planner (3,76 MB → 0,13 MB)</li>
+          <li><b>27</b>nodos n8n en Just Enjoy, TFM calificado 10/10</li>
+          <li><b>+80</b>cuentas enterprise B2B gestionadas (Movistar / Telefónica)</li>
         </ul>
       </section>
 
       <section>
+        <h2>Competencias clave</h2>
+        <div class="skills-group">
+          <h4>Diseño de producto:</h4>
+          <span class="items">Product Discovery, User Research, Usability Testing, Information Architecture, Wireframing, Prototipado interactivo, Design Thinking, Lean UX, Design Systems, Design Tokens, Figma, Accesibilidad WCAG 2.1 AA.</span>
+        </div>
+        <div class="skills-group">
+          <h4>IA aplicada:</h4>
+          <span class="items">Generative AI, Large Language Models (OpenAI, Claude, Gemini), Prompt Engineering, RAG, Embeddings, AI Agents, Conversational AI, Voice AI, LangChain, Vector DB.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Automatización &amp; Low-code:</h4>
+          <span class="items">Make (Integromat), n8n, Botpress, Vapi, Zapier, Supabase, Firebase, REST APIs, Webhooks, Hyperautomation, RPA.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Frontend aplicado:</h4>
+          <span class="items">HTML, CSS, JavaScript (ES6+), React, Next.js, Tailwind CSS, Vite, WordPress, Elementor, Shopify, Git, Vercel.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Analítica &amp; Negocio:</h4>
+          <span class="items">Google Analytics 4, Hotjar, Power BI, Excel avanzado, A/B testing, CRO, Gestión B2B enterprise, KPIs, stakeholder management, Agile / Scrum.</span>
+        </div>
+      </section>
+
+      <section>
         <h2>Experiencia profesional</h2>
+
         <div class="block">
-          <h3>AI Product Designer &amp; Automation Consultant</h3>
-          <p class="meta">Proyectos propios / Freelance | Barcelona · Remoto | sept. 2024 - actualidad</p>
+          <div class="job-head">
+            <h3>AI Product Designer &amp; Independent Consultant</h3>
+            <span class="job-dates">Sep 2024 – Presente</span>
+          </div>
+          <p class="meta">Rodrigo Negrete (freelance) — Barcelona, España · Remoto</p>
           <ul>
-            <li>Diseño producto digital e implanto flujos de IA aplicada para clientes propios y proyectos personales, del research a la puesta en producción.</li>
-            <li>ZODI — producto IA en producción: PWA con 17 tipos de lectura, 4 tonos de respuesta, modelo freemium, comunidad y UX writing propio. Stack: Botpress, Make, OpenAI, WordPress.</li>
-            <li>Just Enjoy (TFM del Máster EBIS) — plataforma de hiperautomatización de viajes con 27 nodos n8n, GPT-4.1, Next.js, Supabase, Firebase, SerpAPI y Tavily.</li>
-            <li>Iberdata (business case final del Máster EBIS) — Centro de Excelencia de IA para empresa de 450 empleados: gobierno, arquitectura RAG, 2 pilotos, plan de 12 semanas, KPIs y matriz de riesgos.</li>
-            <li>Dedícalo Play — juego musical multijugador en tiempo real (React + Supabase + IA generativa), UX, branding, mecánicas y lanzamiento.</li>
-            <li>Invitoo — founder único de producto wedding-tech con IA (invitaciones digitales, RSVP, canciones IA, automatizaciones Make).</li>
-            <li>Red rodd.es — 8+ sitios en producción para experimentar con IA generativa, CRO, WPO y arquitectura multisite.</li>
+            <li><strong>Diseñé y construí AEM Planner</strong>, app web PWA offline-first para la wedding planner <em>Algo Entre Manos</em> (3 personas, 12 bodas/año): panel operativo, portal privado de la pareja, plano de mesas interactivo, generador de contratos y presupuesto por plazos. Reduje el peso de datos un 96% (3,76 MB → 0,13 MB) y validé zonas táctiles ≥44×44 px con auditoría automatizada en 3 breakpoints.</li>
+            <li><strong>Publiqué Rodd.es</strong>, biblioteca open source multilingüe (7 idiomas nativos) de 287 recursos web — efectos, shaders WebGL, componentes React, escenas 3D con live preview. Research de competencia (Shadcn, Motion.dev, React Bits), arquitectura de 6 categorías, lanzamiento en Vercel.</li>
+            <li><strong>Lancé ZODI</strong>, producto IA en producción (PWA): 17 tipos de lectura, 4 tonos de respuesta, modelo freemium y comunidad. Stack: Botpress + Make + OpenAI + WordPress; UX writing propio y arquitectura conversacional.</li>
+            <li><strong>Dirigí Dedícalo Play</strong>, juego musical multijugador en tiempo real (React + Supabase + GenAI): UX, branding, mecánicas de juego y lanzamiento end-to-end.</li>
+            <li><strong>Fundé Invitoo</strong> como founder único de wedding-tech con IA: invitaciones digitales, RSVP automatizado, canciones generadas con IA (Suno) y publicación web.</li>
+            <li><strong>Desplegué 8+ sitios de la red rodd.es</strong> para experimentar con IA generativa, CRO, WPO y arquitectura multisite.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Gestor de Cobros Empresas +Orange (rol simultáneo)</h3>
-          <p class="meta">Abai, cliente Orange Empresas | Barcelona | 2024 - actualidad</p>
+          <div class="job-head">
+            <h3>Gestor de Cobros Empresas +Orange</h3>
+            <span class="job-dates">2024 – Presente</span>
+          </div>
+          <p class="meta">Abai (cliente Orange Empresas) — Barcelona, España · Rol simultáneo</p>
           <ul>
-            <li>Gestión de cartera corporativa B2B, trazabilidad de incidencias y acuerdos de pago con clientes enterprise.</li>
-            <li>Reporting y automatizaciones ligeras con Excel avanzado, Google Workspace y Notion para mejorar seguimiento y eficiencia operativa.</li>
+            <li>Gestiono cartera corporativa B2B con trazabilidad de incidencias y acuerdos de pago con clientes enterprise.</li>
+            <li>Automatizo reporting y seguimiento con Excel avanzado, Google Workspace y Notion para reducir tiempos operativos.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Coordinador</h3>
-          <p class="meta">Garden España | Barcelona | 2022 - 2024</p>
+          <div class="job-head">
+            <h3>Coordinador Operativo Nacional</h3>
+            <span class="job-dates">2022 – 2024</span>
+          </div>
+          <p class="meta">Garden España — Barcelona, España</p>
           <ul>
-            <li>Coordinación operativa nacional para red de tiendas: incidencias, logística, documentación y comunicación entre áreas.</li>
-            <li>Digitalización de protocolos internos con herramientas colaborativas, mejorando trazabilidad y estandarización.</li>
+            <li>Coordiné operaciones de red nacional de tiendas: incidencias, logística, documentación y comunicación entre áreas.</li>
+            <li>Digitalicé protocolos internos con herramientas colaborativas, mejorando trazabilidad y estandarización.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Senior Enterprise Account Manager</h3>
-          <p class="meta">Movistar Empresas (Telefónica) | Santiago, Chile | 2008 - 2019</p>
+          <div class="job-head">
+            <h3>Senior Enterprise Account Manager</h3>
+            <span class="job-dates">2008 – 2019</span>
+          </div>
+          <p class="meta">Movistar Empresas (Telefónica) — Santiago, Chile</p>
           <ul>
-            <li>Gestión de cartera de 80+ cuentas corporativas enterprise. Retención de clientes VIP, negociación de contratos y fidelización a largo plazo.</li>
-            <li>Base actual de business acumen y trato con stakeholders enterprise: la mitad de mi diferencial hoy diseñando producto B2B con IA.</li>
+            <li>Gestioné cartera de más de 80 cuentas corporativas enterprise: retención de clientes VIP, negociación de contratos y fidelización a largo plazo.</li>
+            <li>Base actual de business acumen y trato con stakeholders enterprise que hoy aplico diseñando productos B2B con IA.</li>
           </ul>
         </div>
       </section>
 
       <section>
         <h2>Proyectos destacados</h2>
+
         <div class="block">
-          <h3>Rodd.es — Biblioteca open source multilingüe de 287 recursos web</h3>
-          <p class="meta">Producto propio · UX/UI · React · WebGL · Three.js · Spline · i18n · Vercel · rodd.es</p>
+          <h3>AEM Planner — Sistema operativo para bodas (<a href="https://aem.rodd.es" target="_blank" rel="noopener">aem.rodd.es</a>)</h3>
+          <p class="meta">Cliente real · Product design + desarrollo end-to-end · PWA offline-first · 2026</p>
           <ul>
-            <li>Biblioteca abierta con 287 efectos, animaciones, componentes React, microinteracciones, shaders WebGL y escenas 3D — todo con live preview y código copiable.</li>
-            <li>Diferencial estructural: <strong>7 idiomas nativos</strong> (ES, EN, CA, FR, IT, DE, PT) con diccionario propio por idioma, no traducción automática. Ventaja frente al resto del ecosistema open source (Shadcn, Motion.dev, Aceternity), en inglés únicamente.</li>
-            <li>Research de competencia, arquitectura de información de 6 categorías, sistema visual Aurora, testing con 5 usuarios, responsive AA y lanzamiento end-to-end en Vercel.</li>
+            <li>Portal web para wedding planner con panel operativo, portal privado de la pareja, plano de mesas interactivo, generador de contratos editorial, presupuesto A/B facturado y dossieres imprimibles.</li>
+            <li>Datos de salud (alergias) bajo RGPD tratados desde el primer día; auditoría automatizada en navegador real para zonas táctiles, textos solapados y arranque sin red.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Iberdata — Business case de Centro de Excelencia IA</h3>
-          <p class="meta">Business case final del Máster EBIS · CoE · RAG · n8n · Supabase · OpenAI API</p>
+          <h3>Rodd.es — Biblioteca open source multilingüe (<a href="https://rodd.es" target="_blank" rel="noopener">rodd.es</a>)</h3>
+          <p class="meta">Producto propio · UX/UI · React · WebGL · Three.js · Spline · i18n · 2026</p>
           <ul>
-            <li>Propuesta de Centro de Excelencia de IA para empresa de 450 empleados: gobierno, roles, arquitectura, plan de 12 semanas, KPIs, riesgos y controles.</li>
-            <li>Definición de 2 pilotos: soporte documental con LLM/RAG y automatización administrativa determinista, separando IA generativa de reglas de negocio.</li>
+            <li>287 recursos web (efectos, shaders, componentes React, microinteracciones, 3D) con live preview y código copiable. Diferencial: 7 idiomas nativos (ES, EN, CA, FR, IT, DE, PT), no traducción automática.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Just Enjoy — TFM de hiperautomatización para viajes</h3>
-          <p class="meta">TFM del Máster EBIS · n8n · GPT-4.1 · Next.js · Supabase · Firebase · SerpAPI · Tavily</p>
+          <h3>Just Enjoy — Hiperautomatización de viajes</h3>
+          <p class="meta">TFM Máster EBIS · n8n · GPT-4.1 · Next.js · Supabase · SerpAPI · Tavily · 2026</p>
           <ul>
-            <li>Plataforma end-to-end que automatiza preferencias, búsqueda de vuelos, hotel, actividades, mapa, PDF y refinamiento del plan con agentes IA.</li>
-            <li>Workflow n8n con 27 nodos, arquitectura funcional, documentación PDD, evaluación de costes, business case y demo funcional.</li>
+            <li>Plataforma end-to-end que automatiza preferencias, vuelos, hoteles, actividades, mapa, PDF y refinamiento del plan con agentes IA. Workflow n8n con 27 nodos y documentación PDD.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>ZODI — Producto IA con PWA, comunidad y modelo freemium</h3>
-          <p class="meta">AI Product · PWA · UX Writing · Botpress · Make · OpenAI · zodi.aibueno.es</p>
+          <h3>Iberdata — Centro de Excelencia IA (business case)</h3>
+          <p class="meta">Business case final Máster EBIS · CoE · RAG · n8n · Supabase · OpenAI API · 2026</p>
           <ul>
-            <li>Producto digital con horóscopo, tarot, carta natal, numerología, compatibilidades, comunidad y chat conversacional personalizado.</li>
-            <li>17 tipos de lectura, 4 tonos de respuesta, planes premium, sistema visual neón reconocible, research de mercado y estrategia freemium completa.</li>
+            <li>Propuesta de CoE IA para empresa de 450 empleados: gobierno, arquitectura RAG, 2 pilotos, plan de 12 semanas, KPIs y matriz de riesgos. Separación clara entre IA generativa y reglas de negocio.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Dedícalo Play — Juego musical multijugador con IA</h3>
-          <p class="meta">React · Supabase · IA generativa · Tiempo real · play.dedicalo.es</p>
+          <h3>ZODI — AI Product PWA con freemium</h3>
+          <p class="meta">AI Product · PWA · Botpress · Make · OpenAI · zodi.aibueno.es · 2025</p>
           <ul>
-            <li>App multijugador donde dedicas canciones, acumulas puntos y compites con amigos en tiempo real. UX, branding, mecánicas de juego y lanzamiento end-to-end.</li>
-          </ul>
-        </div>
-        <div class="block">
-          <h3>Invitoo — Wedding-tech founder-led con IA</h3>
-          <p class="meta">Founder único · UX · IA generativa · Suno · React · Make · invitoo.es</p>
-          <ul>
-            <li>Marca propia desde cero: discovery, benchmark, diseño visual, módulos de invitación, RSVP, canciones IA, animaciones y publicación web.</li>
+            <li>Producto digital con horóscopo, tarot, carta natal, numerología, comunidad y chat conversacional personalizado. 17 lecturas, 4 tonos, planes premium y sistema visual neón.</li>
           </ul>
         </div>
       </section>
 
       <section>
         <h2>Formación</h2>
-        <div class="two-col">
-          <div>
-            <div class="block"><h3>Máster en Agentes de IA e Hiperautomatización de Procesos</h3><p class="meta">EBIS Business Techschool · Barcelona | Ago. 2026 | Finalizado · <a href="/assets/legacy/Certificado%20EBIS%20IA.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p></div>
-            <div class="block"><h3>Especialización en IA Generativa</h3><p class="meta">UDIA - Universidad de IA | 2025 - 2026 | En curso</p></div>
-            <div class="block"><h3>Bootcamp UX/UI Design - Professional Track</h3><p class="meta">Neoland Madrid | 2024 | 600h · <a href="/assets/legacy/Neoland.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p></div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Máster en Agentes de IA e Hiperautomatización de Procesos</h3>
+            <p class="meta">EBIS Business Techschool, Barcelona · <a href="/assets/legacy/Certificado%20EBIS%20IA.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p>
           </div>
-          <div>
-            <div class="block"><h3>Diseño Web Multimedia y Marketing Digital</h3><p class="meta">CIPSA.NET Barcelona | 2020 - 2022</p></div>
-            <div class="block"><h3>Técnico en Administración Financiera</h3><p class="meta">Instituto Profesional Duoc UC · Santiago, Chile | 2014 - 2016 · <a href="/assets/legacy/Duoc.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p></div>
+          <span class="edu-right">Ago 2026 · Finalizado</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Especialización en IA Generativa</h3>
+            <p class="meta">UDIA — Universidad de IA</p>
           </div>
+          <span class="edu-right">2025 – 2026 · En curso</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Bootcamp UX/UI Design — Professional Track (600h)</h3>
+            <p class="meta">Neoland, Madrid · <a href="/assets/legacy/Neoland.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p>
+          </div>
+          <span class="edu-right">2024</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Diseño Web Multimedia y Marketing Digital</h3>
+            <p class="meta">CIPSA.NET, Barcelona</p>
+          </div>
+          <span class="edu-right">2020 – 2022</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Técnico en Administración Financiera</h3>
+            <p class="meta">Instituto Profesional Duoc UC, Santiago (Chile) · <a href="/assets/legacy/Duoc.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p>
+          </div>
+          <span class="edu-right">2014 – 2016</span>
         </div>
       </section>
 
       <section>
         <h2>Idiomas y disponibilidad</h2>
-        <p>Español nativo | Catalán A2 | Inglés B2 | Disponibilidad inmediata | Barcelona · Remoto EU · Híbrido | Residencia legal en España</p>
-        <p class="ats">Palabras clave ATS: AI Product Designer, Product Designer, UX/UI Designer, AI Automation Specialist, AI Engineer Junior, Hyperautomation, Process Automation, Generative AI, Large Language Models, LLM, Prompt Engineering, RAG, Retrieval-Augmented Generation, AI Agents, Conversational AI, Figma, Design Systems, User Research, User Experience, Wireframing, Prototyping, Usability Testing, Information Architecture, Design Thinking, Lean UX, Agile, Scrum, OpenAI, Claude, Anthropic, Gemini, n8n, Make, Integromat, Botpress, Vapi, ElevenLabs, React, Next.js, Tailwind, WordPress, Elementor, Shopify, Supabase, Firebase, GA4, Google Analytics, Hotjar, Power BI, Notion, Jira, Linear, B2B, SaaS, Enterprise, Stakeholder Management, KPI, Barcelona, Remote, Remote EU, Spain, España.</p>
+        <ul class="languages">
+          <li><b>Español</b> — Nativo (C2)</li>
+          <li><b>Inglés</b> — Intermedio alto (B2)</li>
+          <li><b>Catalán</b> — Básico (A2)</li>
+        </ul>
+        <p class="avail-line"><strong>Disponibilidad:</strong> Inmediata · Barcelona, remoto EU o híbrido · Residencia legal en España (nacionalidad chilena, permiso de trabajo).</p>
       </section>
     </article>
 
+    <!-- ═══════════════════════════════════════
+         CV AUTOMATION / IA
+    ═══════════════════════════════════════ -->
     <article class="cv-panel" id="cv-ux">
       <header>
         <h1>Rodrigo Negrete Aros</h1>
-        <p class="headline">AI Automation Specialist · Agentes IA + Automatización de procesos</p>
+        <p class="headline">AI Automation Specialist | Agentes IA, RAG &amp; Hiperautomatización de procesos</p>
         <p class="contact">
-          Barcelona, España · Remoto EU | +34 653 567 610 | rodrigo.negrete.aros@gmail.com |
-          <a href="https://www.rodrigonegrete.es" target="_blank" rel="noopener">rodrigonegrete.es</a> | <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">linkedin.com/in/rodrigonegretearos</a>
+          Barcelona, España <span class="dot">·</span> Disponible en remoto EU
+          <span class="dot">|</span> +34 653 567 610
+          <span class="dot">|</span> <a href="mailto:rodrigo.negrete.aros@gmail.com">rodrigo.negrete.aros@gmail.com</a>
+          <br>
+          <a href="https://www.rodrigonegrete.es" target="_blank" rel="noopener">rodrigonegrete.es</a>
+          <span class="dot">·</span> <a href="https://linkedin.com/in/rodrigonegretearos" target="_blank" rel="noopener">linkedin.com/in/rodrigonegretearos</a>
+          <span class="dot">·</span> <a href="https://github.com/Ronegret" target="_blank" rel="noopener">github.com/Ronegret</a>
         </p>
       </header>
 
-      <section>
+      <section class="summary">
         <h2>Perfil profesional</h2>
-        <p>AI Automation Specialist con base en Barcelona, especializado en automatización de procesos, agentes IA, integraciones low-code y diseño de flujos con LLMs. Combino Máster en Agentes de IA e Hiperautomatización por EBIS Business Techschool con +17 años previos en negocio B2B enterprise y operaciones. Diseño y despliego automatizaciones end-to-end: research del proceso, arquitectura del flujo, integración de APIs, agentes conversacionales, medición de impacto y traspaso a operaciones. Busco integrarme en equipos que escalen IA aplicada en España o en remoto para equipos EU.</p>
+        <p>AI Automation Specialist con Máster en Agentes de IA e Hiperautomatización (EBIS Business Techschool) y 17 años en negocio B2B enterprise. Diseño y despliego automatizaciones end-to-end: análisis del proceso, arquitectura del flujo, integración de APIs REST y webhooks, agentes conversacionales con LLM, RAG sobre bases vectoriales y traspaso a operaciones. Experiencia con Make, n8n, Botpress, Vapi, Zapier, OpenAI, Anthropic Claude, Google Gemini, Supabase y Firebase. Casos reales en producción: Just Enjoy (27 nodos n8n), ZODI (agente conversacional con memoria), Iberdata (CoE IA para 450 empleados), AEM Planner (automatizaciones RGPD y sincronización offline-first).</p>
       </section>
 
       <section>
-        <h2>Competencias clave</h2>
-        <ul class="skills">
-          <li>Automatización de procesos, hiperautomatización, low-code / no-code</li>
-          <li>Diseño y despliegue de agentes IA conversacionales</li>
-          <li>Prompt Engineering avanzado, LLM (OpenAI, Claude, Gemini)</li>
-          <li>RAG, embeddings, bases vectoriales, prompt orchestration</li>
-          <li>Make (Integromat), n8n, Botpress, Zapier, UiPath (base)</li>
-          <li>Integración de APIs REST, webhooks, Supabase, Firebase</li>
-          <li>Voice AI (Vapi, ElevenLabs) y generación multimodal</li>
-          <li>Gestión de proyectos IA: gobierno, KPIs, roadmap, riesgos</li>
-          <li>Business analysis B2B, casos de uso, Centro de Excelencia IA</li>
-          <li>UX/UI aplicada al diseño de flujos y agentes (Figma)</li>
+        <h2>Impacto clave</h2>
+        <ul class="impact">
+          <li><b>27</b>nodos n8n orquestados en Just Enjoy (TFM 10/10)</li>
+          <li><b>12</b>semanas de roadmap CoE IA (Iberdata, 450 empleados)</li>
+          <li><b>-96%</b>peso de datos sincronizados en AEM Planner</li>
+          <li><b>17</b>flujos conversacionales desplegados en ZODI</li>
         </ul>
       </section>
 
       <section>
+        <h2>Competencias clave</h2>
+        <div class="skills-group">
+          <h4>IA generativa &amp; LLM:</h4>
+          <span class="items">OpenAI (GPT-4, GPT-4o, GPT-4.1), Anthropic Claude (Opus, Sonnet, Haiku), Google Gemini, Prompt Engineering avanzado, RAG, embeddings, vector databases (Pinecone, Supabase pgvector), context engineering.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Agentes conversacionales:</h4>
+          <span class="items">Botpress, Voiceflow, Vapi (voz), ElevenLabs, LangChain, memoria contextual, orquestación multi-agente, UX writing conversacional.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Automatización low-code:</h4>
+          <span class="items">Make (Integromat), n8n, Zapier, Power Automate, UiPath (base), workflows event-driven, triggers, scheduled jobs.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Integración &amp; backend:</h4>
+          <span class="items">REST APIs, webhooks, OAuth 2.0, Supabase, Firebase, PostgreSQL, Node.js, Next.js API routes, Vercel serverless.</span>
+        </div>
+        <div class="skills-group">
+          <h4>Gobierno &amp; negocio:</h4>
+          <span class="items">Centros de Excelencia (CoE) de IA, business case, KPIs, matriz de riesgos, compliance RGPD, documentación PDD, Agile / Scrum.</span>
+        </div>
+      </section>
+
+      <section>
         <h2>Experiencia profesional</h2>
+
         <div class="block">
-          <h3>AI Automation Consultant &amp; Product Designer</h3>
-          <p class="meta">Proyectos propios / Freelance | Barcelona · Remoto | sept. 2024 - actualidad</p>
+          <div class="job-head">
+            <h3>AI Automation Consultant &amp; Product Designer</h3>
+            <span class="job-dates">Sep 2024 – Presente</span>
+          </div>
+          <p class="meta">Rodrigo Negrete (freelance) — Barcelona, España · Remoto</p>
           <ul>
-            <li>Diseño y despliego automatizaciones end-to-end y agentes IA para clientes propios y proyectos personales, del análisis del proceso al traspaso a operaciones.</li>
-            <li>Iberdata (business case final del Máster EBIS) — Centro de Excelencia de IA para empresa de 450 empleados: gobierno, arquitectura RAG, 2 pilotos, plan de 12 semanas, KPIs y matriz de riesgos.</li>
-            <li>Just Enjoy (TFM del Máster EBIS) — hiperautomatización de viajes con 27 nodos n8n, GPT-4.1, Next.js, Supabase, Firebase, SerpAPI y Tavily.</li>
-            <li>ZODI — producto IA en producción: PWA con 17 tipos de lectura, 4 tonos de respuesta, modelo freemium. Stack: Botpress, Make, OpenAI, WordPress.</li>
-            <li>Invitoo — founder único de producto wedding-tech con IA (invitaciones digitales, RSVP, canciones IA, automatizaciones Make).</li>
-            <li>Red rodd.es — 8+ sitios en producción para experimentar con IA generativa, CRO, WPO y multisite.</li>
+            <li><strong>Diseñé e implementé Just Enjoy</strong> (TFM Máster EBIS): plataforma de hiperautomatización de viajes con 27 nodos n8n, GPT-4.1, Next.js, Supabase, Firebase, SerpAPI y Tavily. Workflow end-to-end con documentación PDD, business case y demo funcional. Calificación 10/10.</li>
+            <li><strong>Diseñé Iberdata</strong> (business case final): Centro de Excelencia de IA para empresa de 450 empleados — gobierno, arquitectura RAG, 2 pilotos (soporte documental con LLM + automatización administrativa determinista), plan de 12 semanas, KPIs y matriz de riesgos.</li>
+            <li><strong>Lancé ZODI</strong>: agente conversacional en producción (PWA) con 17 tipos de lectura, memoria contextual, 4 tonos y modelo freemium. Stack: Botpress + Make + OpenAI + WordPress.</li>
+            <li><strong>Construí AEM Planner</strong>: automatizaciones RGPD, sincronización offline-first y generador de contratos editorial para wedding planner en producción.</li>
+            <li><strong>Fundé Invitoo</strong>: wedding-tech con RSVP automatizado, canciones generadas con IA (Suno) y publicación web.</li>
+            <li><strong>Desplegué 8+ sitios de la red rodd.es</strong> con automatizaciones Make, pipelines CMS y arquitectura multisite.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Gestor de Cobros Empresas +Orange (rol simultáneo)</h3>
-          <p class="meta">Abai, cliente Orange Empresas | Barcelona | 2024 - actualidad</p>
+          <div class="job-head">
+            <h3>Gestor de Cobros Empresas +Orange</h3>
+            <span class="job-dates">2024 – Presente</span>
+          </div>
+          <p class="meta">Abai (cliente Orange Empresas) — Barcelona, España · Rol simultáneo</p>
           <ul>
-            <li>Gestión de cartera corporativa B2B, trazabilidad de incidencias y acuerdos de pago con clientes enterprise.</li>
-            <li>Reporting y automatizaciones ligeras con Excel avanzado, Google Workspace y Notion para mejorar seguimiento y eficiencia.</li>
+            <li>Gestiono cartera B2B corporativa con automatizaciones ligeras de reporting en Excel avanzado, Google Workspace y Notion.</li>
+            <li>Trazabilidad de incidencias y acuerdos de pago con clientes enterprise.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Coordinador</h3>
-          <p class="meta">Garden España | Barcelona | 2022 - 2024</p>
+          <div class="job-head">
+            <h3>Coordinador Operativo Nacional</h3>
+            <span class="job-dates">2022 – 2024</span>
+          </div>
+          <p class="meta">Garden España — Barcelona, España</p>
           <ul>
-            <li>Coordinación operativa nacional, documentación de procesos, incidencias y comunicación entre áreas.</li>
-            <li>Digitalización de protocolos internos con herramientas colaborativas, mejorando trazabilidad y tiempos de respuesta.</li>
+            <li>Coordiné operaciones de red nacional de tiendas y digitalicé protocolos internos para mejorar trazabilidad y tiempos de respuesta.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Senior Enterprise Account Manager</h3>
-          <p class="meta">Movistar Empresas (Telefónica) | Santiago, Chile | 2008 - 2019</p>
+          <div class="job-head">
+            <h3>Senior Enterprise Account Manager</h3>
+            <span class="job-dates">2008 – 2019</span>
+          </div>
+          <p class="meta">Movistar Empresas (Telefónica) — Santiago, Chile</p>
           <ul>
-            <li>Cartera de 80+ cuentas corporativas enterprise. Retención de clientes VIP, negociación de contratos y fidelización a largo plazo.</li>
+            <li>Gestioné 80+ cuentas corporativas enterprise con negociación de contratos y fidelización a largo plazo.</li>
           </ul>
         </div>
       </section>
 
       <section>
         <h2>Proyectos destacados</h2>
+
         <div class="block">
-          <h3>Iberdata — Business case de Centro de Excelencia IA</h3>
-          <p class="meta">Business case final del Máster EBIS · CoE · RAG · n8n · Supabase · OpenAI API</p>
+          <h3>Just Enjoy — Hiperautomatización de viajes con IA</h3>
+          <p class="meta">TFM Máster EBIS · n8n (27 nodos) · GPT-4.1 · Next.js · Supabase · 2026</p>
           <ul>
-            <li>Modelo operativo de IA y automatización para empresa de 450 empleados: gobierno, roles, arquitectura, roadmap de 12 semanas, KPIs y matriz de riesgos.</li>
-            <li>2 pilotos definidos: soporte documental con LLM/RAG y automatización administrativa determinista, separando IA generativa de reglas de negocio.</li>
+            <li>Plataforma que automatiza preferencias, vuelos, hoteles, actividades, mapa, PDF y refinamiento con agentes IA. Documentación PDD y evaluación de costes.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Just Enjoy — TFM de hiperautomatización para viajes</h3>
-          <p class="meta">TFM del Máster EBIS · n8n · GPT-4.1 · Next.js · Supabase · SerpAPI · Tavily</p>
+          <h3>Iberdata — Centro de Excelencia IA para 450 empleados</h3>
+          <p class="meta">Business case Máster EBIS · CoE · RAG · n8n · Supabase · OpenAI API · 2026</p>
           <ul>
-            <li>Plataforma end-to-end que automatiza preferencias, vuelos, hotel, actividades, mapa, PDF y refinamiento del plan con agentes IA.</li>
-            <li>Workflow n8n con 27 nodos, arquitectura funcional, documentación PDD, business case y demo funcional.</li>
+            <li>Modelo operativo de IA y automatización: gobierno, roles, arquitectura, roadmap de 12 semanas, KPIs y riesgos. 2 pilotos: LLM/RAG documental + automatización determinista.</li>
           </ul>
         </div>
+
         <div class="block">
           <h3>ZODI — Agente IA conversacional en producción</h3>
-          <p class="meta">Botpress · Make · OpenAI · Gemini · PWA · zodi.aibueno.es</p>
+          <p class="meta">Botpress · Make · OpenAI · Gemini · PWA · zodi.aibueno.es · 2025</p>
           <ul>
-            <li>Agente conversacional con memoria contextual, 17 tipos de lectura, 4 tonos y modelo freemium. Automatizaciones internas para contenido, entregas y comunidad.</li>
+            <li>Agente con memoria contextual, 17 flujos conversacionales, 4 tonos y freemium. Automatizaciones Make para contenido, entregas y comunidad.</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Invitoo — Plataforma con IA generativa</h3>
-          <p class="meta">Founder único · UX · Suno · Make · React · invitoo.es</p>
+          <h3>AEM Planner — PWA offline-first con sincronización</h3>
+          <p class="meta">Cliente real · PWA · Supabase · Service Worker · RGPD · aem.rodd.es · 2026</p>
           <ul>
-            <li>Marca propia desde cero con RSVP automatizado, canciones generadas con IA, animaciones y publicación web.</li>
+            <li>Portal para wedding planner con sincronización offline-first, resolución de conflictos y automatizaciones RGPD para datos de salud (alergias de invitados).</li>
           </ul>
         </div>
+
         <div class="block">
-          <h3>Dedícalo Play — Multijugador tiempo real con IA</h3>
-          <p class="meta">React · Supabase · IA generativa · Tiempo real</p>
+          <h3>Invitoo — Plataforma wedding-tech con IA generativa</h3>
+          <p class="meta">Founder único · UX · Suno · Make · React · invitoo.es · 2025</p>
           <ul>
-            <li>App multijugador con mecánicas de juego, dedicatorias musicales y ranking en tiempo real.</li>
-          </ul>
-        </div>
-        <div class="block">
-          <h3>ParaTuMundo — Research y arquitectura de e-commerce</h3>
-          <p class="meta">Shopify · CRO · UX Research · Google Analytics · BigBuy</p>
-          <ul>
-            <li>Research (33 encuestas), DAFO, arquitectura de información y optimización de flujo de compra para marketplace multicategoría.</li>
+            <li>RSVP automatizado, canciones generadas con IA, animaciones y publicación web.</li>
           </ul>
         </div>
       </section>
 
       <section>
         <h2>Formación</h2>
-        <div class="two-col">
-          <div>
-            <div class="block"><h3>Máster en Agentes de IA e Hiperautomatización de Procesos</h3><p class="meta">EBIS Business Techschool · Barcelona | Ago. 2026 | Finalizado · <a href="/assets/legacy/Certificado%20EBIS%20IA.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p></div>
-            <div class="block"><h3>Especialización en IA Generativa</h3><p class="meta">UDIA - Universidad de IA | 2025 - 2026 | En curso</p></div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Máster en Agentes de IA e Hiperautomatización de Procesos</h3>
+            <p class="meta">EBIS Business Techschool, Barcelona · <a href="/assets/legacy/Certificado%20EBIS%20IA.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p>
           </div>
-          <div>
-            <div class="block"><h3>Bootcamp UX/UI Design - Professional Track</h3><p class="meta">Neoland Madrid | 2024 | 600h · <a href="/assets/legacy/Neoland.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p></div>
-            <div class="block"><h3>Diseño Web Multimedia y Marketing Digital</h3><p class="meta">CIPSA.NET Barcelona | 2020 - 2022</p></div>
-            <div class="block"><h3>Técnico en Administración Financiera</h3><p class="meta">Instituto Profesional Duoc UC · Santiago, Chile | 2014 - 2016 · <a href="/assets/legacy/Duoc.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p></div>
+          <span class="edu-right">Ago 2026 · Finalizado</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Especialización en IA Generativa</h3>
+            <p class="meta">UDIA — Universidad de IA</p>
           </div>
+          <span class="edu-right">2025 – 2026 · En curso</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Bootcamp UX/UI Design — Professional Track (600h)</h3>
+            <p class="meta">Neoland, Madrid · <a href="/assets/legacy/Neoland.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p>
+          </div>
+          <span class="edu-right">2024</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Diseño Web Multimedia y Marketing Digital</h3>
+            <p class="meta">CIPSA.NET, Barcelona</p>
+          </div>
+          <span class="edu-right">2020 – 2022</span>
+        </div>
+        <div class="edu-item">
+          <div class="edu-left">
+            <h3>Técnico en Administración Financiera</h3>
+            <p class="meta">Instituto Profesional Duoc UC, Santiago (Chile) · <a href="/assets/legacy/Duoc.pdf" target="_blank" rel="noopener">Certificado (PDF)</a></p>
+          </div>
+          <span class="edu-right">2014 – 2016</span>
         </div>
       </section>
 
       <section>
         <h2>Idiomas y disponibilidad</h2>
-        <p>Español nativo | Catalán A2 | Inglés B2 | Disponibilidad inmediata | Barcelona · Remoto EU · Híbrido | Residencia legal en España</p>
-        <p class="ats">Palabras clave ATS: AI Automation Specialist, AI Automation Engineer, Process Automation Engineer, RPA Developer, AI Engineer Junior, Hyperautomation Specialist, Prompt Engineer, Automation Consultant, AI Product Designer, AI Consultant, Generative AI, LLM, Large Language Models, Prompt Engineering, RAG, Retrieval-Augmented Generation, AI Agents, Conversational AI, Voice AI, Make, Integromat, n8n, Zapier, Botpress, Voiceflow, Vapi, ElevenLabs, UiPath, Power Automate, OpenAI API, Anthropic Claude, Google Gemini, LangChain, Supabase, Firebase, REST API, Webhooks, Low-code, No-code, Center of Excellence, CoE, KPI, Business Case, B2B, SaaS, Enterprise, Barcelona, Remote, Remote EU, Spain, España.</p>
+        <ul class="languages">
+          <li><b>Español</b> — Nativo (C2)</li>
+          <li><b>Inglés</b> — Intermedio alto (B2)</li>
+          <li><b>Catalán</b> — Básico (A2)</li>
+        </ul>
+        <p class="avail-line"><strong>Disponibilidad:</strong> Inmediata · Barcelona, remoto EU o híbrido · Residencia legal en España (nacionalidad chilena, permiso de trabajo).</p>
       </section>
     </article>
   </main>
@@ -608,27 +837,16 @@
         tabs[key].classList.toggle('active', key === type);
       });
       document.title = type === 'ux'
-        ? 'CV Rodrigo Negrete Aros | AI Automation Specialist · Procesos y Agentes IA'
-        : 'CV Rodrigo Negrete Aros | AI Product Designer · UX/UI + Automatización IA';
+        ? 'CV Rodrigo Negrete Aros — AI Automation Specialist | Agentes IA & RPA'
+        : 'CV Rodrigo Negrete Aros — AI Product Designer | UX/UI | GenAI & Automation';
       history.replaceState(null, '', type === 'ux' ? '#ux' : '#ai');
     }
 
     function downloadCv(type) {
       showCv(type);
-      const links = {
-        ai: '/assets/cv/CV_Rodrigo_Negrete_UXUI_IA_2026.pdf',
-        ux: '/assets/cv/CV_Rodrigo_Negrete_UXUI_Web_2026.pdf'
-      };
-      const names = {
-        ai: 'CV_Rodrigo_Negrete_UXUI_IA_2026.pdf',
-        ux: 'CV_Rodrigo_Negrete_UXUI_Web_2026.pdf'
-      };
-      const link = document.createElement('a');
-      link.href = links[type];
-      link.download = names[type];
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
+      // En lugar de descargar un PDF estático, abrimos el diálogo nativo de impresión
+      // para que exporte un PDF text-based (ATS-friendly) desde el navegador.
+      window.print();
     }
 
     let activeCv = 'ai';
