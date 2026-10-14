@@ -1,4 +1,5 @@
 import { T } from './content.js';
+import './mobile-ux.js';
 
 let LANG = 'es';
 
@@ -992,3 +993,27 @@ if(savedT) applyTheme(savedT);
   syncMute();
   setHeroState('idle');
 })();
+/* Foto de perfil con vida: órbita + pulso + inclinación con muelle (decorativo, solo puntero fino) */
+const avWrap = document.querySelector('.av-wrap');
+if (avWrap) {
+  ['av-pulse', 'av-orbit'].forEach(c => { const i = document.createElement('i'); i.className = c; i.setAttribute('aria-hidden', 'true'); avWrap.appendChild(i); });
+  const fine = matchMedia('(hover: hover) and (pointer: fine)');
+  const calm = matchMedia('(prefers-reduced-motion: reduce)');
+  if (fine.matches && !calm.matches) {
+    const host = avWrap.closest('.pcard') || avWrap;
+    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+    const tick = () => {
+      cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;   // muelle suave: la imagen tiene inercia
+      avWrap.style.transform = `perspective(900px) rotateX(${cy.toFixed(2)}deg) rotateY(${cx.toFixed(2)}deg)`;
+      raf = (Math.abs(tx - cx) + Math.abs(ty - cy) > 0.02) ? requestAnimationFrame(tick) : 0;
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    host.addEventListener('pointermove', e => {
+      const r = host.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * 14;
+      ty = -((e.clientY - r.top) / r.height - 0.5) * 14;
+      kick();
+    });
+    host.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
+  }
+}
