@@ -2880,3 +2880,39 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 .m-all > .m-more[hidden] { display: none; }
 .m-all > .m-more svg { transition: transform .3s cubic-bezier(0.23, 1, 0.32, 1); }
 .m-all > .m-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+/* ═══ MÓVIL — objetivos táctiles de al menos 40px (WCAG/HIG) ═══ */
+@media (max-width: 640px) {
+  .dk { width: 40px; height: 40px; }
+  .fb { min-height: 44px; }
+  .edu-cert { min-height: 40px; display: inline-flex; align-items: center; }
+  .cc-v { display: inline-flex; align-items: center; min-height: 40px; }
+  .fx-lnk { min-height: 44px; }
+  .fx-soc { width: 44px; height: 44px; }
+  .fx-lang-btn { min-width: 44px; min-height: 40px; }
+  .nav-logo { min-height: 40px; }
+  .tag-row .tag { min-height: 40px; display: inline-flex; align-items: center; }
+}
+/* Puntos de tema: mismo aspecto, pero el área de toque llega a 40px con un pseudo-elemento invisible */
+@media (max-width: 640px) {
+  .dk::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; }
+}
+/* ═══ MÁRGENES Y RITMO — una sola línea de contenido en toda la página ═══
+   Antes: hero a x=73, secciones a x=213 y footer a x=171 (a 1440px). Ahora todo comparte el mismo borde (contenido de 1200px). */
+:root { --gut: clamp(1.2rem, 5vw, 2.5rem); }
+.wrap { max-width: calc(1200px + 2 * var(--gut)); }
+.hero-inner { max-width: 1200px; }
+.fx-wrap { max-width: calc(1200px + 2 * var(--gut)); padding-inline: var(--gut); }
+/* Más aire vertical entre secciones (72px → hasta 104px en escritorio; en móvil se mantiene 48px) */
+.sec { padding-block: clamp(3rem, 7vw, 6.5rem); }
+
+@media (max-width: 640px) {
+  /* Carruseles: la primera tarjeta alinea con el resto del contenido (antes la franja de pruebas empezaba pegada al borde) */
+  .proof-grid { margin-inline: 0; padding-inline: var(--gut); scroll-padding-inline: var(--gut); }
+  .test-g { margin-inline: calc(var(--gut) * -1); padding-inline: var(--gut); scroll-padding-inline: var(--gut); }
+  .proof-grid, .test-g { scroll-snap-type: x mandatory; }
+  .proof-grid > *, .test-g > * { scroll-snap-align: start; }
+}#hero { padding-inline: var(--gut); }
+@media (max-width: 640px) { #nav { padding-inline: var(--gut); } }@media (max-width: 640px) {
+  .pcard .av-wrap { margin-left: 8px; }          /* la órbita ya no cruza el marco de la tarjeta */
+  .hero-sub { -webkit-line-clamp: 4; }           /* el texto ya es corto: no se corta a media frase */
+}
