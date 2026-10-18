@@ -1,25 +1,35 @@
-# Portfolio Rodrigo Negrete
+<div align="center">
 
-Portfolio convertido desde el HTML original a una estructura editable con Vite, manteniendo el estilo, los temas, las animaciones y las imagenes originales.
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=20,12,24&height=170&section=header&text=My%20Portfolio&fontSize=42&fontColor=ffffff&fontAlignY=38&desc=rodrigonegrete.es&descSize=16&descAlignY=60&animation=fadeIn" alt="My Portfolio" />
 
-## Estructura
+<a href="https://www.rodrigonegrete.es"><img src="https://img.shields.io/badge/🌐_Live_Demo-8B5CF6?style=for-the-badge" /></a>
 
-- `index.html`: estructura principal de secciones, tarjetas, enlaces e imagenes.
-- `src/styles.css`: estilos, responsive, tokens y los 5 temas visuales.
-- `src/content.js`: textos traducibles en ES/CA/EN.
-- `src/main.js`: cambio de idioma, cambio de tema, animaciones, canvas e interacciones.
+<a href="https://www.rodrigonegrete.es"><img width="85%" src="https://image.thum.io/get/width/900/crop/520/noanimate/https://www.rodrigonegrete.es" alt="My Portfolio preview" /></a>
 
-## Desarrollo
+</div>
 
+## 🧭 Overview
+Source of my portfolio site — a modular build with multiple interchangeable visual systems over the same codebase, cinematic transitions, per-theme canvas backgrounds and i18n.
+
+## ✨ Features
+- 5 interchangeable visual themes
+- Cinematic transitions & canvas backgrounds
+- i18n language switching
+- Case studies for every project
+
+## 🛠️ Built with
+`Vite` · `HTML/CSS/JS` · `Design tokens`
+
+## 🚀 Run locally
 ```bash
 npm install
 npm run dev
 ```
 
-## Produccion
 
-```bash
-npm run build
-```
+---
 
-El build final queda en `dist/`. Las imagenes siguen apuntando a las URLs publicas de `rodrigonegrete.es` para que sean visibles desde el primer arranque.
+<div align="center">
+<sub>Made by <b>Rodrigo Negrete</b> — AI Product Designer &amp; Automation Architect<br/>
+<a href="https://www.rodrigonegrete.es">Portfolio</a> · <a href="https://linkedin.com/in/rodrigonegretearos">LinkedIn</a> · <a href="https://github.com/Ronegret">GitHub</a></sub>
+</div>
