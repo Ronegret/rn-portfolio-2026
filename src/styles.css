@@ -1777,24 +1777,30 @@ body[data-cursor="mira"]::after {
 .db-card .bc-img {
   position: relative;
   overflow: hidden;
-  background: #0b0714;
+  background: radial-gradient(circle at 30% 20%, #241a3d 0%, #0b0714 70%);
   min-height: 340px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(.5rem, 1.5vw, 1.1rem);
 }
 .db-card .bc-img > img {
-  position: absolute !important;
-  inset: 0 !important;
+  position: relative !important;
   width: 100% !important;
   height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  object-fit: cover !important;
-  object-position: 32% center !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  /* contain, no cover: esta imagen lleva tipografía pegada a los bordes
+     (SAGA DEL DISEÑO DE PRODUCTO / RODRIGO NEGRETE) — cualquier recorte
+     por aspect-ratio del contenedor se come letras. Se ve completa siempre. */
+  object-fit: contain !important;
+  object-position: center !important;
   filter: none !important;
+  border-radius: 6px;
   transition: transform 1s var(--ease);
 }
 .db-card .bc:hover .bc-img > img {
-  transform: scale(1.045) !important;
+  transform: scale(1.03) !important;
 }
 .db-card .bc-img::after {
   content: "";
@@ -2914,22 +2920,27 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 }
 
 /* ═══ MENOS TEXTO ═══ */
-/* Tarjetas de proyecto: descripción a 3 líneas en todos los tamaños (el detalle vive en el caso) */
-.bc-d { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.zodi-feature .bc-d, .rodd-es-card .bc-d, .aem-card .bc-d { -webkit-line-clamp: 4; }
+/* Tarjetas de proyecto: descripción a 4 líneas, con botón "Leer más" propio
+   (ver initCardDescriptions en mobile-ux.js) si el texto no cabe — nunca se
+   corta en silencio sin forma de leer el resto. */
+/* max-height en vez de -webkit-line-clamp: dentro de un item flex (.bc-bd es
+   flex column) el line-clamp legacy no siempre recorta de forma fiable;
+   max-height en em (relativo a line-height) sí, en cualquier navegador. */
+.bc-d { overflow: hidden; max-height: 6.6em; }
+.bc-d.bc-d-open { max-height: none; overflow: visible; }
 
-/* "Leer más" también en escritorio para el bloque Sobre mí */
+/* "Leer más" también en escritorio para el bloque Sobre mí y las descripciones de proyecto */
 .m-all.m-collapsed > .m-extra { display: none !important; }
-.m-all > .m-more {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 42px; margin-top: 1rem; padding: 0 1.1rem;
+.m-all > .m-more, .bc-d-more {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 42px; margin-top: .6rem; padding: 0 1.1rem;
   font: inherit; font-size: 13.5px; font-weight: 700; color: var(--t1); background: var(--surf);
   border: 1px solid var(--bord2); border-radius: 100px; cursor: pointer; width: auto;
   transition: transform .16s cubic-bezier(0.23, 1, 0.32, 1), border-color .2s;
 }
-.m-all > .m-more:active { transform: scale(.97); }
+.m-all > .m-more:active, .bc-d-more:active { transform: scale(.97); }
 .m-all > .m-more[hidden] { display: none; }
-.m-all > .m-more svg { transition: transform .3s cubic-bezier(0.23, 1, 0.32, 1); }
-.m-all > .m-more[aria-expanded="true"] svg { transform: rotate(180deg); }
+.m-all > .m-more svg, .bc-d-more svg { transition: transform .3s cubic-bezier(0.23, 1, 0.32, 1); }
+.m-all > .m-more[aria-expanded="true"] svg, .bc-d-more[aria-expanded="true"] svg { transform: rotate(180deg); }
 /* ═══ MÓVIL — objetivos táctiles de al menos 40px (WCAG/HIG) ═══ */
 @media (max-width: 640px) {
   .dk { width: 40px; height: 40px; }

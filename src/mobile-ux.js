@@ -64,6 +64,39 @@ function initProjects() {
   });
 }
 
+/* Descripciones de proyecto (.bc-d): se recortan a 4 líneas por CSS.
+   Aquí solo se añade un botón "Leer más" cuando el texto realmente no
+   cabe, para que nada se corte en silencio sin forma de leer el resto. */
+function initCardDescriptions() {
+  document.querySelectorAll('#proyectos .bc-d').forEach(p => {
+    requestAnimationFrame(() => {
+      if (p.scrollHeight - p.clientHeight < 2) return; // ya cabe entero
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'bc-d-more';
+      btn.setAttribute('aria-expanded', 'false');
+      p.insertAdjacentElement('afterend', btn);
+      let open = false;
+      const render = () => {
+        p.classList.toggle('bc-d-open', open);
+        btn.setAttribute('aria-expanded', String(open));
+        const l = L();
+        btn.innerHTML = `<span>${open ? l.readLess : l.read}</span><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+      };
+      btn.addEventListener('click', (e) => {
+        // El botón vive dentro del <a> que envuelve toda la tarjeta:
+        // sin esto, "Leer más" también navegaría al caso de estudio.
+        e.preventDefault();
+        e.stopPropagation();
+        open = !open;
+        render();
+      });
+      toggles.push({ render });
+      render();
+    });
+  });
+}
+
 function initFooter() {
   document.querySelectorAll('.fx-col').forEach((col, i, all) => {
     const head = col.querySelector('.fx-col-h');
@@ -105,6 +138,7 @@ function initMotion() {
 function init() {
   initMotion();
   initProjects();
+  initCardDescriptions();
   const about = document.querySelector('#about-grid > div');
   // El botón va DENTRO de la columna (tras el último hijo); si fuera hermano, entraría como celda de la rejilla y desplazaría las tarjetas
   collapsible(about, { keep: 1, kind: 'read', all: true, after: about && about.lastElementChild });
