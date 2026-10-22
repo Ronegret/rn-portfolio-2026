@@ -3005,3 +3005,50 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 @media (min-width: 1800px) {
   #nav { padding-inline: max(3rem, calc((100vw - 1600px) / 2)); }
 }
+
+/* ═══ Pulido visual (crítica de dirección de arte, 22-oct) ═══ */
+@media (min-width: 880px) { .hero-copy .trust { display: none; } } /* los stats ya están en la tarjeta */
+.hero-copy .vp-list { gap: .4rem; margin-bottom: 1.4rem; }
+.hero-copy .vp { background: transparent; }
+.split-chars .sc-word { margin-right: .08em; }
+.hero-h, .sh, .bc-h, .lab-h { text-wrap: balance; }
+.sb, .bc-d, .hero-sub, .lab-d { text-wrap: pretty; }
+[data-theme="saas"] .sh, [data-theme="cyber"] .sh, [data-theme="diario"] .sh { letter-spacing: -.025em; line-height: 1.08; }
+/* menos neón genérico */
+.sh.vis em { animation: none; }
+.status-available::after { display: none; }
+.shiny-text { background: none; -webkit-text-fill-color: currentColor; color: var(--t2); animation: none; }
+[data-theme="saas"] .hero-h em { animation: none; }
+/* contraste de textos secundarios */
+[data-theme="hud"] { --t2: #8e8b82; --t3: #8a8778; }
+[data-theme="diario"] { --t3: #6b6b6b; }
+[data-theme="cyber"] { --t3: #8a8a9c; }
+/* escala de texto pequeño */
+.tag, .eyebrow, .hero-eyebrow, .cstat-l, .sc-ttl, .bc-link, .lab-link, .tl-dates, .lab-tag, .proof-k, .bc-tag, .lab-pills span { font-size: 12px; }
+.bc-d { font-size: 14px; line-height: 1.65; }
+.lab-card-d { font-size: 13.5px; line-height: 1.6; }
+.proof-item p { font-size: 13.5px; }
+/* tarjetas destacadas sin hueco vacío */
+.bfeat .bc-bd { justify-content: center; padding: clamp(1.25rem, 2.4vw, 2rem); }
+.bfeat .bc-d { flex: 0 0 auto; }
+.bfeat .bc-link { margin-top: .5rem; }
+.lab-feat .lab-d { flex: 0 0 auto; }
+.lab-feat .lab-pills { margin-bottom: 1rem; }
+/* una sola receta de pill */
+.bc-tag, .lab-pills span, .tag { padding: 4px 11px; border-radius: var(--rb); line-height: 1.3; }
+.bc-tags { gap: 6px; margin-bottom: 10px; }
+/* ritmo vertical */
+.sec { padding-block: clamp(3rem, 6vw, 5rem); }
+.sec-n { opacity: .55; }
+.eyebrow { margin-bottom: 1rem; }
+.sh { margin-bottom: 1.25rem; }
+@media (max-width: 600px) {
+  #dock { background: color-mix(in srgb, var(--surf) 92%, transparent); }
+  .fx-footer { padding-bottom: 6rem; }
+  .proof-grid { grid-template-columns: 1fr; }
+}
+.fb.on { font-weight: 800; box-shadow: none; }
+.fb { min-height: 40px; }
+.nav-links a { white-space: nowrap; }
+/* el subtítulo del hero es el elemento LCP: visible desde el primer pintado */
+.hero-sub.rv { opacity: 1; transform: none; transition: none; }
