@@ -3052,3 +3052,11 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 .nav-links a { white-space: nowrap; }
 /* el subtítulo del hero es el elemento LCP: visible desde el primer pintado */
 .hero-sub.rv { opacity: 1; transform: none; transition: none; }
+
+/* ═══ Correcciones del QA por temas (contraste y dock móvil) ═══ */
+[data-theme="diario"] .db-tag, [data-theme="editorial"] .db-tag,
+[data-theme="diario"] .db-card .bc-m, [data-theme="editorial"] .db-card .bc-m { color: #6b4e00 !important; background: rgba(255,207,46,.3) !important; border-color: rgba(107,78,0,.4) !important; }
+[data-theme="saas"] .aem-tag, [data-theme="cyber"] .aem-tag, [data-theme="hud"] .aem-tag { color: #d6e0bf !important; background: rgba(214,224,191,.1) !important; border-color: rgba(214,224,191,.3) !important; }
+[data-theme="diario"] .cb2, [data-theme="editorial"] .cb2 { color: color-mix(in srgb, var(--a2) 65%, #000); }
+/* en móvil el dock tapaba texto de forma permanente; los temas ya están en el menú (.mob-themes) */
+@media (max-width: 600px) { #dock { display: none; } }
