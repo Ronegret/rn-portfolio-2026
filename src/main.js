@@ -1,5 +1,6 @@
 import { T } from './content.js';
 import './mobile-ux.js';
+import './motion.js';
 
 let LANG = 'es';
 
@@ -861,8 +862,8 @@ const AVATARS={
 };
 
 function applyTheme(t){
-  document.documentElement.setAttribute('data-theme',t);
-  
+  (window.__vt||(f=>f()))(()=>document.documentElement.setAttribute('data-theme',t));
+
   // Sincronizar todos los botones selectores (Dock, Menú Móvil y Footer)
   document.querySelectorAll('.dk, .tc').forEach(b => {
     b.classList.remove('on');
