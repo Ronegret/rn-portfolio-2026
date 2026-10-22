@@ -1,3 +1,4 @@
+import './motion.css'; // @view-transition entre casos
 /* Casos de estudio en móvil: cada sección larga se muestra recortada con un "Ver más".
    Genérico para todas las páginas de caso: no toca el HTML ni el CSS de cada una.
    En escritorio no hace nada. */
