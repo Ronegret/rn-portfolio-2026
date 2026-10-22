@@ -2,10 +2,7 @@
 <html lang="es" data-theme="saas">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' text-anchor='middle' fill='%23fff'%3ERN%3C/text%3E%3Ccircle cx='51' cy='13' r='5' fill='%23ff2d2d'/%3E%3C/svg%3E">
   <meta name="description" content="Rodrigo Negrete — AI Product Designer especializado en agentes IA, hiperautomatización y diseño de producto con IA aplicada. Máster EBIS en Agentes de IA. +17 años previos en negocio B2B enterprise (Movistar/Telefónica). Proyectos reales en producción: Rodd.es, ZODI, Dedícalo Play. Barcelona · Remoto EU · Freelance.">
   <meta name="keywords" content="Rodrigo Negrete, AI Product Designer Barcelona, Product Designer AI, AI Automation Specialist, Prompt Engineer Barcelona, UX UI Designer con IA, Design Technologist, hiperautomatización, agentes IA, LLM, RAG, prompt engineering, Figma, React, Next.js, WordPress, n8n, Make, Botpress, Vapi, OpenAI, Claude, Gemini, ZODI, Invitoo, remoto EU">
@@ -60,14 +57,18 @@
   </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</noscript>
 <link rel="stylesheet" href="./src/styles.css">
-<script src="https://cdn.jsdelivr.net/npm/ogl@1.0.10/dist/ogl.umd.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/ogl@1.0.10/dist/ogl.umd.js"></script>
 </head>
 <body>
 
-<a href="#hero" class="skip-link">Saltar al contenido principal</a>
+<a href="#main" class="skip-link">Saltar al contenido principal</a>
 
 <!-- PRELOADER — intro minimalista y profesional (~2s) -->
 <div id="preloader" aria-hidden="true">
@@ -103,19 +104,19 @@
 
 <!-- DOCK TEMAS -->
 <aside id="dock" aria-label="Cambiar tema visual">
-  <button class="dk on" data-t="saas" data-label="Dual Core AI">
+  <button class="dk on" data-t="saas" data-label="Dual Core AI" aria-label="Tema Dual Core AI">
     <div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div>
   </button>
-  <button class="dk" data-t="editorial" data-label="El Diario Digital">
+  <button class="dk" data-t="editorial" data-label="El Diario Digital" aria-label="Tema El Diario Digital">
     <div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div>
   </button>
-  <button class="dk" data-t="cyber" data-label="Abstract Cyber">
+  <button class="dk" data-t="cyber" data-label="Abstract Cyber" aria-label="Tema Abstract Cyber">
     <div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div>
   </button>
-  <button class="dk" data-t="diario" data-label="Minimal Journal">
+  <button class="dk" data-t="diario" data-label="Minimal Journal" aria-label="Tema Minimal Journal">
     <div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div>
   </button>
-  <button class="dk" data-t="hud" data-label="Fine Art">
+  <button class="dk" data-t="hud" data-label="Fine Art" aria-label="Tema Fine Art">
     <div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div>
   </button>
 </aside>
@@ -209,15 +210,16 @@
     <button class="mlb" data-lang="en">EN</button>
   </div>
   <div class="mob-themes">
-    <button class="dk on" data-t="saas"><div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div></button>
-    <button class="dk" data-t="editorial"><div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div></button>
-    <button class="dk" data-t="cyber"><div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div></button>
-    <button class="dk" data-t="diario"><div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div></button>
-    <button class="dk" data-t="hud"><div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div></button>
+    <button class="dk on" data-t="saas" aria-label="Tema Dual Core AI"><div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div></button>
+    <button class="dk" data-t="editorial" aria-label="Tema El Diario Digital"><div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div></button>
+    <button class="dk" data-t="cyber" aria-label="Tema Abstract Cyber"><div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div></button>
+    <button class="dk" data-t="diario" aria-label="Tema Minimal Journal"><div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div></button>
+    <button class="dk" data-t="hud" aria-label="Tema Fine Art"><div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div></button>
   </div>
 </div>
 
 <!-- HERO -->
+<main id="main">
 <section id="hero">
   <canvas id="lr-canvas"></canvas>
   <div class="hero-inner">
@@ -243,7 +245,7 @@
       <div class="cta-row rv" data-d="4">
         <a href="#proyectos" class="btn-p trigger-flash" data-i="cta_p">Ver proyectos →</a>
         <a href="https://wa.me/34653567610" class="btn-s trigger-flash" target="_blank" rel="noopener">💬 WhatsApp</a>
-        <a href="/cv/" class="btn-s btn-dl trigger-flash" aria-label="Ver y descargar CV en PDF">
+        <a href="/cv/" class="btn-s btn-dl trigger-flash">
           <span class="dl-ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v10"/><path d="M7.5 10.5 12 15l4.5-4.5"/><path d="M5 19h14"/></svg></span>
           <span class="dl-tx"><b>CV</b><small>Descargar PDF</small></span>
         </a>
@@ -324,7 +326,7 @@
 <!-- SOBRE MÍ -->
 <section class="sec" id="sobre-mi">
   <div class="wrap">
-    <span class="sec-n" aria-hidden="true">01</span>
+    <span class="sec-n" data-n="01" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="about_ey">Perfil profesional</p>
     <h2 class="sh rv" data-i="about_h">Diseño de producto<br><em>con IA aplicada.</em></h2>
     <div id="about-grid" style="display:grid;gap:2rem">
@@ -355,7 +357,7 @@
 <!-- STACK -->
 <section class="sec" id="stack">
   <div class="wrap">
-    <span class="sec-n" aria-hidden="true">02</span>
+    <span class="sec-n" data-n="02" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="stack_ey">Tecnología</p>
     <h2 class="sh rv" data-i="stack_h">Herramientas usadas <em>en proyectos reales.</em></h2>
     <p class="sb rv" data-i="stack_sub">Stack práctico para investigar, prototipar, lanzar, automatizar y medir. Lo presento con foco en uso real, no como una lista inflada de expertise.</p>
@@ -439,7 +441,7 @@
 <!-- PROYECTOS -->
 <section class="sec" id="proyectos">
   <div class="wrap">
-    <span class="sec-n" aria-hidden="true">03</span>
+    <span class="sec-n" data-n="03" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="proj_ey">Casos de estudio</p>
     <h2 class="sh rv" data-i="proj_h">Proceso, decisiones <em>y aprendizajes.</em></h2>
     <p class="sb rv" data-i="proj_sub">Proyectos propios, prototipos y productos lanzados donde muestro research, arquitectura, UI, automatización, validación y criterio de negocio.</p>
@@ -673,7 +675,7 @@
 <!-- LABORATORIO DIGITAL -->
 <section class="sec" id="laboratorio">
   <div class="wrap">
-    <span class="sec-n" aria-hidden="true">04</span>
+    <span class="sec-n" data-n="04" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="lab_ey">Laboratorio digital</p>
     <h2 class="sh rv" data-i="lab_h">Laboratorio de producto:<br><em>UX, IA y automatización.</em></h2>
     <p class="sb rv" data-i="lab_sub">Además de los casos principales, mantengo un laboratorio de webs, herramientas y experimentos para validar UX, IA aplicada, automatización, SEO y medición.</p>
@@ -776,7 +778,7 @@
 <!-- TRAYECTORIA -->
 <section class="sec" id="trayectoria">
   <div class="wrap">
-    <span class="sec-n" aria-hidden="true">05</span>
+    <span class="sec-n" data-n="05" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="car_ey">Experiencia profesional</p>
     <h2 class="sh rv" data-i="car_h">Trayectoria <em>no convencional.</em></h2>
     <p class="sb rv" data-i="car_sub">Una transición profesional hacia UX/Product apoyada en negocio B2B, operaciones, tecnología e IA aplicada.</p>
@@ -1071,6 +1073,7 @@
   </div>
 </section>
 
+</main>
 <footer class="fx-footer" aria-labelledby="fx-brand">
   <div class="fx-glow" aria-hidden="true"></div>
   <div class="fx-grid-bg" aria-hidden="true"></div>
@@ -1152,9 +1155,9 @@
     <!-- BOTTOM LINE: idioma + copyright + made-with -->
     <div class="fx-bottom">
       <div class="fx-lang">
-        <button class="fx-lang-btn on" data-lang="es" type="button" aria-label="Español">ES</button>
-        <button class="fx-lang-btn" data-lang="ca" type="button" aria-label="Català">CA</button>
-        <button class="fx-lang-btn" data-lang="en" type="button" aria-label="English">EN</button>
+        <button class="fx-lang-btn on" data-lang="es" type="button" aria-label="ES, Español">ES</button>
+        <button class="fx-lang-btn" data-lang="ca" type="button" aria-label="CA, Català">CA</button>
+        <button class="fx-lang-btn" data-lang="en" type="button" aria-label="EN, English">EN</button>
       </div>
       <p class="fx-meta">
         <span>© 2026 Rodrigo Negrete Aros</span>

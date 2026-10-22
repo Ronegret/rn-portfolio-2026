@@ -25,7 +25,7 @@ let LANG = 'es';
 
   // Counter 00 -> 99 durante la linea de progreso (1.6s)
   const counter = document.getElementById('pl-count');
-  const totalMs = reduced ? 300 : 1600;
+  const totalMs = reduced ? 300 : 750;
   const startMs = reduced ? 0 : 150;
   const t0 = performance.now();
   function tick(now){
@@ -52,7 +52,7 @@ let LANG = 'es';
       pl.remove();
     }, 550);
   }
-  const holdMs = reduced ? 400 : 2000;
+  const holdMs = reduced ? 400 : 900; // el preloader retrasaba el LCP ~3s
   setTimeout(finish, holdMs);
 
   // Skip con click o tecla

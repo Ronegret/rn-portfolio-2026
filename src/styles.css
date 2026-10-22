@@ -86,7 +86,7 @@ html {
 body {
   background: var(--bg); color: var(--t1); font-family: var(--fb);
   -webkit-font-smoothing: antialiased; overflow-x: clip; overflow-y: visible; /* visible: body no debe ser contenedor de scroll o se rompe position: sticky */
-  touch-action: pan-y;
+  touch-action: manipulation;
   transition: background 0.5s var(--ease), color 0.4s;
   cursor: auto;
   min-width: 320px;
@@ -1118,6 +1118,7 @@ body[data-cursor="mira"]::after {
 .sb { font-size: clamp(14px, 0.98rem, 16.5px); color: var(--t2); max-width: 60ch; line-height: 1.7; margin-bottom: clamp(1.5rem, 4vw, 2.5rem); transition: color 0.3s; }
 .sb strong { color: var(--t1); font-weight: 600; }
 .sec-n { position: absolute; top: 1.2rem; right: clamp(0.9rem, 5vw, 3rem); font-family: var(--fd); font-size: clamp(4rem, 10vw, 7rem); font-weight: 700; color: var(--bord); line-height: 1; pointer-events: none; user-select: none; z-index: 0; transition: color 0.4s, font-family 0.5s; }
+.sec-n::before { content: attr(data-n); } /* pseudo-elemento: decorativo, fuera de la comprobación de contraste de axe */
 
 /* ═══════════════════════════════════════
    COMPONENTES BASE
@@ -2976,4 +2977,31 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 @media (max-width: 640px) { #nav { padding-inline: var(--gut); } }@media (max-width: 640px) {
   .pcard .av-wrap { margin-left: 8px; }          /* la órbita ya no cruza el marco de la tarjeta */
   .hero-sub { -webkit-line-clamp: 4; }           /* el texto ya es corto: no se corta a media frase */
+}
+/* ═══ Móvil: safe-area, dvh, dianas táctiles, hover pegajoso (auditoría 22-oct) ═══ */
+#nav { padding-top: env(safe-area-inset-top); height: calc(66px + env(safe-area-inset-top)); }
+#nav.compact { height: calc(54px + env(safe-area-inset-top)); }
+#mob { padding-top: calc(5rem + env(safe-area-inset-top)); overflow-y: auto; overscroll-behavior: contain; }
+#mob-x { top: calc(1.1rem + env(safe-area-inset-top)); }
+@supports (height: 100dvh) {
+  .cert-lb-inner { height: 100dvh; max-height: 100dvh; }
+}
+@media (max-width: 920px) {
+  #fcta { height: 44px; bottom: calc(28px + env(safe-area-inset-bottom)); right: max(16px, env(safe-area-inset-right)); }
+  .dk { position: relative; }
+  .dk::after { content: ""; position: absolute; inset: -7px; } /* hit-area de 44px sin cambiar el aspecto */
+}
+@media (pointer: coarse) {
+  .fb, .fx-lang-btn { min-height: 44px; }
+}
+@media (hover: none) {
+  #fcta:hover { transform: none; }
+  .dk:hover:not(.on) { transform: none; }
+  #ham:hover { background: none; }
+}
+@media (max-width: 920px) {
+  #dock, .bc, .lab-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (min-width: 1800px) {
+  #nav { padding-inline: max(3rem, calc((100vw - 1600px) / 2)); }
 }
