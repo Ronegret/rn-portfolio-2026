@@ -1773,6 +1773,56 @@ body[data-cursor="mira"]::after {
   .aem-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
 }
 
+/* Capsule Corp — portfolio gamificado Dragon Ball Z (db.rodrigonegrete.es) */
+.db-card .bc-img {
+  position: relative;
+  overflow: hidden;
+  background: #0b0714;
+  min-height: 340px;
+  display: block;
+}
+.db-card .bc-img > img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  filter: none !important;
+  transition: transform 1s var(--ease);
+}
+.db-card .bc:hover .bc-img > img {
+  transform: scale(1.045) !important;
+}
+.db-card .bc-img::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ffcf2e 0 60%, #c81e3a 60% 100%);
+  z-index: 2;
+}
+.db-tag-hi {
+  background: #c81e3a !important;
+  color: #fff !important;
+  border-color: #c81e3a !important;
+}
+.db-tag {
+  background: rgba(255,207,46,.12) !important;
+  color: #ffcf2e !important;
+  border-color: rgba(255,207,46,.3) !important;
+}
+.db-card .bc-m {
+  color: #ffcf2e;
+  border-color: rgba(255,207,46,.34);
+  background: rgba(255,207,46,.12);
+}
+@media(max-width: 860px) {
+  .db-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
+}
+
 .dedicalo-play-card .bc-img {
   background:
     radial-gradient(circle at 20% 50%, rgba(255,107,43,.18), transparent 40%),
