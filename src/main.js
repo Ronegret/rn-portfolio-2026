@@ -1,6 +1,7 @@
 import { T } from './content.js';
 import './mobile-ux.js';
 import './motion.js';
+import './effects.js';
 
 let LANG = 'es';
 
