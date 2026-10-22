@@ -456,7 +456,7 @@
       <div class="bfeat rv db-card" data-cats="ux ia">
         <a href="https://db.rodrigonegrete.es/" target="_blank" rel="noopener" class="bc trigger-flash">
           <div class="bc-img db-img">
-            <img src="/assets/dragonball/db-hero.webp" alt="Portfolio gamificado estilo Dragon Ball Z de Rodrigo Negrete: personaje con aura Super Saiyan azul, logo Capsule Corp, rótulo Saga del diseño de producto" width="1800" height="900" loading="eager" fetchpriority="high">
+            <img data-src="/assets/dragonball/db-hero.webp" alt="Portfolio gamificado estilo Dragon Ball Z de Rodrigo Negrete: personaje con aura Super Saiyan azul, logo Capsule Corp, rótulo Saga del diseño de producto" width="1800" height="900" loading="lazy">
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi db-tag-hi">★ Proyecto principal · 2026</span><span class="bc-tag db-tag">React · TypeScript · GSAP · Framer Motion · Gamificación</span></div>
@@ -470,7 +470,7 @@
       <div class="bfeat rv rodd-es-card" data-cats="ux saas ia">
         <a href="/rodd-es/" class="bc trigger-flash">
           <div class="bc-img">
-            <img src="/assets/rodd-es/roddfondo.webp" alt="Rodd.es — Biblioteca open source multilingüe de 287 recursos web: hero editorial con composición visual de la marca RODD" loading="eager" width="1800" height="1125" fetchpriority="high">
+            <img data-src="/assets/rodd-es/roddfondo.webp" alt="Rodd.es — Biblioteca open source multilingüe de 287 recursos web: hero editorial con composición visual de la marca RODD" loading="lazy" width="1800" height="1125">
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi">★ Open source · 2026</span><span class="bc-tag">Open source · 287 recursos · 7 idiomas · React · WebGL · 3D</span></div>
@@ -484,7 +484,7 @@
       <div class="bfeat rv aem-card" data-cats="ux saas ia">
         <a href="/aem/" class="bc trigger-flash">
           <div class="bc-img aem-img">
-            <img src="/assets/events-planner/screens/desktop-login.webp" alt="Events Planner — Portal web para wedding planners: pantalla de acceso con boda real en la playa, monograma EP y logotipo Events Planner · Wedding + Events" width="1800" height="1125" loading="eager" fetchpriority="high">
+            <img data-src="/assets/events-planner/screens/desktop-login.webp" alt="Events Planner — Portal web para wedding planners: pantalla de acceso con boda real en la playa, monograma EP y logotipo Events Planner · Wedding + Events" width="1800" height="1125" loading="lazy">
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi aem-tag-hi">★ Producto propio · 2026 · En producción</span><span class="bc-tag aem-tag">Product design · PWA offline · Sistema visual · Desarrollo end-to-end</span></div>
@@ -498,7 +498,7 @@
       <div class="bfeat rv zodi-feature" data-cats="ia saas ux">
         <a href="/zodi/" class="bc trigger-flash">
           <div class="bc-img">
-            <img src="/assets/zodi/Hero-principal-portada.webp" alt="ZODI oráculo astral con IA">
+            <img data-src="/assets/zodi/Hero-principal-portada.webp" alt="ZODI oráculo astral con IA">
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi" data-i="zodi_badge">★ Caso destacado</span><span class="bc-tag">AI Product · PWA · UX Writing</span></div>
@@ -1233,5 +1233,6 @@
 </dialog>
 
 <script type="module" src="./src/main.js"></script>
+<script>addEventListener("load",()=>setTimeout(()=>document.querySelectorAll("img[data-src]").forEach(i=>{i.src=i.dataset.src}),300))</script>
 </body>
 </html>
