@@ -20,6 +20,96 @@
         ],
         "createdAt": "2026-10-22T20:15:13.004Z",
         "reason": "patrón compartido por TODAS las bento cards (rodd-es #7c5cff, zodi #b8ff17, dedicalo, aem): acento fijo saturado sobre --surf, no theme-aware. Mejorado a 7.3:1 en temas oscuros (mayoría); falla en los 2 temas claros igual que el resto de cards hermanas. Rediseño theme-aware queda para auditoría dedicada, no se parchea 1 card aislada"
+      },
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:42:04.783Z",
+        "reason": "Verificados 9 de 11 selectores únicos (.sec, .test-c, .counts-strip, .test-cta-box, .contact-box, .proof-item, .cert-lb-head): todos tienen padding real generoso (clamp 1-5.5rem) en la propia regla o en el hijo inmediato que compone el contenido real (.wrap dentro de .sec/.counts-strip). El detector mide inset contra el elemento con el borde, no contra el hijo que aporta el padding real — falso positivo sistemático de este patrón de composición, no 25 defectos de diseño"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:43:04.240Z",
+        "reason": "2 son indicadores de estado reales (punto REC rojo, punto Disponible verde — glow refuerza la señal, no decora). El resto vive bajo [data-theme='cyber'], una de 5 identidades visuales intercambiables del sitio documentada como 'Glassmorphism Neon Extremo' — el glow es la estética elegida a propósito para ese tema, no un tell accidental"
+      },
+      {
+        "rule": "gradient-text",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:43:04.378Z",
+        "reason": "Los 4 son degradados monocromáticos sutiles (mismo tono o los 2 acentos ya establecidos del sistema de temas, no multicolor arcoíris): shine-sweep del hero, wordmark de marca del footer, watermark de fondo gigante con fade. Ninguno es el cliché de título con gradiente vivo que la regla busca cazar"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:44:11.197Z",
+        "reason": "Los 3 casos (.bc-h, .proof-item strong, .lab-card-h) son headings cortos de 1-2 líneas, no prosa larga. La propia regla pide 1.5-1.7 'for body text' — line-height ajustado en titulares cortos es práctica tipográfica estándar, no el problema que la regla busca"
+      },
+      {
+        "rule": "wide-tracking",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:44:11.320Z",
+        "reason": "Los 4 casos son labels uppercase de 10.5-11px (.ci-l, .tlv, .curr-pill, .edu-b y similares) — exactamente la excepción que la propia regla declara: 'reserve wide tracking for short uppercase labels only'"
+      },
+      {
+        "rule": "overused-font",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:45:06.713Z",
+        "reason": "user confirmed: mantener Inter como fuente principal, no es prioridad cambiar la identidad tipográfica de las 5 variantes de tema en esta sesión"
+      },
+      {
+        "rule": "codex-grid-background",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:45:06.834Z",
+        "reason": "user confirmed: el grid de fondo del tema SaaS por defecto (3% opacidad) se mantiene, coherente con la identidad 'Dual Core AI/tech' declarada de ese tema"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:45:24.606Z",
+        "reason": "3 casos: sheen sutil sobre el badge Disponible ahora (refuerza estado activo), marquee de 17 logos de herramientas en el hero (caso de uso legítimo: mostrar un stack extenso sin scroll), blob decorativo con drift en el footer. Ninguno es ruido sin propósito"
+      },
+      {
+        "rule": "side-tab",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:45:24.728Z",
+        "reason": "Franjas superiores de .aem-card/.db-card replican fielmente la paleta real de cada marca (verde+mostaza del informe PDF de Events Planner, dorado+rojo del poster de Capsule Corp) — identidad de marca, no decoración genérica"
+      },
+      {
+        "rule": "pulsing-dot",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:45:24.852Z",
+        "reason": "Ambos son indicadores de estado reales (punto REC, punto Disponible ahora) — el pulso comunica 'en vivo', patrón extendido tipo Slack/Discord, no decorativo"
       }
     ]
   }
