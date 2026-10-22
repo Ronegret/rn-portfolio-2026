@@ -853,11 +853,11 @@ tiltCards.forEach(card => {
    TEMAS MAPEO DE IMÁGENES Y BOTONES
 ═══════════════════════════════════════ */
 const AVATARS={
-  saas:'/assets/profile/fotoperfil0001.png',   // Estilo 1: SaaS (principal)
-  editorial:'/assets/profile/fotoperfil0002.png', // Estilo 2: Diario Digital
-  cyber:'/assets/legacy/foto-estilo3.png',     // Estilo 3: Cyber
-  diario:'/assets/profile/perfilrod.png',      // Estilo 4: Minimal Journal
-  hud:'/assets/profile/fotoperfil0003.png'     // Estilo 5: Fine Art
+  saas:'/assets/profile/fotoperfil0001.webp',   // Estilo 1: SaaS (principal)
+  editorial:'/assets/profile/fotoperfil0002.webp', // Estilo 2: Diario Digital
+  cyber:'/assets/legacy/foto-estilo3.webp',     // Estilo 3: Cyber
+  diario:'/assets/profile/perfilrod.webp',      // Estilo 4: Minimal Journal
+  hud:'/assets/profile/fotoperfil0003.webp'     // Estilo 5: Fine Art
 };
 
 function applyTheme(t){

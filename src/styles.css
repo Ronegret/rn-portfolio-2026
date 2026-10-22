@@ -1789,7 +1789,7 @@ body[data-cursor="mira"]::after {
   max-width: none !important;
   max-height: none !important;
   object-fit: cover !important;
-  object-position: center !important;
+  object-position: 32% center !important;
   filter: none !important;
   transition: transform 1s var(--ease);
 }
