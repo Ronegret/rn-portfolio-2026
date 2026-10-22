@@ -1,0 +1,94 @@
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo trigger-flash">
+    Rodrigo Negrete
+    <span class="rec-badge"><span class="logo-dot"></span></span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
+    <li><a href="#sobre-mi" data-i="nav_about"><span class="nav-lbl">Sobre mí</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#stack" data-i="nav_stack"><span class="nav-lbl">Stack</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#proyectos" data-i="nav_projects"><span class="nav-lbl">Proyectos</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#laboratorio" data-i="nav_lab"><span class="nav-lbl">Lab</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#trayectoria" data-i="nav_career"><span class="nav-lbl">Trayectoria</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#contacto" data-i="nav_contact"><span class="nav-lbl">Contacto</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="cur-switch" id="cur-switch">
+      <button type="button" class="cur-trigger" id="cur-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Cambiar tipo de cursor">
+        <svg class="cur-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51z"/>
+        </svg>
+        <svg class="lang-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      <div class="cur-panel" id="cur-panel" role="listbox" aria-label="Estilos de cursor">
+        <p class="lang-panel-h">Cursor <span class="lang-dot"></span></p>
+        <button type="button" class="cur-opt on" data-cur="normal" role="option" aria-selected="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51z"/></svg>
+          <span class="cur-opt-name">Normal</span>
+          <span class="cur-opt-check"></span>
+        </button>
+        <button type="button" class="cur-opt" data-cur="mira" role="option" aria-selected="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          <span class="cur-opt-name">Mira</span>
+          <span class="cur-opt-check"></span>
+        </button>
+      </div>
+    </div>
+    <div class="lang-switch" id="lang-switch">
+      <button type="button" class="lang-trigger" id="lang-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Cambiar idioma">
+        <svg class="lang-globe" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+        <span class="lang-code" id="lang-code">ES</span>
+        <svg class="lang-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      <div class="lang-panel" id="lang-panel" role="listbox" aria-label="Idiomas disponibles">
+        <p class="lang-panel-h">Idioma <span class="lang-dot"></span></p>
+        <button type="button" class="lang-opt on" data-lang="es" role="option" aria-selected="true">
+          <span class="lang-opt-code">ES</span>
+          <span class="lang-opt-name">Español</span>
+          <span class="lang-opt-check"></span>
+        </button>
+        <button type="button" class="lang-opt" data-lang="ca" role="option" aria-selected="false">
+          <span class="lang-opt-code">CA</span>
+          <span class="lang-opt-name">Català</span>
+          <span class="lang-opt-check"></span>
+        </button>
+        <button type="button" class="lang-opt" data-lang="en" role="option" aria-selected="false">
+          <span class="lang-opt-code">EN</span>
+          <span class="lang-opt-name">English</span>
+          <span class="lang-opt-check"></span>
+        </button>
+      </div>
+    </div>
+    <a href="mailto:rodrigo.negrete.aros@gmail.com" class="nav-cta trigger-flash" data-i="nav_cta">Hablemos →</a>
+  </div>
+  <button id="ham" aria-label="Abrir menú" aria-expanded="false">
+    <span class="hl"></span><span class="hl"></span><span class="hl"></span>
+  </button>
+</nav>
+
+<!-- MENÚ MÓVIL -->
+<div id="mob" role="dialog" aria-modal="true">
+  <button id="mob-x" aria-label="Cerrar">✕</button>
+  <a href="#sobre-mi" data-i="nav_about">Sobre mí</a>
+  <a href="#stack" data-i="nav_stack">Stack</a>
+  <a href="#proyectos" data-i="nav_projects">Proyectos</a>
+  <a href="#laboratorio" data-i="nav_lab">Lab</a>
+  <a href="#trayectoria" data-i="nav_career">Trayectoria</a>
+  <a href="#contacto" data-i="nav_contact">Contacto</a>
+  <div class="mob-lang">
+    <button class="mlb on" data-lang="es">ES</button>
+    <button class="mlb" data-lang="ca">CA</button>
+    <button class="mlb" data-lang="en">EN</button>
+  </div>
+  <div class="mob-themes">
+    <button class="dk on" data-t="saas" aria-label="Tema Dual Core AI"><div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div></button>
+    <button class="dk" data-t="editorial" aria-label="Tema El Diario Digital"><div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div></button>
+    <button class="dk" data-t="cyber" aria-label="Tema Abstract Cyber"><div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div></button>
+    <button class="dk" data-t="diario" aria-label="Tema Minimal Journal"><div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div></button>
+    <button class="dk" data-t="hud" aria-label="Tema Fine Art"><div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div></button>
+  </div>
+</div>
+

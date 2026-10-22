@@ -3,4 +3,4 @@ Allow: /
 Disallow: /deep-detection-access/
 Disallow: /deep-detection-discovery/
 
-Sitemap: https://rodrigonegrete.es/sitemap.xml
+Sitemap: https://rodrigonegrete.es/sitemap-index.xml

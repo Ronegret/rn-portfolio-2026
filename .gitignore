@@ -16,3 +16,4 @@ zodi-chat/
 .upload/
 .claude/settings.local.json
 
+.astro/

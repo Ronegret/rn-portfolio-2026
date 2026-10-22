@@ -1,0 +1,240 @@
+---
+import CardImg from './CardImg.astro';
+import dbHero from '../assets/cards/db-hero.webp';
+import roddFondo from '../assets/cards/roddfondo.webp';
+import eventsLogin from '../assets/cards/events-login.webp';
+import zodiHero from '../assets/cards/zodi-hero.webp';
+import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
+---
+<section class="sec" id="proyectos">
+  <div class="wrap">
+    <span class="sec-n" data-n="03" aria-hidden="true"></span>
+    <p class="eyebrow rv" data-i="proj_ey">Casos de estudio</p>
+    <h2 class="sh rv" data-i="proj_h">Proceso, decisiones <em>y aprendizajes.</em></h2>
+    <p class="sb rv" data-i="proj_sub">Proyectos propios, prototipos y productos lanzados donde muestro research, arquitectura, UI, automatización, validación y criterio de negocio.</p>
+    <div class="fbar rv">
+      <button class="fb on" data-f="all" data-i="f_all">Todos</button>
+      <button class="fb" data-f="ux" data-i="f_ux">UX / UI</button>
+      <button class="fb" data-f="ia" data-i="f_ia">IA & Auto.</button>
+      <button class="fb" data-f="ecom" data-i="f_ecom">E-commerce</button>
+      <button class="fb" data-f="saas" data-i="f_saas">SaaS</button>
+    </div>
+    <div class="bento">
+      <div class="bfeat rv db-card" data-cats="ux ia">
+        <a href="https://db.rodrigonegrete.es/" target="_blank" rel="noopener" class="bc trigger-flash">
+          <div class="bc-img db-img">
+            <CardImg defer src={dbHero} alt="Portfolio gamificado estilo Dragon Ball Z de Rodrigo Negrete: personaje con aura Super Saiyan azul, logo Capsule Corp, rótulo Saga del diseño de producto" />
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi db-tag-hi">★ Proyecto principal · 2026</span><span class="bc-tag db-tag">React · TypeScript · GSAP · Framer Motion · Gamificación</span></div>
+            <h3 class="bc-h">Capsule Corp — Mi CV convertido en un power-up Saiyan</h3>
+            <p class="bc-d">¿Y si un CV se jugara en vez de leerse? Seis transformaciones Saiyan sincronizadas con etapas reales de mi carrera, siete esferas del dragón escondidas, Modo Reclutador y un fondo que evoluciona con el scroll. Nada de accesibilidad de cartón: WCAG 2.2 AA verificado con axe-core, 100 en accesibilidad, buenas prácticas y SEO en Lighthouse.</p>
+            <div class="bc-m">6 transformaciones · 7 esferas · Modo Reclutador · WCAG 2.2 AA · db.rodrigonegrete.es</div>
+            <span class="bc-link">Ver el portfolio ↗</span>
+          </div>
+        </a>
+      </div>
+      <div class="bfeat rv rodd-es-card" data-cats="ux saas ia">
+        <a href="/rodd-es/" class="bc trigger-flash">
+          <div class="bc-img">
+            <CardImg defer src={roddFondo} alt="Rodd.es — Biblioteca open source multilingüe de 287 recursos web: hero editorial con composición visual de la marca RODD" />
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi">★ Open source · 2026</span><span class="bc-tag">Open source · 287 recursos · 7 idiomas · React · WebGL · 3D</span></div>
+            <h3 class="bc-h" data-i="p11_h">Rodd.es — 287 recursos web que se prueban en vivo, no se describen</h3>
+            <p class="bc-d" data-i="p11_d">Ves el efecto funcionando antes de copiar el código: 287 recursos — animaciones, componentes React, microinteracciones, fondos animados, escenas 3D — en 7 idiomas, con preview en vivo y código listo para editar. Lo llevé end-to-end: research, arquitectura UX/UI, testing y publicación.</p>
+            <div class="bc-m">6 categorías · 7 idiomas · Live preview · Framer Motion · Three.js · Vercel</div>
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
+          </div>
+        </a>
+      </div>
+      <div class="bfeat rv aem-card" data-cats="ux saas ia">
+        <a href="/aem/" class="bc trigger-flash">
+          <div class="bc-img aem-img">
+            <CardImg defer src={eventsLogin} alt="Events Planner — Portal web para wedding planners: pantalla de acceso con boda real en la playa, monograma EP y logotipo Events Planner · Wedding + Events" />
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi aem-tag-hi">★ Producto propio · 2026 · En producción</span><span class="bc-tag aem-tag">Product design · PWA offline · Sistema visual · Desarrollo end-to-end</span></div>
+            <h3 class="bc-h">Events Planner — El sistema operativo para wedding planners que trabajan sin cobertura</h3>
+            <p class="bc-d">Tres personas coordinan hasta 12 bodas al año, de pie, en fincas sin cobertura: Wedding + Events necesitaba herramientas que funcionaran sin internet. Diseñé panel operativo, portal privado para la pareja, plano de mesas interactivo, generador de contratos, presupuesto por plazos y dossieres imprimibles. Research UX, sistema de diseño, IA como herramienta y desarrollo end-to-end.</p>
+            <div class="bc-m">Panel · Portal novios · Mesas · Contrato · Pagos · Offline-first · aem.rodd.es</div>
+            <span class="bc-link">Ver caso completo →</span>
+          </div>
+        </a>
+      </div>
+      <div class="bfeat rv zodi-feature" data-cats="ia saas ux">
+        <a href="/zodi/" class="bc trigger-flash">
+          <div class="bc-img">
+            <CardImg defer src={zodiHero} alt="ZODI oráculo astral con IA" />
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi" data-i="zodi_badge">★ Caso destacado</span><span class="bc-tag">AI Product · PWA · UX Writing</span></div>
+            <h3 class="bc-h" data-i="zodi_h">ZODI — Oráculo astral con IA, sin filtro y con humor ácido</h3>
+            <p class="bc-d" data-i="zodi_d">Horóscopo, tarot, carta natal, numerología y comunidad en un solo producto digital, con un humor que no edulcora las respuestas. Definí la experiencia de IA personalizada: 17 tipos de lectura, 4 tonos de respuesta, planes premium y una identidad visual que no pasa desapercibida.</p>
+            <div class="bc-m" data-i="zodi_m">17 lecturas · 4 tonos · PWA · modelo freemium</div>
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
+          </div>
+        </a>
+      </div>
+      <div class="bfeat rv dedicalo-play-card" data-cats="ia saas">
+        <a href="/dedicalo-play/" class="bc trigger-flash">
+          <div class="bc-img dedicalo-play-img"><CardImg src={dedicaloPlay} alt="Dedícalo Play — App musical para jugar con amigos" /></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag dedicalo-play-tag">🎵 Juego musical · React · Supabase · IA</span></div>
+            <h3 class="bc-h" data-i="pdp_h">Dedícalo Play — Dedica canciones y compite con tus amigos en tiempo real</h3>
+            <p class="bc-d" data-i="pdp_d">App multijugador para dedicar canciones, sumar puntos y competir con amigos en tiempo real. Diseñé la UX, el branding, las mecánicas de juego y el lanzamiento end-to-end.</p>
+            <div class="bc-m">Multijugador · Tiempo real · play.dedicalo.es</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="bfeat rv just-enjoy-project-card" data-cats="ia ux saas">
+        <a href="/just-enjoy/" class="bc trigger-flash">
+          <div class="bc-img bc-img-logo"><img src="/assets/just-enjoy/je-logo-trim.webp" alt="Logo de Just Enjoy" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi">TFM · Máster EBIS</span><span class="bc-tag">n8n · GPT-4.1 · Next.js</span></div>
+            <h3 class="bc-h">Just Enjoy — Agentes IA que planifican tu viaje de punta a punta</h3>
+            <p class="bc-d">TFM del Máster EBIS que convierte tus preferencias en un itinerario completo — vuelos, hotel, actividades, mapa y PDF — automatizado y refinado con agentes IA y datos reales.</p>
+            <div class="bc-m">27 nodos n8n · Supabase · Firebase · SerpAPI · Tavily</div>
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv iberdata-project-card" data-d="1" data-cats="ia ux">
+        <a href="/iberdata/" class="bc trigger-flash">
+          <div class="bc-img bc-img-logo"><img src="/assets/iberdata/iberdata-logo-crop.webp" alt="Logo de Iberdata Servicios Integrales" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi">Business case · Máster EBIS</span><span class="bc-tag">CoE · RAG · Automatización</span></div>
+            <h3 class="bc-h">Iberdata — Oficina de IA y Automatización</h3>
+            <p class="bc-d">Business case para una empresa de 450 empleados: Centro de Excelencia, gobierno, arquitectura, dos pilotos, sprints, KPIs y riesgos.</p>
+            <div class="bc-m">n8n · Supabase · OpenAI API · Playwright · 12 semanas</div>
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv zodi-bto-card" data-d="1" data-cats="ia ux">
+        <a href="/zodi-bto/" class="bc trigger-flash">
+          <div class="bc-img bc-img-logo">
+            <img src="/assets/zodi/zodi-logo.png" alt="Logo de ZODI BTO" loading="lazy">
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi">Prototipo IA</span><span class="bc-tag">Botpress · UX Writing</span></div>
+            <h3 class="bc-h">ZODI BTO — Oráculo conversacional</h3>
+            <p class="bc-d">Primer prototipo de ZODI: terminal de consulta con Botpress, personalidad mística, memoria contextual y tono honesto antes de escalar al producto PWA actual.</p>
+            <div class="bc-m">Botpress · WordPress · personaje IA</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="1" data-cats="ia">
+        <a href="/invitoo/" class="bc invitoo-project-card trigger-flash">
+          <div class="bc-img bc-img-logo"><img src="/assets/invitoo/invitoo-png-e1741309569943.avif" alt="Logo de Invitoo" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">Founder · IA · Wedding Tech</span></div>
+            <h3 class="bc-h" data-i="p1_h">Invitoo — Invitaciones digitales con IA</h3>
+            <p class="bc-d" data-i="p1_d">Marca propia creada desde cero: UX/UI, web design, RSVP, automatizaciones, canciones generadas con IA, animaciones e invitaciones interactivas personalizadas.</p>
+            <div class="bc-m">Founder único · Suno · React · Make</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv pdf-rodd-card" data-d="2" data-cats="ux saas">
+        <a href="/pdf-rodd/" class="bc trigger-flash">
+          <div class="bc-img">
+            <img src="/assets/pdf-rodd/roodpdf.png" alt="PDF Rodd editor PDF online" loading="lazy">
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">UX Tool · PDF.js · Fabric</span></div>
+            <h3 class="bc-h" data-i="p10_h">PDF Rodd — Editor PDF gratuito y rápido</h3>
+            <p class="bc-d" data-i="p10_d">Herramienta web para editar, firmar, resaltar, corregir y comprimir PDFs desde el navegador. Minimalista, funcional y pensada para resolver tareas reales sin instalación.</p>
+            <div class="bc-m">PDF.js · PDF-lib · Fabric.js · descarga local</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="2" data-cats="ux">
+        <a href="/ccse/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-estudio-ccse.png" alt="Estudio CCSE — Simulador nacionalidad española" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">EdTech · UX/UI · GitHub Pages</span></div>
+            <h3 class="bc-h" data-i="p3_h">Estudio CCSE — Simulador para nacionalidad española</h3>
+            <p class="bc-d" data-i="p3_d">Herramienta digital para estudiar la prueba CCSE con preguntas verificadas, interfaz accesible y simulador en vivo desplegado en GitHub Pages.</p>
+            <div class="bc-m">Contenido verificado · acceso gratuito · mobile-first</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="1" data-cats="ia saas">
+        <a href="/dedicalo/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/dedicalo/logo.avif" alt="Dedícalo — Canciones personalizadas con IA" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">IA generativa · UX emocional · Música</span></div>
+            <h3 class="bc-h" data-i="p4_h">Dedícalo — Canciones personalizadas con IA</h3>
+            <p class="bc-d" data-i="p4_d">Producto propio para convertir historias en canciones: brainstorming, benchmark, flujo de 3 pasos, audio IA, portadas, video y entrega emocional.</p>
+            <div class="bc-m">7 demos · Suno/Udio · WordPress · CapCut</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="2" data-cats="ecom">
+        <a href="/paratumundo/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-paratumundo.png" alt="ParaTuMundo — UX marketplace e-commerce" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">E-commerce · UX Research · Shopify</span></div>
+            <h3 class="bc-h" data-i="p5_h">ParaTuMundo — Estrategia UX para marketplace</h3>
+            <p class="bc-d" data-i="p5_d">Research competitivo, DAFO, encuestas, personas, journey map, arquitectura de información y prototipo Figma para un e-commerce multcategoría.</p>
+            <div class="bc-m">33 encuestas · Shopify · BigBuy</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="3" data-cats="ux">
+        <a href="/te-atiendo/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-teatiendo.png" alt="Te Atiendo — UX para servicio en mesa" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag">Gastro-Tech · UX Research · Service Design</span></div>
+            <h3 class="bc-h" data-i="p6_h">Te Atiendo — UX para servicio en mesa</h3>
+            <p class="bc-d" data-i="p6_d">Producto digital para restaurantes: research, DAFO, benchmarking, journey map, gamificación del staff, feedback en tiempo real y prototipo Figma.</p>
+            <div class="bc-m">20 encuestas · 90% validación · Figma</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="1" data-cats="ux saas">
+        <a href="/aquae/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-aquae.png" alt="Aquae — App sostenibilidad y ahorro hídrico" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag" data-i="p7_tag">App Móvil</span></div>
+            <h3 class="bc-h">Aquae</h3>
+            <p class="bc-d" data-i="p7_d">Aplicación móvil concebida para la sostenibilidad. Adopta técnicas de gamificación y ciencia de datos para incentivar el ahorro hídrico.</p>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="2" data-cats="ux ecom">
+        <a href="/travel-of-vapers/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/legacy/logo-travel-of-vapers.png" alt="Travel of Vapers — Branding y packaging" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag" data-i="p8_tag">Branding · Packaging · Operaciones</span></div>
+            <h3 class="bc-h" data-i="p8_h">Travel of Vapers — Marca sensorial</h3>
+            <p class="bc-d" data-i="p8_d">Identidad visual, packaging, sistema de 21 sabores/destinos, marketing social, venta directa, eventos y logística nacional para una marca de producto físico.</p>
+            <div class="bc-m">21 destinos · Photoshop · escala nacional</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+      <div class="rv" data-d="3" data-cats="ux">
+        <a href="/tomapoly/" class="bc trigger-flash">
+          <div class="bc-img" style="background:#fff"><img src="/assets/tomapoly/logotomapoly.png" alt="Tomapoly — Juego físico con UX y gamificación" loading="lazy"></div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag" data-i="p9_tag">UX físico · Branding · Packaging</span></div>
+            <h3 class="bc-h">Tomapoly — UX aplicado a un juego físico</h3>
+            <p class="bc-d" data-i="p9_d">Proyecto propio de gamificación física: diseñé mecánicas sociales, tablero de 113 casillas, packaging waterproof, preprensa, testing y producción audiovisual.</p>
+            <div class="bc-m">113 casillas · PVC · Photoshop · Premiere</div>
+            <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

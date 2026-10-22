@@ -1,4 +1,3 @@
-import './deepDetectionAccess.css';
 
 const form = document.getElementById('accessForm');
 const message = document.getElementById('accessMessage');

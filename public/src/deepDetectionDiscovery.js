@@ -1,4 +1,3 @@
-import './deepDetectionDiscovery.css';
 
 const STORAGE_KEY = 'deep-detection-discovery-v2';
 const MAX_ATTACHMENT_BYTES = 3 * 1024 * 1024;
