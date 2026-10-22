@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>AEM Planner — Un sistema operativo para bodas · Caso de estudio · Rodrigo Negrete</title>
-<meta name="description" content="Caso de estudio del portal AEM Planner para Algo Entre Manos (Wedding + Events): panel operativo, portal privado de la pareja, plano de mesas, generador de contratos y presupuesto por plazos. Research UX, sistema de diseño, IA aplicada y desarrollo end-to-end.">
-<meta name="theme-color" content="#4e6359">
+<title>Events Planner — Un sistema operativo para bodas · Caso de estudio · Rodrigo Negrete</title>
+<meta name="description" content="Caso de estudio de Events Planner (Wedding + Events): panel operativo, portal privado de la pareja, plano de mesas, generador de contratos y presupuesto por plazos. Research UX, sistema de diseño, IA aplicada y desarrollo end-to-end.">
+<meta name="theme-color" content="#56603f">
 <meta name="robots" content="index,follow">
 <link rel="canonical" href="https://rodrigonegrete.es/aem/">
 
 <meta property="og:type" content="article">
 <meta property="og:locale" content="es_ES">
-<meta property="og:title" content="AEM Planner — Un sistema operativo para bodas · Rodrigo Negrete">
+<meta property="og:title" content="Events Planner — Un sistema operativo para bodas · Rodrigo Negrete">
 <meta property="og:description" content="Cómo diseñé y construí una app web para wedding planners que abre sin cobertura, sincroniza sola y trabaja para tres personas a la vez. Portal de novios, mesas, contratos y pagos.">
-<meta property="og:image" content="/assets/aem/mesa-floral.jpg">
+<meta property="og:image" content="/assets/events-planner/screens/desktop-login.webp">
 <meta property="og:url" content="https://rodrigonegrete.es/aem/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,16 +22,16 @@
 
 <style>
 :root{
-  --tinta:#4e6359;
-  --tinta-honda:#33463d;
-  --tinta-clara:#7a8f83;
-  --mostaza:#e2e735;
-  --mostaza-suave:#eff2a3;
-  --crema:#f0f0e6;
-  --papel:#faf9f4;
-  --texto:#24231d;
+  --tinta:#56603f;
+  --tinta-honda:#2f3a24;
+  --tinta-clara:#858a72;
+  --mostaza:#d6b36b;
+  --mostaza-suave:#ead9b8;
+  --crema:#f4efe4;
+  --papel:#fbf8f1;
+  --texto:#20230d;
   --suave:#747164;
-  --linea:#dcdcc9;
+  --linea:#d8d2bd;
   --alerta:#a84f42;
   --ease:cubic-bezier(.22,.61,.36,1);
   --ease-out:cubic-bezier(.16,1,.3,1);
@@ -205,10 +205,9 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .hero-datos a{color:var(--tinta);border-bottom:1px solid rgba(78,99,89,.32)}
 .hero-scroll{
   position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
-  z-index:3;color:var(--tinta);
-  font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;
+  z-index:3;color:var(--suave);
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
   display:flex;flex-direction:column;align-items:center;gap:10px;
-  opacity:.6;
 }
 .hero-scroll::after{
   content:"";display:block;width:1px;height:36px;
@@ -843,7 +842,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   <div class="hero-top">
     <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
     <h1>
-      AEM Planner
+      Events Planner
       <em>Un sistema operativo para bodas</em>
     </h1>
     <div class="hero-linea"></div>
@@ -854,11 +853,11 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   </div>
 
   <div class="hero-media">
-    <img src="/assets/aem/planneraem-hero.webp" alt="Poster editorial de AEM Planner — Algo Entre Manos Wedding + Events, con logotipo central, eucalipto, flores de novia y anillos de boda">
+    <img src="/assets/events-planner/screens/desktop-login.webp" alt="Pantalla de acceso de Events Planner: boda en la playa a la izquierda, monograma EP y logotipo Events Planner · Wedding + Events a la derecha">
   </div>
 
   <div class="hero-datos">
-    <div><span>Cliente</span><b>Algo Entre Manos<br>Barcelona · Girona</b></div>
+    <div><span>Producto</span><b>Events Planner<br>Wedding + Events</b></div>
     <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
     <div><span>Periodo</span><b>2026<br>En producción</b></div>
     <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
@@ -873,10 +872,11 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   <h2 class="sec-h">Qué es y qué <em>resolvía</em></h2>
 
   <p class="entradilla">
-    Algo Entre Manos coordina bodas en Barcelona y Girona. Tres personas,
-    entre ocho y doce bodas al año, y toda la operación repartida entre
-    WhatsApp, hojas de cálculo y el calendario del móvil de una de ellas.
-    El encargo no fue «haznos una app»: fue dejar de perder cosas.
+    Events Planner está pensado para estudios de boda pequeños: tres
+    personas, entre ocho y doce bodas al año, con toda la operación
+    repartida entre WhatsApp, hojas de cálculo y el calendario del móvil
+    de una de ellas. El objetivo no era «hacer una app»: era dejar de
+    perder cosas.
   </p>
 
   <h3>El problema real</h3>
@@ -959,7 +959,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
         </ul>
       </div>
       <div class="mock-wrap">
-        <img src="/assets/aem/screens/desktop-dashboard.webp" alt="Panel de AEM Planner mostrando próximas bodas, tareas de hoy, resumen general con gráfico de evolución y distribución del presupuesto por categoría" class="mock-img" loading="lazy">
+        <img src="/assets/events-planner/screens/desktop-dashboard.webp" alt="Panel de Events Planner mostrando próximas bodas, tareas de hoy, resumen general con gráfico de evolución y distribución del presupuesto por categoría" class="mock-img" loading="lazy">
       </div>
     </div>
 
@@ -985,7 +985,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
         </ul>
       </div>
       <div class="mock-wrap">
-        <img src="/assets/aem/screens/desktop-bodas.webp" alt="Pantalla de bodas de AEM Planner con tres cards: Ainhoa y Diego, Lucía y Martín, Clara y Tomás, con fechas, estados y progreso" class="mock-img" loading="lazy">
+        <img src="/assets/events-planner/screens/desktop-bodas.webp" alt="Pantalla de bodas de Events Planner con tres cards: Ainhoa y Diego, Lucía y Martín, Clara y Tomás, con fechas, estados y progreso" class="mock-img" loading="lazy">
       </div>
     </div>
 
@@ -1012,7 +1012,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
         </ul>
       </div>
       <div class="mock-wrap">
-        <img src="/assets/aem/screens/desktop-boda-mesas.webp" alt="Plano de mesas interactivo con mesa Presidencial, Olivo, Romero y stats de 52 invitados confirmados, 5 mesas creadas, 1 plaza libre" class="mock-img" loading="lazy">
+        <img src="/assets/events-planner/screens/desktop-mesas.webp" alt="Plano de mesas interactivo con mesa Presidencial, Olivo, Romero y stats de 52 invitados, 43 confirmados, 5 mesas creadas, 1 plaza libre" class="mock-img" loading="lazy">
       </div>
     </div>
 
@@ -1039,7 +1039,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
         </ul>
       </div>
       <div class="mock-wrap">
-        <img src="/assets/aem/screens/desktop-presupuesto.webp" alt="Presupuesto de la boda Ainhoa y Diego: 29.500€ objetivo, 27.650€ contratado, bloque A facturado 26.951€ (97%), bloque B no facturado 699€ (3%)" class="mock-img" loading="lazy">
+        <img src="/assets/events-planner/screens/desktop-presupuesto.webp" alt="Presupuesto de la boda Ainhoa y Diego: 29.500€ objetivo, 27.650€ contratado, bloque A facturado 26.951€ (97%), bloque B no facturado 699€ (3%)" class="mock-img" loading="lazy">
       </div>
     </div>
 
@@ -1048,24 +1048,25 @@ footer a:hover{border-bottom-color:var(--mostaza)}
       <div class="tab-info">
         <h3>Generador de <em>contratos</em></h3>
         <p class="tab-lead">
-          Un contrato editorial que la pareja recibe en PDF con la identidad
-          de AEM. Se rellena solo con los datos de la boda que están en el
-          sistema: pareja, fecha, finca, importe, forma de pago.
+          Un contrato editorial que la pareja recibe en PDF, con la misma
+          tipografía de la marca. Se rellena con los datos de la boda que ya
+          están en el sistema: pareja, fecha, finca, importe, forma de pago.
         </p>
         <p>
-          Se compone en el navegador con la misma tipografía de la marca,
-          exporta a PDF limpio para firmar y queda registrado en el portal
-          privado. El equipo controla las variables sin tocar plantillas ni
+          El flujo tiene cuatro pasos explícitos —datos, generado, firmado,
+          recibido— y la aplicación avisa de qué falta antes de poder
+          generar el documento, en vez de dejar un botón activo que falla en
+          silencio. El equipo controla las variables sin tocar plantillas ni
           Word.
         </p>
         <ul>
-          <li><strong>Portada editorial</strong> con los nombres y la fecha en Cormorant Garamond.</li>
-          <li><strong>Autocompletado</strong> desde la ficha de la boda.</li>
-          <li><strong>Impresión fiel</strong> a la paleta y márgenes de la marca.</li>
+          <li><strong>Estado siempre visible</strong> con los cuatro pasos del contrato.</li>
+          <li><strong>Validación explícita</strong> de los datos obligatorios antes de generar.</li>
+          <li><strong>Firma dibujada</strong> o marcado como firmado en papel, desde el portal.</li>
         </ul>
       </div>
       <div class="mock-wrap">
-        <img src="/assets/aem/screens/desktop-contrato.webp" alt="Pantalla de contrato de la boda Ainhoa y Diego con datos autocompletados: cláusulas, importes, forma de pago y descarga en PDF" class="mock-img" loading="lazy">
+        <img src="/assets/events-planner/screens/desktop-contrato.webp" alt="Pantalla de contrato de la boda Ainhoa y Diego con los cuatro pasos del flujo (datos, generado, firmado, recibido) y aviso de datos obligatorios pendientes" class="mock-img" loading="lazy">
       </div>
     </div>
 
@@ -1079,7 +1080,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
           pareja.
         </p>
         <p>
-          Portada personalizada con foto de la boda, cuenta atrás, y siete
+          Portada personalizada con foto de la boda y cuenta atrás, y ocho
           apartados: Resumen, Invitados, Mesas, Rincones, Presupuesto,
           Proveedores, Plan y Detalles. Transparencia total con los números
           — <em>«Estas son las mismas cifras que llevamos nosotras. No hay
@@ -1092,7 +1093,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
         </ul>
       </div>
       <div class="mock-wrap">
-        <img src="/assets/aem/screens/desktop-portal.webp" alt="Portal privado de la pareja Ainhoa y Diego: portada con foto de la boda, 16 días hasta el enlace, siete apartados y resumen del gran día" class="mock-img" loading="lazy">
+        <img src="/assets/events-planner/screens/desktop-portal.webp" alt="Portal privado de la pareja Ainhoa y Diego: portada con foto de la boda, 19 días hasta el enlace, ocho apartados y resumen del gran día" class="mock-img" loading="lazy">
       </div>
     </div>
   </div>
@@ -1104,12 +1105,12 @@ footer a:hover{border-bottom-color:var(--mostaza)}
       <h3>Login <em>editorial</em></h3>
       <p>
         La primera pantalla cuenta la propuesta antes de pedir credenciales.
-        Imagen real de boda de AEM a la izquierda, acceso tipográfico a la
-        derecha, con instrucciones de acceso de prueba a la vista — porque
-        esto es un portfolio, no una producción real.
+        Foto real de boda a la izquierda, acceso tipográfico con el
+        monograma EP a la derecha, con instrucciones de acceso de prueba a
+        la vista — porque esto es un portfolio, no una producción real.
       </p>
     </div>
-    <img src="/assets/aem/screens/desktop-landing.webp" alt="Login de AEM Planner con imagen de boda, lema Cada boda bajo control, y acceso de prueba admin / admin" class="landing-img" loading="lazy">
+    <img src="/assets/events-planner/screens/desktop-login.webp" alt="Login de Events Planner con imagen de boda en la playa, lema Cada boda paso a paso, y acceso de prueba admin / admin" class="landing-img" loading="lazy">
   </div>
 </section>
 
@@ -1287,18 +1288,18 @@ punto (151,683) → responde el botón que está en (721,984)</div>
   <h2 class="sec-h">La marca, puesta a <em>trabajar</em></h2>
 
   <p class="entradilla">
-    La identidad de Algo Entre Manos es editorial y serena: dos tipografías,
-    verde salvia y un acento mostaza. Trasladarla a una herramienta operativa
+    La identidad de Events Planner es editorial y serena: dos tipografías,
+    verde oliva y un acento dorado. Trasladarla a una herramienta operativa
     obliga a resolver algo que un catálogo no tiene: densidad de información.
   </p>
 
   <div class="galeria">
-    <a href="/assets/aem/mesa-floral.jpg" target="_blank"><img src="/assets/aem/mesa-floral.jpg" alt="Mesa decorada con flores"></a>
-    <a href="/assets/aem/arco-bosque.jpg" target="_blank"><img src="/assets/aem/arco-bosque.jpg" alt="Arco de ceremonia en el bosque"></a>
-    <a href="/assets/aem/petal-bar.jpg" target="_blank"><img src="/assets/aem/petal-bar.jpg" alt="Bar de pétalos"></a>
-    <a href="/assets/aem/ceremonia-montana.jpg" target="_blank"><img src="/assets/aem/ceremonia-montana.jpg" alt="Ceremonia en la montaña"></a>
-    <a href="/assets/aem/seaside-arco.jpg" target="_blank"><img src="/assets/aem/seaside-arco.jpg" alt="Arco frente al mar"></a>
-    <a href="/assets/aem/petalos-jaula.jpg" target="_blank"><img src="/assets/aem/petalos-jaula.jpg" alt="Detalle de pétalos y jaula"></a>
+    <a href="/assets/events-planner/bosque-ceremonia.webp" target="_blank"><img src="/assets/events-planner/bosque-ceremonia.webp" alt="Ceremonia en el bosque"></a>
+    <a href="/assets/events-planner/arco-rosas.webp" target="_blank"><img src="/assets/events-planner/arco-rosas.webp" alt="Arco de ceremonia con rosas"></a>
+    <a href="/assets/events-planner/mesa-dulce.webp" target="_blank"><img src="/assets/events-planner/mesa-dulce.webp" alt="Mesa dulce decorada"></a>
+    <a href="/assets/events-planner/acantilado-ceremonia.webp" target="_blank"><img src="/assets/events-planner/acantilado-ceremonia.webp" alt="Ceremonia en el acantilado"></a>
+    <a href="/assets/events-planner/terraza-banquete.webp" target="_blank"><img src="/assets/events-planner/terraza-banquete.webp" alt="Banquete en la terraza"></a>
+    <a href="/assets/events-planner/jardin-iluminado.webp" target="_blank"><img src="/assets/events-planner/jardin-iluminado.webp" alt="Jardín iluminado de noche"></a>
   </div>
 
   <h3>Tipografía</h3>
@@ -1324,41 +1325,43 @@ punto (151,683) → responde el botón que está en (721,984)</div>
 <!-- 07 · PRIVACIDAD -->
 <section class="seccion narrow rv">
   <span class="sec-num">07 · Privacidad</span>
-  <h2 class="sec-h">Lo que cuesta publicar un <em>trabajo real</em></h2>
+  <h2 class="sec-h">Privacidad por diseño, desde el <em>primer día</em></h2>
 
   <p class="entradilla">
-    Para poder enseñar este proyecto hizo falta construir una segunda versión:
-    la misma aplicación, con todos los datos inventados. El ejercicio fue más
-    revelador de lo previsto.
+    Events Planner se publica como demostración desde el origen: misma
+    aplicación, mismas funciones, con datos inventados que no pasaron por
+    ninguna boda real. No es una versión limpiada después de construirla —
+    es la única versión que existe en abierto.
   </p>
 
-  <h3>Lo que apareció al buscar en serio</h3>
+  <h3>Convenciones, no excepciones</h3>
   <table class="tabla">
-    <thead><tr><th style="width:44%">Qué</th><th>Dónde estaba</th></tr></thead>
+    <thead><tr><th style="width:44%">Qué</th><th>Convención</th></tr></thead>
     <tbody>
-      <tr><td>DNI, número de cuenta, nombre legal completo y domicilio</td><td>En la plantilla de contrato, dentro del código</td></tr>
-      <tr><td>144 invitados con sus alergias</td><td>Datos de salud, en los datos de ejemplo</td></tr>
-      <tr><td>Tres móviles del equipo y un correo personal</td><td>En el estado por defecto</td></tr>
-      <tr><td>Razón social y domicilio del responsable</td><td>Visibles en el pie del acceso y en la sección legal</td></tr>
-      <tr><td>El nombre de una compañera</td><td>Repartido por once archivos: manual, portal, documentos y ajustes</td></tr>
-      <tr><td>Una boda real entera</td><td>En un archivo que no cargaba nadie, pero que se publicaba igual</td></tr>
+      <tr><td>Correos</td><td><code>@example.com</code> — el dominio que la RFC&nbsp;2606 reserva justo para esto</td></tr>
+      <tr><td>Teléfonos</td><td><code>+34 600 000 0xx</code>, un bloque sin abonados</td></tr>
+      <tr><td>DNI</td><td><code>00000000T</code>, el ejemplo canónico</td></tr>
+      <tr><td>IBAN</td><td>todo ceros, no pasa el dígito de control</td></tr>
+      <tr><td>Parejas, invitados y proveedores</td><td>generados con semilla fija: reproducibles, nunca personas reales</td></tr>
+      <tr><td>Fotografías</td><td>solo material sin nombres impresos ni caras identificables</td></tr>
     </tbody>
   </table>
 
-  <h3>El hallazgo que ninguna herramienta encuentra</h3>
-  <p>Siete fotografías tenían el problema <strong>dentro de la imagen</strong>. Cuatro llevaban impreso en la señalética el nombre completo de una pareja y la fecha de su boda. Otra ponía los nombres de otra pareja y se usaba de fondo de la barra lateral. La última mostraba a los novios con <strong>una veintena de invitados de cara</strong>.</p>
-  <p>Ninguna búsqueda de texto detecta eso. Se encontró abriendo las veintiuna imágenes del proyecto una a una.</p>
+  <h3>La comprobación, automatizada</h3>
+  <p>Antes de publicar, un script revisa el paquete entero —texto, imágenes incrustadas, teléfonos en cualquier formato— buscando que ninguna convención se haya roto. <strong>Si aparece un solo hallazgo, no se publica.</strong></p>
 
-  <div class="evidencia">✓ DNI · ✓ IBAN · ✓ nombre legal · ✓ razón social · ✓ domicilio
-✓ teléfonos (3) · ✓ correo personal · ✓ dominio del cliente
-✓ parejas reales (3) · ✓ equipo real (3) · ✓ credenciales (4)
-✓ fotos identificables (22 imágenes revisadas)
+  <div class="evidencia">✓ DNI real · ✓ IBAN real · ✓ dominio real · ✓ teléfonos reales
+✓ nombres fuera de convención · ✓ credenciales de nube
+✓ fotografías identificables
 
-═══ LIMPIO: nada real en el paquete ═══</div>
+═══ LIMPIO: nada fuera de convención en el paquete ═══</div>
+
+  <h3>El límite que ninguna herramienta cubre</h3>
+  <p>Un script encuentra texto y metadatos; no mira dentro de una fotografía. Las imágenes del proyecto se revisaron una a una antes de entrar al repositorio público, precisamente porque ese es el hueco que el propio script no puede cerrar.</p>
 
   <div class="aviso">
     <b>Decisión de producto</b>
-    <p>La demostración conserva la identidad de Algo Entre Manos —es trabajo hecho para un cliente real y tiene sentido que se vea— pero lleva una franja fija en todas las pantallas advirtiendo de que los datos son inventados. Sin botón de cerrar: si se pudiera cerrar, se cerraría en el primer minuto.</p>
+    <p>La demostración vive en su propio dominio con la identidad real de Events Planner —tiene sentido que se vea bien— pero lleva una franja fija en todas las pantallas advirtiendo de que los datos son de ejemplo. Sin botón de cerrar: si se pudiera cerrar, se cerraría en el primer minuto y ya no lo vería nadie más.</p>
   </div>
 </section>
 
@@ -1409,19 +1412,16 @@ punto (151,683) → responde el botón que está en (721,984)</div>
     Versión publicable con la misma interfaz, sin credenciales ni datos reales.
     Funciona íntegramente en el navegador de quien la visita.
   </p>
-  <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-btn">Abrir aem.rodd.es</a>
+  <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-btn">Abrir la demo</a>
   <div class="demo-creds">
     <span><b>Usuario:</b> admin</span>
     <span><b>Contraseña:</b> admin</span>
     <span><b>Portal novios:</b> demo2026</span>
   </div>
-  <p style="margin-top:40px">
-    <a href="/assets/aem/AEM-Planner-Informe-UX.pdf" target="_blank" rel="noopener" style="color:var(--tinta);border-bottom:1px solid var(--linea);font-size:.9rem">↓ Descargar informe completo (PDF · 12 páginas)</a>
-  </p>
 </section>
 
 <footer>
-  <div class="aem-firma">Algo Entre Manos</div>
+  <div class="aem-firma">Events Planner</div>
   <p style="font-size:.85rem">
     Diseño de producto, sistema visual y desarrollo por <a href="/">Rodrigo Negrete</a>.
     <br>

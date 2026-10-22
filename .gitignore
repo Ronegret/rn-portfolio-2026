@@ -10,3 +10,9 @@ dist/
 tmp/
 zodi-chat/
 
+# tool-local caches (not portfolio source)
+.playwright-mcp/
+.taste-skill/
+.upload/
+.claude/settings.local.json
+

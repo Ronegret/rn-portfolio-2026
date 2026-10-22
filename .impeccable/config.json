@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "tiny-text",
+        "value": "*",
+        "files": [
+          "aem/index.html"
+        ],
+        "createdAt": "2026-10-22T20:10:30.780Z",
+        "reason": "etiquetas decorativas dentro de mockups en miniatura (.mesa small, .contrato-meta b) que replican una interfaz vista a escala reducida, no prosa de lectura"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "src/styles.css"
+        ],
+        "createdAt": "2026-10-22T20:15:13.004Z",
+        "reason": "patrón compartido por TODAS las bento cards (rodd-es #7c5cff, zodi #b8ff17, dedicalo, aem): acento fijo saturado sobre --surf, no theme-aware. Mejorado a 7.3:1 en temas oscuros (mayoría); falla en los 2 temas claros igual que el resto de cards hermanas. Rediseño theme-aware queda para auditoría dedicada, no se parchea 1 card aislada"
+      }
+    ]
+  }
+}

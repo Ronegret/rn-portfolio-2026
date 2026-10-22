@@ -1719,11 +1719,11 @@ body[data-cursor="mira"]::after {
 @media(max-width: 860px) {
   .rodd-es-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
 }
-/* AEM Planner — Algo Entre Manos · Hero editorial con 3 móviles */
+/* Events Planner — Hero editorial con login real (olivo + oro) */
 .aem-card .bc-img {
   position: relative;
   overflow: hidden;
-  background: #f0f0e6;
+  background: #f4efe4;
   min-height: 340px;
   border: 0 !important;
   border-right: 0 !important;
@@ -1751,23 +1751,23 @@ body[data-cursor="mira"]::after {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #4e6359 0 62%, #e2e735 62% 100%);
+  background: linear-gradient(90deg, #56603f 0 62%, #d6b36b 62% 100%);
   z-index: 2;
 }
 .aem-tag-hi {
-  background: #4e6359 !important;
+  background: #56603f !important;
   color: #fff !important;
-  border-color: #4e6359 !important;
+  border-color: #56603f !important;
 }
 .aem-tag {
-  background: rgba(78,99,89,.08) !important;
-  color: #33463d !important;
-  border-color: rgba(78,99,89,.24) !important;
+  background: rgba(86,96,63,.08) !important;
+  color: #2f3a24 !important;
+  border-color: rgba(86,96,63,.24) !important;
 }
 .aem-card .bc-m {
-  color: #4e6359;
-  border-color: rgba(78,99,89,.28);
-  background: rgba(226,231,53,.10);
+  color: #d6b36b;
+  border-color: rgba(214,179,107,.34);
+  background: rgba(214,179,107,.12);
 }
 @media(max-width: 860px) {
   .aem-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
