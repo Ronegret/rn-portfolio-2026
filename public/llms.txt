@@ -1,0 +1,31 @@
+# Rodrigo Negrete
+
+> Portfolio de Rodrigo Negrete, AI Product Designer y UX/UI Designer con foco en agentes de IA, automatización y producto digital. Barcelona, trabajo remoto en la UE. Disponible para roles de AI Product Designer, Product Designer UX/UI, AI Automation Specialist y Design Technologist.
+
+Idiomas del sitio: español, catalán e inglés. El contenido de cada caso de estudio distingue lo verificado de las hipótesis.
+
+## Casos de estudio
+
+- [Capsule Corp](https://rodrigonegrete.es/capsule-corp/): un CV gamificado inspirado en Dragon Ball, con scroll como línea de tiempo y seis transformaciones.
+- [Este portfolio](https://rodrigonegrete.es/portfolio-2026/): cada animación, sonido e interacción documentados con su investigación, medición y descarte.
+- [Kettelbro](https://rodrigonegrete.es/kettelbro/): PWA de entrenamiento de pesa rusa, caso UX/UI con decisiones de diseño.
+- [Events Planner](https://rodrigonegrete.es/aem/): sistema para planificar bodas y eventos, versión de demostración.
+- [ZODI](https://rodrigonegrete.es/zodi/): producto de IA de astrología con tono propio.
+- [Dedícalo Play](https://rodrigonegrete.es/dedicalo-play/): juego musical multijugador en tiempo real.
+- [Rodd.es](https://rodrigonegrete.es/rodd-es/): biblioteca de recursos web con previsualización.
+- [Invitoo](https://rodrigonegrete.es/invitoo/): invitaciones de boda digitales con IA.
+- [Just Enjoy](https://rodrigonegrete.es/just-enjoy/): planificador de viajes con agentes y automatización (trabajo de máster en equipo).
+- [PDF Rodd](https://rodrigonegrete.es/pdf-rodd/): editor de PDF en el navegador.
+
+## Currículum
+
+- [CV en HTML](https://rodrigonegrete.es/cv/)
+- [CV en PDF, español](https://rodrigonegrete.es/cv/Rodrigo-Negrete-AI-Product-Designer-CV-ES.pdf)
+- [CV en PDF, inglés](https://rodrigonegrete.es/cv/Rodrigo-Negrete-AI-Product-Designer-CV-EN.pdf)
+
+## Otros enlaces
+
+- [Portada](https://rodrigonegrete.es/)
+- [Mapa del sitio](https://rodrigonegrete.es/sitemap-index.xml)
+- [Código fuente de este portfolio](https://github.com/Ronegret/rn-portfolio-2026)
+- [Capsule Corp en vivo](https://db.rodrigonegrete.es/)
