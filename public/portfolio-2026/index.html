@@ -711,6 +711,22 @@ footer a{color:var(--acc)}
       <article class="card"><span class="tg tg-v">Verificado</span><h3>Fallos reales de la QA</h3><ul class="l"><li>Contraste de los chips por tema.</li><li>El dock en móvil tapaba texto.</li><li>Animaciones infinitas sin guarda de <code>reduced</code>.</li><li>Un título sin traducir.</li></ul></article>
       <article class="card"><span class="tg tg-l">Lectura mía</span><h3>Lo que aprendí</h3><p>Un agente que implementa no es el que debe revisar. Los fallos más útiles los halló la QA con Playwright, a 1440 y 390 px, no la implementación original.</p></article>
     </div>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Herramientas de IA y de calidad usadas, con su evidencia">
+    <table class="tbl"><caption>Herramientas que sí se usaron en este sitio y dónde queda su rastro en el repositorio.</caption>
+      <thead><tr><th scope="col">Herramienta</th><th scope="col">Para qué se usó</th><th scope="col">Evidencia</th></tr></thead>
+      <tbody>
+        <tr><td>Claude Code</td><td>Implementación y revisión por agentes que yo dirigía</td><td>Trailer <code>Co-Authored-By</code> en los commits (<code>git log</code>)</td></tr>
+        <tr><td>Git worktrees</td><td>Cada subagente trabaja en una rama aislada y se fusiona después</td><td>Fusiones <code>worktree-agent-*</code> en el historial</td></tr>
+        <tr><td>CLAUDE.md y graphify</td><td>Reglas del proyecto y grafo de conocimiento del código para los agentes</td><td><code>CLAUDE.md</code> en la raíz. El grafo no se versiona</td></tr>
+        <tr><td>Impeccable</td><td>Detector de calidad de diseño; triage de 199 hallazgos</td><td><code>.impeccable/config.json</code> (<code>703d3cc</code>)</td></tr>
+        <tr><td>Playwright</td><td>QA a 1440 y 390 px y capturas reales de demos</td><td>Mensaje del commit <code>24a9cee</code> (capturas); QA descrita en esta sección</td></tr>
+        <tr><td>axe-core y Lighthouse</td><td>Accesibilidad y rendimiento móvil, en local</td><td>Mensaje del commit <code>2cd6ea0</code>; mediciones de la sección 08</td></tr>
+        <tr><td>HyperFrames</td><td>Proyecto base de un reel (HTML a vídeo), fuera del build</td><td><code>video/reel/</code> (<code>1df5500</code>). Solo el proyecto base: sin render publicado</td></tr>
+        <tr><td>Remotion</td><td>Teaser original de Capsule Corp mostrado en una tarjeta</td><td>Commit <code>692afe1</code></td></tr>
+        <tr><td>Vercel y GitHub</td><td>Despliegue y ramas</td><td><code>vercel.json</code> (<code>c5e8238</code>); remoto <code>origin</code></td></tr>
+      </tbody>
+    </table>
+    </div>
     <div class="note"><b>Límite de mi QA.</b> Se probó en tres temas y dos viewports, no en los cinco temas ni en dispositivos reales.</div>
   </div>
 </section>
