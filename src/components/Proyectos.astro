@@ -258,6 +258,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
         </a>
       </div>
     </div>
+    <script is:inline>try{var f=sessionStorage.getItem('rn-f');if(f&&f!=='all'){document.querySelectorAll('#proyectos .bento>[data-cats]').forEach(function(c){c.classList.toggle('fhid',(' '+c.dataset.cats+' ').indexOf(' '+f+' ')<0)});document.querySelectorAll('#proyectos .fb').forEach(function(b){var on=b.dataset.f===f;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}}catch(e){}</script><!-- filtro activo al volver de un caso: se aplica antes del primer pintado, sin esperar a la hidratación -->
     </ProjectFilter>
   </div>
 </section>

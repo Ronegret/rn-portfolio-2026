@@ -15,35 +15,54 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* Volver al portfolio: la imagen del hero viaja de vuelta a su tarjeta */
-  ::view-transition-group(rn-hero) { animation-duration: .52s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); }
-  ::view-transition-image-pair(rn-hero) { overflow: clip; animation-name: rn-rad; animation-duration: .52s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both; }
+  /* Detrás de la página que se hunde o se cierra: el fondo de la portada oscurecido (nunca blanco/negro puro) */
+  ::view-transition { background: color-mix(in srgb, var(--rn-bg, #000) 22%, #000); }
+
+  /* Volver al portfolio: la imagen del hero viaja de vuelta a su tarjeta (curva de salida suave, algo más rápida que la ida) */
+  ::view-transition-group(rn-hero) { animation-duration: .44s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); }
+  ::view-transition-image-pair(rn-hero) { overflow: clip; animation-name: rn-rad; animation-duration: .44s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); animation-fill-mode: both; }
   ::view-transition-old(rn-hero), ::view-transition-new(rn-hero) { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
   @keyframes rn-rad { from { border-radius: 12px; } to { border-radius: var(--rn-br, 16px); } }
 
-  /* Cortinilla inversa: la página del caso se cierra sobre la tarjeta de origen y deja ver la portada */
+  /* Cortinilla inversa: la página del caso se cierra sobre la tarjeta de origen (o, en la baraja móvil, sobre el centro) y deja ver la portada */
   :root:active-view-transition-type(rn-back)::view-transition-old(root) { animation-name: rn-close; z-index: 2; }
   :root:active-view-transition-type(rn-back)::view-transition-new(root) { animation-name: rn-rise; z-index: 1; }
   :root:active-view-transition-type(rn-back)::view-transition-old(root), :root:active-view-transition-type(rn-back)::view-transition-new(root) {
-    mix-blend-mode: normal; animation-duration: .52s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both;
+    mix-blend-mode: normal; animation-duration: .44s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); animation-fill-mode: both;
   }
-  @keyframes rn-close {
-    from { clip-path: inset(0 round 0); }
-    to { clip-path: inset(var(--rn-t, 50%) var(--rn-r, 50%) var(--rn-b, 50%) var(--rn-l, 50%) round var(--rn-br, 24px)); }
+  @keyframes rn-close { /* el último tramo funde la página: al quedar en el tamaño de la tarjeta no hay "pop" al terminar */
+    0% { clip-path: inset(0 round 0); opacity: 1; }
+    70% { opacity: 1; }
+    100% { clip-path: inset(var(--rn-t, 45%) var(--rn-r, 35%) var(--rn-b, 45%) var(--rn-l, 35%) round var(--rn-br, 24px)); opacity: 0; }
   }
   @keyframes rn-rise { from { transform: scale(1.06); filter: brightness(.55); } to { transform: none; filter: none; } }
 
-  /* Navegación genérica (enlace sin tarjeta): se abre desde el elemento pulsado */
+  /* Navegación genérica (enlace sin tarjeta): se abre desde el elemento pulsado o sube desde abajo */
   :root:active-view-transition-type(rn-nav)::view-transition-old(root) { animation-name: rn-sink; z-index: 1; }
   :root:active-view-transition-type(rn-nav)::view-transition-new(root) { animation-name: rn-open; z-index: 2; }
   :root:active-view-transition-type(rn-nav)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) {
-    mix-blend-mode: normal; animation-duration: .5s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both;
+    mix-blend-mode: normal; animation-duration: .5s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); animation-fill-mode: both;
   }
-  @keyframes rn-sink { to { transform: scale(.95); filter: brightness(.55); } }
+  @keyframes rn-sink { to { transform: scale(.94); filter: brightness(.5); } }
   @keyframes rn-open {
-    from { clip-path: inset(var(--rn-t, 50%) var(--rn-r, 50%) var(--rn-b, 50%) var(--rn-l, 50%) round var(--rn-br, 24px)); }
+    from { clip-path: inset(var(--rn-t, 100%) var(--rn-r, 0%) var(--rn-b, 0%) var(--rn-l, 0%) round var(--rn-br, 0px)); }
     to { clip-path: inset(0 round 0); }
   }
+}
+
+/* Móvil: algo más corta */
+@media (prefers-reduced-motion: no-preference) and (max-width: 700px) {
+  ::view-transition-group(rn-hero), ::view-transition-image-pair(rn-hero),
+  :root:active-view-transition-type(rn-back)::view-transition-old(root), :root:active-view-transition-type(rn-back)::view-transition-new(root) { animation-duration: .4s; }
+}
+
+/* Espera de red: barra fina arriba y tarjeta pulsada (las pone case-transitions.js al hacer clic; pageswap las quita) */
+@media (prefers-reduced-motion: no-preference) {
+  html.rn-wait::after { content: ''; position: fixed; z-index: 99999; top: 0; left: 0; right: 0; height: 2px; pointer-events: none; background: var(--a1, #fff); transform-origin: 0 50%; transform: scaleX(.04);
+    animation-name: rn-bar; animation-duration: 2.6s; animation-timing-function: cubic-bezier(.1, .7, .2, 1); animation-fill-mode: forwards; }
+  html.rn-leaving::after { display: none; }
+  @keyframes rn-bar { to { transform: scaleX(.88); } }
+  a.rn-going { scale: .98; filter: brightness(.94); }
 }
 
 /* ───────── 2. Indicador de capítulos (fijo, discreto) ───────── */

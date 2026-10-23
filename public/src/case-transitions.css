@@ -1,5 +1,6 @@
 /* Transiciones de página (casos): la cortinilla nace de la tarjeta pulsada y el hero se forma desde su imagen.
-   Los nombres (rn-hero) y las variables --rn-* los pone case-transitions.js; sin ellos queda un fundido corto. */
+   Los nombres (rn-hero) y las variables --rn-* los pone case-transitions.js; sin ellos queda un wipe desde abajo.
+   Curva única de salida suave (arranca rápido, aterriza despacio): la espera de red ya consume tiempo, no se le suma un arranque lento. */
 @view-transition { navigation: auto; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -7,20 +8,39 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Detrás de la página que se hunde: el fondo de la página de destino oscurecido (nunca blanco/negro puro) */
+  ::view-transition { background: color-mix(in srgb, var(--rn-bg, #000) 22%, #000); }
+
   /* Elemento compartido: la imagen de la tarjeta viaja y se recorta (cover) hasta el hero */
-  ::view-transition-group(rn-hero) { animation-duration: .56s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); }
-  ::view-transition-image-pair(rn-hero) { overflow: clip; animation-name: rn-rad; animation-duration: .56s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both; }
+  ::view-transition-group(rn-hero) { animation-duration: .52s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); }
+  ::view-transition-image-pair(rn-hero) { overflow: clip; animation-name: rn-rad; animation-duration: .52s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); animation-fill-mode: both; }
   ::view-transition-old(rn-hero), ::view-transition-new(rn-hero) { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
   @keyframes rn-rad { from { border-radius: var(--rn-br, 16px); } to { border-radius: 12px; } }
 
-  /* Cortinilla: la página nueva se abre desde el rectángulo pulsado; la vieja se hunde y oscurece */
+  /* Cortinilla: la página nueva se abre desde el rectángulo pulsado (sin rectángulo, sube desde abajo); la vieja se hunde y oscurece */
   :root:active-view-transition-type(rn-open)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-old(root) { animation-name: rn-sink; z-index: 1; }
   :root:active-view-transition-type(rn-open)::view-transition-new(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) { animation-name: rn-open; z-index: 2; }
   :root:active-view-transition-type(rn-open)::view-transition-old(root), :root:active-view-transition-type(rn-open)::view-transition-new(root),
-  :root:active-view-transition-type(rn-nav)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) { mix-blend-mode: normal; animation-duration: .56s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both; }
-  @keyframes rn-sink { to { transform: scale(.95); filter: brightness(.55); } }
+  :root:active-view-transition-type(rn-nav)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) { mix-blend-mode: normal; animation-duration: .52s; animation-timing-function: cubic-bezier(.32, .72, 0, 1); animation-fill-mode: both; }
+  @keyframes rn-sink { to { transform: scale(.94); filter: brightness(.5); } }
   @keyframes rn-open {
-    from { clip-path: inset(var(--rn-t, 50%) var(--rn-r, 50%) var(--rn-b, 50%) var(--rn-l, 50%) round var(--rn-br, 24px)); }
+    from { clip-path: inset(var(--rn-t, 100%) var(--rn-r, 0%) var(--rn-b, 0%) var(--rn-l, 0%) round var(--rn-br, 0px)); }
     to { clip-path: inset(0 round 0); }
   }
+}
+
+/* Móvil: algo más corta; el hueco de red ya es más largo que en escritorio */
+@media (prefers-reduced-motion: no-preference) and (max-width: 700px) {
+  ::view-transition-group(rn-hero), ::view-transition-image-pair(rn-hero),
+  :root:active-view-transition-type(rn-open)::view-transition-old(root), :root:active-view-transition-type(rn-open)::view-transition-new(root),
+  :root:active-view-transition-type(rn-nav)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) { animation-duration: .46s; }
+}
+
+/* Espera de red: barra fina arriba y tarjeta pulsada (las pone case-transitions.js al hacer clic; pageswap las quita) */
+@media (prefers-reduced-motion: no-preference) {
+  html.rn-wait::after { content: ''; position: fixed; z-index: 99999; top: 0; left: 0; right: 0; height: 2px; pointer-events: none; background: var(--a1, #fff); transform-origin: 0 50%; transform: scaleX(.04);
+    animation-name: rn-bar; animation-duration: 2.6s; animation-timing-function: cubic-bezier(.1, .7, .2, 1); animation-fill-mode: forwards; }
+  html.rn-leaving::after { display: none; }
+  @keyframes rn-bar { to { transform: scaleX(.88); } }
+  a.rn-going { scale: .98; filter: brightness(.94); }
 }
