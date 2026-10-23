@@ -77,3 +77,6 @@ if (mob && ham) {
   mob.addEventListener('pointercancel', release);
   mob.addEventListener('click', (e) => { if (swallow) { e.stopPropagation(); e.preventDefault(); } }, true);
 }
+
+// Elegir idioma cierra el menú, igual que elegir tema (antes quedaba abierto bajo la cortina).
+document.addEventListener('click', (e) => { if (e.target.closest('#mob .mlb')) document.getElementById('mob-x')?.click(); });

@@ -3060,3 +3060,11 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 @media (prefers-reduced-motion: reduce) {
   .mq-i, .av-wrap, .c-aurora, .logo-dot, .tag-green, .status-available, [data-theme="saas"] body::before { animation: none !important; }
 }
+
+/* Botón flotante: se oculta al bajar y junto al contacto; en móvil, compacto (solo icono) */
+#fcta { transition: opacity .3s, translate .35s var(--ease), box-shadow .3s; }
+#fcta.fab-hide, #fcta.fab-off { translate: 0 160%; opacity: 0; pointer-events: none; }
+@media (max-width: 600px) {
+  #fcta { width: 48px; height: 48px; padding: 0; justify-content: center; font-size: 0; gap: 0; border-radius: 50%; right: max(16px, env(safe-area-inset-right)); }
+  #fcta::before { content: "✉"; font-size: 20px; line-height: 1; }
+}
