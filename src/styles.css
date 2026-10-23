@@ -1,94 +1,4 @@
 /* ═══════════════════════════════════════
-   DESIGN TOKENS — 5 ecosistemas en 1
-═══════════════════════════════════════ */
-:root {
-  --ease: cubic-bezier(.22,1,.36,1);
-  --ease-back: cubic-bezier(.34,1.56,.64,1);
-  /* Sistema tipográfico y de ritmo (mismo que public/src/case-type.css). Los temas siguen
-     mandando en familias, colores y radios (--r/--rs/--rb). */
-  --t-h1: clamp(2.25rem, 5vw, 4.5rem);   --t-h1-lh: 1.04;
-  --t-h2: clamp(1.75rem, 3.2vw, 2.75rem); --t-h2-lh: 1.1; --t-h2-ls: -.02em;
-  --t-h3: 1.375rem;                       --t-h3-lh: 1.25;
-  --t-body: clamp(1rem, .975rem + .1vw, 1.0625rem); --t-body-lh: 1.6;
-  --t-lead: clamp(1.0625rem, 1rem + .3vw, 1.25rem); --t-lead-lh: 1.55;
-  --t-measure: 66ch;
-  --t-mini: .75rem; --t-mini-ls: .14em;
-  --r-sm: 12px; --r-md: 16px; --r-pill: 999px;
-  --sh-card: 0 24px 60px -24px rgb(0 0 0/.5);
-  --ease-out: cubic-bezier(.16,1,.3,1);
-  --dur-enter: 520ms; --dur-micro: 160ms; --dur-fold: 280ms; --stagger: 60ms;
-  --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px; --sp-5: 48px;
-  --sec-y: clamp(72px, 10vw, 140px);
-  --pad-card: 24px; --gutter: 20px;
-}
-@media (min-width: 641px) { :root { --pad-card: 32px; --gutter: 48px; } }
-
-/* 01. TEMA HIGH-TECH (Dual Core AI) */
-[data-theme="saas"] {
-  --bg: #0a0a0a; --bg2: #000000; --bg3: #111111;
-  --surf: #111111; --surf2: #151515;
-  --bord: rgba(255,255,255,0.08); --bord2: rgba(255,255,255,0.15);
-  --t1: #ffffff; --t2: #a1a1aa; --t3: #7b7b84;
-  --a1: #ffffff; --a2: #00f0ff; --a3: #ff2a2a;
-  --a1g: rgba(255,255,255,0.15); --a2g: rgba(0,240,255,0.15);
-  --fd: 'Inter', sans-serif; --fb: 'Inter', sans-serif; --fm: 'Space Mono', monospace;
-  --r: 4px; --rs: 2px; --rb: 0px;
-  --sh-size: var(--t-h2);
-}
-
-/* 02. TEMA EL DIARIO DIGITAL (Periódico Clásico) */
-[data-theme="editorial"] {
-  --bg: #f4f1ea; --bg2: #e3dccf; --bg3: #d5cebd;
-  --surf: #fdfbf7; --surf2: #f4f1ea;
-  --bord: rgba(26,26,26,1); --bord2: rgba(26,26,26,1);
-  --t1: #1a1a1a; --t2: #3a3a3a; --t3: #5a5a5a;
-  --a1: #8b0000; --a2: #1a1a1a; --a3: #5a5a5a;
-  --a1g: rgba(139,0,0,0.1); --a2g: rgba(26,26,26,0.1);
-  --fd: 'Playfair Display', serif; --fb: 'Lora', serif; --fm: 'Space Mono', monospace;
-  --r: 0px; --rs: 0px; --rb: 0px;
-  --sh-size: var(--t-h2);
-}
-
-/* 03. TEMA ABSTRACT CYBER (Plasma y Neón) */
-[data-theme="cyber"] {
-  --bg: #050507; --bg2: #111116; --bg3: #1a1a24;
-  --surf: #111116; --surf2: #1a1a24;
-  --bord: rgba(0,240,255,0.2); --bord2: rgba(176,38,255,0.2);
-  --t1: #ffffff; --t2: #a0a0b0; --t3: #707080;
-  --a1: #b026ff; --a2: #00f0ff; --a3: #39ff14;
-  --a1g: rgba(176,38,255,0.2); --a2g: rgba(0,240,255,0.2);
-  --fd: 'Outfit', sans-serif; --fb: 'Outfit', sans-serif; --fm: 'Space Mono', monospace;
-  --r: 24px; --rs: 12px; --rb: 100px;
-  --sh-size: var(--t-h2);
-}
-
-/* 04. TEMA MINIMAL JOURNAL (Limpio, con sombras fluidas) */
-[data-theme="diario"] {
-  --bg: #fafafa; --bg2: #f0f0f0; --bg3: #e4e4e4;
-  --surf: #ffffff; --surf2: #fafafa;
-  --bord: rgba(0,0,0,0.06); --bord2: rgba(0,0,0,0.12);
-  --t1: #111111; --t2: #555555; --t3: #888888;
-  --a1: #0052cc; --a2: #ff6b6b; --a3: #10a37f;
-  --a1g: rgba(0,82,204,.1); --a2g: rgba(255,107,107,.1);
-  --fd: 'Inter', sans-serif; --fb: 'Inter', sans-serif; --fm: 'Space Mono', monospace;
-  --r: 16px; --rs: 12px; --rb: 100px;
-  --sh-size: var(--t-h2);
-}
-
-/* 05. TEMA FINE ART HUD (Mate Oscuro Elegante) */
-[data-theme="hud"] {
-  --bg: #060606; --bg2: #0e0e0e; --bg3: #161616;
-  --surf: #181818; --surf2: #202020;
-  --bord: rgba(255,255,255,0.05); --bord2: rgba(255,255,255,0.1);
-  --t1: #f2f0ea; --t2: #7a7870; --t3: #3a3830;
-  --a1: #d4b87a; --a2: #b89050; --a3: #ece0c0;
-  --a1g: rgba(212,184,122,0.07); --a2g: rgba(184,144,80,0.09);
-  --fd: 'Playfair Display', serif; --fb: 'Outfit', sans-serif; --fm: 'Space Mono', monospace;
-  --r: 4px; --rs: 2px; --rb: 4px;
-  --sh-size: var(--t-h2);
-}
-
-/* ═══════════════════════════════════════
    RESET & UTILIDADES
 ═══════════════════════════════════════ */
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -122,24 +32,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
 @media(prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
 
 
-/* ══════════════════════════════════════════
-   INTRO — contenedor (el contenido vive en intro.css)
-════════════════════════════════════════════ */
-#preloader {
-  position: fixed; inset: 0; z-index: 100000;
-  background: var(--bg, #08090f);
-  color: var(--t1, #fff);
-  overflow: hidden;
-  pointer-events: auto;
-  clip-path: inset(0);
-  transition: clip-path .45s cubic-bezier(.76,0,.24,1), visibility 0s .45s;
-}
-#preloader.pl-out {
-  clip-path: inset(0 0 100% 0);
-  pointer-events: none;
-}
-#preloader.pl-gone { visibility: hidden; }
-html.pl-locked, body.pl-locked { overflow: hidden !important; }
+/* Tokens de tema y contenedor de la intro viven en critical.css (inline en <head>) */
 
 /* Skip link — a11y quick nav for keyboard/screen-reader users */
 .skip-link {
@@ -3079,3 +2972,28 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 .lab-feat .lab-img-web img { width: 100%; height: auto; object-fit: contain; transform: none !important; animation: none !important; translate: none !important; }
 .lab-feat:hover .lab-img-web img { scale: 1.02 !important; }
 @media (max-width: 768px) { .lab-feat .lab-img-web { height: auto; } }
+
+/* PERF: las secciones fuera de pantalla no se maquetan hasta acercarse (baja el layout inicial y el TBT).
+   Las .sec ya recortan (overflow: clip) y no contienen fixed/sticky, asi que la contencion no cambia nada visible.
+   contain-intrinsic-size = altura real medida a 1440 y 390 con todo renderizado menos el padding vertical de .sec (el tamano intrinseco es el del contenido); con "auto" el navegador recuerda la altura real tras renderizar.
+   html.cv-off (la pone main.js al pulsar un ancla) renderiza todo antes de hacer scroll para que el destino sea exacto. */
+main > section.sec { content-visibility: auto; contain-intrinsic-size: auto calc(900px - 2 * var(--sec-y)); }
+#sobre-mi { contain-intrinsic-size: auto calc(830px - 2 * var(--sec-y)); }
+#stack { contain-intrinsic-size: auto calc(970px - 2 * var(--sec-y)); }
+#proyectos { contain-intrinsic-size: auto calc(6080px - 2 * var(--sec-y)); }
+#laboratorio { contain-intrinsic-size: auto calc(1830px - 2 * var(--sec-y)); }
+#trayectoria { contain-intrinsic-size: auto calc(1370px - 2 * var(--sec-y)); }
+#testimonios { contain-intrinsic-size: auto calc(1320px - 2 * var(--sec-y)); }
+#estilos { contain-intrinsic-size: auto calc(820px - 2 * var(--sec-y)); }
+#contacto { contain-intrinsic-size: auto calc(1000px - 2 * var(--sec-y)); }
+@media (max-width: 640px) {
+  #sobre-mi { contain-intrinsic-size: auto calc(990px - 2 * var(--sec-y)); }
+  #stack { contain-intrinsic-size: auto calc(1390px - 2 * var(--sec-y)); }
+  #proyectos { contain-intrinsic-size: auto calc(1140px - 2 * var(--sec-y)); }
+  #laboratorio { contain-intrinsic-size: auto calc(1800px - 2 * var(--sec-y)); }
+  #trayectoria { contain-intrinsic-size: auto calc(1850px - 2 * var(--sec-y)); }
+  #testimonios { contain-intrinsic-size: auto calc(1230px - 2 * var(--sec-y)); }
+  #estilos { contain-intrinsic-size: auto calc(990px - 2 * var(--sec-y)); }
+  #contacto { contain-intrinsic-size: auto calc(1230px - 2 * var(--sec-y)); }
+}
+html.cv-off main > section.sec { content-visibility: visible; }

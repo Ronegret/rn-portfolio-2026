@@ -129,7 +129,9 @@ if (tg && tg.children.length > 1) {
       : slides.reduce((b, s, i) => Math.abs(s.offsetLeft - pl - tg.scrollLeft) < Math.abs(slides[b].offsetLeft - pl - tg.scrollLeft) ? i : b, 0);
     paint();
   };
-  const io = new IntersectionObserver(sync, { root: tg, threshold: [.5, 1] });
+  // La primera entrega del observer es solo el estado inicial (cur = 0): sync() obliga a maquetar la seccion durante la carga, asi que se omite
+  let armed = false;
+  const io = new IntersectionObserver(() => { if (armed) sync(); else armed = true; }, { root: tg, threshold: [.5, 1] });
   slides.forEach(s => io.observe(s));
 }
 

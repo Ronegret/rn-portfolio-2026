@@ -76,8 +76,15 @@ if (bento) {
       if (performance.now() - t0 < 2500) to = setTimeout(() => { raf = requestAnimationFrame(measure); }, 220);
       else raf = requestAnimationFrame(measure);
     };
-    new ResizeObserver(later).observe(bento); // dispara al observar: mide en el primer frame, sin layout forzado durante la carga
-    new MutationObserver(rs => { if (rs.some(r => r.target === bento || r.target.parentElement === bento)) later(); }) // solo .fhid / m-collapsed, no cada .vis o hover del interior
-      .observe(bento, { attributes: true, attributeFilter: ['class'], subtree: true });
+    const start = () => {
+      new ResizeObserver(later).observe(bento); // dispara al observar: mide en el primer frame, sin layout forzado durante la carga
+      new MutationObserver(rs => { if (rs.some(r => r.target === bento || r.target.parentElement === bento)) later(); }) // solo .fhid / m-collapsed, no cada .vis o hover del interior
+        .observe(bento, { attributes: true, attributeFilter: ['class'], subtree: true });
+    };
+    // Medir fuerza el layout de la seccion de proyectos (la mas alta; content-visibility la omite hasta acercarse): se hace al acercarse al viewport, no durante la carga
+    if ('IntersectionObserver' in window) {
+      const sio = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { sio.disconnect(); start(); } }, { rootMargin: '1500px 0px' });
+      sio.observe(bento);
+    } else start();
   }
 }

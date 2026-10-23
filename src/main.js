@@ -34,7 +34,7 @@ let LANG = 'es';
   const counter = document.getElementById('pl-count');
   const totalMs = reduced ? 300 : 1000;
   const startMs = reduced ? 0 : 150;
-  const t0 = performance.now();
+  const t0 = window.__t0 || performance.now(); // __t0 = primer pintado de la intro (Layout.astro): su animacion CSS arranca ahi, no cuando carga este modulo
   function tick(now){
     const p = Math.min(1, Math.max(0, (now - t0 - startMs) / totalMs));
     if(counter) counter.textContent = String(Math.round(p * 99)).padStart(2,'0');
@@ -60,7 +60,7 @@ let LANG = 'es';
     }, 550);
   }
   const holdMs = reduced ? 400 : 1250; // intro cinética (intro.css/js): hero interactivo a ~1,25 s
-  setTimeout(finish, holdMs);
+  setTimeout(finish, Math.max(0, holdMs - (performance.now() - t0)));
 
   // Skip con click o tecla
   function skip(){ if(!done) finish(); }
@@ -130,6 +130,8 @@ document.addEventListener('click', e => {
   if(!target) return;
   e.preventDefault();
   if(mob && mob.classList.contains('open')) closeMob();
+  document.documentElement.classList.add('cv-off'); // renderiza todas las secciones (content-visibility) para que el scroll llegue exacto
+  document.dispatchEvent(new Event('rn:layout')); // y los modulos que miden/crean contenido bajo demanda lo hacen ya (layout definitivo)
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   history.pushState(null, '', hash);
 });

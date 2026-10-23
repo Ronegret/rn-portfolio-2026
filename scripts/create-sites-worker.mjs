@@ -54,7 +54,7 @@ export default {
 
     if (asset.status !== 404) {
       const response = new Response(asset.body, asset);
-      if ((mappedPath.startsWith("/assets/") || mappedPath.startsWith("/_astro/"))) {
+      if ((mappedPath.startsWith("/assets/") || mappedPath.startsWith("/_astro/") || mappedPath.startsWith("/fonts/"))) {
         response.headers.set("Cache-Control", "public, max-age=31536000, immutable");
       }
       return response;

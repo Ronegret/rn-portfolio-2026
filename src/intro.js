@@ -1,4 +1,3 @@
-import './intro.css';
 
 /* Ráfaga de líneas ligeras (canvas 2D) que estalla desde el puntero/toque (o el centro) cuando el nombre "revienta".
    El resto de la intro es CSS; main.js decide cuándo termina. */
@@ -49,5 +48,5 @@ import './intro.css';
     if (!pl.isConnected || pl.classList.contains('pl-out') || document.hidden) return;
     t0 = last = performance.now();
     requestAnimationFrame(frame);
-  }, 500);
+  }, Math.max(0, 500 - (performance.now() - (window.__t0 || performance.now())))); // el retardo CSS (.5 s) cuenta desde el primer pintado (__t0)
 })();
