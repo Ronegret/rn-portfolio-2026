@@ -109,44 +109,6 @@
 }
 .sx-spot.link i::after { scale: 1.6; background: color-mix(in srgb, var(--a1) 9%, transparent); }
 
-/* ───── (B3) Testimonios: carrusel scroll-snap x proximity, cita gigante ───── */
-#testimonios .test-g {
-  position: relative; display: flex !important; gap: clamp(1rem, 2vw, 1.5rem); overflow-x: auto; overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity; scrollbar-width: none; padding-block: .6rem; margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0;
-}
-#testimonios .test-g::-webkit-scrollbar { display: none; }
-#testimonios .test-g:focus-visible { outline: 2px solid var(--a1); outline-offset: 4px; }
-#testimonios .test-g > .test-c { flex: 0 0 min(88%, 900px); scroll-snap-align: start; padding: clamp(1.6rem, 4vw, 3.2rem); gap: clamp(1.2rem, 3vw, 2rem); min-width: 0; }
-#testimonios .tq {
-  font-family: var(--fd); font-style: normal; font-weight: 500; color: var(--t1); letter-spacing: -.01em;
-  font-size: clamp(1.2rem, 1rem + 1.9vw, 2.2rem); line-height: 1.28;
-}
-#testimonios .tq::before { content: '\201C'; font-size: clamp(4.5rem, 10vw, 8rem); line-height: .55; margin: .15em 0 .1em; height: .5em; }
-#testimonios .tq::after { content: '\201D'; color: var(--a1); font-family: var(--fd); }
-#testimonios .tav {
-  --sx-sq: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0C85 0 100 15 100 50S85 100 50 100 0 85 0 50 15 0 50 0Z'/%3E%3C/svg%3E");
-  width: 64px; height: 64px; font-size: 20px;
-  -webkit-mask: var(--sx-sq) center / 100% 100% no-repeat; mask: var(--sx-sq) center / 100% 100% no-repeat;
-}
-#testimonios .tav::before { inset: 0; }
-#testimonios .tav span, #testimonios .tav-photo {
-  width: calc(100% - 4px); height: calc(100% - 4px); border-radius: 0;
-  -webkit-mask: var(--sx-sq) center / 100% 100% no-repeat; mask: var(--sx-sq) center / 100% 100% no-repeat;
-}
-.sx-car { display: flex; align-items: center; justify-content: flex-end; gap: .9rem; margin-top: 1rem; font-family: var(--fm); font-size: 12px; letter-spacing: .12em; color: var(--t2); }
-.sx-car button {
-  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--rb, 50%);
-  border: 1px solid var(--bord2); background: var(--surf); color: var(--t1); cursor: pointer;
-  transition: background-color .16s, color .16s, border-color .16s, opacity .16s;
-}
-.sx-car button:hover { background: var(--a1); color: var(--bg); border-color: var(--a1); }
-.sx-car button:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
-.sx-car button[aria-disabled="true"] { opacity: .35; cursor: default; background: var(--surf); color: var(--t1); border-color: var(--bord2); }
-@media (max-width: 640px) {
-  #testimonios .test-g > .test-c { flex-basis: 88%; }
-  .sx-car { justify-content: space-between; }
-}
-
 /* ───── (B4) Estilos: barrido circular del tema (el clip-path lo anima sections.js via WAAPI) ───── */
 html.sx-vt::view-transition-old(root), html.sx-vt::view-transition-new(root) {
   animation-name: none; animation-duration: 0s; mix-blend-mode: normal;
