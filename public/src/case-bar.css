@@ -1,0 +1,13 @@
+/* Casos: botón Volver homogéneo (píldora de 44 px, radio 999, a 16 px del borde), igual que kettelbro, aem y portfolio-2026. */
+:is(nav, header) > a[href="/#proyectos"]:not(.cf-btn),
+.nav-inner > a.back-link[href="/#proyectos"] {
+  position: fixed; top: 16px; left: max(16px, env(safe-area-inset-left)); z-index: 99; margin: 0;
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem; box-sizing: border-box;
+  width: auto; min-height: 44px; padding: 0 16px; border-radius: 999px;
+  color: #fff; background: rgba(10, 10, 12, .74); border: 1px solid rgba(255, 255, 255, .2);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  font: 600 .9rem/1 system-ui, sans-serif; text-decoration: none; text-transform: none; letter-spacing: 0;
+  box-shadow: none; transform: none; overflow: visible;
+}
+:is(nav, header) > a[href="/#proyectos"]:hover { background: rgba(10, 10, 12, .9); transform: none; filter: none; }
+:is(nav, header, .nav-inner):has(> a[href="/#proyectos"]) { justify-content: flex-end; }
