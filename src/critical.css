@@ -4,6 +4,9 @@
 html { background: #08090f; }
 /* Mientras las hojas principales no han llegado, el contenido detras de la intro no se pinta (sin FOUC, sin CLS, sin layout caro en el primer frame) */
 html.cp body > :not(#preloader):not(script):not(style):not(noscript) { display: none !important; }
+/* Segundo paso del reveal: primero solo el hero (el LCP) y, un frame despues, el resto: dos tareas de layout cortas en vez de una larga */
+html.cp2 body > :not(#preloader):not(main):not(script):not(style):not(noscript) { display: none !important; }
+html.cp2 main > :not(#hero) { display: none !important; }
 /* ═══════════════════════════════════════
    DESIGN TOKENS — 5 ecosistemas en 1
 ═══════════════════════════════════════ */

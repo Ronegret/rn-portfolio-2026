@@ -27,7 +27,9 @@ import fonts from '../fonts.css?raw';
 try{skip=!!(d.referrer&&new URL(d.referrer).origin===location.origin)||sessionStorage.getItem('intro_seen')==='1'||/[?&]intro=0/.test(location.search)}catch(e){}
 if(skip){res();return}
 h.classList.add('cp');
-function done(){h.classList.remove('cp');res()}
+var go=0;function done(){if(go)return;go=1;h.classList.add('cp2');h.classList.remove('cp');
+function end(){h.classList.remove('cp2');res()}
+requestAnimationFrame(function(){requestAnimationFrame(end)});setTimeout(end,300)}
 try{new PerformanceObserver(function(l,o){if(l.getEntriesByName('first-contentful-paint').length){o.disconnect();setTimeout(done,0)}}).observe({type:'paint',buffered:true})}catch(e){}
 setTimeout(done,1500)})(document);
 </script>
