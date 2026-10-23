@@ -837,3 +837,35 @@ body {
 
 /* auditoria 23-oct: en pantallas muy anchas "automatizaciones." no desborda la columna del chat */
 @media (min-width: 1100px) { .split.reverse h2 { font-size: clamp(2.25rem, 5vw, 4.4rem); } }
+
+/* Auditoría: barra superior (44 px, radio 999, a 16 px), hero más compacto y marco del póster */
+.z-hero { padding-top: 76px; }
+.z-nav { position: fixed; z-index: 99; top: 16px; left: 16px; right: 16px; min-height: 0; pointer-events: none; }
+.z-nav > a { pointer-events: auto; min-height: 44px; border-radius: 999px; padding: 0 18px; }
+.back-link { background: rgba(5,5,7,.78); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.hero-grid { min-height: calc(100svh - 76px); align-items: start; align-content: center; }
+.hero-copy h1 { font-size: clamp(2.5rem, 5.2vw, 4.5rem); max-width: 14ch; line-height: 1.04; letter-spacing: -.035em; }
+.hero-copy .z-logo-link { width: 120px; margin: 0 0 1.1rem; }
+.hero-copy .hero-lead { margin-top: 1.25rem; max-width: 62ch; }
+.hero-art { max-width: 560px; margin-left: auto; width: 100%; margin-top: 138px; }
+.tarot-frame { border-color: rgb(255 255 255 / .14); border-radius: 14px; box-shadow: 0 24px 60px -20px #000a; }
+.tarot-frame img { border-radius: 8px; }
+@media (max-width: 980px) {
+  .hero-grid { min-height: 0; display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .hero-copy { display: contents; }
+  .hero-copy .z-logo-link { order: 1; }
+  .hero-copy .eyebrow { order: 2; }
+  .hero-copy h1 { order: 3; }
+  .hero-copy .hero-actions { order: 4; margin: 1.4rem 0 1.6rem; }
+  .hero-art { order: 5; margin: 0 auto 1.6rem; max-width: min(560px, calc(38svh * 1.8)); }
+  .hero-copy .hero-lead { order: 6; margin: 0; }
+}
+@media (max-width: 640px) {
+  .hero-copy h1 { font-size: clamp(2rem, 8.5vw, 2.75rem); letter-spacing: -.03em; }
+}
+@media (max-width: 640px) {
+  .z-nav { flex-direction: row; align-items: center; }
+  .z-nav > a { width: auto; white-space: nowrap; padding: 0 14px; font-size: 13px; }
+  .z-nav .back-link::before { margin-right: .3rem; }
+  .z-hero { padding-top: 84px; }
+}
