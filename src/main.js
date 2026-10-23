@@ -4,6 +4,7 @@ import './mobile-menu.js';
 import './motion.js';
 import './effects.js';
 import './scroll-fx.js';
+import './intro.js';
 
 let LANG = 'es';
 
@@ -29,7 +30,7 @@ let LANG = 'es';
 
   // Counter 00 -> 99 durante la linea de progreso (1.6s)
   const counter = document.getElementById('pl-count');
-  const totalMs = reduced ? 300 : 750;
+  const totalMs = reduced ? 300 : 1000;
   const startMs = reduced ? 0 : 150;
   const t0 = performance.now();
   function tick(now){
@@ -56,12 +57,14 @@ let LANG = 'es';
       pl.remove();
     }, 550);
   }
-  const holdMs = reduced ? 400 : 900; // el preloader retrasaba el LCP ~3s
+  const holdMs = reduced ? 400 : 1250; // intro cinética (intro.css/js): hero interactivo a ~1,25 s
   setTimeout(finish, holdMs);
 
   // Skip con click o tecla
   function skip(){ if(!done) finish(); }
   pl.addEventListener('pointerdown', skip);
+  addEventListener('wheel', skip, { passive: true, once: true });
+  addEventListener('touchmove', skip, { passive: true, once: true });
   window.addEventListener('keydown', e=>{
     if(e.key === 'Escape' || e.key === ' ' || e.key === 'Enter') skip();
   });

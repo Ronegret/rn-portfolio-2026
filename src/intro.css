@@ -1,0 +1,73 @@
+/* INTRO — nombre cinético que estalla en las especialidades.
+   Solo transform / opacity / clip-path. Longhands (el minificador fusiona shorthands). */
+#preloader .in-meta {
+  position: absolute; z-index: 2; padding: clamp(1rem, 2.4vw, 2rem);
+  font-family: 'Space Mono', ui-monospace, monospace; font-size: 11px; line-height: 1; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--t1, #fff); opacity: .5; font-variant-numeric: tabular-nums;
+}
+#preloader .in-meta-tl { top: 0; left: 0; }
+#preloader .in-meta-br { bottom: 0; right: 0; }
+
+#preloader .in-stage { position: absolute; inset: 0; display: grid; place-items: center; z-index: 1; }
+#preloader #in-fx { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+
+#preloader .in-name {
+  display: flex; flex-direction: column; align-items: center;
+  font-family: 'Outfit', 'Inter', system-ui, sans-serif; font-weight: 800; text-transform: uppercase;
+  font-size: clamp(3.2rem, 17vw, 12rem); line-height: .92; letter-spacing: -.045em;
+  animation-name: in-pulse; animation-duration: .5s; animation-delay: .5s; animation-timing-function: cubic-bezier(.34,1.56,.64,1); animation-fill-mode: both;
+}
+#preloader .in-line { display: block; overflow: hidden; padding: .04em .02em; white-space: nowrap; }
+#preloader .in-ch {
+  display: inline-block; transform: translateY(110%);
+  animation-name: in-rise; animation-duration: .45s; animation-timing-function: cubic-bezier(.22,1,.36,1); animation-fill-mode: forwards;
+  animation-delay: calc(var(--d, 0s) + var(--i) * .035s);
+}
+#preloader .in-l2 .in-ch {
+  opacity: .3;
+  animation-name: in-rise, in-fill; animation-duration: .45s, .2s;
+  animation-delay: calc(var(--d, 0s) + var(--i) * .035s), .55s;
+  animation-timing-function: cubic-bezier(.22,1,.36,1), ease-out;
+  animation-fill-mode: forwards, forwards;
+}
+#preloader .in-dot {
+  display: inline-block; width: .13em; height: .13em; margin-left: .05em; border-radius: 50%;
+  background: var(--a2, var(--a1, #7c5cff)); transform: scale(0);
+  animation-name: in-dot; animation-duration: .35s; animation-delay: .6s; animation-timing-function: cubic-bezier(.34,1.7,.64,1); animation-fill-mode: forwards;
+}
+
+/* Palabras de especialidad: salen disparadas desde el centro (detrás del nombre) */
+#preloader .in-word {
+  position: absolute; margin: 0; left: 50%; top: 50%; z-index: 0; opacity: 0; white-space: nowrap;
+  font-family: 'Space Mono', ui-monospace, monospace; font-weight: 600; font-size: clamp(.7rem, 1.6vw, 1rem); line-height: 1;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--t1, #fff); padding: .55em .9em; border: 1px solid var(--a1, currentColor); border-radius: 100px;
+  animation-name: in-fly; animation-duration: .7s; animation-delay: .5s; animation-timing-function: cubic-bezier(.16,1,.3,1); animation-fill-mode: both;
+}
+
+#preloader.pl-out .in-name { transform: scale(1.12); opacity: 0; transition: transform .45s ease, opacity .3s ease; }
+
+@keyframes in-rise { to { transform: translateY(0); } }
+@keyframes in-fill { to { opacity: 1; } }
+@keyframes in-dot { to { transform: scale(1); } }
+@keyframes in-pulse { 0% { transform: scale(1); } 40% { transform: scale(1.05); } 100% { transform: scale(1); } }
+@keyframes in-fly {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.4) rotate(0deg); }
+  25% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1) rotate(var(--r)); }
+}
+
+@media (max-width: 640px) { #preloader .in-word { font-size: .62rem; padding: .5em .75em; } }
+
+/* Movimiento reducido: sin animación, solo un fundido corto al salir */
+@media (prefers-reduced-motion: reduce) {
+  #preloader .in-ch { transform: none !important; animation-name: none !important; }
+  #preloader .in-l2 .in-ch { opacity: 1 !important; }
+  #preloader .in-dot { transform: none !important; animation-name: none !important; }
+  #preloader .in-name { animation-name: none !important; }
+  #preloader .in-word { display: none; }
+  html #preloader { clip-path: none !important; transition-property: opacity !important; transition-duration: .25s !important; }
+  html #preloader.pl-out { opacity: 0; }
+  #preloader.pl-out .in-name { transform: none !important; transition: none !important; opacity: 1 !important; }
+}

@@ -1,21 +1,36 @@
+---
+const ch = (w) => [...w];
+---
 <a href="#main" class="skip-link">Saltar al contenido principal</a>
 
-<!-- PRELOADER — intro minimalista y profesional (~2s) -->
+<!-- INTRO — nombre cinético que estalla en las especialidades (decorativa, ~1,3 s; lógica en main.js + intro.js) -->
 <div id="preloader" aria-hidden="true">
-  <div class="pl-meta pl-meta-tl">Rodrigo Negrete · Barcelona</div>
-  <div class="pl-meta pl-meta-tr">AI Product Designer · 2026</div>
-  <div class="pl-center">
-    <h1 class="pl-name" aria-label="Rodrigo Negrete">
-      <span class="pl-first">Rodrigo</span><span class="pl-space">&nbsp;</span><span class="pl-last">Negrete</span><span class="pl-dot"></span>
-    </h1>
-    <p class="pl-line" aria-hidden="true"></p>
+  <div class="in-meta in-meta-tl">Rodrigo Negrete · Barcelona</div>
+  <div class="in-meta in-meta-br"><span id="pl-count">00</span></div>
+  <div class="in-stage">
+    <p class="in-word" style="--x:-34vw;--y:-30vh;--r:-4deg">AI Product Design</p>
+    <p class="in-word" style="--x:30vw;--y:-22vh;--r:3deg">UX/UI</p>
+    <p class="in-word" style="--x:-30vw;--y:28vh;--r:3deg">Automation</p>
+    <p class="in-word" style="--x:28vw;--y:30vh;--r:-3deg">AI Agents</p>
+    <div class="in-name">
+      <span class="in-line in-l1" style="--d:.04s">{ch('RODRIGO').map((c, i) => <span class="in-ch" style={`--i:${i}`}>{c}</span>)}</span>
+      <span class="in-line in-l2" style="--d:.14s">{ch('NEGRETE').map((c, i) => <span class="in-ch" style={`--i:${i}`}>{c}</span>)}<span class="in-dot"></span></span>
+    </div>
   </div>
-  <div class="pl-meta pl-meta-bl">© 2026 · Portfolio</div>
-  <div class="pl-meta pl-meta-br"><span class="pl-count" id="pl-count">00</span></div>
 </div>
 <script is:inline>
-  /* Bloquear scroll durante el preloader para evitar salto */
-  document.documentElement.classList.add('pl-locked');
+  /* Una vez por sesión (o ?intro=0): se retira antes del primer pintado. Si no, se bloquea el scroll con red de seguridad de 3 s */
+  (function () {
+    var d = document.documentElement, p = document.getElementById('preloader'), seen = false;
+    try { seen = sessionStorage.getItem('intro_seen') === '1'; sessionStorage.setItem('intro_seen', '1'); } catch (e) {}
+    if (p && (seen || /[?&]intro=0/.test(location.search))) { p.remove(); return; }
+    d.classList.add('pl-locked');
+    setTimeout(function () {
+      d.classList.remove('pl-locked');
+      if (document.body) document.body.classList.remove('pl-locked');
+      var q = document.getElementById('preloader'); if (q) q.remove();
+    }, 3000);
+  })();
 </script>
 
 <div class="lang-curtain" id="lang-curtain" aria-hidden="true">
