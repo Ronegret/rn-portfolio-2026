@@ -170,7 +170,13 @@ function setDeck(on, user) {
   markSeg(on);
   if (on) { bento.setAttribute('role', 'region'); } else { bento.removeAttribute('role'); cardsOf().forEach(c => { c.classList.remove('tj-cur'); c.removeAttribute('data-tj-hold'); c.style.removeProperty('--tj-p'); }); }
   if (user) { userChose = true; store.set('rn-deck', on ? '1' : '0'); buzz(10); }
-  if (on) { bento.scrollLeft = 0; rebuildDots(); wake(); if (user) fan(); }
+  if (on) {
+    bento.scrollLeft = 0; rebuildDots(); wake(); if (user) fan();
+    // Volver de un caso (case-transitions.js deja el slug): la baraja se coloca en su tarjeta
+    const back = window.__rnBack, c = back && cardsOf().find(k => (k.matches('a.bc') ? k : k.querySelector('a.bc'))?.getAttribute('href') === `/${back}/`);
+    window.__rnBack = '';
+    if (c && !user) { bento.scrollLeft = c.offsetLeft - (bento.clientWidth - c.offsetWidth) / 2; wake(); }
+  }
   else if (user) cardsOf()[idx]?.scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' });
 }
 

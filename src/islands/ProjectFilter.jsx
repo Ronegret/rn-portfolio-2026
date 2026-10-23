@@ -9,6 +9,9 @@ const LABELS = {
   en: { more: (n) => `Show ${n} more`, less: 'Show less' },
 };
 
+// El filtro activo sobrevive a la visita a un caso (sessionStorage): al volver, la portada queda como se dejó
+const saved = () => { try { const s = sessionStorage.getItem('rn-f'); return FILTERS.some(([id]) => id === s) ? s : 'all'; } catch { return 'all'; } };
+
 // children = .bento (HTML estatico de Astro; React no lo reconcilia, solo le conmuta clases).
 // El CSS sigue mandando: .fhid oculta por filtro y .m-collapsed > .m-extra pliega solo en movil.
 export default function ProjectFilter({ children }) {
@@ -17,6 +20,9 @@ export default function ProjectFilter({ children }) {
   const [f, setF] = useState('all');
   const [open, setOpen] = useState(false);
   const [extra, setExtra] = useState(0);
+  const mounted = useRef(false);
+
+  useEffect(() => { setF(saved()); }, []);
 
   useEffect(() => {
     const kids = [...root.current.querySelector('.bento').children];
@@ -25,8 +31,10 @@ export default function ProjectFilter({ children }) {
   }, []);
 
   useEffect(() => {
+    const t = mounted.current ? f : saved(); // primer pase: respeta el filtro guardado hasta que setF lo alcance (el script de Proyectos.astro ya lo aplicó)
+    mounted.current = true;
     root.current.querySelectorAll('.bento>[data-cats],.bfeat[data-cats]').forEach((card) => {
-      card.classList.toggle('fhid', f !== 'all' && !card.dataset.cats.split(' ').includes(f));
+      card.classList.toggle('fhid', t !== 'all' && !card.dataset.cats.split(' ').includes(t));
     });
   }, [f]);
 
@@ -50,7 +58,7 @@ export default function ProjectFilter({ children }) {
     <div style={{ display: 'contents' }} ref={root}>
       <div className="fbar rv">
         {FILTERS.map(([id, key, html]) => (
-          <button key={id} type="button" className={'fb' + (f === id ? ' on' : '')} data-f={id} data-i={key} aria-pressed={f === id} onClick={() => setF(id)} dangerouslySetInnerHTML={{ __html: html }} />
+          <button key={id} type="button" className={'fb' + (f === id ? ' on' : '')} data-f={id} data-i={key} aria-pressed={f === id} onClick={() => { setF(id); try { sessionStorage.setItem('rn-f', id); } catch (e) { /* privado */ } }} dangerouslySetInnerHTML={{ __html: html }} />
         ))}
       </div>
       {children}
