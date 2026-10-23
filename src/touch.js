@@ -345,7 +345,7 @@ function animateTo(y, ms, easing, done) {
 
 function snapTo(i, v) {
   snapI = i; calc();
-  panel.classList.toggle('tj-full', i === 0);
+  panel.classList.toggle('tj-full', snapPos[i] < 2);
   const dist = Math.abs(snapPos[i] - curY);
   animateTo(snapPos[i], clamp(300 + dist * .3 - Math.abs(v) * 90, 260, 720), SHEET_SPRING);
   buzz(8);
@@ -379,9 +379,11 @@ function openSheet(card, from) {
   dlg.showModal();
   openedAt = performance.now();
   calc();
-  panel.classList.remove('tj-full');
-  snapI = 1; setY(H + 24, false); scrim.style.opacity = 0;
-  animateTo(snapPos[1], 620, SHEET_SPRING);
+  // si la altura media ya es la máxima, el cuerpo hace scroll desde el primer gesto (sin gastar el swipe en subir la hoja)
+  const maxed = snapPos[1] < 2;
+  panel.classList.toggle('tj-full', maxed);
+  snapI = maxed ? 0 : 1; setY(H + 24, false); scrim.style.opacity = 0;
+  animateTo(snapPos[snapI], 620, SHEET_SPRING);
   $('.tj-x', dlg).focus({ preventScroll: true });
   buzz(12);
 }

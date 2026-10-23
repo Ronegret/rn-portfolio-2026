@@ -11,7 +11,7 @@ const motion = matchMedia('(prefers-reduced-motion: no-preference)');
 const secs = ['hero', 'sobre-mi', 'stack', 'proyectos', 'laboratorio', 'trayectoria', 'testimonios', 'estilos', 'contacto'].map(id => document.getElementById(id)).filter(Boolean);
 if (secs.length > 1) {
   const HOME = { es: 'Inicio', ca: 'Inici', en: 'Home' };
-  const titleOf = i => (i ? secs[i].querySelector('.eyebrow')?.textContent : HOME[document.documentElement.lang.slice(0, 2)] || HOME.es)?.trim() || '';
+  const titleOf = i => (i ? (e => e?.dataset.txt || e?.textContent)(secs[i].querySelector('.eyebrow')) : HOME[document.documentElement.lang.slice(0, 2)] || HOME.es)?.trim() || '';
   const el = document.createElement('div');
   el.className = 'chap';
   el.setAttribute('aria-hidden', 'true');
@@ -31,8 +31,21 @@ if (secs.length > 1) {
   // La sección que cruza una franja central de la pantalla es el capítulo actual
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) show(secs.indexOf(e.target), true); }), { rootMargin: '-45% 0px -50% 0px' });
   secs.forEach(s => io.observe(s));
+  // Saltos instantaneos (End, scrollTo, anclas): el observer puede no entregar el cruce; se recalcula por posicion al terminar el scroll y tras un salto grande
+  const sync = () => {
+    const y = innerHeight * .5;
+    let k = 0;
+    secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= y) k = i; });
+    if (k !== cur) show(k, false);
+  };
+  let lastY = scrollY, sr = 0;
+  addEventListener('scroll', () => {
+    if (Math.abs(scrollY - lastY) > innerHeight * .8 && !sr) sr = requestAnimationFrame(() => { sr = 0; sync(); });
+    lastY = scrollY;
+  }, { passive: true });
+  if ('onscrollend' in window) addEventListener('scrollend', sync, { passive: true }); else { let t = 0; addEventListener('scroll', () => { clearTimeout(t); t = setTimeout(sync, 160); }, { passive: true }); }
   // Cambio de idioma: refrescar el título sin animar
-  new MutationObserver(() => requestAnimationFrame(() => { tt.textContent = ''; show(cur, false); })).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  new MutationObserver(() => requestAnimationFrame(() => { const t = titleOf(cur); if (t !== tt.textContent) { tt.textContent = t; } })).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 }
 
 /* (B) Apilado sticky: mide cuánto debe sostenerse cada tarjeta destacada (hasta que acaba la última) y da nombre a su timeline.

@@ -62,6 +62,11 @@ section.cf-sec.cf-closed { padding-bottom: 48px; }
   .cf-bar { padding-top: 16px; }
   .cf-nav { display: none; }
   section.cf-sec.cf-closed { padding-bottom: 36px; }
+  /* Índice: solo icono (44 px) y hueco inferior para que no tape el final del texto */
+  .cf-fab { min-height: 44px; min-width: 44px; padding: 0; justify-content: center; }
+  .cf-fab span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  body:has(.cf-fab) { padding-bottom: 72px; }
+  .cf-idx { bottom: calc(max(16px, env(safe-area-inset-bottom)) + 52px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .cf-fold, .cf-btn, .cf-btn svg, .cf-sw span { transition: none; }

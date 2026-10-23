@@ -7,7 +7,7 @@
   position: fixed; inset: 0; z-index: 9999; background: var(--bg);
   display: flex; flex-direction: column; align-items: stretch; gap: 0; text-align: left;
   padding: calc(5.4rem + env(safe-area-inset-top)) max(1.4rem, env(safe-area-inset-right)) calc(1.4rem + env(safe-area-inset-bottom)) max(1.4rem, env(safe-area-inset-left));
-  overflow: hidden; overscroll-behavior: contain; touch-action: none; user-select: none; -webkit-user-select: none;
+  height: 100vh; height: 100dvh; overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; touch-action: pan-y; user-select: none; -webkit-user-select: none;
   visibility: hidden; pointer-events: none;
   clip-path: circle(0px at var(--ox) var(--oy));
   transition: clip-path .7s var(--mm-ease), visibility 0s .7s;
@@ -84,8 +84,8 @@ html.mm-lock { overscroll-behavior: none; } /* el overflow:hidden del body ya lo
 #mob a.mm-so { display: inline-flex; align-items: center; min-height: 44px; padding: 0 1.1rem; border-radius: 100px; border: 1px solid var(--bord2); background: var(--surf); color: var(--t1); font-family: var(--fm); font-size: .72rem; letter-spacing: .06em; text-transform: uppercase; }
 #mob a.mm-so:active, #mob a.mm-cta:active { transform: scale(.94) !important; }
 
-/* pantallas bajas (horizontal): el menú puede desplazarse y no se usa el arrastre */
-@media (max-height: 560px) { #mob { overflow-y: auto; touch-action: pan-y; } }
+/* el menú se desplaza siempre que no quepa (390x664, 320x640); el CTA y las redes quedan alcanzables */
+#mob .mm-foot { flex: none; }
 
 /* movimiento reducido: apertura simple con fade */
 @media (prefers-reduced-motion: reduce) {
