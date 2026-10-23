@@ -2920,7 +2920,7 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 /* "Leer más" también en escritorio para el bloque Sobre mí y las descripciones de proyecto */
 .m-all.m-collapsed > .m-extra { display: none !important; }
 .m-all > .m-more, .bc-d-more {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 42px; margin-top: .6rem; padding: 0 1.1rem;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: .6rem; padding: 0 1.1rem;
   font: inherit; font-size: 13.5px; font-weight: 700; color: var(--t1); background: var(--surf);
   border: 1px solid var(--bord2); border-radius: 100px; cursor: pointer; width: auto;
   transition: transform .16s cubic-bezier(0.23, 1, 0.32, 1), border-color .2s;
@@ -3094,3 +3094,31 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
    que dejaba el texto cortado y el botón encima del párrafo (reporte móvil iOS, 23-oct) */
 .bc-d.bc-d-open { display: block; -webkit-line-clamp: unset; line-clamp: unset; max-height: none; overflow: visible; }
 .bc-d + .bc-d-more { position: relative; z-index: 1; }
+
+/* ═══ Auditoría responsive 23-oct ═══ */
+.nav-logo { flex-shrink: 0; } /* el punto rojo ya no desborda el enlace a 1024px */
+/* La palabra más larga del h1 ("automatizaciones.") siempre cabe en el ancho útil (320–640px, es/ca/en, 5 temas) */
+@media (max-width: 640px) {
+  .hero-h { font-size: min(clamp(2.4rem, 11vw, 3.2rem), calc((100vw - 2 * var(--gut)) / 8.8)); }
+}
+/* Trayectoria: en pantallas muy estrechas fechas y "Actual" pasan a una segunda línea bajo el rol */
+@media (max-width: 360px) {
+  .tl-hd { flex-wrap: wrap; row-gap: .35rem; }
+  .tl-meta { flex: 1 1 calc(100% - 24px - .8rem - 1px); }
+  .tl-chv { order: 2; }
+  .curr-pill, .tl-dates { order: 3; }
+}
+/* Dianas táctiles de 44px (móvil/tablet o puntero táctil); en escritorio con ratón no cambia nada */
+@media (max-width: 844px), (pointer: coarse) {
+  .fb, .edu-cert, .cc-v, .fx-lnk, .nav-logo, .tag-row .tag, .btn-p, .btn-s, .btn-s.btn-dl, .btn-music, .fx-lang-btn { min-height: 44px; }
+  .fx-soc, .fx-lang-btn { min-width: 44px; }
+  .fx-soc { height: 44px; }
+  .btn-p, .btn-s, .btn-s.btn-dl, .btn-music { height: 44px; }
+  .test-cta-btns .btn-s { height: auto; padding-block: .5rem; } /* texto de 2 líneas sin recorte */
+  .edu-cert, .cc-v, .tag-row .tag { display: inline-flex; align-items: center; }
+  .fx-col-h { min-height: 44px; margin-bottom: 0; }
+  /* el punto de tema mide 30-34px: el halo invisible llega a 44px (antes quedaba recortado por overflow:hidden) */
+  .dk { overflow: visible !important; }
+  .dk::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; }
+  .mob-themes .dk::after { display: none; } /* en el menú móvil ya miden 44px */
+}
