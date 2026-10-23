@@ -75,6 +75,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .back{color:var(--paper);border:1px solid var(--seam)}
 .back:hover{background:var(--night-3)}
 .live{background:var(--gold);color:var(--on-gold)}
+.live span[aria-hidden]{margin-left:.35em}
 
 /* botones */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .18s var(--ease-out),background .2s}
@@ -98,12 +99,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .ficha{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;padding-top:24px;border-top:1px solid var(--seam)}
 .ficha dt{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute)}
 .ficha dd{font-weight:600;font-size:1rem}
-.phone{position:relative;max-width:300px;margin:0 auto}
+.phone{position:relative;width:100%;max-width:300px;margin:0 auto}
 .phone-f{position:relative;border-radius:30px;overflow:hidden;border:2px solid var(--seam);box-shadow:0 30px 60px -24px rgba(0,0,0,.9);aspect-ratio:9/16;background:var(--night-2)}
 .phone-f img,.phone-f video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .phone-f video{opacity:0;transition:opacity .4s}
 .phone-f video.on{opacity:1}
-.phone .tgl{margin:14px auto 0;display:flex}
+.phone .tgl{margin:14px auto 0;display:flex;width:100%;justify-content:center;align-items:center}
 .cap{font-size:.86rem;color:var(--paper-mute);margin-top:10px;line-height:1.5}
 
 /* secciones */
@@ -198,7 +199,7 @@ ul.l li{margin-bottom:8px}
 .evo-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
 .evo-tabs button{min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:2px solid var(--seam);background:var(--night-2);color:var(--paper);font:700 .88rem "Inter","Inter Fallback",sans-serif;cursor:pointer}
 .evo-tabs button[aria-selected="true"]{background:var(--aura);color:#07050f;border-color:var(--aura)}
-.evo-info h4{font-size:1.5rem;line-height:1.15;margin-bottom:6px;font-family:"Luckiest Guy","Luckiest Guy Fallback",Impact,sans-serif;font-weight:400;letter-spacing:.01em}
+.evo-info h3{font-size:1.5rem;line-height:1.15;margin-bottom:6px;font-family:"Luckiest Guy","Luckiest Guy Fallback",Impact,sans-serif;font-weight:400;letter-spacing:.01em}
 .evo-info p{margin:0 0 10px!important}
 .evo-lv{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.8rem;color:var(--paper-mute)}
 .evo-lv i{display:block;flex:1;height:10px;border-radius:99px;background:var(--seam);overflow:hidden}
@@ -212,13 +213,13 @@ ul.l li{margin-bottom:8px}
 .scr-c input[type=range]{flex:1 1 240px;min-height:44px;accent-color:var(--gold)}
 .scr-o{font-family:var(--mono);font-size:.82rem;color:var(--paper-dim)}
 /* demo 3: esferas */
-.dbs-map{position:relative;aspect-ratio:16/7;min-height:170px;border-radius:18px;border:1px solid var(--seam);background:radial-gradient(60% 80% at 80% 0%,rgba(150,60,255,.28),transparent 70%),radial-gradient(60% 80% at 10% 100%,rgba(255,120,0,.18),transparent 70%),#0a0716;overflow:hidden}
+.dbs-map{position:relative;height:clamp(240px,34vw,340px);border-radius:18px;border:1px solid var(--seam);background:radial-gradient(60% 80% at 80% 0%,rgba(150,60,255,.28),transparent 70%),radial-gradient(60% 80% at 10% 100%,rgba(255,120,0,.18),transparent 70%),#0a0716;overflow:hidden}
 .dbs-map p{position:absolute;left:14px;top:10px;font-size:.78rem!important;margin:0!important;color:var(--paper-mute)!important}
-.dbs-ball{position:absolute;width:48px;height:48px;padding:0;border:0;background:none;cursor:pointer;border-radius:50%;transition:transform .5s var(--ease-out),opacity .4s}
+.dbs-ball{position:absolute;width:var(--bs,48px);height:var(--bs,48px);padding:0;border:0;background:none;cursor:pointer;border-radius:50%;transition:transform .5s var(--ease-out),opacity .4s}
 .dbs-ball img{width:100%;height:100%}
 .dbs-ball:hover{transform:scale(1.15)}
 .demo[data-on="1"] .dbs-ball{animation:bob 3.6s ease-in-out infinite}
-@keyframes bob{50%{margin-top:-8px}}
+@keyframes bob{50%{translate:0 -8px}}
 .dbs-ball[hidden]{display:none}
 .dbs-hud{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
 .dbs-slots{display:flex;gap:6px;padding:7px 12px;border:1px solid var(--seam);border-radius:999px;background:var(--night-2)}
@@ -249,6 +250,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
   .sw{grid-template-columns:repeat(3,minmax(0,1fr))}
   .bar .back span.long{display:none}
   .evo{grid-template-columns:1fr}
+  .dbs-map{--bs:40px}
   .evo-stage{max-width:220px;margin:0 auto}
   .demo{padding:14px}
 }
@@ -376,14 +378,14 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
             <button type="button" role="tab" aria-selected="false" tabindex="-1" data-i="5">6 · Fase 4</button>
           </div>
           <div role="tabpanel" aria-live="polite">
-            <h4 id="evo-name">Forma Base</h4>
+            <h3 id="evo-name">Forma Base</h3>
             <p id="evo-stage-t">Fundamentos · +17 años B2B + Desarrollo Web</p>
           </div>
         </div>
       </div>
       <p class="dcap">Qué observar: el color del aura cambia con la forma y el nombre se anuncia (<code>aria-live</code>), como en la web. Las seis imágenes son <code>f1..f6.webp</code> del repo, reordenadas como en <code>ORDER = [1, 2, 5, 3, 4, 6]</code>.</p>
     </div>
-    <div class="scroll-x"><table class="tbl">
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de las seis formas"><table class="tbl">
       <caption>Las seis formas y su etapa (textos y orden del repo: <code>Character3D.tsx</code>)</caption>
       <thead><tr><th>Forma</th><th>Etapa de mi carrera</th><th>Dónde aparece</th></tr></thead>
       <tbody>
@@ -562,7 +564,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
     <p class="eyebrow">08 · Motion y sonido</p>
     <h2 class="disp">Mucho movimiento, <em>con salida de emergencia.</em></h2>
     <p class="intro">Tres librerías con un reparto claro y un criterio común: el movimiento explica o recompensa, y se apaga si el sistema lo pide.</p>
-    <div class="scroll-x"><table class="tbl">
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de piezas de movimiento"><table class="tbl">
       <caption>Piezas de movimiento y a qué responden (del repo y de su código)</caption>
       <thead><tr><th>Pieza</th><th>Con qué</th><th>Para qué</th><th>Con «reducir movimiento»</th></tr></thead>
       <tbody>
@@ -590,7 +592,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
       <article class="card"><span class="tag tag-doc">Del repo</span><h3>Lo que hay</h3>
         <ul class="l"><li>Enlace «Saltar al contenido» que además mueve el foco; los saltos de sección también.</li><li>Foco visible en toda la web.</li><li>El diálogo de cápsulas lleva el foco dentro, hace inerte el resto (<code>inert</code>) y lo devuelve al cerrar.</li><li>Evolución del personaje y avisos de esferas con <code>aria-live</code>; sonido con <code>aria-pressed</code>.</li><li>Todo <code>:hover</code> va dentro de <code>(hover:hover) and (pointer:fine)</code>: en móvil no se queda «pegado».</li><li>Esferas escondidas alcanzables con teclado.</li></ul></article>
       <article class="card"><span class="tag tag-me">Lectura mía</span><h3>Lo que echo en falta</h3>
-        <ul class="l"><li><strong>Pausa del fondo animado.</strong> WCAG 2.2.2 pide un control para detener el movimiento automático de más de 5 s. En el código solo respeta «reducir movimiento»; no encontré un botón de pausa. axe no detecta este criterio.</li><li><strong>Avisos de contraste de axe</strong> en el nombre de los portales del pie: el README los explica como falso positivo por el trazo negro del texto. No he podido reproducirlo ni descartarlo.</li><li><strong>Etiquetas de las imágenes del fondo</strong> y texto sobre fondo animado: habría que auditarlos con lector de pantalla. No lo he hecho.</li></ul></article>
+        <ul class="l"><li><strong>Pausa del fondo animado.</strong> WCAG 2.2.2 pide un control para detener el movimiento automático de más de 5 s. En el código solo respeta «reducir movimiento»; no encontré un botón de pausa. axe no detecta este criterio.</li><li><strong>Contraste de los portales del pie.</strong> El README dice que axe avisaba de ellos y que era un falso positivo por el trazo negro del texto. En mi pasada de axe 4.14 (reglas WCAG 2.0/2.1/2.2 A y AA más buenas prácticas, escritorio y móvil, tras la intro) no salió ninguna violación; el contraste real sobre el fondo animado sigue sin medirse a mano.</li><li><strong>Etiquetas de las imágenes del fondo</strong> y texto sobre fondo animado: habría que auditarlos con lector de pantalla. No lo he hecho.</li></ul></article>
     </div>
     <p class="note"><b>Lo que no he probado.</b> No he usado lectores de pantalla (NVDA, VoiceOver) para recorrer la web ni he medido contraste sobre el fondo animado en cada fase. «Cumple AA» aquí significa «axe no encontró fallos reales y revisé estos puntos a mano», no una auditoría formal.</p>
   </div>
@@ -601,7 +603,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
     <p class="eyebrow">10 · Rendimiento y decisiones técnicas</p>
     <h2 class="disp">Rápido donde importa, <em>pesado donde lo elegí.</em></h2>
     <p class="intro">Vite, React y TypeScript con versiones fijadas: framer-motion 11.15.0, gsap 3.12.5, lenis 1.1.18, howler 2.2.4, react 18.3.1, vite 6.4.5 y typescript 5.6.3 (<code>package.json</code>).</p>
-    <div class="scroll-x"><table class="tbl">
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de decisiones de rendimiento"><table class="tbl">
       <caption>Decisiones de rendimiento y su coste (del repo)</caption>
       <thead><tr><th>Decisión</th><th>Qué hace</th><th>Coste / límite</th></tr></thead>
       <tbody>
@@ -626,10 +628,10 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
     <p class="intro">Para compartir la web hice un teaser vertical y la imagen para redes con Remotion, que renderiza vídeo a partir de componentes React. Usa los mismos assets y la misma tipografía que la web.</p>
     <figure class="vid">
       <div class="phone-f"><video id="rem-vid" muted loop playsinline preload="none" poster="/assets/capsule-corp/teaser-poster.webp" aria-label="Teaser de Capsule Corp de 14 segundos, sin sonido" width="540" height="960"><source src="/assets/capsule-corp/teaser.webm" type="video/webm"></video></div>
-      <button class="tgl" type="button" id="rem-tgl" aria-pressed="false" style="margin:14px auto 0;display:flex">Reproducir teaser</button>
+      <button class="tgl" type="button" id="rem-tgl" aria-pressed="false" style="margin:14px auto 0;display:flex;align-items:center">Reproducir teaser</button>
       <figcaption class="cap" style="text-align:center">Render propio de la composición <code>Teaser</code> a media escala (540×960, 15 fps, VP9, sin audio, 0,6 MB). El original es de 1080×1920 a 30 fps y lleva música; las tarjetas del portfolio usan una versión aún más ligera.</figcaption>
     </figure>
-    <div class="scroll-x"><table class="tbl">
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de planos del teaser"><table class="tbl">
       <caption>Composición <code>Teaser</code> (<code>remotion/src/Teaser.tsx</code>): 420 fotogramas a 30 fps = 14 s</caption>
       <thead><tr><th>Plano</th><th>Fotogramas</th><th>Qué pasa</th></tr></thead>
       <tbody>
@@ -767,7 +769,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
   /* 3 · esferas y Modo Reclutador */
   (function(){
     var dm=d.getElementById('demo-balls'),map=d.getElementById('dbs-map'),slots=d.getElementById('dbs-slots'),cnt=d.getElementById('dbs-cnt'),msg=d.getElementById('dbs-msg');
-    var POS=[[8,34],[24,64],[40,28],[55,62],[70,32],[84,60],[92,22]],got={},balls=[];
+    var POS=[[6,34],[20,64],[34,26],[48,62],[62,30],[74,60],[86,24]],got={},balls=[];
     for(var s=1;s<=7;s++){(function(s){
       var sl=d.createElement('span');sl.dataset.s=s;slots.appendChild(sl);
       var b=d.createElement('button');b.type='button';b.className='dbs-ball';b.style.left=POS[s-1][0]+'%';b.style.top=POS[s-1][1]+'%';b.style.animationDelay=(s*.4)+'s';
