@@ -1,21 +1,8 @@
+---
+import ThemeSwitch from '../islands/ThemeSwitch.jsx';
+---
 <!-- DOCK TEMAS -->
-<aside id="dock" aria-label="Cambiar tema visual">
-  <button class="dk on" data-t="saas" data-label="Dual Core AI" aria-label="Tema Dual Core AI">
-    <div class="dk-i" style="background:linear-gradient(135deg,#00d4d4,#ff3333)"></div>
-  </button>
-  <button class="dk" data-t="editorial" data-label="El Diario Digital" aria-label="Tema El Diario Digital">
-    <div class="dk-i" style="background:linear-gradient(135deg,#f4f1ea,#8b0000)"></div>
-  </button>
-  <button class="dk" data-t="cyber" data-label="Abstract Cyber" aria-label="Tema Abstract Cyber">
-    <div class="dk-i" style="background:linear-gradient(135deg,#b026ff,#00f0ff)"></div>
-  </button>
-  <button class="dk" data-t="diario" data-label="Minimal Journal" aria-label="Tema Minimal Journal">
-    <div class="dk-i" style="background:linear-gradient(135deg,#fafafa,#0052cc)"></div>
-  </button>
-  <button class="dk" data-t="hud" data-label="Fine Art" aria-label="Tema Fine Art">
-    <div class="dk-i" style="background:linear-gradient(135deg,#d4b87a,#101010)"></div>
-  </button>
-</aside>
+<ThemeSwitch client:idle variant="dock" />
 
 <!-- CTA FLOTANTE -->
 <a href="#contacto" id="fcta" data-i="fcta" class="trigger-flash">✉ Hablemos</a>

@@ -51,19 +51,6 @@ function collapsible(container, { keep, kind = 'more', after = container, all = 
   return t;
 }
 
-function initProjects() {
-  const bento = document.querySelector('#proyectos .bento');
-  const t = collapsible(bento, { keep: 4 });
-  if (!t) return;
-  // Con un filtro activo se muestran todos los que coinciden; "Todos" vuelve al estado plegado
-  document.querySelectorAll('#proyectos .fb').forEach(fb => {
-    fb.addEventListener('click', () => {
-      t.forceOpen = fb.dataset.f !== 'all';
-      t.render();
-    });
-  });
-}
-
 /* Descripciones de proyecto (.bc-d): se recortan a 4 líneas por CSS.
    Aquí solo se añade un botón "Leer más" cuando el texto realmente no
    cabe, para que nada se corte en silencio sin forma de leer el resto. */
@@ -137,7 +124,6 @@ function initMotion() {
 
 function init() {
   initMotion();
-  initProjects();
   initCardDescriptions();
   const about = document.querySelector('#about-grid > div');
   // El botón va DENTRO de la columna (tras el último hijo); si fuera hermano, entraría como celda de la rejilla y desplazaría las tarjetas

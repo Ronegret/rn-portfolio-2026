@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import react from '@astrojs/react';
 
 const site = 'https://rodrigonegrete.es';
 // Subpaginas estaticas servidas desde public/ (Astro no las conoce): se anaden a mano.
@@ -7,5 +8,5 @@ const staticPages = ['zodi', 'dedicalo-play', 'pdf-rodd', 'rodd-es', 'aem', 'aqu
 
 export default defineConfig({
   site,
-  integrations: [sitemap({ customPages: staticPages.map((p) => `${site}/${p}/`) })],
+  integrations: [react(), sitemap({ customPages: staticPages.map((p) => `${site}/${p}/`) })],
 });

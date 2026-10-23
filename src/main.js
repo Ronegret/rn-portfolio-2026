@@ -73,7 +73,7 @@ function applyLang(l){
     const k=el.dataset.i;
     if(t[k]!==undefined) el.innerHTML=t[k];
   });
-  document.querySelectorAll('[data-lang]').forEach(b=>{
+  document.querySelectorAll('[data-lang]:not(.lang-opt)').forEach(b=>{
     b.classList.toggle('on',b.dataset.lang===l);
   });
   document.documentElement.lang=l;
@@ -92,13 +92,6 @@ function playLangCurtain(lang){
   // Apply lang mid-curtain (when both panels meet)
   window.setTimeout(()=>{
     applyLang(lang);
-    const trg = document.getElementById('lang-code');
-    if(trg) trg.textContent = lang.toUpperCase();
-    document.querySelectorAll('.lang-opt').forEach(o=>{
-      const on = o.dataset.lang === lang;
-      o.classList.toggle('on', on);
-      o.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
   }, 380);
   window.setTimeout(()=>{
     c.classList.remove('close'); c.classList.add('open');
@@ -113,35 +106,11 @@ document.addEventListener('click',e=>{
   if(b){
     e.preventDefault();
     const l = b.dataset.lang;
-    // Close dropdown if open
-    const sw = document.getElementById('lang-switch');
-    sw?.classList.remove('open');
-    const trg = document.getElementById('lang-trigger');
-    trg?.setAttribute('aria-expanded','false');
     if(l !== LANG) playLangCurtain(l);
     else applyLang(l);
   }
 });
 
-// Toggle dropdown
-(()=>{
-  const sw = document.getElementById('lang-switch');
-  const trg = document.getElementById('lang-trigger');
-  if(!sw || !trg) return;
-  trg.addEventListener('click', e=>{
-    e.stopPropagation();
-    const isOpen = sw.classList.toggle('open');
-    trg.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-  });
-  document.addEventListener('click', e=>{
-    if(!sw.contains(e.target)){ sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); }
-  });
-  document.addEventListener('keydown', e=>{
-    if(e.key === 'Escape' && sw.classList.contains('open')){
-      sw.classList.remove('open'); trg.setAttribute('aria-expanded','false'); trg.focus();
-    }
-  });
-})();
 
 document.addEventListener('click', e => {
   const a = e.target.closest('a[href^="#"], a[href^="/#"]');
@@ -815,16 +784,6 @@ document.querySelectorAll('.edu-hd').forEach(hd=>hd.addEventListener('click',()=
 function setAG(){ const g=document.getElementById('about-grid'); if(g)g.style.gridTemplateColumns=innerWidth>=920?'1.2fr 1fr':'1fr'; }
 setAG();window.addEventListener('resize',setAG,{passive:true});
 
-document.querySelectorAll('.fb').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const f=btn.dataset.f;
-    document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');
-    document.querySelectorAll('.bento>[data-cats],.bfeat[data-cats]').forEach(card=>{
-      card.classList.toggle('fhid',f!=='all'&&!card.dataset.cats.split(' ').includes(f));
-    });
-  });
-});
 
 const cbox=document.querySelector('.contact-box');
 if(cbox){
@@ -851,49 +810,9 @@ tiltCards.forEach(card => {
   });
 });
 
-/* ═══════════════════════════════════════
-   TEMAS MAPEO DE IMÁGENES Y BOTONES
-═══════════════════════════════════════ */
-const AVATARS={
-  saas:'/assets/profile/fotoperfil0001.webp',   // Estilo 1: SaaS (principal)
-  editorial:'/assets/profile/fotoperfil0002.webp', // Estilo 2: Diario Digital
-  cyber:'/assets/legacy/foto-estilo3.webp',     // Estilo 3: Cyber
-  diario:'/assets/profile/perfilrod.webp',      // Estilo 4: Minimal Journal
-  hud:'/assets/profile/fotoperfil0003.webp'     // Estilo 5: Fine Art
-};
-
-function applyTheme(t){
-  (window.__vt||(f=>f()))(()=>document.documentElement.setAttribute('data-theme',t));
-
-  // Sincronizar todos los botones selectores (Dock, Menú Móvil y Footer)
-  document.querySelectorAll('.dk, .tc').forEach(b => {
-    b.classList.remove('on');
-    if(b.dataset.t === t || b.dataset.tc === t) {
-      b.classList.add('on');
-    }
-  });
-
-  const av=document.getElementById('av');
-  if(av && AVATARS[t]) av.src=AVATARS[t];
-  sessionStorage.setItem('rn-theme',t);
-  
-  // Cerrar menú móvil si se clickeó desde ahí
-  if(document.getElementById('mob').classList.contains('open')){
-    closeMob();
-  }
-}
-
-// Asignar eventos de click a TODOS los botones selectores
-document.querySelectorAll('.dk, .tc').forEach(b=>{
-  b.addEventListener('click', (e)=>{
-    e.preventDefault();
-    const t = b.dataset.t || b.dataset.tc;
-    if(t) applyTheme(t);
-  });
-});
-
-const savedT=sessionStorage.getItem('rn-theme');
-if(savedT) applyTheme(savedT);
+/* Temas, avatar por tema y filtro/plegado de proyectos viven en las islas React (src/islands/).
+   Aqui solo se cierra el menu movil cuando una isla cambia el tema. */
+window.addEventListener('rn-theme',()=>{ if(mob.classList.contains('open')) closeMob(); });
 
 /* ═══════════════════════════════════════
    MUSIC PLAYER
