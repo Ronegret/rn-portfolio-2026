@@ -67,7 +67,7 @@ function measure() {
 
 function layout() {
   const hr = hero.getBoundingClientRect(), c = card.getBoundingClientRect();
-  strip = matchMedia('(max-width:640px)').matches;
+  strip = matchMedia('(max-width:979px)').matches;
   const px = strip ? 0 : 130, up = strip ? 52 : 60;
   const L = Math.max(0, c.left - hr.left - px), T = Math.max(0, c.top - hr.top - up);
   const R = Math.min(hr.width, c.right - hr.left + px), B = Math.min(hr.height, strip ? c.top - hr.top + 8 : c.bottom - hr.top + 60);
