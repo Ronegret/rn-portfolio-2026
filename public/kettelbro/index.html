@@ -80,7 +80,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--paper);outline-offs
 .btn-ghost:hover{background:var(--seam)}
 
 /* hero */
-.hero{position:relative;padding:112px 20px 72px;background:radial-gradient(120% 70% at 12% -10%,#5c140b 0%,transparent 60%),var(--night);border-bottom:1px solid var(--seam)}
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:112px 20px 72px;background:radial-gradient(120% 70% at 12% -10%,#5c140b 0%,transparent 60%),var(--night);border-bottom:1px solid var(--seam)}
 .wrap{max-width:1100px;margin:0 auto}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
 .eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-lift);margin-bottom:14px}
@@ -92,9 +92,10 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--paper);outline-offs
 .ficha{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;padding-top:24px;border-top:1px solid var(--seam)}
 .ficha dt{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute)}
 .ficha dd{font-weight:600;font-size:1rem}
-.hero-shot{position:relative;max-width:340px;margin:0 auto 6%}
+.hero-shot{position:relative;max-width:340px;margin:0 auto}
+.hero-shot img:first-child{width:auto;max-width:100%;max-height:70vh;margin:0 auto}
 .hero-shot img{border-radius:24px;border:1px solid var(--seam);box-shadow:0 26px 46px -22px rgba(0,0,0,.85)}
-.hero-shot .shot-b{position:absolute;right:-6%;bottom:-8%;width:46%;border-radius:20px}
+.hero-shot .shot-b{display:none}
 .cap{font-size:.86rem;color:var(--paper-mute);margin-top:10px;line-height:1.5}
 
 /* secciones */
@@ -177,8 +178,14 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
 @media(max-width:860px){
   .hero{padding:96px 16px 56px}
   .hero-grid{grid-template-columns:1fr;gap:36px}
-  .hero-shot{max-width:420px}
-  .hero-shot .shot-b{right:-2%}
+  .hero{min-height:0;display:block}
+  .hero-grid>div:first-child{display:contents}
+  .hero-grid>div:first-child>*{grid-column:1}
+  .eyebrow{order:1}.hero h1{order:2}.hero-shot{order:3;max-width:none;margin:0 0 24px}.lead{order:4}.actions{order:5}.ficha{order:6}
+  .hero-grid{gap:0}
+  .hero h1{margin-bottom:20px}.lead{margin-bottom:24px}
+  .hero-shot img:first-child{max-height:38svh;border-radius:18px}
+  .actions{margin-bottom:28px}
   section.s{padding:64px 16px}
   .g2,.g3,.s2,.types{grid-template-columns:minmax(0,1fr)}
   .dec-b{grid-template-columns:1fr}
