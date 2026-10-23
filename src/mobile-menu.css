@@ -21,7 +21,7 @@
 html.mm-lock { overscroll-behavior: none; } /* el overflow:hidden del body ya lo pone main.js; no se toca html para no cancelar el scroll suave al navegar */
 
 /* nav por encima del menú: logo + cruz visibles */
-#nav:has(#ham.open) { z-index: 10000; background: transparent; border-bottom-color: transparent; }
+#nav:has(#ham.open) { z-index: 10000; background: var(--bg); border-bottom-color: transparent; }
 
 /* hamburguesa -> cruz: las tres barras comparten centro y solo mueven transform/opacity */
 #nav #ham .hl { top: 21px; width: 24px; transform-origin: center; transition: transform .55s var(--mm-out), opacity .25s, background-color .3s; }

@@ -83,6 +83,8 @@
     { "source": "/CCSE/", "destination": "/ccse/index.html" },
     { "source": "/cv", "destination": "/cv/index.html" },
     { "source": "/cv/", "destination": "/cv/index.html" },
+    { "source": "/cv/ats-es", "destination": "/cv/ats-es.html" },
+    { "source": "/cv/ats-en", "destination": "/cv/ats-en.html" },
     { "source": "/deep-detection-access", "destination": "/deep-detection-access/index.html" },
     { "source": "/deep-detection-access/", "destination": "/deep-detection-access/index.html" },
     { "source": "/deep-detection-discovery", "destination": "/deep-detection-discovery/index.html" },
