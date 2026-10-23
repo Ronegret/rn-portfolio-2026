@@ -939,3 +939,5 @@ if (avWrap) {
     host.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
   }
 }
+
+import('./cinema.js'); // capa cinematográfica: al final para que el DOM generado (pills, hero) ya exista

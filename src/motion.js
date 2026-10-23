@@ -12,7 +12,7 @@ window.__vt = fn => {
 
 // (4) Magnético: propiedad `translate`, un único rAF que solo corre mientras hay movimiento.
 if (matchMedia('(hover:hover) and (pointer:fine)').matches) {
-  const S = '.btn-p, .btn-s', R = 0.25, MAX = 10;
+  const S = '.btn-p:not([data-mag]), .btn-s', R = 0.25, MAX = 10;
   const st = new Map(); // el -> {x,y,tx,ty}
   let raf = 0;
   const tick = () => {
