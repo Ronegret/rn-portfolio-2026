@@ -96,9 +96,9 @@ export const cv = {
     skills: [
       { cat: 'Diseño de producto y research', items: ['Product discovery', 'problem framing', 'user research', 'entrevistas y encuestas', 'benchmark', 'DAFO', 'personas', 'customer journey', 'service design', 'arquitectura de información', 'user flows', 'wireframes', 'prototipos de baja y alta fidelidad', 'usability testing', 'Design Thinking', 'Design Sprint', 'Lean UX', 'Agile/Scrum'] },
       { cat: 'UI y design systems', items: ['Figma', 'FigJam', 'auto layout', 'componentes y variantes', 'design systems', 'design tokens', 'responsive y mobile-first', 'accesibilidad (principios WCAG)', 'microinteracciones', 'UX writing', 'documentación y handoff a desarrollo'] },
-      { cat: 'IA y automatización', items: ['IA generativa', 'prompt engineering', 'OpenAI', 'Claude', 'Gemini', 'Google AI Studio', 'agentes conversacionales', 'Botpress', 'Vapi', 'Make', 'n8n', 'hiperautomatización', 'APIs y webhooks', 'RAG (diseño de arquitectura)'] },
+      { cat: 'IA y automatización', items: ['IA generativa', 'prompt engineering', 'OpenAI', 'Claude', 'Gemini', 'Google AI Studio', 'Stitch', 'agentes conversacionales', 'Botpress', 'Vapi', 'Make', 'n8n', 'hiperautomatización', 'APIs y webhooks', 'RAG (diseño de arquitectura)'] },
       { cat: 'Front-end y CMS', items: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind CSS', 'WordPress', 'Elementor', 'Shopify', 'Supabase', 'Firebase', 'GitHub'] },
-      { cat: 'Analítica y negocio', items: ['GA4', 'Hotjar', 'CRO', 'funnels', 'KPIs', 'Excel avanzado', 'Power BI', 'Notion', 'Jira', 'B2B enterprise', 'e-commerce', 'MVP', 'gestión de stakeholders'] },
+      { cat: 'Analítica y negocio', items: ['GA4', 'Hotjar', 'CRO', 'funnels', 'KPIs', 'Excel avanzado', 'Power BI', 'Google Workspace', 'Notion', 'Jira', 'B2B enterprise', 'e-commerce', 'MVP', 'gestión de stakeholders'] },
     ],
     education: [
       { title: 'Máster en Agentes de IA e Hiperautomatización de Procesos', school: 'EBIS Business Techschool, Barcelona', dates: '2025 – 2026 (finalizado)', cert: '/assets/legacy/Certificado%20EBIS%20IA.pdf' },
@@ -200,9 +200,9 @@ export const cv = {
     skills: [
       { cat: 'Product design and research', items: ['Product discovery', 'problem framing', 'user research', 'interviews and surveys', 'benchmarking', 'SWOT analysis', 'personas', 'customer journey', 'service design', 'information architecture', 'user flows', 'wireframes', 'low and high fidelity prototypes', 'usability testing', 'Design Thinking', 'Design Sprint', 'Lean UX', 'Agile/Scrum'] },
       { cat: 'UI and design systems', items: ['Figma', 'FigJam', 'auto layout', 'components and variants', 'design systems', 'design tokens', 'responsive and mobile-first', 'accessibility (WCAG principles)', 'microinteractions', 'UX writing', 'documentation and developer handoff'] },
-      { cat: 'AI and automation', items: ['generative AI', 'prompt engineering', 'OpenAI', 'Claude', 'Gemini', 'Google AI Studio', 'conversational agents', 'Botpress', 'Vapi', 'Make', 'n8n', 'hyperautomation', 'APIs and webhooks', 'RAG (architecture design)'] },
+      { cat: 'AI and automation', items: ['generative AI', 'prompt engineering', 'OpenAI', 'Claude', 'Gemini', 'Google AI Studio', 'Stitch', 'conversational agents', 'Botpress', 'Vapi', 'Make', 'n8n', 'hyperautomation', 'APIs and webhooks', 'RAG (architecture design)'] },
       { cat: 'Front-end and CMS', items: ['HTML', 'CSS', 'JavaScript', 'React', 'Next.js', 'Tailwind CSS', 'WordPress', 'Elementor', 'Shopify', 'Supabase', 'Firebase', 'GitHub'] },
-      { cat: 'Analytics and business', items: ['GA4', 'Hotjar', 'CRO', 'funnels', 'KPIs', 'advanced Excel', 'Power BI', 'Notion', 'Jira', 'B2B enterprise', 'e-commerce', 'MVP', 'stakeholder management'] },
+      { cat: 'Analytics and business', items: ['GA4', 'Hotjar', 'CRO', 'funnels', 'KPIs', 'advanced Excel', 'Power BI', 'Google Workspace', 'Notion', 'Jira', 'B2B enterprise', 'e-commerce', 'MVP', 'stakeholder management'] },
     ],
     education: [
       { title: 'Master in AI Agents and Process Hyperautomation', school: 'EBIS Business Techschool, Barcelona', dates: '2025 – 2026 (completed)', cert: '/assets/legacy/Certificado%20EBIS%20IA.pdf' },
