@@ -1,4 +1,3 @@
-import './intro.css';
 
 /* Ráfaga de líneas ligeras (canvas 2D) que estalla desde el puntero/toque (o el centro) cuando el nombre "revienta".
    El resto de la intro es CSS; main.js decide cuándo termina. */

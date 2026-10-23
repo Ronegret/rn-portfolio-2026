@@ -130,6 +130,8 @@ document.addEventListener('click', e => {
   if(!target) return;
   e.preventDefault();
   if(mob && mob.classList.contains('open')) closeMob();
+  document.documentElement.classList.add('cv-off'); // renderiza todas las secciones (content-visibility) para que el scroll llegue exacto
+  document.dispatchEvent(new Event('rn:layout')); // y los modulos que miden/crean contenido bajo demanda lo hacen ya (layout definitivo)
   target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   history.pushState(null, '', hash);
 });

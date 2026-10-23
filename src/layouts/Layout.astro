@@ -6,6 +6,8 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { AVATARS } from '../islands/themes.js';
 import vtCore from '../../public/src/case-transitions.js?raw';
+import critical from '../critical.css?raw';
+import fonts from '../fonts.css?raw';
 ---
 <!DOCTYPE html>
 <html lang="es" data-theme="saas">
@@ -13,6 +15,22 @@ import vtCore from '../../public/src/case-transitions.js?raw';
 <meta charset="UTF-8">
 <style is:inline>@view-transition{navigation:auto}</style><!-- opt-in antes de los <link> que bloquean el render: si llega despues Chrome aborta la transicion -->
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
+<!-- CSS critico inline (tokens + intro + fuentes propias); astro.config.mjs incrusta tambien las hojas de la portada al construir.
+     Sin ningun <link rel=stylesheet> pendiente el primer frame no espera a la red: antes Chrome movil (Lighthouse) lo retenia ~2 s
+     segun una carrera con el CSS (FCP bimodal 1,5/3,5 s). -->
+<style is:inline set:html={critical + fonts}></style>
+<script is:inline>
+/* Primer frame ligero: con intro, el resto de la pagina (html.cp) no se pinta hasta que la intro ha dado el FCP; entonces se revela.
+   Sin intro (misma sesion, ?intro=0) o llegando desde otra pagina del sitio (volver de un caso, view transition) no se oculta nada.
+   window.__css = promesa que main.js espera antes de arrancar. */
+(function(d){var h=d.documentElement,res,skip=false;window.__css=new Promise(function(r){res=r});
+try{skip=!!(d.referrer&&new URL(d.referrer).origin===location.origin)||sessionStorage.getItem('intro_seen')==='1'||/[?&]intro=0/.test(location.search)}catch(e){}
+if(skip){res();return}
+h.classList.add('cp');
+function done(){h.classList.remove('cp');res()}
+try{new PerformanceObserver(function(l,o){if(l.getEntriesByName('first-contentful-paint').length){o.disconnect();setTimeout(done,0)}}).observe({type:'paint',buffered:true})}catch(e){}
+setTimeout(done,1500)})(document);
+</script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' text-anchor='middle' fill='%23fff'%3ERN%3C/text%3E%3Ccircle cx='51' cy='13' r='5' fill='%23ff2d2d'/%3E%3C/svg%3E">
   <meta name="description" content="Rodrigo Negrete — AI Product Designer especializado en agentes IA, hiperautomatización y diseño de producto con IA aplicada. Máster EBIS en Agentes de IA. +17 años previos en negocio B2B enterprise (Movistar/Telefónica). Proyectos reales en producción: Rodd.es, ZODI, Dedícalo Play. Barcelona · Remoto EU · Freelance.">
   <meta name="keywords" content="Rodrigo Negrete, AI Product Designer Barcelona, Product Designer AI, AI Automation Specialist, Prompt Engineer Barcelona, UX UI Designer con IA, Design Technologist, hiperautomatización, agentes IA, LLM, RAG, prompt engineering, Figma, React, Next.js, WordPress, n8n, Make, Botpress, Vapi, OpenAI, Claude, Gemini, ZODI, Invitoo, remoto EU">
@@ -65,14 +83,6 @@ import vtCore from '../../public/src/case-transitions.js?raw';
     "description": "AI Product Designer especializado en agentes IA, hiperautomatización de procesos y diseño de producto con IA aplicada. Máster EBIS en Agentes de IA. Domino Make, n8n, Botpress, Vapi, Claude, GPT y Gemini. +17 años previos gestionando cuentas B2B enterprise (Movistar/Telefónica). Proyectos propios en producción: Rodd.es (biblioteca open source multilingüe), ZODI (AI product), Dedícalo Play. Trabajos de máster: Just Enjoy (TFM en equipo; frontend, diseño UX/UI e interfaces y parte de la automatización en n8n) e Iberdata (business case)."
   }
   </script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" media="print" onload="this.media='all'">
-<noscript>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,500;0,700;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-</noscript>
 
 <!-- Transiciones de pagina: logica compartida con los casos (public/src/case-transitions.js), inline para estar lista antes del primer pintado -->
 <script is:inline set:html={vtCore}></script>
@@ -87,9 +97,16 @@ import vtCore from '../../public/src/case-transitions.js?raw';
 </main>
 <Footer />
 <script>
-  import '../main.js';
-  import '../transitions.js';
-  import '../hero-polish.js';
+  // main.js mide el layout al arrancar: espera a las hojas de estilo (ya no bloquean el render)
+  await (window as any).__css;
+  // y a que la pagina revelada se haya pintado (FCP/LCP) antes de ejecutar el JS
+  await new Promise<void>((r) => {
+    const t = setTimeout(r, 400);
+    requestAnimationFrame(() => requestAnimationFrame(() => { clearTimeout(t); r(); }));
+  });
+  await import('../main.js');
+  await import('../transitions.js');
+  await import('../hero-polish.js');
 </script>
 <!-- Tema persistido: se aplica antes del primer pintado (el body ya esta parseado); las islas hidratan despues sin salto -->
 <script is:inline define:vars={{ AVATARS }}>try{var t=sessionStorage.getItem('rn-theme');if(t&&AVATARS[t]){document.documentElement.setAttribute('data-theme',t);var a=document.getElementById('av');if(a)a.src=AVATARS[t];document.querySelectorAll('.dk,.tc').forEach(function(b){var on=(b.dataset.t||b.dataset.tc)===t;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}}catch(e){}</script>

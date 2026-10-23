@@ -55,9 +55,10 @@ function collapsible(container, { keep, kind = 'more', after = container, all = 
    Aquí solo se añade un botón "Leer más" cuando el texto realmente no
    cabe, para que nada se corte en silencio sin forma de leer el resto. */
 function initCardDescriptions() {
-  document.querySelectorAll('#proyectos .bc-d').forEach(p => {
-    requestAnimationFrame(() => {
-      if (p.scrollHeight - p.clientHeight < 2) return; // ya cabe entero
+  const cards = [...document.querySelectorAll('#proyectos .bc-d')];
+  if (!cards.length) return;
+  const build = p => {
+    {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'bc-d-more';
@@ -80,8 +81,22 @@ function initCardDescriptions() {
       });
       toggles.push({ render });
       render();
-    });
-  });
+    }
+  };
+  // Todas las lecturas de layout juntas y despues las escrituras (leer scrollHeight tras insertar un boton fuerza un layout por tarjeta)
+  let done = false;
+  const addButtons = () => { if (done) return; done = true; cards.filter(p => p.scrollHeight - p.clientHeight >= 2 /* las que no caben enteras */).forEach(build); };
+  // Medir obliga a maquetar la seccion de proyectos (la mas alta, con content-visibility): se hace cuando esta cerca del viewport,
+  // o antes de un salto a un ancla (main.js emite 'rn:layout' para que el destino del scroll se calcule con el layout definitivo)
+  const sec = document.getElementById('proyectos');
+  document.addEventListener('rn:layout', addButtons);
+  if (!sec || !('IntersectionObserver' in window)) { requestAnimationFrame(addButtons); return; }
+  const io = new IntersectionObserver(es => {
+    if (!es.some(e => e.isIntersecting)) return;
+    io.disconnect();
+    requestAnimationFrame(addButtons);
+  }, { rootMargin: '1200px 0px' });
+  io.observe(sec);
 }
 
 function initFooter() {
