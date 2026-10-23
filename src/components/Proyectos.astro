@@ -2,7 +2,6 @@
 import ProjectFilter from '../islands/ProjectFilter.jsx';
 import ProjectPreview from './ProjectPreview.astro';
 import CardImg from './CardImg.astro';
-import kettelbroHero from '../assets/cards/kettelbro-hero.webp';
 import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
 ---
 <section class="sec" id="proyectos">
@@ -57,8 +56,8 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
       </div>
       <div class="bfeat rv kb-card" data-cats="ux ia">
         <a href="/kettelbro/" class="bc trigger-flash">
-          <div class="bc-img kb-img">
-            <CardImg defer src={kettelbroHero} alt="KETTELBRO — PWA de pesa rusa: portada con titular sobre degradado rojo y pantalla Hoy con la tarjeta azul del día de entrenamiento" />
+          <div class="bc-img pv-host pv-host--phone kb-img">
+            <ProjectPreview device="phone" width={390} height={693} video="/assets/previews/kettelbro.webm" poster="/assets/previews/kettelbro-poster.webp" alt="KETTELBRO, PWA de pesa rusa: recorrido por la portada con el titular Tu entrenador de pesa rusa y las cartas de sesión, la pantalla Hoy con la tarjeta azul El peso muerto y la página La ciencia detrás de la pesa rusa" />
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi kb-tag-hi" data-i="kb_t1">★ Producto propio · 2026</span><span class="bc-tag kb-tag" data-i="kb_t2">UX/UI · PWA · Sistema visual · Next.js · Firebase</span></div>
