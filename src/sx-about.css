@@ -1,0 +1,189 @@
+/* ═════ Sobre mí · "memoria del agente" (ver sx-about.js) ═════
+   Firma comun del sitio: pulso de datos (linea de acento + punto de luz), easing unico y duraciones 240/520/900 ms. */
+#sobre-mi {
+  --ab-ease: cubic-bezier(.22, 1, .36, 1);
+  --ab-acc: var(--a1);
+}
+[data-theme="saas"] #sobre-mi { --ab-acc: var(--a2); } /* en Dual Core el a1 es blanco: el modo agente necesita color */
+
+/* ───── Rejilla: bio | retrato (las columnas las fija setAG en main.js) ───── */
+.ab-grid { display: grid; gap: clamp(2rem, 4vw, 4.5rem); align-items: start; }
+.ab-p { font-size: clamp(14px, .97rem, 16px); color: var(--t2); line-height: 1.85; margin-bottom: 1.1rem; }
+.ab-p:first-child { /* el manifiesto: la primera frase manda */
+  font-family: var(--fd); font-size: clamp(1.14rem, 1.05rem + .55vw, 1.42rem); line-height: 1.55; letter-spacing: -.012em; color: var(--t1);
+  margin-bottom: 1.4rem; text-wrap: pretty;
+}
+.ab-lead + .ab-p { margin-top: 1.6rem; }
+.ab-q {
+  border-left: 2px solid var(--ab-acc); padding-left: 1.2rem; margin-top: 1.4rem;
+  font-family: var(--fd); font-style: italic; font-size: clamp(1.1rem, 1rem + .5vw, 1.4rem); color: var(--t1); line-height: 1.5;
+}
+
+/* ───── (1) Manifiesto: cada palabra se enciende en orden de lectura (scroll-driven, sin JS por frame) ─────
+   Estado inicial t1 al 60 %: >= 4.5:1 en los 5 temas; las palabras clave subrayan con el acento al leerse. */
+#sobre-mi p.sx-split { color: var(--t1) !important; view-timeline-name: --abp; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    #sobre-mi .sx-w {
+      animation-name: sx-lit; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: --abp; /* longhands: el minificador funde el shorthand y Chrome pierde el timeline */
+      animation-range: cover calc(8% + var(--p, 0) * 32%) cover calc(13% + var(--p, 0) * 32%);
+    }
+    /* marcador continuo bajo cada frase clave (no subrayado: no debe parecer un enlace) */
+    #sobre-mi .sx-split strong {
+      background: linear-gradient(color-mix(in srgb, var(--ab-acc) 24%, transparent), color-mix(in srgb, var(--ab-acc) 24%, transparent)) 0 92% / 0% .42em no-repeat;
+      animation-name: sx-ul; animation-timing-function: var(--ab-ease); animation-fill-mode: both; animation-timeline: --abp;
+      animation-range: cover calc(10% + var(--p, 0) * 32%) cover calc(17% + var(--p, 0) * 32%);
+    }
+    @keyframes sx-lit { from { opacity: .6; } to { opacity: 1; } }
+    @keyframes sx-ul { to { background-size: 100% .42em; } }
+    #sobre-mi.sec.sec > .wrap { animation-name: none; } /* protagonista unica: aqui la cortinilla de cinema.css sobra */
+  }
+}
+
+/* ───── (2) Retrato a dos capas ───── */
+@property --ab-r { syntax: '<length-percentage>'; inherits: true; initial-value: 0px; }
+@property --ab-x { syntax: '<length-percentage>'; inherits: true; initial-value: 50%; }
+@property --ab-y { syntax: '<length-percentage>'; inherits: true; initial-value: 34%; }
+
+.ab-por {
+  position: relative; margin: 0; width: 100%; max-width: 400px; aspect-ratio: 4 / 5; justify-self: end;
+  border: 1px solid var(--bord2); border-radius: var(--r); overflow: hidden; background: var(--bg3); isolation: isolate;
+  --ab-R: 112px;
+}
+.ab-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.ab-agent { position: absolute; inset: 0; clip-path: circle(var(--ab-r) at var(--ab-x) var(--ab-y)); }
+.ab-agent .ab-img { filter: grayscale(1) contrast(1.45) brightness(1.45); }
+.ab-agent::before, .ab-agent::after { content: ''; position: absolute; inset: 0; pointer-events: none; }
+.ab-agent::before { background: var(--ab-acc); mix-blend-mode: color; opacity: .85; } /* duotono */
+.ab-agent::after { background: radial-gradient(circle, transparent 0 1px, rgb(0 0 0 / .4) 1.5px) 0 0 / 4px 4px; } /* trama */
+.ab-grid-ov {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--ab-acc) 30%, transparent) 0 1px, transparent 1px 40px),
+    repeating-linear-gradient(0deg, color-mix(in srgb, var(--ab-acc) 30%, transparent) 0 1px, transparent 1px 40px);
+}
+.ab-ann { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; fill: none; stroke: var(--ab-acc); stroke-width: 2; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 4px color-mix(in srgb, var(--ab-acc) 60%, transparent)); }
+.ab-ann path { vector-effect: non-scaling-stroke; }
+.ab-ann-l { opacity: .8; }
+.ab-tag {
+  position: absolute; z-index: 3; display: inline-flex; gap: .45em; white-space: nowrap;
+  font: 700 10.5px/1 var(--fm); letter-spacing: .02em; color: #fff;
+  padding: .42em .6em; border: 1px solid var(--ab-acc); border-radius: var(--rs); background: rgb(8 8 10 / .78);
+}
+.ab-tag b { color: var(--ab-acc); font-weight: 700; }
+[data-theme="editorial"] .ab-tag b, [data-theme="diario"] .ab-tag b { color: color-mix(in srgb, var(--ab-acc) 45%, #fff); }
+.ab-t1 { left: 50%; top: 19%; }
+.ab-t2 { left: 6%; top: 47%; }
+.ab-t3 { right: 6%; top: 58%; }
+
+/* aro de la lente: sigue a la misma posicion que el recorte */
+.ab-ring {
+  position: absolute; z-index: 4; left: var(--ab-x); top: var(--ab-y); width: calc(var(--ab-r) * 2); aspect-ratio: 1; translate: -50% -50%;
+  border-radius: 50%; border: 1px solid var(--ab-acc); pointer-events: none;
+  box-shadow: 0 0 0 1px rgb(0 0 0 / .25), 0 0 24px color-mix(in srgb, var(--ab-acc) 35%, transparent);
+  opacity: 0; transition: opacity .24s var(--ab-ease);
+}
+
+/* boton: modo agente a pantalla completa (teclado, tactil y reduced-motion) */
+.ab-cap { position: absolute; left: .75rem; bottom: .75rem; z-index: 5; }
+.ab-mode {
+  display: inline-flex; align-items: center; gap: .55rem; min-height: 40px; padding: .55rem .85rem; cursor: pointer;
+  font: 700 11px/1 var(--fm); letter-spacing: .08em; text-transform: uppercase; color: #fff;
+  background: rgb(8 8 10 / .82); border: 1px solid rgb(255 255 255 / .22); border-radius: var(--rb);
+  transition: border-color .24s var(--ab-ease), background-color .24s var(--ab-ease), scale .24s var(--ab-ease);
+}
+.ab-mode i { width: 7px; height: 7px; border-radius: 50%; background: rgb(255 255 255 / .5); transition: background-color .24s, box-shadow .24s; }
+.ab-mode[aria-pressed="true"] { border-color: var(--ab-acc); }
+.ab-mode[aria-pressed="true"] i { background: var(--ab-acc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ab-acc) 30%, transparent); }
+.ab-mode:active { scale: .97; }
+.ab-mode:focus-visible { outline: 2px solid var(--ab-acc); outline-offset: 3px; }
+@media (hover: hover) { .ab-mode:hover { border-color: var(--ab-acc); } }
+
+/* estados: reposo sin JS / reduced-motion = recorte fijo sobre la cara (estatico, legible) */
+.ab-por { --ab-r: 104px; }
+.ab-por.lens { --ab-r: 0px; transition: --ab-r .52s var(--ab-ease); }
+.ab-por.lens.on { --ab-r: var(--ab-R); }
+.ab-por:not(.lens) .ab-ring, .ab-por.lens.on .ab-ring { opacity: 1; }
+.ab-por.full { --ab-r: 150%; transition: --ab-r .9s var(--ab-ease); }
+.ab-por.full .ab-ring { opacity: 0 !important; }
+@media (prefers-reduced-motion: reduce) { .ab-por, .ab-por.full { transition: none; } }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* tactil: la lente cruza el retrato en diagonal mientras se hace scroll (solo propiedades registradas, sin JS) */
+    .ab-por.scan:not(.full) { animation-name: ab-scan; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: cover 12% cover 88%; }
+    @keyframes ab-scan {
+      0% { --ab-r: 0px; --ab-x: 18%; --ab-y: 12%; }
+      22% { --ab-r: 92px; }
+      78% { --ab-r: 92px; }
+      100% { --ab-r: 0px; --ab-x: 78%; --ab-y: 72%; }
+    }
+  }
+}
+
+/* ───── (3) Memoria: chips de contexto ───── */
+.ab-mem {
+  position: relative; margin-top: clamp(2.4rem, 5vw, 3.6rem); padding: clamp(1.1rem, 2.4vw, 1.9rem);
+  border: 1px solid var(--bord2); border-radius: var(--r); background: var(--surf); overflow: hidden;
+}
+.ab-pulse { position: absolute; left: 0; right: 0; top: 0; height: 1px; overflow: hidden; background: color-mix(in srgb, var(--ab-acc) 35%, transparent); }
+.ab-pulse::after {
+  content: ''; position: absolute; inset: 0; translate: 100% 0;
+  background: radial-gradient(closest-side, var(--ab-acc), transparent) 0 0 / 140px 100% no-repeat;
+}
+.ab-mem-hd { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.1rem; }
+.ab-mem-t { display: flex; align-items: center; gap: .6rem; font: 700 11px/1.3 var(--fm); letter-spacing: .14em; text-transform: uppercase; color: var(--t1); }
+.ab-led { width: 7px; height: 7px; border-radius: 50%; background: var(--ab-acc); box-shadow: 0 0 0 3px color-mix(in srgb, var(--ab-acc) 22%, transparent); flex: none; }
+.ab-st { display: grid; font: 400 11px/1.3 var(--fm); color: var(--t2); }
+.ab-st > span { grid-area: 1 / 1; }
+.ab-st-a { opacity: 0; }
+
+.ab-kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: .9rem 1.4rem; margin: 0 0 1.3rem; padding-bottom: 1.3rem; border-bottom: 1px dashed var(--bord2); }
+.ab-kv dt { font: 400 10.5px/1.3 var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--t2); margin-bottom: .3rem; }
+.ab-kv dd { margin: 0; font-size: 14px; font-weight: 600; color: var(--t1); }
+.ab-kv .ab-hi { color: var(--a2); }
+[data-theme="diario"] .ab-kv .ab-hi { color: var(--a3); filter: brightness(.8); }
+
+.ab-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 1.4rem 1.6rem; }
+.ab-gh { display: flex; align-items: center; gap: .5rem; margin-bottom: .7rem; font: 700 10.5px/1.3 var(--fm); letter-spacing: .12em; text-transform: uppercase; color: var(--t2); }
+.ab-n { opacity: .75; font-weight: 400; }
+.ab-ok { margin-left: auto; color: var(--ab-acc); font-size: 12px; }
+.ab-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .4rem; }
+.ab-chip {
+  font-size: 12.5px; line-height: 1.25; color: var(--t1); padding: .4rem .7rem;
+  border: 1px solid var(--bord2); border-radius: var(--rb); background: var(--bg2);
+}
+.ab-chip-ok::after { content: ' ✓'; color: var(--ab-acc); font-weight: 700; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .ab-mem.arm:not(.go) :is(.ab-chip, .ab-ok) { opacity: 0; }
+  .ab-mem.arm:not(.go) .ab-st-a { opacity: 1; }
+  .ab-mem.arm:not(.go) .ab-st-b { opacity: 0; }
+  .ab-mem.go .ab-chip { animation: ab-load .52s var(--ab-ease) both; animation-delay: calc(var(--g) * 260ms + var(--i) * 55ms + 160ms); }
+  .ab-mem.go .ab-ok { animation: ab-ok .24s var(--ab-ease) both; animation-delay: calc(var(--g) * 260ms + var(--n) * 55ms + 420ms); }
+  .ab-mem.go .ab-pulse::after { animation: ab-run 1.5s var(--ab-ease) both; }
+  .ab-mem.go .ab-led { animation: ab-blink .3s steps(2, jump-none) 5 both; }
+  .ab-mem.go .ab-st-a { animation: ab-st-out 1.6s linear both; }
+  .ab-mem.go .ab-st-b { animation: ab-ok .24s var(--ab-ease) 1.5s both; }
+  @keyframes ab-load {
+    0% { opacity: 0; translate: 0 6px; border-color: var(--ab-acc); }
+    55% { opacity: 1; border-color: var(--ab-acc); }
+    100% { opacity: 1; translate: 0 0; }
+  }
+  @keyframes ab-ok { from { opacity: 0; scale: .5; } }
+  @keyframes ab-run { from { translate: -140px 0; } to { translate: 100% 0; } }
+  @keyframes ab-blink { from { opacity: .25; } }
+  @keyframes ab-st-out { 0%, 90% { opacity: 1; } 100% { opacity: 0; } }
+}
+
+@media (min-width: 920px) { .ab-grid { align-items: center; } }
+
+/* ───── Movil: composicion propia ───── */
+@media (max-width: 919px) {
+  .ab-por { justify-self: start; max-width: 420px; }
+}
+@media (max-width: 480px) {
+  .ab-por { max-width: none; aspect-ratio: 4 / 4.6; --ab-R: 92px; }
+  .ab-tag { font-size: 9.5px; }
+  .ab-chip { font-size: 12px; }
+  .ab-kv { grid-template-columns: 1fr 1fr; }
+}

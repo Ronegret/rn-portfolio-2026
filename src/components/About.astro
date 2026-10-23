@@ -1,29 +1,89 @@
+---
+import '../sx-about.css';
+// Memoria del agente: datos reales del CV (scripts/cv-data.mjs). Las etiquetas traducibles llevan data-i (content.js).
+const groups = [
+  { k: 'ab_g_edu', t: 'Formación', chips: [
+    { i: 'ab_c_ebis', t: 'Máster Agentes IA e Hiperautomatización · EBIS', ok: true },
+    { i: 'ab_c_udia', t: 'IA Generativa · UDIA (en curso)' },
+    { i: 'ab_c_neo', t: 'Bootcamp UX/UI · Neoland', ok: true },
+    { i: 'ab_c_cipsa', t: 'Diseño Web Multimedia · CIPSA.NET' },
+  ] },
+  { k: 'ab_g_sec', t: 'Sectores', chips: [
+    { i: 'ab_c_b2b', t: 'B2B enterprise · telecom' },
+    { i: 'ab_c_ecom', t: 'E-commerce' },
+    { i: 'ab_c_ops', t: 'Operaciones y experiencia de cliente' },
+    { i: 'ab_c_wed', t: 'Wedding tech' },
+  ] },
+  { k: 'ab_g_tools', t: 'Herramientas', chips: ['Figma', 'Claude', 'OpenAI', 'Gemini', 'Botpress', 'Vapi', 'Make', 'n8n', 'React', 'Supabase'].map(t => ({ t })) },
+  { k: 'ab_g_lang', t: 'Idiomas', chips: [
+    { i: 'ab_c_es', t: 'Español · nativo' },
+    { i: 'ab_c_en', t: 'Inglés · A2' },
+    { i: 'ab_c_ca', t: 'Catalán · A2' },
+  ] },
+];
+---
 <section class="sec" id="sobre-mi">
   <div class="wrap">
     <span class="sec-n" data-n="01" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="about_ey">Perfil profesional</p>
     <h2 class="sh rv" data-i="about_h">Diseño de producto<br><em>con IA aplicada.</em></h2>
-    <div id="about-grid" style="display:grid;gap:2rem">
-      <div class="rv">
-        <p style="font-size:clamp(14px,.97rem,16px);color:var(--t2);line-height:1.85;margin-bottom:1.1rem" data-i="about_p1">Soy Rodrigo, <strong style="color:var(--t1)">diseñador de producto especializado en IA aplicada y automatización de procesos</strong>. Diseño, construyo y despliego <strong style="color:var(--t1)">agentes IA</strong> (Botpress, Vapi, Claude/GPT/Gemini), <strong style="color:var(--t1)">flujos de hiperautomatización</strong> (Make, n8n) y producto digital con IA integrada como parte del flujo — no como añadido.</p>
-        <p style="font-size:clamp(14px,.97rem,16px);color:var(--t2);line-height:1.85;margin-bottom:1.4rem" data-i="about_p2">Mi background es raro: <strong style="color:var(--t1)">diseño web autodidacta</strong> desde hace años, luego <strong style="color:var(--t1)">bootcamp UX/UI en Neoland</strong> y <strong style="color:var(--t1)">Máster en Agentes de IA e Hiperautomatización por EBIS</strong>. Sumo también <strong style="color:var(--t1)">+17 años previos gestionando cuentas B2B enterprise en Movistar/Telefónica</strong> — hablo el idioma del negocio y sé qué necesita un producto para funcionar de verdad. Formación continua todos los días en IA generativa, agentes, herramientas nuevas — porque me apasiona.</p>
-        <blockquote style="border-left:3px solid var(--a1);padding-left:1.2rem;font-family:var(--fd);font-style:italic;font-size:clamp(1.1rem,1.5rem,1.5rem);color:var(--t1);line-height:1.5;transition:font-family .5s,border-color .4s" data-i="about_quote">"No soy solo un diseñador que aprendió IA — construyo agentes, automatizo procesos y llevo producto a producción. La diferencia está en el resultado."</blockquote>
+    <div id="about-grid" class="ab-grid">
+      <div class="rv ab-bio">
+        <div class="ab-lead"><!-- primer hijo = lo que queda visible tras "Leer más" (mobile-ux.js keep:1): manifiesto + cita -->
+        <p class="ab-p" data-i="about_p1">Soy Rodrigo, <strong style="color:var(--t1)">diseñador de producto especializado en IA aplicada y automatización de procesos</strong>. Diseño, construyo y despliego <strong style="color:var(--t1)">agentes IA</strong> (Botpress, Vapi, Claude/GPT/Gemini), <strong style="color:var(--t1)">flujos de hiperautomatización</strong> (Make, n8n) y producto digital con IA integrada como parte del flujo — no como añadido.</p>
+        <blockquote class="ab-q" data-i="about_quote">"No soy solo un diseñador que aprendió IA — construyo agentes, automatizo procesos y llevo producto a producción. La diferencia está en el resultado."</blockquote>
+        </div>
+        <p class="ab-p" data-i="about_p2">Mi background es raro: <strong style="color:var(--t1)">diseño web autodidacta</strong> desde hace años, luego <strong style="color:var(--t1)">bootcamp UX/UI en Neoland</strong> y <strong style="color:var(--t1)">Máster en Agentes de IA e Hiperautomatización por EBIS</strong>. Sumo también <strong style="color:var(--t1)">+17 años previos gestionando cuentas B2B enterprise en Movistar/Telefónica</strong> — hablo el idioma del negocio y sé qué necesita un producto para funcionar de verdad. Formación continua todos los días en IA generativa, agentes, herramientas nuevas — porque me apasiona.</p>
       </div>
-      <div id="about-cards" style="display:flex;flex-direction:column;gap:.9rem">
-        <div style="background:var(--surf);border:1px solid var(--bord2);border-radius:var(--rs);padding:1.3rem;transition:all .35s var(--ease)">
-          <p style="font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--a1);margin-bottom:.85rem" data-i="info_head">Datos de contacto</p>
-          <div style="display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)" data-i="loc_l">Ubicación</span><span style="color:var(--t1);font-weight:600">Barcelona, España</span></div>
-          <div style="display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)" data-i="mod_l">Modalidad</span><span style="color:var(--t1);font-weight:600" data-i="mod_v">Remoto · Híbrido BCN</span></div>
-          <div style="display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)" data-i="avail_l">Disponibilidad</span><span style="color:var(--a2);font-weight:700" data-i="avail_v">Inmediata</span></div>
-          <div style="display:flex;justify-content:space-between;padding:.55rem 0;font-size:13px"><span style="color:var(--t2)" data-i="obj_l">Objetivo</span><span style="color:var(--t1);font-weight:600" data-i="obj_v">Empleo estable + proyectos UX/IA</span></div>
+      <figure class="ab-por rv" id="ab-por">
+        <img class="ab-img" src="/assets/profile/fotoperfil0002.webp" alt="Retrato de Rodrigo Negrete" width="800" height="1000" loading="lazy" decoding="async">
+        <div class="ab-agent" aria-hidden="true">
+          <img class="ab-img" src="/assets/profile/fotoperfil0002.webp" alt="" width="800" height="1000" loading="lazy" decoding="async">
+          <i class="ab-grid-ov"></i>
+          <svg class="ab-ann" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+            <path d="M232 132h-34v34M548 132h34v34M232 548h-34v-34M548 548h34v-34" />
+            <path class="ab-ann-l" d="M390 340v-16M390 356v16M374 340h-16M406 340h16" />
+          </svg>
+          <span class="ab-tag ab-t1"><b>role</b> AI Product Designer</span>
+          <span class="ab-tag ab-t2"><b>base</b> Barcelona</span>
+          <span class="ab-tag ab-t3"><b>ctx</b> <span data-i="ab_tag_ctx">+17 años B2B</span></span>
         </div>
-        <div style="background:var(--surf);border:1px solid var(--bord2);border-radius:var(--rs);padding:1.3rem">
-          <p style="font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--a1);margin-bottom:.85rem" data-i="lang_head">Idiomas</p>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)">Español</span><div style="display:flex;align-items:center;gap:.6rem"><div style="width:65px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="width:100%;height:100%;background:var(--a1);border-radius:3px"></div></div><span style="color:var(--t1);font-weight:600;font-size:11px" data-i="native">Nativo</span></div></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--bord);font-size:13px"><span style="color:var(--t2)">Inglés</span><div style="display:flex;align-items:center;gap:.6rem"><div style="width:65px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="width:70%;height:100%;background:var(--a1);border-radius:3px"></div></div><span style="color:var(--t1);font-weight:600;font-size:11px">B2</span></div></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-size:13px"><span style="color:var(--t2)">Catalán</span><div style="display:flex;align-items:center;gap:.6rem"><div style="width:65px;height:5px;background:var(--bg3);border-radius:3px;overflow:hidden"><div style="width:40%;height:100%;background:var(--a1);border-radius:3px"></div></div><span style="color:var(--t1);font-weight:600;font-size:11px">A2</span></div></div>
-        </div>
+        <i class="ab-ring" aria-hidden="true"></i>
+        <figcaption class="ab-cap">
+          <button type="button" class="ab-mode" aria-pressed="false"><i aria-hidden="true"></i><span data-i="ab_mode">Ver modo agente</span></button>
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="ab-mem" id="ab-mem" aria-labelledby="ab-mem-h">
+      <i class="ab-pulse" aria-hidden="true"></i>
+      <div class="ab-mem-hd">
+        <h3 id="ab-mem-h" class="ab-mem-t"><span class="ab-led" aria-hidden="true"></span><span data-i="ab_mem_h">Memoria · contexto del agente</span></h3>
+        <p class="ab-st" aria-hidden="true"><span class="ab-st-a" data-i="ab_loading">cargando contexto…</span><span class="ab-st-b" data-i="ab_loaded">contexto cargado</span></p>
+      </div>
+      <dl class="ab-kv">
+        <div><dt data-i="loc_l">Ubicación</dt><dd>Barcelona, España</dd></div>
+        <div><dt data-i="mod_l">Modalidad</dt><dd data-i="mod_v">Remoto · Híbrido BCN</dd></div>
+        <div><dt data-i="avail_l">Disponibilidad</dt><dd class="ab-hi" data-i="avail_v">Inmediata</dd></div>
+        <div><dt data-i="obj_l">Objetivo</dt><dd data-i="obj_v">Empleo estable + proyectos UX/IA</dd></div>
+      </dl>
+      <div class="ab-groups">
+        {groups.map((g, gi) => (
+          <div class="ab-g" style={`--g:${gi};--n:${g.chips.length}`}>
+            <h4 class="ab-gh"><span data-i={g.k}>{g.t}</span><span class="ab-n" aria-hidden="true">{String(g.chips.length).padStart(2, '0')}</span><span class="ab-ok" aria-hidden="true">✓</span></h4>
+            <ul class="ab-chips">
+              {g.chips.map((c, ci) => (
+                <li class:list={['ab-chip', { 'ab-chip-ok': c.ok }]} style={`--i:${ci}`}>{c.i ? <span data-i={c.i}>{c.t}</span> : c.t}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
       </div>
     </div>
   </div>
 </section>
+<script>
+  // En idle: la seccion no esta en el primer pantallazo y su JS no debe competir con el LCP del hero
+  const go = () => import('../sx-about.js');
+  'requestIdleCallback' in window ? requestIdleCallback(go, { timeout: 2500 }) : setTimeout(go, 1200);
+</script>

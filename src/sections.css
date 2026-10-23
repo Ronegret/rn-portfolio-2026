@@ -82,20 +82,7 @@
   body.is-scrolling .sx-trk, .sx-off .sx-trk { animation-play-state: paused; }
 }
 
-/* ───── (B1) Sobre mi: las palabras se iluminan de gris a pleno color con el scroll ─────
-   Texto real (spans en linea, sin duplicar). Estado inicial: t1 al 70 % de opacidad (>= 4.5:1 en los 5 temas). */
-#sobre-mi p.sx-split { color: var(--t1) !important; }
-@media (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .sx-w {
-      animation-name: sx-lit; animation-timing-function: linear; animation-fill-mode: both;
-      animation-timeline: view(); animation-range: cover calc(20% + var(--k, 0) * 1.2%) cover calc(40% + var(--k, 0) * 1.2%);
-    }
-    @keyframes sx-lit { from { opacity: .7; } to { opacity: 1; } }
-    /* protagonista unica: aqui la cortinilla de cinema.css sobra */
-    #sobre-mi.sec.sec > .wrap { animation-name: none; }
-  }
-}
+/* (B1) Sobre mi: vive en sx-about.css */
 
 /* ───── (B2) Laboratorio: spotlight/lupa (solo puntero fino) ───── */
 #laboratorio .lab-grid { position: relative; }
