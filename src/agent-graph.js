@@ -96,7 +96,7 @@ function layout() {
   pulses.length = 0;
 }
 
-function spawn(e, hop) { if (pulses.length < (lvl ? 6 : 12)) pulses.push({ e, t: 0, hop, sp: .28 + Math.random() * .12 }); }
+function spawn(e, hop) { if (lvl < 2 && pulses.length < (lvl ? 6 : 12)) pulses.push({ e, t: 0, hop, sp: .28 + Math.random() * .12 }); }
 function activate(n) {
   n.act = 1; n.beat = 1; ripples.push({ n, t: 0 });
   for (const e of n.out) spawn(e, 3);
@@ -183,13 +183,13 @@ function frame(now) {
   if (!running) return;
   raf = requestAnimationFrame(frame);
   const gap = now - last, dt = Math.min(gap / 1000, .05) || .016; last = now; t += dt;
-  // gobernador de fps: media de 30 fotogramas > 24 ms => menos pulsos y dpr 1; si persiste, fundido a negro y apagado
+  // gobernador de fps (media de 30 fotogramas > 24 ms), por pasos; el WebGL tiene su propio gobernador y a veces es el que carga el fotograma
   if (warm < 8) warm++;
   else if (gap < 250) {
     acc += gap;
     if (++frames === 30) {
       const avg = acc / 30; acc = frames = 0;
-      if (avg > 24) { if (!lvl) { lvl = 1; dpr = 1; warm = 4; layout(); } else return shutdown(); }
+      if (avg > 24) { if (lvl > 1) return shutdown(); warm = 4; if (++lvl === 1) { dpr = 1; layout(); } else pulses.length = 0; } // 1: dpr 1 y menos pulsos; 2: sin pulsos; 3: fundido y apagado
     }
   }
   if (++tick % 40 === 0 && cv.isConnected) { const c = card.getBoundingClientRect(), h = hero.getBoundingClientRect(); if ([c.left, c.top, c.width, c.height, h.left, h.top].map(Math.round).join() !== cardKey) layout(); }
