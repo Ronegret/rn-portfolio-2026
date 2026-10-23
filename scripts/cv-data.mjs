@@ -109,7 +109,7 @@ export const cv = {
     ],
     languages: [
       { l: 'Español', level: 'nativo' },
-      { l: 'Inglés', level: 'B2 (intermedio-alto)' },
+      { l: 'Inglés', level: 'A2 (elemental)' },
       { l: 'Catalán', level: 'A2 (elemental)' },
     ],
     ui: { certLabel: 'Certificado (PDF)' },
@@ -213,7 +213,7 @@ export const cv = {
     ],
     languages: [
       { l: 'Spanish', level: 'native' },
-      { l: 'English', level: 'B2 (upper intermediate)' },
+      { l: 'English', level: 'A2 (elementary)' },
       { l: 'Catalan', level: 'A2 (elementary)' },
     ],
     ui: { certLabel: 'Certificate (PDF)' },
