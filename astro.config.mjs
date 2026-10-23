@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import sysCard from './scripts/sx-system-card.mjs';
 
 const site = 'https://rodrigonegrete.es';
 // Subpaginas estaticas servidas desde public/ (Astro no las conoce): se anaden a mano.
@@ -52,5 +53,5 @@ const inlineCss = () => ({
 
 export default defineConfig({
   site,
-  integrations: [react(), sitemap({ customPages: staticPages.map((p) => `${site}/${p}/`) }), inlineCss()],
+  integrations: [react(), sitemap({ customPages: staticPages.map((p) => `${site}/${p}/`) }), inlineCss(), sysCard()], // sysCard despues de inlineCss: mide el HTML final
 });

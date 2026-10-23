@@ -3,7 +3,6 @@ import './sections.css';
 /* Sections: separadores entre secciones + una firma propia por sección. Progresivo: sin JS o con reduced-motion todo queda legible y estático. */
 const doc = document.documentElement;
 const motion = matchMedia('(prefers-reduced-motion: no-preference)');
-const fine = matchMedia('(hover:hover) and (pointer:fine)');
 const $ = (s, r = document) => r.querySelector(s);
 const pad = n => String(n).padStart(2, '0');
 
@@ -52,29 +51,7 @@ if ('IntersectionObserver' in window) {
 
 /* (B1) Sobre mí: vive en sx-about.js (importado desde About.astro) */
 
-/* ───── (B2) Laboratorio: spotlight que sigue al puntero (un rAF que se apaga al asentarse) ───── */
-const grid = $('#laboratorio .lab-grid');
-if (grid && fine.matches && motion.matches) {
-  grid.insertAdjacentHTML('beforeend', '<div class="sx-spot" aria-hidden="true"><i></i></div>');
-  const spot = grid.lastElementChild, blob = spot.firstElementChild;
-  let tx = 0, ty = 0, x = 0, y = 0, raf = 0, ready = false;
-  const tick = () => {
-    raf = 0;
-    x += (tx - x) * .22; y += (ty - y) * .22;
-    blob.style.translate = `${x.toFixed(1)}px ${y.toFixed(1)}px`;
-    if (Math.abs(tx - x) > .3 || Math.abs(ty - y) > .3) raf = requestAnimationFrame(tick);
-  };
-  grid.addEventListener('pointermove', e => {
-    if (e.pointerType !== 'mouse') return;
-    const r = grid.getBoundingClientRect();
-    tx = e.clientX - r.left; ty = e.clientY - r.top;
-    if (!ready) { x = tx; y = ty; ready = true; } // primera entrada: aparece ya bajo el puntero
-    spot.classList.add('on');
-    spot.classList.toggle('link', !!e.target.closest('a'));
-    if (!raf) raf = requestAnimationFrame(tick);
-  }, { passive: true });
-  grid.addEventListener('pointerleave', () => { spot.classList.remove('on'); ready = false; });
-}
+/* (B2) Laboratorio: el spotlight se sustituye por el registro lab.log (sx-lab.js / sx-lab.css) */
 
 /* ───── (B4) Estilos: barrido circular desde el botón pulsado (View Transitions + clip-path) ───── */
 let ox = innerWidth / 2, oy = innerHeight / 2;
