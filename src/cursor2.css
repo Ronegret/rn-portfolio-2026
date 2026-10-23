@@ -1,0 +1,88 @@
+/* Cursor 2.0 — solo se importa en (hover:hover)+(pointer:fine)+sin reduced-motion (ver main.js). Todo con transform/opacity. */
+#c2 { display: contents; --c2: var(--a1); --c2p: var(--a1); --c2d: var(--a1); --s: 1; }
+[data-theme="editorial"] #c2 { --c2d: var(--t1); }
+[data-theme="cyber"] #c2 { --c2p: var(--a2); }
+[data-theme="hud"] #c2 { --c2p: var(--a2); --c2d: var(--t1); }
+[data-theme="diario"] #c2 { --c2p: var(--a1); --c2d: var(--t1); }
+
+/* Sustituye al cursor 1.0 y al nativo (excepto campos de texto, teclado y modo Mira) */
+body.c2 #cur, body.c2 #cur-r { display: none !important; }
+body.c2, body.c2 * { cursor: none !important; }
+body.c2 :is(input:not([type=checkbox],[type=radio],[type=button],[type=submit]), textarea, [contenteditable="true"]) { cursor: text !important; }
+body.c2 select { cursor: default !important; }
+body.c2.c2-kb, body.c2.c2-kb * { cursor: auto !important; }
+body.c2.c2-kb #c2, body[data-cursor="mira"] #c2 { display: none; }
+body.c2[data-cursor="mira"], body.c2[data-cursor="mira"] * { cursor: crosshair !important; }
+
+#c2 > * { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999999; opacity: 0; will-change: transform; transition: opacity .25s; }
+#c2.on > * { opacity: 1; }
+
+/* Punto exacto (nunca se retrasa) */
+.c2-p { width: 0; height: 0; }
+.c2-d, .c2-i { position: absolute; display: block; transition: opacity .18s, transform .3s cubic-bezier(.16, 1, .3, 1); }
+.c2-d { width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--c2d); }
+.c2-i { width: 2px; height: 22px; margin: -11px 0 0 -1px; border-radius: 1px; background: var(--c2d); opacity: 0; transform: scaleY(.3); }
+[data-theme="hud"] .c2-d { border-radius: 1px; }
+
+/* Halo con anillo de progreso de scroll */
+.c2-r { width: 0; height: 0; }
+.c2-b { position: absolute; display: block; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%;
+  transform: scale(var(--s)); transition: transform .45s cubic-bezier(.16, 1, .3, 1), opacity .25s, background-color .25s; }
+.c2-b svg { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); transition: opacity .25s; }
+.c2-b circle { fill: none; stroke-width: 1.6; }
+.c2-tk { stroke: color-mix(in srgb, var(--c2p) 28%, transparent); }
+.c2-pg { stroke: var(--c2p); stroke-linecap: round; }
+#c2.sc .c2-tk { stroke: color-mix(in srgb, var(--c2p) 55%, transparent); }
+.c2-r { transition: opacity .25s; }
+.c2-l { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 5px; transform: translate(-50%, -50%); white-space: nowrap;
+  font: 700 10.5px/1 var(--fm, ui-monospace, monospace); letter-spacing: .06em; text-transform: uppercase; color: #000; opacity: 0; transition: opacity .2s; }
+.c2-l:empty { display: none; }
+.c2-l svg { flex: none; }
+
+/* Estela (solo en reposo) */
+.c2-t { width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--c2d); transition: opacity .2s; }
+#c2.on > .c2-t { opacity: calc(.22 - var(--i, 0) * .02); }
+#c2:not([data-s=""]) > .c2-t { opacity: 0; }
+#c2 > .c2-t:nth-child(n+4) { --i: 4; }
+[data-theme="hud"] .c2-t { border-radius: 1px; }
+
+/* (a) imanes: halo envuelve al elemento */
+#c2[data-s="mag"] .c2-d { transform: scale(.7); }
+#c2[data-s="mag"] .c2-b { background: color-mix(in srgb, var(--c2) 9%, transparent); }
+
+/* (b)(c)(d) estados con mezcla difference */
+#c2[data-s="view"] .c2-r, #c2[data-s="web"] .c2-r { mix-blend-mode: difference; }
+#c2[data-s="view"] .c2-b, #c2[data-s="web"] .c2-b { background: #fff; }
+/* sobre imagen/clip/carrusel la mezcla ensucia la etiqueta: burbuja solida con el acento del tema */
+#c2:is([data-s="clip"],[data-s="drag"],[data-s="zoom"]) .c2-b { background: var(--c2); }
+#c2:is([data-s="clip"],[data-s="drag"],[data-s="zoom"]) .c2-l { color: var(--bg); }
+#c2[data-s="view"], #c2[data-s="web"], #c2[data-s="clip"] { --s: 2.7; }
+#c2[data-s="drag"] { --s: 3.1; }
+#c2[data-s="zoom"] { --s: 1.9; }
+#c2:is([data-s="view"],[data-s="web"],[data-s="clip"],[data-s="drag"],[data-s="zoom"]) .c2-b svg { opacity: 0; }
+#c2[data-s="view"] .c2-l, #c2[data-s="web"] .c2-l, #c2[data-s="clip"] .c2-l, #c2[data-s="drag"] .c2-l, #c2[data-s="zoom"] .c2-l { opacity: 1; }
+#c2[data-s="view"] .c2-d, #c2[data-s="web"] .c2-d, #c2[data-s="clip"] .c2-d, #c2[data-s="drag"] .c2-d, #c2[data-s="zoom"] .c2-d { opacity: 0; }
+#c2[data-s="drag"].dn .c2-b { transform: scale(calc(var(--s) * .86)); }
+#c2[data-s="drag"] .c2-ar-r { transform: rotate(180deg); }
+#c2[data-s="drag"] .c2-ar { animation-name: c2-nudge; animation-duration: 1.1s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+#c2[data-s="drag"] .c2-ar-r { animation-delay: .55s; }
+@keyframes c2-nudge { 50% { translate: -3px 0; } }
+
+/* (d) texto: barra fina */
+#c2[data-s="text"] .c2-d { opacity: 0; transform: scale(.3); }
+#c2[data-s="text"] .c2-i { opacity: 1; transform: none; }
+#c2[data-s="text"] .c2-r { opacity: .4; }
+
+/* (i) foco: se atenua (el cursor nativo de texto se ve en los campos) */
+#c2[data-s="focus"] .c2-d, #c2[data-s="focus"] .c2-i { opacity: 0; }
+#c2[data-s="focus"] .c2-r { opacity: .2; }
+
+/* (g) clic: ondulacion */
+#c2.dn:not([data-s="drag"]) .c2-b { transform: scale(calc(var(--s) * .82)); }
+.c2-rp { position: fixed; top: 0; left: 0; z-index: 999998; pointer-events: none; width: 44px; height: 44px; margin: -22px 0 0 -22px; border-radius: 50%;
+  border: 1.5px solid var(--c2); opacity: 0; will-change: scale, opacity;
+  animation-name: c2-rp; animation-duration: .6s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); animation-fill-mode: forwards; }
+@keyframes c2-rp { from { scale: .2; opacity: .8; } to { scale: 2.2; opacity: 0; } }
+
+/* arrastre: el carrusel no se selecciona y se desactiva el snap mientras dura (lo gestiona JS) */
+.c2-dragging { user-select: none; -webkit-user-select: none; }
