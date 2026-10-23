@@ -101,7 +101,7 @@ export const cv = {
       { cat: 'Analítica y negocio', items: ['GA4', 'Hotjar', 'CRO', 'funnels', 'KPIs', 'Excel avanzado', 'Power BI', 'Google Workspace', 'Notion', 'Jira', 'B2B enterprise', 'e-commerce', 'MVP', 'gestión de stakeholders'] },
     ],
     education: [
-      { title: 'Máster en Agentes de IA e Hiperautomatización de Procesos', school: 'EBIS Business Techschool, Barcelona', dates: '2025 – 2026 (finalizado)', cert: '/assets/legacy/Certificado%20EBIS%20IA.pdf' },
+      { title: 'Máster en Agentes de IA e Hiperautomatización de Procesos', school: 'EBIS Business Techschool, Barcelona', dates: 'nov. 2025 – ago. 2026 (finalizado)', cert: '/assets/legacy/Certificado%20EBIS%20IA.pdf' },
       { title: 'Especialización en IA Generativa', school: 'UDIA', dates: '2025 – 2026 (en curso)' },
       { title: 'Bootcamp UX/UI Design, 300 horas', school: 'Neoland, Madrid', dates: 'ene. – mar. 2024', cert: '/assets/legacy/Neoland.pdf' },
       { title: 'Diseño Web Multimedia y Marketing Digital', school: 'CIPSA.NET, Barcelona', dates: '2020 – 2022' },
@@ -205,7 +205,7 @@ export const cv = {
       { cat: 'Analytics and business', items: ['GA4', 'Hotjar', 'CRO', 'funnels', 'KPIs', 'advanced Excel', 'Power BI', 'Google Workspace', 'Notion', 'Jira', 'B2B enterprise', 'e-commerce', 'MVP', 'stakeholder management'] },
     ],
     education: [
-      { title: 'Master in AI Agents and Process Hyperautomation', school: 'EBIS Business Techschool, Barcelona', dates: '2025 – 2026 (completed)', cert: '/assets/legacy/Certificado%20EBIS%20IA.pdf' },
+      { title: 'Master in AI Agents and Process Hyperautomation', school: 'EBIS Business Techschool, Barcelona', dates: 'Nov 2025 – Aug 2026 (completed)', cert: '/assets/legacy/Certificado%20EBIS%20IA.pdf' },
       { title: 'Specialization in Generative AI', school: 'UDIA', dates: '2025 – 2026 (in progress)' },
       { title: 'UX/UI Design Bootcamp, 300 hours', school: 'Neoland, Madrid', dates: 'Jan – Mar 2024', cert: '/assets/legacy/Neoland.pdf' },
       { title: 'Multimedia Web Design and Digital Marketing', school: 'CIPSA.NET, Barcelona', dates: '2020 – 2022' },
