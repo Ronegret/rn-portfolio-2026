@@ -166,7 +166,7 @@ html.tj-lock, html.tj-lock body { overflow: hidden; }
 /* ───────────── (4) Flotantes: viewport visual + safe-area ───────────── */
 @media (max-width: 920px) {
   #dock { bottom: calc(14px + env(safe-area-inset-bottom)); left: max(14px, env(safe-area-inset-left)); translate: 0 calc(var(--tj-vb, 0px) * -1); transition: background .4s, border-color .4s, translate .5s var(--tj-out), scale .5s var(--tj-spring), opacity .35s; transform-origin: 0 100%; }
-  #fcta { translate: 0 calc(var(--tj-vb, 0px) * -1); transition: opacity .4s var(--ease), transform .4s var(--ease), background .3s, box-shadow .3s, translate .5s var(--tj-out); }
+  #fab.show { translate: 0 calc(var(--tj-vb, 0px) * -1); }
   html.tj-down #dock { scale: .8; opacity: .6; translate: 0 calc(var(--tj-vb, 0px) * -1 + 6px); }
 }
 
