@@ -55,7 +55,7 @@
     }
 
     .back-link {
-      display: inline-flex; align-items: center; gap: 6px;
+      display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
       font-size: 13px; font-weight: 600; color: var(--muted);
       transition: color .2s;
     }
@@ -63,7 +63,7 @@
     .back-link::before { content: '←'; font-size: 15px; }
 
     .open-btn {
-      display: inline-flex; align-items: center; gap: 7px;
+      display: inline-flex; align-items: center; gap: 7px; min-height: 44px;
       background: var(--red); color: #fff;
       font-size: 13px; font-weight: 700;
       padding: 9px 20px; border-radius: 100px;
@@ -262,7 +262,7 @@
     }
 
     footer p { font-size: 12.5px; color: var(--muted); }
-    footer a { font-weight: 600; color: var(--muted); transition: color .2s; }
+    footer a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; color: var(--muted); transition: color .2s; }
     footer a:hover { color: var(--ink); }
 
     @media (max-width: 640px) {

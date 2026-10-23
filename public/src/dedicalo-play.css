@@ -86,7 +86,7 @@ body::before {
 .back-link, .live-link {
   display: inline-flex; align-items: center;
   border-radius: 999px; padding: 0 1.1rem;
-  height: 42px; font-size: 12px;
+  height: 44px; font-size: 12px;
   font-weight: 800; letter-spacing: .07em;
   text-transform: uppercase;
   transition: transform .22s var(--ease), opacity .22s;
@@ -575,7 +575,7 @@ section { padding: clamp(4rem,8vw,7rem) 0; }
 .dp-footer-links { display: flex; gap: .75rem; flex-wrap: wrap; }
 .footer-link {
   display: inline-flex; align-items: center;
-  height: 36px; padding: 0 .9rem;
+  height: 44px; padding: 0 .9rem;
   border-radius: 999px; font-size: 11px;
   font-weight: 700; border: 1px solid var(--line);
   color: var(--muted); background: rgba(255,255,255,.04);
@@ -606,7 +606,7 @@ section { padding: clamp(4rem,8vw,7rem) 0; }
 @media(max-width:600px){
   .metric-strip, .grid-3, .grid-4, .grid-2, .steps, .palette { grid-template-columns:1fr; }
   .dp-nav { gap:.6rem; }
-  .back-link, .live-link { font-size:11px; padding:0 .85rem; height:38px; }
+  .back-link, .live-link { font-size:11px; padding:0 .85rem; height:44px; }
   h1 { font-size:clamp(2rem,8.5vw,2.8rem); }
   h2 { font-size:clamp(1.6rem,7.5vw,2.4rem); }
   .hero-actions { flex-direction:column; }
