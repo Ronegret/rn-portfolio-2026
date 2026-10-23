@@ -3017,3 +3017,4 @@ html.cv-off main > section.sec { content-visibility: visible; }
 /* Tema principal (cyber): el violeta #b026ff no llega a 4.5:1 como texto pequeño sobre negro, ni con texto negro encima */
 [data-theme="cyber"] .ag-ctx a { color: #c45cff; }
 [data-theme="cyber"] .nav-cta { color: #fff; }
+.lang-trigger { white-space: nowrap; flex-shrink: 0; }
