@@ -1,9 +1,127 @@
+---
+// Grafo de herramientas + paleta ⌘K (sx-stack.css/.js). Solo herramientas que ya lista esta sección/CV y solo
+// enlaces a casos publicados donde aparecen. "Para qué la uso": content.js (sk_u_<id>). Capsule Corp primero si aplica.
+import '../sx-stack.css';
+const PJ = {
+  'capsule-corp': 'Capsule Corp', 'portfolio-2026': 'Portfolio 2026', 'rodd-es': 'Rodd.es', kettelbro: 'KETTELBRO',
+  aem: 'Events Planner', zodi: 'ZODI', 'dedicalo-play': 'Dedícalo Play', 'just-enjoy': 'Just Enjoy', iberdata: 'Iberdata',
+  'zodi-bto': 'ZODI BTO', invitoo: 'Invitoo', 'pdf-rodd': 'PDF Rodd', ccse: 'Estudio CCSE', dedicalo: 'Dedícalo',
+  paratumundo: 'ParaTuMundo', 'te-atiendo': 'Te Atiendo', aquae: 'Aquae',
+};
+const G = [
+  { k: 'dis', n: 'Diseño', v: 'diseñar', t: [
+    { id: 'figma', s: 'Figma', n: 'Figma · prototipado y design systems', p: ['rodd-es', 'dedicalo-play', 'aquae', 'paratumundo', 'te-atiendo'], u: 'Wireframes, prototipos navegables y sistemas de diseño antes de tocar código.' },
+    { id: 'framer', s: 'Framer Motion', n: 'Framer · Framer Motion', p: ['capsule-corp', 'dedicalo-play', 'rodd-es'], u: 'Animación de interfaz y microinteracciones dentro de React.' },
+    { id: 'photoshop', s: 'Photoshop', n: 'Adobe Photoshop · Illustrator', p: ['dedicalo'], u: 'Retoque e imagen para piezas de marca y portadas.' },
+  ] },
+  { k: 'ia', n: 'IA y agentes', v: 'razonar', t: [
+    { id: 'claude', s: 'Claude', n: 'Claude (Opus, Sonnet, Haiku)', p: ['aem', 'zodi', 'rodd-es'], u: 'Pensar, redactar y revisar: mi copiloto diario de producto.' },
+    { id: 'claudecode', s: 'Claude Code', n: 'Claude Code · Agent SDK', p: ['portfolio-2026', 'zodi'], u: 'Dirijo agentes que implementan y revisan código en ramas aisladas.' },
+    { id: 'openai', s: 'OpenAI', n: 'OpenAI (GPT-4o · GPT-5 · o3)', p: ['just-enjoy', 'iberdata', 'zodi'], u: 'Modelos para agentes y planificadores que usan herramientas.' },
+    { id: 'gemini', s: 'Gemini', n: 'Google AI Studio · Gemini', p: ['ccse', 'aem', 'invitoo'], u: 'Procesar material y generar imágenes para demos y contenidos.' },
+  ] },
+  { k: 'auto', n: 'Automatización', v: 'orquestar', t: [
+    { id: 'n8n', s: 'n8n', n: 'n8n', p: ['just-enjoy', 'iberdata'], u: 'Orquestar la lógica entre la interfaz, los modelos y los datos.' },
+    { id: 'make', s: 'Make', n: 'Make (Integromat)', p: ['invitoo'], u: 'Automatizaciones para formularios, avisos y datos.' },
+    { id: 'botpress', s: 'Botpress', n: 'Botpress', p: ['zodi-bto'], u: 'Prototipos conversacionales con intents, variables y memoria.' },
+    { id: 'vapi', s: 'Vapi', n: 'Vapi (Voice AI)', p: [], u: 'Agentes de voz con IA.' },
+  ] },
+  { k: 'fe', n: 'Front-end', v: 'entregar', t: [
+    { id: 'react', s: 'React', n: 'React · Vite · Next.js', p: ['capsule-corp', 'kettelbro', 'rodd-es', 'dedicalo-play'], u: 'Producto real: componentes, estado y apps desplegadas.' },
+    { id: 'tailwind', s: 'Tailwind', n: 'Tailwind CSS · shadcn/ui', p: ['kettelbro', 'pdf-rodd', 'rodd-es'], u: 'Estilos con tokens para iterar rápido sin perder consistencia.' },
+    { id: 'three', s: 'Three.js', n: 'Three.js · Spline · WebGL', p: ['rodd-es'], u: 'Escenas 3D interactivas en el navegador.' },
+    { id: 'vercel', s: 'Vercel', n: 'Vercel · GitHub · CI/CD', p: ['portfolio-2026', 'dedicalo-play', 'rodd-es'], u: 'Ramas, revisiones y despliegue continuo de cada proyecto.' },
+  ] },
+  { k: 'dat', n: 'Datos', v: 'medir', t: [
+    { id: 'supabase', s: 'Supabase', n: 'Supabase · Firebase', p: ['just-enjoy', 'dedicalo-play', 'iberdata', 'aem', 'kettelbro'], u: 'Estado persistente, tiempo real y autenticación.' },
+    { id: 'ga4', s: 'GA4', n: 'Google Analytics 4', p: [], u: 'Medir embudos y comportamiento para decidir qué cambiar.' },
+    { id: 'posthog', s: 'PostHog', n: 'PostHog · Vercel Analytics', p: ['rodd-es'], u: 'Ver qué se usa de verdad en un producto publicado.' },
+    { id: 'powerbi', s: 'Power BI', n: 'Excel avanzado · Power BI', p: [], u: 'Informes y análisis de negocio.' },
+  ] },
+];
+// Geometría del grafo (viewBox 1200×352): 5 columnas; tronco a la izquierda de cada columna y ramas en codo hacia cada píldora.
+const X0 = (i) => 24 + i * 236, HY = 96, PY = (r) => 132 + r * 56;
+const branch = (i, r) => { const x = X0(i) + 8, ym = PY(r) + 20; return `M${x} ${HY}V${ym - 12}Q${x} ${ym} ${x + 12} ${ym}H${x + 34}`; };
+const SPINE = `M${X0(0) + 8} ${HY}H${X0(4) + 8}`;
+---
 <section class="sec" id="stack">
   <div class="wrap">
     <span class="sec-n" data-n="02" aria-hidden="true"></span>
     <p class="eyebrow rv" data-i="stack_ey">Tecnología</p>
     <h2 class="sh rv" data-i="stack_h">Herramientas usadas <em>en proyectos reales.</em></h2>
     <p class="sb rv" data-i="stack_sub">Stack práctico para investigar, prototipar, lanzar, automatizar y medir. Lo presento con foco en uso real, no como una lista inflada de expertise.</p>
+
+    <div class="sk" id="sk">
+      <div class="sk-bar rv">
+        <button type="button" class="sk-open" data-sk-open aria-haspopup="dialog" aria-controls="skp">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+          <span data-i="sk_cta">Buscar en mi stack</span>
+          <kbd class="sk-kbd" aria-hidden="true"><span class="sk-mod">Ctrl</span> K</kbd>
+        </button>
+        <p class="sk-use" id="sk-use"><span class="sk-use-t" data-sk-tool>›</span> <span data-sk-hint data-i="sk_hint">Señala una herramienta para ver para qué la uso.</span><span data-sk-txt hidden></span></p>
+      </div>
+
+      <svg class="sk-svg" viewBox="0 0 1200 352" role="group" aria-labelledby="sk-svg-t">
+        <title id="sk-svg-t" data-i="sk_svg_t">Mapa de herramientas por función</title>
+        <path class="sk-e sk-spine" d={SPINE} pathLength="100" />
+        <path class="sk-pl" d={SPINE} pathLength="100" />
+        <path class="sk-pl sk-pl2" d={SPINE} pathLength="100" />
+        {G.map((g, i) => (
+          <g class="sk-col" data-g={g.k} style={`--i:${i}`}>
+            <text class="sk-v" x={X0(i)} y="30">{`0${i + 1} · `}<tspan data-i={`sk_v${i + 1}`}>{g.v}</tspan></text>
+            <text class="sk-gn" x={X0(i)} y="62" data-i={`sk_g${i + 1}`}>{g.n}</text>
+            {g.t.map((t, r) => (
+              <g class="sk-n" data-t={t.id} tabindex="0" role="button" aria-haspopup="dialog" aria-describedby="sk-use" style={`--r:${r}`}>
+                <path class="sk-e sk-br" d={branch(i, r)} pathLength="100" />
+                <path class="sk-bp" d={branch(i, r)} pathLength="100" />
+                <rect class="sk-pill" x={X0(i) + 34} y={PY(r)} width="170" height="40" rx="8" />
+                <text class="sk-tn" x={X0(i) + 50} y={PY(r) + 25.5}>{t.s}</text>
+                {t.p.length > 0 && <text class="sk-pc" x={X0(i) + 190} y={PY(r) + 25} text-anchor="end" aria-hidden="true">↗</text>}
+              </g>
+            ))}
+            <circle class="sk-hub" cx={X0(i) + 8} cy={HY} r="5" />
+          </g>
+        ))}
+      </svg>
+
+      <div class="sk-list">
+        {G.map((g, i) => (
+          <div class="sk-lg" data-g={g.k} style={`--i:${i}`}>
+            <p class="sk-lh"><span class="sk-v">{`0${i + 1} · `}<span data-i={`sk_v${i + 1}`}>{g.v}</span></span> <span class="sk-gn" data-i={`sk_g${i + 1}`}>{g.n}</span></p>
+            <ul class="sk-chips">
+              {g.t.map((t) => <li><button type="button" class="sk-chip" data-t={t.id} aria-haspopup="dialog">{t.s}</button></li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <dialog class="skp" id="skp" aria-labelledby="skp-t">
+        <div class="skp-in">
+          <div class="skp-hd">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+            <label id="skp-t" for="skp-q" class="sk-sr" data-i="sk_cta">Buscar en mi stack</label>
+            <input id="skp-q" class="skp-q" type="text" autocomplete="off" spellcheck="false" enterkeyhint="go" aria-describedby="skp-n" aria-controls="skp-ls" />
+            <span hidden data-sk-ph data-i="sk_ph">Busca una herramienta o un proyecto</span>
+            <span hidden data-sk-res data-i="sk_res">resultados</span><span hidden data-sk-res1 data-i="sk_res1">resultado</span>
+            <button type="button" class="skp-x" data-sk-close><span class="sk-sr" data-i="sk_close">Cerrar</span><span aria-hidden="true">esc</span></button>
+          </div>
+          <ul class="skp-ls" id="skp-ls">
+            {G.map((g, i) => g.t.map((t) => (
+              <li class="skp-it" data-t={t.id} data-g={g.k}>
+                <p class="skp-r1"><span class="skp-nm">{t.n}</span><span class="skp-g" data-i={`sk_g${i + 1}`}>{g.n}</span></p>
+                <p class="skp-use" data-i={`sk_u_${t.id}`}>{t.u}</p>
+                <p class="skp-pj">
+                  {t.p.length ? <><span class="skp-lb" data-i="sk_usedin">Usado en</span>{t.p.map((p) => <a href={`/${p}/`}>{PJ[p]}</a>)}</> : <span class="skp-lb" data-i="sk_none">Sin caso publicado todavía</span>}
+                </p>
+              </li>
+            )))}
+          </ul>
+          <p class="skp-empty" hidden data-i="sk_empty">Ninguna herramienta coincide.</p>
+          <div class="skp-ft"><span id="skp-n" aria-live="polite"></span><span class="skp-keys" aria-hidden="true" data-i="sk_keys">↑↓ navegar · ↵ abrir · esc cerrar</span></div>
+        </div>
+      </dialog>
+    </div>
+
     <div class="mq rv"><div class="mq-i" id="mq-i"></div></div>
     
     <div class="sg">
@@ -127,3 +245,4 @@
     </section>
   </div>
 </section>
+<script>import '../sx-stack.js';</script>
