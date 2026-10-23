@@ -14,7 +14,7 @@ Idiomas del sitio: español, catalán e inglés. El contenido de cada caso de es
 - [Dedícalo Play](https://rodrigonegrete.es/dedicalo-play/): juego musical multijugador en tiempo real.
 - [Rodd.es](https://rodrigonegrete.es/rodd-es/): biblioteca de recursos web con previsualización.
 - [Invitoo](https://rodrigonegrete.es/invitoo/): invitaciones de boda digitales con IA.
-- [Just Enjoy](https://rodrigonegrete.es/just-enjoy/): planificador de viajes con agentes y automatización (trabajo de máster en equipo).
+- [Just Enjoy](https://rodrigonegrete.es/just-enjoy/): planificador de viajes con agentes y automatización (TFM del máster en equipo; parte de Rodrigo: frontend, diseño UX/UI e interfaces y parte de la automatización en n8n).
 - [PDF Rodd](https://rodrigonegrete.es/pdf-rodd/): editor de PDF en el navegador.
 
 ## Currículum
