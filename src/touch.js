@@ -14,9 +14,9 @@ const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const store = { get: k => { try { return localStorage.getItem(k); } catch { return null; } }, set: (k, v) => { try { localStorage.setItem(k, v); } catch { /* privado */ } } };
 
 const TXT = {
-  es: { view: 'Vista de proyectos', list: 'Lista', deck: 'Baraja', qv: 'Vista rápida', close: 'Cerrar', grab: 'Cambiar la altura de la hoja', car: 'Proyectos destacados', go: n => `Ir al proyecto ${n}` },
-  ca: { view: 'Vista de projectes', list: 'Llista', deck: 'Baralla', qv: 'Vista ràpida', close: 'Tancar', grab: 'Canviar l’alçada del full', car: 'Projectes destacats', go: n => `Anar al projecte ${n}` },
-  en: { view: 'Project view', list: 'List', deck: 'Deck', qv: 'Quick view', close: 'Close', grab: 'Change sheet height', car: 'Featured projects', go: n => `Go to project ${n}` },
+  es: { view: 'Vista de proyectos', list: 'Lista', deck: 'Baraja', qv: 'Vista rápida', close: 'Cerrar', grab: 'Cambiar la altura de la hoja', car: 'Proyectos destacados', go: n => `Ir al proyecto ${n}`, ann: (d, n) => d ? `Vista baraja: ${n} proyectos, desliza para recorrerlos` : `Vista lista: ${n} proyectos` },
+  ca: { view: 'Vista de projectes', list: 'Llista', deck: 'Baralla', qv: 'Vista ràpida', close: 'Tancar', grab: 'Canviar l’alçada del full', car: 'Projectes destacats', go: n => `Anar al projecte ${n}`, ann: (d, n) => d ? `Vista baralla: ${n} projectes, llisca per recórrer-los` : `Vista llista: ${n} projectes` },
+  en: { view: 'Project view', list: 'List', deck: 'Deck', qv: 'Quick view', close: 'Close', grab: 'Change sheet height', car: 'Featured projects', go: n => `Go to project ${n}`, ann: (d, n) => d ? `Deck view: ${n} projects, swipe to browse` : `List view: ${n} projects` },
 };
 const tx = () => TXT[doc.lang] || TXT.es;
 const relabel = [];
@@ -35,7 +35,8 @@ const spring = (zeta, w0, n = 40) => {
 const hasLinear = CSS.supports('transition-timing-function', 'linear(0,1)');
 const SPRING = hasLinear ? spring(.5, 16) : 'cubic-bezier(.34,1.56,.64,1)';
 const SHEET_SPRING = hasLinear ? spring(.74, 16) : 'cubic-bezier(.22,1,.36,1)';
-if (hasLinear) doc.style.setProperty('--tj-spring', SPRING);
+const SOFT = hasLinear ? spring(.8, 15, 48) : 'cubic-bezier(.22,1,.36,1)'; // casi sin rebote: lo usan el FLIP lista⇄baraja y la píldora
+if (hasLinear) { doc.style.setProperty('--tj-spring', SPRING); doc.style.setProperty('--tj-soft', SOFT); }
 
 /* Háptica discreta: solo con activación de usuario y sin reduced-motion */
 const buzz = ms => { if (!reduced() && navigator.vibrate && navigator.userActivation?.isActive) navigator.vibrate(ms); };
@@ -79,10 +80,10 @@ if (window.visualViewport) {
 const sec = $('#proyectos'), bento = sec && $('.bento', sec), island = bento && bento.closest('astro-island');
 const cardsOf = () => bento ? [...bento.children].filter(c => !c.classList.contains('m-more') && !c.classList.contains('fhid')) : [];
 const nativeTL = CSS.supports('animation-timeline: view()');
-let deckOn = false, userChose = false, idx = 0, prog, seg;
+let deckOn = false, userChose = false, idx = 0, prog, seg, live;
 const ICON = {
-  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>',
-  deck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M3 7v10M21 7v10" stroke-linecap="round"/></svg>',
+  list: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/></svg>',
+  deck: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="4" width="10" height="16" rx="2"/><path d="M3 7v10" stroke-linecap="round"/><path d="M21 7v10" stroke-linecap="round"/></svg>',
   x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>',
   qv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 15l7-7 7 7"/><path d="M5 20h14"/></svg>',
 };
@@ -90,9 +91,12 @@ const ICON = {
 function buildDeckUI() {
   seg = document.createElement('div');
   seg.className = 'tj-seg'; seg.setAttribute('role', 'group');
-  seg.innerHTML = `<button type="button" data-v="list">${ICON.list}<span></span></button><button type="button" data-v="deck">${ICON.deck}<span></span></button>`;
+  seg.innerHTML = `<i class="tj-pill" aria-hidden="true"></i><button type="button" data-v="list">${ICON.list}<span></span></button><button type="button" data-v="deck">${ICON.deck}<span></span></button>`;
   seg.addEventListener('click', e => { const b = e.target.closest('button'); if (b) setDeck(b.dataset.v === 'deck', true); });
   island.before(seg);
+  live = document.createElement('div');
+  live.className = 'tj-sr'; live.setAttribute('role', 'status'); live.setAttribute('aria-live', 'polite');
+  seg.after(live);
   prog = document.createElement('div');
   prog.className = 'tj-prog';
   prog.innerHTML = '<span class="tj-count" aria-hidden="true"></span><div class="tj-bar" aria-hidden="true"><i></i></div><div class="tj-dots"></div>';
@@ -118,7 +122,9 @@ function rebuildDots() {
   lastDeckIdx = -1; hooks.deck?.();
 }
 
-/* Un solo cálculo por frame: tarjeta activa, progreso, y --tj-p solo si no hay scroll-driven nativo */
+/* Un solo cálculo por frame: tarjeta activa, progreso, inclinación por velocidad, y --tj-p solo si no hay scroll-driven nativo */
+let sl0 = 0, vx = 0, tilt = 0;
+const keepIdx = i => { try { sessionStorage.setItem('rn-deck-i', String(i)); } catch { /* privado */ } };
 function deckFrame() {
   if (!deckOn) return false;
   const cs = cardsOf(), mid = bento.scrollLeft + bento.clientWidth / 2;
@@ -126,9 +132,15 @@ function deckFrame() {
   cs.forEach((c, i) => { const d = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (d < bd) { bd = d; best = i; } if (!nativeTL) c.style.setProperty('--tj-p', clamp((c.offsetLeft + c.offsetWidth / 2 - mid) / (bento.clientWidth * .6), -1, 1).toFixed(3)); });
   const max = bento.scrollWidth - bento.clientWidth;
   prog.querySelector('.tj-bar i').style.transform = `scaleX(${max > 0 ? clamp(.08 + .92 * bento.scrollLeft / max, 0, 1).toFixed(3) : 1})`;
+  // Inclinación: la tarjeta y sus vecinas se ladean según la velocidad del arrastre y se enderezan con inercia (rotate es componible, no pisa nada)
+  vx += ((bento.scrollLeft - sl0) - vx) * .35; sl0 = bento.scrollLeft;
+  tilt += ((reduced() || flying ? 0 : clamp(-vx * .3, -4, 4)) - tilt) * .2;
+  if (Math.abs(tilt) < .03) tilt = 0;
+  const deg = tilt ? `${tilt.toFixed(2)}deg` : '';
+  cs.forEach((c, i) => { const v = Math.abs(i - best) <= 1 ? deg : ''; if (c._r !== v) { c._r = v; c.style.rotate = v; } });
   if (best !== lastDeckIdx) {
     if (lastDeckIdx !== -1) buzz(6);
-    lastDeckIdx = idx = best;
+    lastDeckIdx = idx = best; keepIdx(best);
     prog.querySelector('.tj-count').textContent = `${pad(best + 1)} / ${pad(cs.length)}`;
     $$('.tj-dot', prog).forEach((d, i) => d.setAttribute('aria-current', String(i === best)));
     cs.forEach((c, i) => {
@@ -139,7 +151,7 @@ function deckFrame() {
       if (i === best) { if (!reduced() && !document.hidden) { if (!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } } else v.pause();
     });
   }
-  return false;
+  return tilt !== 0 || Math.abs(vx) > .1;
 }
 hooks.deck = deckFrame;
 
@@ -150,39 +162,118 @@ function goTo(i, user) {
   if (user) buzz(8);
 }
 
-/* "Baraja": las tarjetas siguientes salen de debajo de la primera con muelle */
+/* "Baraja": las tarjetas siguientes salen de debajo de la primera con muelle (entrada inicial, sin interacción del usuario) */
 function fan() {
   if (reduced() || !bento.animate) return;
   const cs = cardsOf().slice(0, 3), w = cs[0].offsetWidth + 14;
   cs.forEach((c, i) => {
     if (!i) return;
-    c.animate([{ translate: `${-w * i}px 0`, rotate: `${i * 5}deg`, opacity: .0 }, { translate: '0 0', rotate: '0deg', opacity: 1 }], { duration: 650, delay: i * 70, easing: SPRING, fill: 'backwards' });
+    c.animate([{ translate: `${-w * i}px 0`, rotate: `${i * 5}deg`, opacity: .0 }, { translate: '0 0', rotate: '0deg', opacity: 1 }], { duration: 650, delay: i * 70, easing: SOFT, fill: 'backwards' });
   });
 }
 
-const markSeg = on => $$('button', seg).forEach(b => b.setAttribute('aria-pressed', String((b.dataset.v === 'deck') === on)));
+const markSeg = on => { seg.dataset.view = on ? 'deck' : 'list'; $$('button', seg).forEach(b => b.setAttribute('aria-pressed', String((b.dataset.v === 'deck') === on))); };
 
-function setDeck(on, user) {
+/* Estado de la vista (clases, ARIA, clips); no mide ni anima */
+function paint(on) {
   deckOn = on;
   sec.classList.toggle('tj-deck-on', on);
   sec.classList.toggle('tj-js', on && !nativeTL);
   prog.classList.toggle('on', on);
   markSeg(on);
-  if (on) { bento.setAttribute('role', 'region'); } else { bento.removeAttribute('role'); cardsOf().forEach(c => { c.classList.remove('tj-cur'); c.removeAttribute('data-tj-hold'); c.style.removeProperty('--tj-p'); }); }
-  if (user) { userChose = true; store.set('rn-deck', on ? '1' : '0'); buzz(10); }
-  if (on) {
-    bento.scrollLeft = 0; rebuildDots(); wake(); if (user) fan();
-    // Volver de un caso (case-transitions.js deja el slug): la baraja se coloca en su tarjeta
-    const back = window.__rnBack, c = back && cardsOf().find(k => (k.matches('a.bc') ? k : k.querySelector('a.bc'))?.getAttribute('href') === `/${back}/`);
-    window.__rnBack = '';
-    if (c && !user) { bento.scrollLeft = c.offsetLeft - (bento.clientWidth - c.offsetWidth) / 2; wake(); }
+  if (on) bento.setAttribute('role', 'region');
+  else {
+    bento.removeAttribute('role');
+    cardsOf().forEach(c => { c.classList.remove('tj-cur'); c.removeAttribute('data-tj-hold'); c.style.removeProperty('--tj-p'); c.style.rotate = ''; c._r = ''; });
+    document.dispatchEvent(new Event('visibilitychange')); // preview.js reevalúa los clips de la lista (la baraja los había pausado)
   }
-  else if (user) cardsOf()[idx]?.scrollIntoView({ block: 'center', behavior: reduced() ? 'auto' : 'smooth' });
+}
+
+/* ═════ Transición Lista ⇄ Baraja ═════
+   FLIP con muelle: se mide (First), se cambia el layout de una vez (Last) y cada tarjeta viaja de su sitio anterior al nuevo con `translate`+`scale`
+   (solo composición). Las tarjetas que no estaban a la vista salen de debajo de la activa (abanico), las que se van se pliegan bajo ella.
+   La altura del bloque no se anima (sería layout): lo que hay debajo hace el mismo FLIP en translate, así que el contenido se desliza sin salto.
+   Se conserva la tarjeta que el usuario tenía en pantalla (activa) y la posición de lo que mira (conmutador / tarjeta / lo de debajo).
+   Elegimos FLIP manual y no View Transitions: las tarjetas llevan <video> vivos, necesitan escalado uniforme con escalonado y rotación,
+   y el snapshot de VT congela el clip y estira de forma no uniforme. */
+let flights = [], flying = false;
+const inVp = (r, m = 40) => r.width > 0 && r.height > 0 && r.bottom > -m && r.top < innerHeight + m && r.right > -m && r.left < innerWidth + m;
+const cx = r => r.left + r.width / 2, cy = r => r.top + r.height / 2;
+const jump = d => { if (Math.abs(d) > .5) scrollTo({ top: scrollY + d, behavior: 'instant' }); };
+const belowAll = () => {
+  const out = [];
+  for (let n = sec.nextElementSibling; n; n = n.nextElementSibling) out.push(n);
+  const f = $('footer'); if (f) out.push(f);
+  return out;
+};
+
+function morph(on, animate) {
+  const vh = innerHeight, cs = cardsOf();
+  if (!cs.length) { paint(on); return; }
+  cs.forEach(c => { if (c._r) { c.style.rotate = ''; c._r = ''; } });
+  // FIRST: con las animaciones en vuelo medimos lo que el usuario ve, así una interrupción sigue desde donde estaba
+  const first = cs.map(c => c.getBoundingClientRect());
+  const sR = seg.getBoundingClientRect(), bR = bento.getBoundingClientRect();
+  const kind = sR.bottom > 0 && sR.top < vh ? 'seg' : bR.bottom > 0 && bR.top < vh ? 'card' : bR.bottom <= 0 ? 'below' : 'above';
+  let act = clamp(idx, 0, cs.length - 1), vis = act; // act: la que queda activa; vis: la que el usuario tiene a la vista (ancla)
+  if (on) { let best = 0; first.forEach((r, i) => { const v = Math.min(r.bottom, vh) - Math.max(r.top, 70); if (r.width && v > best) { best = v; vis = i; } }); if (animate) act = vis; } // la tarjeta con más superficie en pantalla; sin interacción (carga/volver de un caso) manda la guardada
+  const bel = belowAll(), belTop = bel.map(e => e.getBoundingClientRect().top);
+  flights.forEach(a => a.cancel()); flights = [];
+  // LAST
+  if (!on && bento.classList.contains('m-collapsed') && cs[act].classList.contains('m-extra')) { $('.m-more', island)?.click(); bento.classList.remove('m-collapsed'); } // la activa estaba en "Ver más": se despliega
+  if (!on) cs.forEach(c => c.classList.add('vis')); // la lista los revelaba con rv-up (opacidad 0→1): aquí viajan visibles
+  paint(on);
+  if (!on) cs.forEach(c => c.getAnimations().forEach(a => { if (a.animationName === 'rv-up') a.finish(); }));
+  if (on) { idx = act; sl0 = 0; vx = tilt = 0; bento.scrollTo({ left: cs[act].offsetLeft - (bento.clientWidth - cs[act].offsetWidth) / 2, behavior: 'instant' }); rebuildDots(); sl0 = bento.scrollLeft; }
+  // ancla: lo que el usuario estaba mirando no se mueve
+  if (kind === 'card') jump(cs[vis].getBoundingClientRect().top - first[vis].top);
+  else if (kind === 'below') jump(bel[0].getBoundingClientRect().top - belTop[0]);
+  else if (kind === 'seg') { const r = cs[act].getBoundingClientRect(); if (r.bottom < 120 || r.top > vh - 120) jump(cy(r) - vh / 2); } // la activa quedó fuera: se trae al centro
+  if (!animate || kind === 'above') return;
+  if (reduced() || !bento.animate) { bento.animate?.([{ opacity: 0 }, { opacity: 1 }], { duration: 160, easing: 'ease-out' }); return; }
+  const last = cs.map(c => c.getBoundingClientRect()), aF = first[act], aL = last[act];
+  const OUT = 'cubic-bezier(.22,1,.36,1)';
+  cs.forEach((c, i) => {
+    const f = first[i], l = last[i], vf = inVp(f), vl = inVp(l);
+    if ((!vf && !vl) || !l.width) return;
+    const at = r => `${cx(r) - cx(l)}px ${cy(r) - cy(l)}px`;
+    const o = getComputedStyle(c).opacity; // el estado real (en la baraja las vecinas van a .7 por scroll-driven)
+    const kf = vf
+      ? [{ offset: 0, translate: at(f), scale: String(f.width / c.offsetWidth) }].concat(vl ? [] : [{ offset: 1, translate: aL.width ? at(aL) : '0 0', scale: '.88', opacity: 0 }]) // sin offset un único fotograma se interpreta como el final
+      : [{ offset: 0, translate: aF.width ? at(aF) : '0 0', scale: '.88', opacity: 0 }, { offset: .4, opacity: o }]; // aparece pronto: el fundido no deja la pantalla vacía mientras viaja
+    flights.push(c.animate(kf, { duration: 680, delay: Math.min(Math.abs(i - act), 7) * 38, easing: SOFT, fill: 'backwards' }));
+  });
+  bel.forEach((e, k) => {
+    const r = e.getBoundingClientRect(), b = belTop[k];
+    let d = b - r.top;
+    if (Math.abs(d) < 2) return;
+    const vb = b < vh + 80 && b + r.height > -80, va = r.top < vh + 80 && r.bottom > -80;
+    if (!vb && !va) return;
+    if (!vb) d = Math.min(d, vh + 80 - r.top); // venía de muy abajo: arranca desde el borde de la pantalla
+    flights.push(e.animate([{ offset: 0, translate: `0 ${d}px` }], { duration: 620, easing: OUT }));
+  });
+  if (on) flights.push(prog.animate([{ offset: 0, opacity: 0, translate: '0 12px' }], { duration: 520, delay: 180, easing: OUT, fill: 'backwards' }));
+  flying = true; // sin inclinación mientras las tarjetas viajan
+  Promise.allSettled(flights.map(a => a.finished)).then(() => { if (!flights.some(a => a.playState === 'running')) { flying = false; flights = []; } });
+}
+
+function setDeck(on, user) {
+  if (on === deckOn) return;
+  if (user) { userChose = true; store.set('rn-deck', on ? '1' : '0'); buzz(8); }
+  morph(on, user);
+  live.textContent = '';
+  if (user) requestAnimationFrame(() => { live.textContent = tx().ann(on, cardsOf().length); });
+  wake();
 }
 
 function initDeck() {
   if (!bento || !island || !$('.fbar', island)) return;
   buildDeckUI();
+  try { idx = +sessionStorage.getItem('rn-deck-i') || 0; } catch { /* privado */ }
+  { // volver de un caso (case-transitions.js deja el slug en window.__rnBack): manda la tarjeta de ese caso
+    const back = window.__rnBack;
+    if (back) { const i = cardsOf().findIndex(k => (k.matches('a.bc') ? k : k.querySelector('a.bc'))?.getAttribute('href') === `/${back}/`); if (i >= 0) idx = i; window.__rnBack = ''; }
+  }
   bento.addEventListener('scroll', wake, { passive: true });
   // el filtro (.fhid) y "Ver más" (m-extra) cambian las tarjetas visibles: reconstruir puntos solo si cambia el número
   let n0 = cardsOf().length;

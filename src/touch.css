@@ -7,21 +7,38 @@
 
 /* ───────────── (1) Conmutador Lista / Baraja ───────────── */
 .tj-seg {
-  display: flex; gap: 2px; width: fit-content; margin: 0 0 .9rem auto; padding: 3px;
+  position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 2px; width: fit-content; margin: 0 0 .9rem auto; padding: 3px;
   border: 1px solid var(--bord2); border-radius: 100px; background: var(--surf);
 }
 .tj-seg button {
-  position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 6px;
+  position: relative; z-index: 1; overflow: hidden; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   min-height: 38px; padding: 0 14px; border: 0; border-radius: 100px; background: transparent;
   color: var(--t2); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
-  transition: color .25s, background-color .25s;
+  transition: color .3s;
 }
-.tj-seg button[aria-pressed="true"] { background: var(--a1); color: var(--bg); }
+.tj-seg button[aria-pressed="true"] { color: var(--bg); }
+/* Píldora deslizante: un solo elemento que viaja entre las dos mitades (translate, sin layout) */
+.tj-pill {
+  position: absolute; z-index: 0; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 8px) / 2); border-radius: 100px; background: var(--a1);
+  translate: 0 0; transition: translate .6s var(--tj-soft, cubic-bezier(.22, 1, .36, 1));
+}
+.tj-seg[data-view="deck"] .tj-pill { translate: calc(100% + 2px) 0; }
 .tj-seg svg { width: 14px; height: 14px; flex: none; }
+/* El icono de la vista elegida se "arma": las líneas de la lista se alargan en cascada, la carta central crece y las laterales se abren */
+.tj-seg svg > * { transform-box: fill-box; transform-origin: center; transition: transform .55s var(--tj-soft, cubic-bezier(.22, 1, .36, 1)), opacity .3s; }
+.tj-seg [data-v="list"] svg > * { transform-origin: 0 50%; }
+.tj-seg [data-v="list"][aria-pressed="false"] svg > * { transform: scaleX(.72); }
+.tj-seg [data-v="list"] svg > :nth-child(2) { transition-delay: .04s; }
+.tj-seg [data-v="list"] svg > :nth-child(3) { transition-delay: .08s; }
+.tj-seg [data-v="deck"][aria-pressed="false"] svg > rect { transform: scale(.78); }
+.tj-seg [data-v="deck"][aria-pressed="false"] svg > path { opacity: .55; }
+.tj-seg [data-v="deck"][aria-pressed="false"] svg > path:nth-child(2) { transform: translateX(3px); }
+.tj-seg [data-v="deck"][aria-pressed="false"] svg > path:nth-child(3) { transform: translateX(-3px); }
+.tj-sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* Baraja: el .bento pasa a carrusel de scroll nativo (snap proximity, nunca mandatory) */
 #proyectos.tj-deck-on .bento {
-  --tj-w: min(82vw, 360px);
+  --tj-w: min(78vw, 340px); /* menos ancho: las vecinas asoman y se ve que hay más */
   display: flex; align-items: stretch; gap: 14px; overflow-x: auto; overflow-y: hidden;
   margin-inline: calc(var(--gut, 1.2rem) * -1); padding: 8px calc((100vw - var(--tj-w)) / 2) 14px;
   scroll-snap-type: x proximity; scroll-padding-inline: calc((100vw - var(--tj-w)) / 2);
@@ -72,7 +89,7 @@
       animation-name: tj-txt; animation-timing-function: linear; animation-fill-mode: both;
       animation-timeline: --tj-c; animation-range: cover 0% cover 100%;
     }
-    @keyframes tj-card { 0% { scale: .9; opacity: .55; } 50% { scale: 1; opacity: 1; } 100% { scale: .9; opacity: .55; } }
+    @keyframes tj-card { 0% { scale: .92; opacity: .7; } 50% { scale: 1; opacity: 1; } 100% { scale: .92; opacity: .7; } }
     @keyframes tj-par { from { translate: 16% 0; } to { translate: -16% 0; } }
     @keyframes tj-txt { from { translate: 26px 0; } to { translate: -26px 0; } }
   }
@@ -172,7 +189,7 @@ html.tj-lock, html.tj-lock body { overflow: hidden; }
   :is(.btn-p, .btn-s, .nav-cta, #fcta, .fb, .m-more, .bc-d-more, .tj-seg button, .tj-qv, .tj-cta, .dk, .bc-link, .tj-dot, .bc):active { scale: none; }
   .bc.tj-hold { scale: none; transition: none; }
   html.tj-down #dock { scale: none; opacity: 1; }
-  .tj-dot::before, .tj-grab::before { transition: none; }
+  .tj-dot::before, .tj-grab::before, .tj-pill, .tj-seg svg > * { transition: none; }
 }
 
 }
