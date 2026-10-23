@@ -32,10 +32,10 @@ const items = [
         <span class="sx-ts-lbl" id="sx-ts-lbl" data-i="ts_src">Fuentes</span>
         <div class="sx-ts-tabs" role="tablist" aria-labelledby="sx-ts-lbl">
           {items.map((t, i) => (
-            <button type="button" role="tab" class:list={['sx-ts-tab', { lit: i === 0 }]} id={`sx-ts-t${i + 1}`} aria-controls={`sx-ts-p${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? '0' : '-1'}>
+            <button type="button" role="tab" class:list={['sx-ts-tab', { lit: i === 0 }]} id={`sx-ts-t${i + 1}`} aria-controls={`sx-ts-p${i + 1}`} aria-labelledby={`sx-ts-w${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? '0' : '-1'}>
               <span class="sx-ts-n" aria-hidden="true">{i + 1}</span>
               <span class="sx-ts-av" aria-hidden="true">{t.ini}</span>
-              <span class="sx-ts-who" data-i={t.n[0]}>{t.n[1]}</span>
+              <span class="sx-ts-who" id={`sx-ts-w${i + 1}`} data-i={t.n[0]}>{t.n[1]}</span>
               <i class="sx-ts-prog" aria-hidden="true"></i>
             </button>
           ))}

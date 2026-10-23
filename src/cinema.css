@@ -89,6 +89,8 @@
     .sc:nth-child(3n+2) { animation-range: entry 8% entry 63%; }
     .sc:nth-child(3n+3) { animation-range: entry 16% entry 71%; }
     @keyframes cin-sc { from { opacity: 0; translate: 0 44px; scale: .95; } }
+    /* El panel de agentes tiene mucho texto pequeño: sin fundido (con opacidad baja suspendía el contraste fuera de vista) */
+    .sc.sc-ag { animation-name: none; }
 
     /* (3) Trayectoria: carril que se dibuja con el scroll + hitos que se activan al pasar */
     .tl-list { position: relative; }
