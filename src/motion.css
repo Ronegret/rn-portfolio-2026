@@ -3,7 +3,6 @@
 /* Transición entre páginas (portfolio <-> casos). Ignorado si el navegador no lo soporta. */
 @media (prefers-reduced-motion: no-preference) {
   @view-transition { navigation: auto; }
-  ::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
 }
 
 @media (prefers-reduced-motion: no-preference) {
