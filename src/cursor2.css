@@ -11,7 +11,7 @@ body.c2, body.c2 * { cursor: none !important; }
 body.c2 :is(input:not([type=checkbox],[type=radio],[type=button],[type=submit]), textarea, [contenteditable="true"]) { cursor: text !important; }
 body.c2 select { cursor: default !important; }
 body.c2.c2-kb, body.c2.c2-kb * { cursor: auto !important; }
-body.c2.c2-kb #c2, body[data-cursor="mira"] #c2 { display: none; }
+body.c2.c2-kb #c2, body[data-cursor="mira"] #c2, body.ct-on #c2 { display: none; }
 body.c2[data-cursor="mira"], body.c2[data-cursor="mira"] * { cursor: crosshair !important; }
 
 #c2 > * { position: fixed; top: 0; left: 0; transform: translate3d(-99px,-99px,0); pointer-events: none; z-index: 999999; opacity: 0; will-change: transform; transition: opacity .25s; }

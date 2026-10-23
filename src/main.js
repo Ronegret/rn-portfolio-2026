@@ -139,7 +139,7 @@ document.addEventListener('click', e => {
 applyLang(LANG);
 
 /* ═══════════════════════════════════════
-   CURSOR SWITCH — Fluido (por defecto) / Normal / Mira
+   CURSOR SWITCH — Fluido (por defecto) / Normal / Mira / Target
 ═══════════════════════════════════════ */
 try {
 (()=>{
@@ -156,6 +156,14 @@ try {
     import('./cursor-fluid.js').catch(()=>{});
   };
   if(fluidOk) document.addEventListener('pointermove', loadFluid, { passive: true });
+  // «target»: mismas condiciones que el cursor 2.0 (raton fino, >1024px, sin reduced-motion); se carga al elegirlo
+  const targetOk = !reduced && innerWidth > 1024 && matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const loadTarget = e => {
+    if(e.pointerType !== 'mouse' || mode !== 'target') return;
+    document.removeEventListener('pointermove', loadTarget);
+    import('./cursor-target.js').catch(()=>{});
+  };
+  if(targetOk) document.addEventListener('pointermove', loadTarget, { passive: true });
 
   let mode = 'fluido';
 
@@ -173,7 +181,7 @@ try {
   let initial = 'fluido';
   try {
     const saved = localStorage.getItem('rn-cursor');
-    if(saved && ['fluido','normal','mira'].includes(saved)) initial = saved;
+    if(saved && ['fluido','normal','mira','target'].includes(saved)) initial = saved;
   } catch(e){}
   if(reduced) initial = 'normal';
   setMode(initial);

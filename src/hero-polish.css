@@ -11,6 +11,11 @@
 .tag-row { min-height: 44px; flex-wrap: nowrap; align-content: flex-start; }
 .tag-row .tag { white-space: nowrap; }
 @media (max-width: 1099px) { .tag-row .tag:nth-child(n+3) { display: none; } }
+/* <360 px: los dos chips no caben a 12 px en mono (se cortaba «Disponible ahora»): se compactan y, si aun asi no caben, bajan de linea sin encogerse */
+@media (max-width: 359px) {
+  .tag-row { flex-wrap: wrap; gap: 6px; }
+  :root .tag-row .tag { flex-shrink: 0; font-size: 11px; letter-spacing: -.04em; padding-inline: 9px; }
+}
 
 /* (19) Retrato: 7 etiquetas visibles legibles (12 px) y "+N" que despliega el resto */
 .cb { font-size: 12px; padding: 3px 8px; }
@@ -47,6 +52,14 @@
 @media (min-width: 981px) and (max-width: 1199px) {
   .pcard .av-wrap { width: min(340px, calc(100% - 96px)); height: auto; aspect-ratio: 1; }
   .hero-inner .pcard { margin-top: 22px; } /* el nodo superior del flujo, apoyado en el borde, no roza la barra */
+}
+/* 921-1399: el dock de temas (vertical, fijo a la derecha, 16+54 px) pisaba ~22 px del borde derecho de la tarjeta del retrato
+   y de todas las secciones. Dock compacto (10+42 px) y margen lateral de 60 px: 8 px de aire en toda la pagina.
+   agent-graph.js recalcula el arco de nodos con el nuevo ancho de la tarjeta y la posicion del dock. */
+@media (min-width: 921px) and (max-width: 1399px) {
+  :root { --gutter: 60px; }
+  #dock { right: 10px; padding: 10px 6px; gap: 8px; }
+  .dk { width: 28px !important; height: 28px !important; min-width: 28px !important; min-height: 28px !important; }
 }
 /* Móvil: hueco bajo el rol para la tira de nodos que se apoya en el borde inferior de la tarjeta */
 @media (max-width: 640px) { [data-theme] .pcard { padding-bottom: calc(.7rem + 8px); } }

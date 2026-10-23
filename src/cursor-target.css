@@ -1,0 +1,30 @@
+/* Cursor «Target» (ver cursor-target.js). Solo transform/opacity. */
+#ct { display: none; --ctc: var(--a1); --ctd: var(--a2, var(--a1)); }
+[data-theme="editorial"] #ct, [data-theme="diario"] #ct, [data-theme="hud"] #ct { --ctd: var(--t1); }
+body.ct-on #ct { display: contents; }
+body.ct-on.c2-kb #ct { display: none; }
+body.ct-on, body.ct-on * { cursor: none !important; }
+body.ct-on :is(input:not([type=checkbox],[type=radio],[type=button],[type=submit]), textarea, [contenteditable="true"]) { cursor: text !important; }
+body.ct-on.c2-kb, body.ct-on.c2-kb * { cursor: auto !important; }
+
+#ct > * { position: fixed; top: 0; left: 0; z-index: 999999; pointer-events: none; opacity: 0; will-change: transform;
+  transform: translate3d(-99px,-99px,0); transition: opacity .25s cubic-bezier(.22,1,.36,1); }
+#ct.on > * { opacity: 1; }
+.ct-f { width: 0; height: 0; }
+.ct-s { position: absolute; width: 0; height: 0; animation: ct-spin 6s linear infinite; }
+.ct-s.lk { animation: none; transition: rotate .45s cubic-bezier(.22,1,.36,1); }
+@keyframes ct-spin { to { rotate: 360deg; } }
+
+/* Esquina en L: dos trazos de 2px; cada una se orienta con su escala */
+.ct-c { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+.ct-c::before { content: ""; position: absolute; width: 8px; height: 8px; border: 2px solid var(--ctc); border-right: 0; border-bottom: 0;
+  transition: scale .3s cubic-bezier(.22,1,.36,1), border-color .25s; }
+.ct-c:nth-child(1)::before { left: -1px; top: -1px; }
+.ct-c:nth-child(2)::before { right: -1px; top: -1px; rotate: 90deg; }
+.ct-c:nth-child(3)::before { right: -1px; bottom: -1px; rotate: 180deg; }
+.ct-c:nth-child(4)::before { left: -1px; bottom: -1px; rotate: 270deg; }
+#ct.lk .ct-c::before { scale: 1.25; }
+#ct.dn .ct-c::before { scale: .8; }
+
+.ct-d { width: 4px; height: 4px; margin: -2px 0 0 -2px; border-radius: 50%; background: var(--ctd); }
+#ct.on.lk .ct-d { opacity: .7; }
