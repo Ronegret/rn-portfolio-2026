@@ -32,6 +32,7 @@ style.textContent = `
 document.head.appendChild(style);
 
 function init() {
+  if (document.documentElement.dataset.cf) return; // case-fold.js ya pliega las secciones
   const all = [...document.querySelectorAll('section')].filter(s => !s.parentElement.closest('section'));
   if (all.length < 4) return;
   // Primera (portada) y última (cierre / CTA) siempre completas
