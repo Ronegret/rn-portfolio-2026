@@ -1,9 +1,7 @@
 ---
 import CardImg from './CardImg.astro';
 import ProjectFilter from '../islands/ProjectFilter.jsx';
-import dbHero from '../assets/cards/db-hero.webp';
-import roddFondo from '../assets/cards/roddfondo.webp';
-import eventsLogin from '../assets/cards/events-login.webp';
+import ProjectPreview from './ProjectPreview.astro';
 import zodiHero from '../assets/cards/zodi-hero.webp';
 import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
 ---
@@ -17,8 +15,8 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
     <div class="bento">
       <div class="bfeat rv db-card" data-cats="ux ia">
         <a href="https://db.rodrigonegrete.es/" target="_blank" rel="noopener" class="bc trigger-flash">
-          <div class="bc-img db-img">
-            <CardImg defer src={dbHero} alt="Portfolio gamificado estilo Dragon Ball Z de Rodrigo Negrete: personaje con aura Super Saiyan azul, logo Capsule Corp, rótulo Saga del diseño de producto" />
+          <div class="bc-img pv-host db-img">
+            <ProjectPreview video="/assets/previews/capsule-corp.webm" poster="/assets/previews/capsule-corp-poster.webp" alt="Portfolio gamificado estilo Dragon Ball Z de Rodrigo Negrete: personaje con aura Super Saiyan azul, logo Capsule Corp, rótulo Saga del diseño de producto" />
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi db-tag-hi">★ Proyecto principal · 2026</span><span class="bc-tag db-tag">React · TypeScript · GSAP · Framer Motion · Gamificación</span></div>
@@ -31,8 +29,8 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
       </div>
       <div class="bfeat rv rodd-es-card" data-cats="ux saas ia">
         <a href="/rodd-es/" class="bc trigger-flash">
-          <div class="bc-img">
-            <CardImg defer src={roddFondo} alt="Rodd.es — Biblioteca open source multilingüe de 287 recursos web: hero editorial con composición visual de la marca RODD" />
+          <div class="bc-img pv-host">
+            <ProjectPreview video="/assets/previews/rodd-es.webm" poster="/assets/previews/rodd-es-poster.webp" alt="Rodd.es — Biblioteca open source multilingüe de 287 recursos web: hero editorial con composición visual de la marca RODD" />
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi">★ Open source · 2026</span><span class="bc-tag">Open source · 287 recursos · 7 idiomas · React · WebGL · 3D</span></div>
@@ -45,8 +43,8 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
       </div>
       <div class="bfeat rv aem-card" data-cats="ux saas ia">
         <a href="/aem/" class="bc trigger-flash">
-          <div class="bc-img aem-img">
-            <CardImg defer src={eventsLogin} alt="Events Planner — Portal web para wedding planners: pantalla de acceso con boda real en la playa, monograma EP y logotipo Events Planner · Wedding + Events" />
+          <div class="bc-img pv-host aem-img">
+            <ProjectPreview video="/assets/previews/events-planner.webm" poster="/assets/previews/events-planner-poster.webp" alt="Events Planner — Portal web para wedding planners: pantalla de acceso con boda real en la playa, monograma EP y logotipo Events Planner · Wedding + Events" />
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi aem-tag-hi" data-i="ep_t1">★ Producto propio · 2026 · En producción</span><span class="bc-tag aem-tag" data-i="ep_t2">Product design · PWA offline · Sistema visual · Desarrollo end-to-end</span></div>
