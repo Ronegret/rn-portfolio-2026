@@ -18,7 +18,7 @@
 #mob.open.mm-snap { transition: transform .5s var(--mm-out), opacity .5s var(--mm-out), clip-path .85s var(--mm-ease); }
 #mob > :not(.mm-bg) { position: relative; z-index: 1; }
 #mob-x { display: none; } /* la hamburguesa (por encima del menú) hace de cruz */
-html.mm-lock, html.mm-lock body { overflow: hidden; overscroll-behavior: none; }
+html.mm-lock { overscroll-behavior: none; } /* el overflow:hidden del body ya lo pone main.js; no se toca html para no cancelar el scroll suave al navegar */
 
 /* nav por encima del menú: logo + cruz visibles */
 #nav:has(#ham.open) { z-index: 10000; background: transparent; border-bottom-color: transparent; }
@@ -76,7 +76,7 @@ html.mm-lock, html.mm-lock body { overflow: hidden; overscroll-behavior: none; }
 
 /* CTA y sociales */
 .mm-foot { margin-top: auto; padding-top: 1.4rem; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-#mob a.mm-cta { position: relative; display: inline-flex; align-items: center; gap: .4rem; min-height: 52px; padding: 0 1.6rem; border-radius: 100px; background: var(--a1); color: var(--bg); font-family: var(--fb); font-weight: 700; font-size: 1rem; }
+#mob a.mm-cta { position: relative; display: inline-flex; align-items: center; gap: .4rem; min-height: 52px; padding: 0 1.6rem; border-radius: 100px; background: var(--a1); color: var(--bg); font-family: var(--fb); font-weight: 700; font-size: 1rem; flex: 1 1 100%; justify-content: center; }
 #mob a.mm-cta::after { content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--a1); pointer-events: none;
   animation-name: mm-ring; animation-duration: 2.4s; animation-timing-function: ease-out; animation-iteration-count: infinite; animation-play-state: paused; }
 #mob.open a.mm-cta::after { animation-play-state: running; }

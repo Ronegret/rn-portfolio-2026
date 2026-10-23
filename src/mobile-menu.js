@@ -21,7 +21,7 @@ if (mob && ham) {
       const r = ham.getBoundingClientRect();
       mob.style.setProperty('--ox', r.left + r.width / 2 + 'px');
       mob.style.setProperty('--oy', r.top + r.height / 2 + 'px');
-      if (!reduced.matches) navigator.vibrate?.(10);
+      if (!reduced.matches && navigator.userActivation?.hasBeenActive) navigator.vibrate?.(10);
       mob.querySelector('.mm-l')?.focus({ preventScroll: true });
     } else {
       mob.classList.remove('mm-drag');
@@ -65,12 +65,13 @@ if (mob && ham) {
     if (e.pointerId !== id) return;
     id = null;
     if (!drag) return;
-    drag = false; swallow = true; setTimeout(() => (swallow = false), 60);
+    drag = false;
     const projected = Math.abs(e.clientY - y0) + Math.abs(v) * 220;
     mob.classList.remove('mm-drag'); mob.classList.add('mm-snap');
     mob.style.transform = mob.style.opacity = '';
     if (e.type === 'pointerup' && projected > 130) document.getElementById('mob-x')?.click();
     else setTimeout(() => mob.classList.remove('mm-snap'), 550);
+    swallow = true; setTimeout(() => (swallow = false), 60); // el click fantasma tras arrastrar no activa enlaces
   };
   mob.addEventListener('pointerup', release);
   mob.addEventListener('pointercancel', release);
