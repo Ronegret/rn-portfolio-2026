@@ -95,7 +95,7 @@ function buildDeckUI() {
   island.before(seg);
   prog = document.createElement('div');
   prog.className = 'tj-prog';
-  prog.innerHTML = '<div class="tj-bar" aria-hidden="true"><i></i></div><div class="tj-dots"></div><span class="tj-count" aria-hidden="true"></span>';
+  prog.innerHTML = '<span class="tj-count" aria-hidden="true"></span><div class="tj-bar" aria-hidden="true"><i></i></div><div class="tj-dots"></div>';
   prog.querySelector('.tj-dots').addEventListener('click', e => { const d = e.target.closest('.tj-dot'); if (d) goTo(+d.dataset.i, true); });
   island.after(prog);
   const lab = () => {
