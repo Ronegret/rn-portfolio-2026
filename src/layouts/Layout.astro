@@ -7,6 +7,7 @@ import Footer from '../components/Footer.astro';
 import { AVATARS } from '../islands/themes.js';
 import vtCore from '../../public/src/case-transitions.js?raw';
 import critical from '../critical.css?raw';
+import intro from '../intro.css?raw';
 import fonts from '../fonts.css?raw';
 ---
 <!DOCTYPE html>
@@ -18,7 +19,7 @@ import fonts from '../fonts.css?raw';
 <!-- CSS critico inline (tokens + intro + fuentes propias); astro.config.mjs incrusta tambien las hojas de la portada al construir.
      Sin ningun <link rel=stylesheet> pendiente el primer frame no espera a la red: antes Chrome movil (Lighthouse) lo retenia ~2 s
      segun una carrera con el CSS (FCP bimodal 1,5/3,5 s). -->
-<style is:inline set:html={critical + fonts}></style>
+<style is:inline set:html={critical + intro + fonts}></style>
 <script is:inline>
 /* Primer frame ligero: con intro, el resto de la pagina (html.cp) no se pinta hasta que la intro ha dado el FCP; entonces se revela.
    Sin intro (misma sesion, ?intro=0) o llegando desde otra pagina del sitio (volver de un caso, view transition) no se oculta nada.
