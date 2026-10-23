@@ -1,9 +1,6 @@
 ---
-import CardImg from './CardImg.astro';
 import ProjectFilter from '../islands/ProjectFilter.jsx';
 import ProjectPreview from './ProjectPreview.astro';
-import zodiHero from '../assets/cards/zodi-hero.webp';
-import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
 ---
 <section class="sec" id="proyectos">
   <div class="wrap">
@@ -57,8 +54,8 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
       </div>
       <div class="bfeat rv zodi-feature" data-cats="ia saas ux">
         <a href="/zodi/" class="bc trigger-flash">
-          <div class="bc-img">
-            <CardImg defer src={zodiHero} alt="ZODI oráculo astral con IA" />
+          <div class="bc-img pv-host pv-host--phone">
+            <ProjectPreview device="phone" video="/assets/previews/zodi.webm" poster="/assets/previews/zodi-poster.webp" alt="ZODI, app web de astrología con IA: pantalla de inicio con el titular El universo tiene mensajes para ti y los botones Empezar gratis y Ya tengo cuenta" />
           </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag bc-tag-hi" data-i="zodi_badge">★ Caso destacado</span><span class="bc-tag">AI Product · PWA · UX Writing</span></div>
@@ -71,7 +68,9 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
       </div>
       <div class="bfeat rv dedicalo-play-card" data-cats="ia saas">
         <a href="/dedicalo-play/" class="bc trigger-flash">
-          <div class="bc-img dedicalo-play-img"><CardImg src={dedicaloPlay} alt="Dedícalo Play — App musical para jugar con amigos" /></div>
+          <div class="bc-img pv-host pv-host--phone dedicalo-play-img">
+            <ProjectPreview device="phone" video="/assets/previews/dedicalo-play.webm" poster="/assets/previews/dedicalo-play-poster.webp" alt="Dedícalo Play, party game musical: pantalla de inicio con disco de vinilo, titular Junta a tu gente y que suene la fiesta, y la pantalla Cómo se juega" />
+          </div>
           <div class="bc-bd">
             <div class="bc-tags"><span class="bc-tag dedicalo-play-tag">🎵 Juego musical · React · Supabase · IA</span></div>
             <h3 class="bc-h" data-i="pdp_h">Dedícalo Play — Dedica canciones y compite con tus amigos en tiempo real</h3>
