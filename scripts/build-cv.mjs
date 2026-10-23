@@ -149,9 +149,9 @@ a:hover{text-decoration-thickness:2px}
 .skip:focus{top:12px}
 .wrap{width:min(1120px,100% - 40px);margin-inline:auto}
 .top{position:sticky;top:0;z-index:20;background:rgba(10,10,10,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:60px;flex-wrap:wrap;padding-block:8px}
-.back{color:var(--t1);text-decoration:none;font:700 14px var(--fm)}
-.back:hover{color:var(--a)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:16px;width:calc(100% - 32px);max-width:none}
+.back{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border:1.5px solid var(--line);border-radius:999px;color:var(--t1);text-decoration:none;font:700 14px var(--fm)}
+.back:hover{color:var(--a);border-color:var(--a)}
 .actions{display:flex;gap:10px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);color:var(--t1);background:transparent;font:700 14px var(--fh);text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s}
 .btn:hover{transform:translateY(-2px);border-color:var(--a)}
@@ -165,10 +165,11 @@ a:hover{text-decoration-thickness:2px}
 h1{margin:20px 0 6px;font:800 clamp(2.4rem,7vw,5rem)/1 var(--fh);letter-spacing:-.02em}
 .role{margin:0;font:600 clamp(1.15rem,2.6vw,1.65rem)/1.3 var(--fh);color:var(--a)}
 .tag{margin:8px 0 0;color:var(--t2);font:400 14px var(--fm)}
-.meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin:22px 0 0;padding:0;list-style:none;color:var(--t2);font-size:15px}
+.meta{display:grid;grid-template-columns:repeat(2,minmax(0,max-content));gap:8px 40px;margin:22px 0 0;padding:0;list-style:none;color:var(--t2);font-size:15px}
+.meta li:first-child{grid-column:1/-1}
+.meta li{overflow-wrap:anywhere}
 .meta a{color:var(--t1)}
 .targets{max-width:62ch;margin:18px 0 0;color:var(--t2)}
-.hero .actions{margin-top:28px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:44px 0 0;padding:0;list-style:none}
 .stats li{padding:18px;background:var(--s1);border:1px solid var(--line);border-radius:16px;transition:transform .25s,border-color .25s}
 .stats li:hover{transform:translateY(-4px);border-color:rgba(0,240,255,.5)}
@@ -221,7 +222,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .js .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s cubic-bezier(.22,1,.36,1)}
 .js .rv.in{opacity:1;transform:none}
 @media(max-width:900px){.grid{grid-template-columns:1fr;gap:0}.side{position:static;margin-top:44px}.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.hero{padding-top:44px}.cards{grid-template-columns:1fr}.actions .btn{flex:1 1 100%;justify-content:center}.top .actions{display:none}.timeline{padding-left:20px}.dot{left:-26px}}
+@media(max-width:600px){.top{position:static}.meta{grid-template-columns:minmax(0,1fr)}.hero{padding-top:44px}.cards{grid-template-columns:1fr}.top .actions{width:100%}.actions .btn{flex:1 1 0;justify-content:center;padding:10px 12px}.timeline{padding-left:20px}.dot{left:-26px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.js .rv{opacity:1;transform:none}}
 @media print{
   @page{size:A4;margin:14mm}
@@ -263,11 +264,6 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         <li><a href="https://${d.github}" target="_blank" rel="noopener">${esc(d.github)}</a></li>
       </ul>
       <p class="targets">${esc(d.targetRoles)} ${esc(d.availability)}.</p>
-      <div class="actions">
-        <a class="btn p" href="/cv/${cv.es.file}" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14"/></svg>Descargar CV (PDF, español)</a>
-        <a class="btn" href="/cv/${cv.en.file}" download>Download CV (PDF, English)</a>
-        <a class="btn" href="/">Ver portfolio</a>
-      </div>
       <ul class="stats">${stats}</ul>
     </div>
 
@@ -303,9 +299,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
         </section>
         <section class="dl" aria-labelledby="h-dl">
           <h2 id="h-dl">Descargas</h2>
-          <p>PDF de una columna, texto seleccionable y fuente estándar, pensado para sistemas de selección (ATS) y para leer rápido.</p>
-          <a class="btn p" href="/cv/${cv.es.file}" download>PDF · Español</a>
-          <a class="btn" href="/cv/${cv.en.file}" download>PDF · English</a>
+          <p>Los PDF están en la barra superior: una columna, texto seleccionable y fuente estándar, pensados para sistemas de selección (ATS) y para leer rápido.</p>
           <small>Versión en texto plano: <a href="/cv/ats-es.html">ES</a> · <a href="/cv/ats-en.html">EN</a></small>
         </section>
       </aside>
