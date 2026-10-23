@@ -402,9 +402,12 @@ try {
   const ok=document.getElementById('lr-canvas')&&!cn.saveData&&(mem||desktop)&&!/[?&]webgl=0(?!\d)/.test(location.search);
   if(!ok) return;
   // arranque: primera interaccion o, como mucho, 5 s despues del load (y en idle): nunca compite con LCP/TBT
-  const run=()=>{ if(!calm) import('./webgl-hero.js').catch(()=>{}); import('./agent-graph.js').catch(()=>{}); }; let fired=0;
+  // El run de agentes del hero (SVG + CSS, ligero) es el momento wow: arranca en cuanto termina la intro, sin esperar a la interaccion
+  let graph=0; const runGraph=()=>{ if(graph++) return; import('./agent-graph.js').catch(()=>{}); };
+  const afterIntro=()=>{ const pl=document.getElementById('preloader'); if(pl&&pl.isConnected&&!pl.classList.contains('pl-out')) return setTimeout(afterIntro,250); 'requestIdleCallback' in window?requestIdleCallback(runGraph,{timeout:900}):setTimeout(runGraph,300); };
+  const run=()=>{ if(!calm) import('./webgl-hero.js').catch(()=>{}); runGraph(); }; let fired=0;
   const go=()=>{ if(fired++) return; ['pointermove','touchstart','scroll','keydown'].forEach(e=>removeEventListener(e,go)); 'requestIdleCallback' in window?requestIdleCallback(run,{timeout:2000}):setTimeout(run,300); };
-  const arm=()=>{ if(calm) return go(); setTimeout(go,5000); ['pointermove','touchstart','scroll','keydown'].forEach(e=>addEventListener(e,go,{once:true,passive:true})); };
+  const arm=()=>{ afterIntro(); if(calm) return go(); setTimeout(go,5000); ['pointermove','touchstart','scroll','keydown'].forEach(e=>addEventListener(e,go,{once:true,passive:true})); };
   document.readyState==='complete'?arm():addEventListener('load',arm,{once:true});
 })();
 
