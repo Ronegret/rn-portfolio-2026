@@ -4,8 +4,10 @@
    SVG + HTML posicionados una vez por cambio de tamano; movimiento en CSS/WAAPI (opacity, scale, stroke-dashoffset), sin rAF continuo.
    Se importa dinamicamente desde main.js (mismo gate que webgl-hero.js). Decorativo: aria-hidden y sin focos de teclado.
    Escritorio (>=981): arco de 240° alrededor del retrato. Tablet/movil: tira de nodos sobre el borde de la tarjeta. */
-import './pulse-line.css';
-import './hero-flow.css';
+import pulseCss from './pulse-line.css?inline';
+import flowCss from './hero-flow.css?inline';
+// ?inline: las hojas viajan con este chunk diferido y no se incrustan en el HTML de la portada (fuera del camino critico)
+document.head.append(Object.assign(document.createElement('style'), { textContent: pulseCss + flowCss }));
 
 const hero = document.getElementById('hero');
 const card = hero && hero.querySelector('.pcard');
