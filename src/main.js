@@ -139,7 +139,7 @@ document.addEventListener('click', e => {
 applyLang(LANG);
 
 /* ═══════════════════════════════════════
-   CURSOR SWITCH — Normal / Mira
+   CURSOR SWITCH — Fluido (por defecto) / Normal / Mira
 ═══════════════════════════════════════ */
 try {
 (()=>{
@@ -148,13 +148,21 @@ try {
   const panel = document.getElementById('cur-panel');
   if(!sw || !trg || !panel) return;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // el fluido (WebGL) solo con raton en escritorio, sin reduced-motion ni ahorro de datos; se carga en la 1.ª pointermove
+  const fluidOk = !reduced && !navigator.connection?.saveData && innerWidth > 1024 && matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const loadFluid = e => {
+    if(e.pointerType !== 'mouse' || mode !== 'fluido') return;
+    document.removeEventListener('pointermove', loadFluid);
+    import('./cursor-fluid.js').catch(()=>{});
+  };
+  if(fluidOk) document.addEventListener('pointermove', loadFluid, { passive: true });
 
-  let mode = 'normal';
+  let mode = 'fluido';
 
-  function setMode(m){
+  function setMode(m, save){
     mode = m;
     document.body.setAttribute('data-cursor', m);
-    try { localStorage.setItem('cursor_mode', m); } catch(e){}
+    if(save) try { localStorage.setItem('rn-cursor', m); } catch(e){} // clave nueva: 'cursor_mode' se guardaba sola en cada visita
     panel.querySelectorAll('.cur-opt').forEach(o=>{
       const on = o.dataset.cur === m;
       o.classList.toggle('on', on);
@@ -162,10 +170,10 @@ try {
     });
   }
 
-  let initial = 'normal';
+  let initial = 'fluido';
   try {
-    const saved = localStorage.getItem('cursor_mode');
-    if(saved && ['normal','mira'].includes(saved)) initial = saved;
+    const saved = localStorage.getItem('rn-cursor');
+    if(saved && ['fluido','normal','mira'].includes(saved)) initial = saved;
   } catch(e){}
   if(reduced) initial = 'normal';
   setMode(initial);
@@ -181,7 +189,7 @@ try {
   });
   panel.querySelectorAll('.cur-opt').forEach(o=>{
     o.addEventListener('click', ()=>{
-      setMode(o.dataset.cur);
+      setMode(o.dataset.cur, true);
       sw.classList.remove('open');
       trg.setAttribute('aria-expanded','false');
     });
@@ -621,7 +629,6 @@ document.querySelectorAll('.trigger-flash, .bc, .lab-card').forEach(el => {
 ═══════════════════════════════════════ */
 const prog=document.getElementById('prog');
 const nav=document.getElementById('nav');
-const fcta=document.getElementById('fcta');
 let scrollIdleTimer;
 let scrollTicking=false;
 window.addEventListener('scroll',()=>{
@@ -635,7 +642,6 @@ window.addEventListener('scroll',()=>{
     const pct=(s.scrollTop/(s.scrollHeight-s.clientHeight))*100;
     if(prog)prog.style.width=Math.min(pct,100)+'%';
     if(nav)nav.classList.toggle('compact',scrollY>80);
-    if(fcta)fcta.classList.toggle('show',scrollY>innerHeight*.35&&pct<96);
     scrollTicking=false;
   });
 },{passive:true});
@@ -837,6 +843,6 @@ window.addEventListener('rn-theme',()=>{ if(mob.classList.contains('open')) clos
 /* El entorno del retrato (flujo de agentes y halo) vive en agent-graph.js; la tarjeta solo inclina, contenida (tiltCards) */
 import('./cinema.js'); // capa cinematográfica: al final para que el DOM generado (pills, hero) ya exista
 import('./sections.js'); // separadores entre secciones + firmas por seccion (despues de cinema)
-import('./fab.js'); // boton flotante: se oculta al bajar y junto al contacto
+import('./fab.js'); // boton flotante «Hablemos»: aparece tras el hero, se oculta junto al contacto
 if (matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches && innerWidth > 1024) import('./cursor2.js'); // cursor 2.0: solo escritorio con puntero fino
 if(matchMedia('(pointer:coarse), (max-width:900px)').matches) import('./touch.js'); // gestos tactiles: baraja, hoja inferior, tacto vivo

@@ -784,15 +784,10 @@ body[data-cursor="mira"]::after {
 .dk::before { content: attr(data-label); position: absolute; right: calc(100% + 11px); top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: 700; white-space: nowrap; background: var(--surf2); border: 1px solid var(--bord2); color: var(--t1); padding: 4px 9px; border-radius: 7px; opacity: 0; pointer-events: none; transition: opacity 0.2s; font-family: var(--fb); }
 .dk:hover::before { opacity: 1; }
 
-#fcta { position: fixed; bottom: 28px; right: 80px; z-index: 7000; display: inline-flex; align-items: center; gap: 7px; background: var(--a1); color: var(--bg); font-size: 13px; font-weight: 700; font-family: var(--fb); padding: 12px 22px; border-radius: 100px; box-shadow: 0 7px 28px var(--a1g); opacity: 0; transform: translateY(14px); pointer-events: none; transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), background 0.3s, box-shadow 0.3s; cursor: pointer;}
-#fcta.show { opacity: 1; transform: none; pointer-events: all; }
-#fcta:hover { transform: translateY(-3px); box-shadow: 0 14px 36px var(--a1g); }
-
 @media(max-width: 920px) {
   #dock { right: auto; left: 14px; top: auto; bottom: 14px; transform: none; flex-direction: row; padding: 8px 11px; border-radius: 100px; gap: 6px; }
   .dk { width: 30px !important; height: 30px !important; min-width: 30px !important; min-height: 30px !important;}
   .dk::before { display: none; }
-  #fcta { right: 14px; bottom: 64px; left: auto; font-size: 12px; padding: 10px 17px; height: 43px; }
 }
 
 /* ═══════════════════════════════════════
@@ -2788,7 +2783,6 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
   .cert-lb-inner { height: 100dvh; max-height: 100dvh; }
 }
 @media (max-width: 920px) {
-  #fcta { height: 44px; bottom: calc(28px + env(safe-area-inset-bottom)); right: max(16px, env(safe-area-inset-right)); }
   .dk { position: relative; }
   .dk::after { content: ""; position: absolute; inset: -7px; } /* hit-area de 44px sin cambiar el aspecto */
 }
@@ -2796,7 +2790,6 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
   .fb, .fx-lang-btn { min-height: 44px; }
 }
 @media (hover: none) {
-  #fcta:hover { transform: none; }
   .dk:hover:not(.on) { transform: none; }
   #ham:hover { background: none; }
 }
@@ -2887,12 +2880,47 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
   .mq-i, .av-wrap, .c-aurora, .logo-dot, .tag-green, .status-available, [data-theme="saas"] body::before { animation: none !important; }
 }
 
-/* Botón flotante: se oculta al bajar y junto al contacto; en móvil, compacto (solo icono) */
-#fcta { transition: opacity .3s, translate .35s var(--ease), box-shadow .3s; }
-#fcta.fab-hide, #fcta.fab-off { translate: 0 160%; opacity: 0; pointer-events: none; }
-@media (max-width: 600px) {
-  #fcta { width: 48px; height: 48px; padding: 0; justify-content: center; font-size: 0; gap: 0; border-radius: 50%; right: max(16px, env(safe-area-inset-right)); }
-  #fcta::before { content: "✉"; font-size: 20px; line-height: 1; }
+/* Botón flotante «Hablemos» (fab.js): círculo con icono + etiqueta que abre un mini panel. Aparece tras el hero, fuera junto a Contacto */
+#fab { position: fixed; right: max(24px, env(safe-area-inset-right)); bottom: calc(24px + env(safe-area-inset-bottom)); z-index: 7000; display: flex; flex-direction: column; align-items: flex-end; gap: 12px;
+  opacity: 0; visibility: hidden; translate: 0 18px; transition: opacity 520ms var(--ease), translate 520ms var(--ease), visibility 0s linear 520ms; }
+#fab.show { opacity: 1; visibility: visible; translate: 0 0; transition: opacity 520ms var(--ease), translate 520ms var(--ease), visibility 0s; }
+#fcta { position: relative; width: 66px; height: 66px; border-radius: 50%; border: 0; padding: 0; overflow: hidden; display: grid; place-items: center; align-content: center; gap: 2px;
+  background: var(--a1); color: var(--bg); font: 700 10px/1 var(--fb); letter-spacing: .02em; cursor: pointer;
+  box-shadow: 0 10px 30px -6px var(--a1g), 0 0 0 1px color-mix(in srgb, var(--a1) 70%, transparent); transition: scale 240ms var(--ease), box-shadow 240ms var(--ease); }
+#fcta:hover { scale: 1.06; box-shadow: 0 14px 38px -6px var(--a1g), 0 0 0 1px var(--a1); }
+#fcta:focus-visible { outline: 2px solid var(--a1); outline-offset: 4px; }
+#fcta .fab-l { white-space: nowrap; transition: opacity 240ms var(--ease); }
+#fcta svg { transition: opacity 240ms var(--ease), rotate 240ms var(--ease), scale 240ms var(--ease); }
+#fcta .fab-x { position: absolute; opacity: 0; rotate: -45deg; scale: .6; }
+#fab.open #fcta .fab-x { opacity: 1; rotate: 0deg; scale: 1; }
+#fab.open #fcta .fab-ic, #fab.open #fcta .fab-l { opacity: 0; }
+[data-theme="cyber"] #fcta { color: #fff; } /* #050507 sobre el violeta no llega a 4.5:1 */
+/* pulso: dos ondas solo la primera vez que aparece (en #fab, fuera del overflow del boton) */
+@keyframes fab-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--a1) 45%, transparent); } 100% { box-shadow: 0 0 0 16px transparent; } }
+#fab.pulse.show::after { content: ""; position: absolute; right: 0; bottom: 0; width: 66px; height: 66px; border-radius: 50%; pointer-events: none; animation: fab-pulse 1.8s var(--ease) .6s 2; }
+/* panel */
+.fab-panel { min-width: 248px; padding: 6px; border-radius: 18px; background: color-mix(in srgb, var(--surf2, var(--bg2)) 94%, transparent); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--bord2); box-shadow: 0 24px 60px -18px rgb(0 0 0/.45); transform-origin: 100% 100%;
+  opacity: 0; visibility: hidden; translate: 0 10px; scale: .96; transition: opacity 240ms var(--ease), translate 240ms var(--ease), scale 240ms var(--ease), visibility 0s linear 240ms; }
+#fab.open .fab-panel { opacity: 1; visibility: visible; translate: 0 0; scale: 1; transition: opacity 240ms var(--ease), translate 240ms var(--ease), scale 240ms var(--ease), visibility 0s; }
+.fab-o { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 8px 12px; border-radius: 12px; color: var(--t1); text-decoration: none; transition: background 240ms var(--ease); }
+.fab-o svg { flex: none; color: var(--a1); }
+[data-theme="saas"] .fab-o svg { color: var(--a2); }
+.fab-o:hover, .fab-o:focus-visible { background: color-mix(in srgb, var(--a1) 12%, transparent); }
+.fab-o:focus-visible { outline: 2px solid var(--a1); outline-offset: -2px; }
+.fab-ot { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.fab-ot b { font: 600 14px/1.2 var(--fb); }
+.fab-ot small { font: 400 12px/1.2 var(--fb); color: var(--t2); overflow-wrap: anywhere; }
+.fab-go { border-top: 1px solid var(--bord2); border-radius: 0 0 12px 12px; margin-top: 2px; }
+@media (max-width: 920px) {
+  #fab { right: max(16px, env(safe-area-inset-right)); bottom: calc(18px + env(safe-area-inset-bottom)); }
+  #fcta { width: 60px; height: 60px; }
+  #fab.pulse.show::after { width: 60px; height: 60px; }
+  #fcta:hover { scale: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #fab, #fab.show, .fab-panel, #fab.open .fab-panel, #fcta, #fcta svg, #fcta .fab-l { transition: none; translate: none; scale: none; }
+  #fab.pulse.show::after { animation: none; }
 }
 
 /* ═══ Contraste en los temas diario y cyber (QA de temas, 23-oct) ═══ */

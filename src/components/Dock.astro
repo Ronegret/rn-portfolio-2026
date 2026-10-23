@@ -4,6 +4,25 @@ import ThemeSwitch from '../islands/ThemeSwitch.jsx';
 <!-- DOCK TEMAS -->
 <ThemeSwitch client:load variant="dock" />
 
-<!-- CTA FLOTANTE -->
-<a href="#contacto" id="fcta" data-i="fcta" class="trigger-flash">✉ Hablemos</a>
-
+<!-- CTA FLOTANTE «Hablemos»: circulo que abre un mini panel (fab.js). Oculto hasta pasar el hero y junto a Contacto -->
+<div id="fab">
+  <div id="fab-panel" class="fab-panel">
+    <a class="fab-o" href="mailto:rodrigo.negrete.aros@gmail.com">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+      <span class="fab-ot"><b>Email</b><small>rodrigo.negrete.aros@gmail.com</small></span>
+    </a>
+    <a class="fab-o" href="https://wa.me/34653567610" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.2A8.5 8.5 0 1 1 20.5 11.6z"/></svg>
+      <span class="fab-ot"><b>WhatsApp</b><small>+34 653 567 610</small></span>
+    </a>
+    <a class="fab-o fab-go" href="#contacto">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      <span class="fab-ot"><b data-i="fab_go">Ir a contacto</b></span>
+    </a>
+  </div>
+  <button type="button" id="fcta" aria-expanded="false" aria-controls="fab-panel">
+    <svg class="fab-ic" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.6a8.5 8.5 0 0 1-12.6 7.4L3.5 20.5l1.6-4.2A8.5 8.5 0 1 1 20.5 11.6z"/><path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01" stroke-width="2.6"/></svg>
+    <svg class="fab-x" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    <span class="fab-l" data-i="fcta">Hablemos</span>
+  </button>
+</div>
