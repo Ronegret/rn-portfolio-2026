@@ -276,6 +276,8 @@ function initThread() {
     chip.textContent = `${TL[k]} · ${String(m ? m[1] : secs.indexOf(s) + 1).padStart(2, '0')}`;
     const cs = getComputedStyle(a);
     s.style.setProperty('--cf-th', cs.color);
+    const em = h.querySelector('em'); // el acento del caso suele ser el <em> del título; solo tiñe borde y fondo, el texto conserva el color del antetítulo
+    if (em) s.style.setProperty('--cf-th-a', getComputedStyle(em).color);
     if (cs.textAlign === 'center') chip.classList.add('cf-ctr');
     a.before(chip);
   });
