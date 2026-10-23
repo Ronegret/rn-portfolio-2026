@@ -1,240 +1,180 @@
-/* Grafo de agentes del hero: nodos-pildora (tu stack y tu oficio) unidos por conexiones curvas con pulsos de datos.
-   Canvas 2D, un solo rAF, sin dependencias. Se importa DINAMICAMENTE desde main.js con el mismo gate que webgl-hero.js.
-   Decorativo (aria-hidden, pointer-events:none): escucha en window, no captura el scroll. Reposo casi quieto;
-   el puntero/dedo atrae los nodos cercanos con muelle e ilumina sus conexiones; un toque en un nodo lo activa. */
+/* Hero: "run en vivo" de un agente alrededor del retrato. Webhook → n8n → Agente → Claude → Producto:
+   un pulso de datos recorre el flujo en ~3 s, cada nodo pasa por pendiente → ejecutando → ✓ y el run termina con un ✓ que ilumina el retrato.
+   Despues, bucle lento (un run cada ~13 s, solo con el hero en pantalla y la pestana visible).
+   SVG + HTML posicionados una vez por cambio de tamano; movimiento en CSS/WAAPI (opacity, scale, stroke-dashoffset), sin rAF continuo.
+   Se importa dinamicamente desde main.js (mismo gate que webgl-hero.js). Decorativo: aria-hidden y sin focos de teclado.
+   Escritorio (>=981): arco de 240° alrededor del retrato. Tablet/movil: tira de nodos sobre el borde de la tarjeta. */
+import './pulse-line.css';
+import './hero-flow.css';
+
 const hero = document.getElementById('hero');
 const card = hero && hero.querySelector('.pcard');
+const av = card && card.querySelector('.av-wrap');
 const root = document.documentElement;
-const coarse = !matchMedia('(hover:hover) and (pointer:fine)').matches;
 const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+const NS = 'http://www.w3.org/2000/svg';
+const RUN = 2700, EASE = 'cubic-bezier(.22,1,.36,1)';
+const CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3 5 8.6l4.5-5"/></svg>';
 
-/* id, etiqueta, tipo (0 IA, 1 automatizacion, 2 diseno, 3 hub), u/v en fraccion de la tarjeta del retrato, y posicion en movil (u, dy px sobre la tarjeta) */
+const I = {
+  webhook: '<path d="M13 3 5 13.5h6L10 21l8-10.5h-6z"/>',
+  n8n: '<rect x="2.5" y="9" width="5" height="6" rx="1.6"/><rect x="16.5" y="3.5" width="5" height="6" rx="1.6"/><rect x="16.5" y="14.5" width="5" height="6" rx="1.6"/><path d="M7.5 12H11c2 0 1.5-5.5 3.5-5.5h2M11 12c2 0 1.5 5.5 3.5 5.5h2"/>',
+  agente: '<circle cx="12" cy="12" r="2.8"/><path d="M12 3.5v3M12 17.5v3M3.5 12h3M17.5 12h3"/><circle cx="12" cy="12" r="7.2" stroke-dasharray="2.4 2.6"/>',
+  claude: '<path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/>',
+  producto: '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M6.5 6.8h.01M9.5 6.8h.01M7 13h6M7 16h4"/>',
+};
+/* id, etiqueta {es,ca,en}, que pasa en ese paso (sin cifras) */
 const N = [
-  ['producto', 'Producto', 3, -.06, .5, .88, -15],
-  ['webhook', 'Webhook', 1, -.04, .1, .1, -15],
-  ['n8n', 'n8n', 1, .28, -.035, .3, -19],
-  ['agente', 'Agente', 0, .7, -.035, .5, -15],
-  ['claude', 'Claude', 0, 1.04, .1, .69, -19],
-  ['make', 'Make', 1, 1.05, .8],
-  ['supabase', 'Supabase', 1, .8, 1.035],
-  ['vapi', 'Vapi', 0, .45, 1.035],
-  ['botpress', 'Botpress', 0, .1, 1.035],
-  ['figma', 'Figma', 2, -.05, .74],
-  ['ux', 'UX Research', 2, -.05, .27],
+  ['webhook', { es: 'Webhook' }, { es: 'Un evento dispara el flujo', ca: 'Un esdeveniment dispara el flux', en: 'An event triggers the flow' }],
+  ['n8n', { es: 'n8n' }, { es: 'Orquesto el flujo con n8n o Make', ca: 'Orquestro el flux amb n8n o Make', en: 'I orchestrate the flow with n8n or Make' }],
+  ['agente', { es: 'Agente', ca: 'Agent', en: 'Agent' }, { es: 'Diseño el agente: rol, herramientas y límites', ca: "Dissenyo l'agent: rol, eines i límits", en: 'I design the agent: role, tools and limits' }],
+  ['claude', { es: 'Claude' }, { es: 'El modelo razona y responde', ca: 'El model raona i respon', en: 'The model reasons and replies' }],
+  ['producto', { es: 'Producto', ca: 'Producte', en: 'Product' }, { es: 'El resultado llega a una interfaz usable', ca: 'El resultat arriba a una interfície usable', en: 'The result lands in a usable interface' }],
 ];
-const LBL = { producto: { ca: 'Producte', en: 'Product' }, agente: { ca: 'Agent', en: 'Agent' } };
-const E = [['producto', 'webhook'], ['webhook', 'n8n'], ['n8n', 'agente'], ['agente', 'claude'], ['claude', 'make'], ['make', 'supabase'],
-  ['supabase', 'vapi'], ['vapi', 'botpress'], ['botpress', 'producto'], ['ux', 'producto'], ['figma', 'producto']];
-const EM = [['webhook', 'n8n'], ['n8n', 'agente'], ['agente', 'claude'], ['claude', 'producto']];
+const MOBILE = ['n8n', 'agente', 'claude', 'producto'];
+const ANG = [210, 150, 90, 30, -30]; // arco simetrico, 60° entre nodos: entra abajo a la izquierda, corona arriba, sale abajo a la derecha
 
-const parse = s => {
-  s = s.trim();
-  let m = /^#([\da-f]{3}|[\da-f]{6})$/i.exec(s);
-  if (m) { let h = m[1]; if (h.length === 3) h = h.replace(/./g, '$&$&'); return [0, 2, 4].map(i => parseInt(h.slice(i, i + 2), 16)); }
-  m = s.match(/[\d.]+/g);
-  return m && m.length >= 3 ? m.slice(0, 3).map(Number) : [255, 255, 255];
-};
-const lum = c => (.2126 * c[0] + .7152 * c[1] + .0722 * c[2]) / 255;
-const rr = (c, x, y, w, h, r) => { c.beginPath(); c.moveTo(x + r, y); c.arcTo(x + w, y, x + w, y + h, r); c.arcTo(x + w, y + h, x, y + h, r); c.arcTo(x, y + h, x, y, r); c.arcTo(x, y, x + w, y, r); c.closePath(); };
+const el = (tag, cls, svg) => { const e = svg ? document.createElementNS(NS, tag) : document.createElement(tag); if (cls) e.setAttribute('class', cls); return e; };
+const lang = () => (root.lang || 'es').slice(0, 2);
+const tr = o => o[lang()] || o.es;
 
-let cv, ctx, nodes = [], edges = [], strip = false, fontStr = 'monospace', pad = 8;
-let cur, tgt, dpr = 1, cw = 0, ch = 0, cc = [0, 0], cardKey = '';
-let raf = 0, running = false, dead = false, last = 0, t = 0, tick = 0, shown = false;
-let acc = 0, frames = 0, warm = 0, lvl = 0, spawnIn = 1.2;
-const P = { cx: 0, cy: 0, on: false }, pulses = [], ripples = [];
-let cr = { left: 0, top: 0 };
+let box, track, lit, dots, spokes, glow, badge, nodes = [], key = '', live = true, timers = [], next = 0;
 
-/* paleta (0-255): a1,a2,a3,t1,bg + flag papel claro; el acento blanco de saas cede el color a a2 */
-function readTheme() {
-  const cs = getComputedStyle(root), v = k => parse(cs.getPropertyValue(k));
-  let a = [v('--a1'), v('--a2'), v('--a3')];
-  const bg = v('--bg'), light = lum(bg) > .5;
-  if (!light && lum(a[0]) > .85) a = [a[1], a[0], a[2]];
-  fontStr = (cs.getPropertyValue('--fm') || '').trim() || 'monospace';
-  return [...a[0], ...a[1], ...a[2], ...v('--t1'), ...bg, light ? 1 : 0];
+function build() {
+  box = el('div', 'hf'); box.setAttribute('aria-hidden', 'true');
+  const svg = el('svg', 'hf-svg', 1);
+  const P = c => { const p = el('path', c, 1); p.setAttribute('pathLength', '1'); svg.append(p); return p; };
+  track = P('pulse-line hf-track'); lit = P('hf-lit');
+  spokes = el('g', 'hf-spokes', 1); svg.append(spokes);
+  dots = [P('pulse-line-dot hf-halo'), P('pulse-line-dot hf-dot')];
+  glow = el('span', 'hf-glow');
+  badge = el('span', 'hf-ok'); badge.innerHTML = CHECK;
+  box.append(glow, svg, badge);
+  nodes = N.map(([id, name, tip]) => {
+    const n = el('span', 'hf-node'); n.dataset.k = id;
+    n.innerHTML = `<span class="hf-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${I[id]}</svg><b></b><i class="hf-st">${CHECK}</i></span><em class="hf-tip"><b></b> · <span></span></em>`;
+    n._name = name; n._tip = tip;
+    box.append(n);
+    return n;
+  });
+  card.append(box);
+  relang();
 }
-const K = (i, al) => `rgba(${cur[i] | 0},${cur[i + 1] | 0},${cur[i + 2] | 0},${al})`; // 0 a1, 3 a2, 6 a3, 9 t1, 12 bg
-const ACC = [0, 3, 6, 0];
+function relang() { for (const n of nodes) { n.querySelector('.hf-tile b').textContent = n.querySelector('.hf-tip b').textContent = tr(n._name); n.querySelector('.hf-tip span').textContent = tr(n._tip); } }
 
-function labelOf(n) { const l = (root.lang || 'es').slice(0, 2); return (LBL[n.id] && LBL[n.id][l]) || n.label; }
-function measure() {
-  for (const n of nodes) {
-    n.h = n.kind === 3 ? (strip ? 24 : 32) : (strip ? 20 : 26);
-    ctx.font = `${n.kind === 3 ? 700 : 400} ${strip ? (n.kind === 3 ? 10 : 9) : (n.kind === 3 ? 13 : 11.5)}px ${fontStr}`;
-    n.w = Math.ceil(ctx.measureText(labelOf(n)).width) + (strip ? 18 : 26) + (n.kind === 3 ? 6 : 0);
-  }
-}
-
+/* Coordenadas en px de la tarjeta (offset*: ignoran el tilt y las animaciones de entrada) */
 function layout() {
-  const hr = hero.getBoundingClientRect(), c = card.getBoundingClientRect();
-  strip = matchMedia('(max-width:979px)').matches;
-  const px = strip ? 0 : 130, up = strip ? 52 : 60;
-  const L = Math.max(0, c.left - hr.left - px), T = Math.max(0, c.top - hr.top - up);
-  const R = Math.min(hr.width, c.right - hr.left + px), B = Math.min(hr.height, strip ? c.top - hr.top + 8 : c.bottom - hr.top + 60);
-  cw = Math.max(1, Math.round(R - L)); ch = Math.max(1, Math.round(B - T));
-  cardKey = [c.left, c.top, c.width, c.height, hr.left, hr.top].map(Math.round).join();
-  Object.assign(cv.style, { left: L + 'px', top: T + 'px', width: cw + 'px', height: ch + 'px' });
-  cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr);
-  const ox = c.left - hr.left - L, oy = c.top - hr.top - T;
-  cc = [ox + c.width / 2, oy + c.height / 2];
-  const prev = new Map(nodes.map(n => [n.id, n]));
-  nodes = N.filter(d => (strip ? d[5] != null : true)).map(d => {
-    const o = prev.get(d[0]) || {};
-    return Object.assign(o, { id: d[0], label: d[1], kind: d[2], u: strip ? d[5] : d[3], v: strip ? d[6] : d[4] });
+  const W = card.clientWidth, H = card.clientHeight, ar = av.offsetWidth / 2;
+  const cx = av.offsetLeft + ar, cy = av.offsetTop + ar;
+  const k = [W, H, ar, cx, cy, innerWidth].map(Math.round).join();
+  if (k === key) return; key = k;
+  let ring = false, R = 0, tw = 58, th = 46;
+  if (innerWidth >= 981) { // radio: tan cerca del retrato como permita la holgura; nodos normales y, si no caben, compactos
+    const cr = card.getBoundingClientRect(), dk = document.querySelector('.dk')?.parentElement, dr = dk && dk.getBoundingClientRect();
+    const navB = (document.getElementById('nav')?.offsetHeight || 66) + 14; // el nodo superior no roza la barra
+    for ([tw, th] of [[58, 46], [50, 40]]) {
+      const clear = r => Math.min(...ANG.map(a => { const t = a * Math.PI / 180, x = Math.abs(r * Math.cos(t)) - (Math.abs(Math.cos(t)) > .01 ? tw / 2 : 0), y = Math.abs(r * Math.sin(t)) - th / 2; return Math.hypot(Math.max(0, x), Math.max(0, y)); }));
+      let side = cx - 12 - tw / 2; // dentro de la tarjeta por los lados...
+      if (dr && dr.height > dr.width && dr.left < cr.right + 40) side = Math.min(side, dr.left - cr.left - cx - tw / 2 - 10); // ...y sin tocar el dock de temas (fijo a la derecha)
+      R = Math.min(ar + 60, side / Math.cos(Math.PI / 6), cy + cr.top + scrollY - navB - th / 2 - 6);
+      if (clear(R) >= ar + 10) { ring = true; break; } // con aire para el indicador de estado de cada nodo
+    }
+  }
+  box.dataset.mode = ring ? 'ring' : 'strip';
+  box.dataset.size = tw < 58 ? 's' : '';
+  spokes.replaceChildren();
+  let pts, d;
+  if (ring) {
+    pts = ANG.map(a => { const t = a * Math.PI / 180; return [cx + R * Math.cos(t), cy - R * Math.sin(t), t]; });
+    const [a, , , , b] = pts;
+    d = `M${a[0].toFixed(1)} ${a[1].toFixed(1)}A${R.toFixed(1)} ${R.toFixed(1)} 0 1 1 ${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
+    pts.forEach(([, , t], i) => { // radio corto del nodo al aro del retrato (el "puerto")
+      const c = Math.cos(t), s = Math.sin(t), half = Math.min(Math.abs(c) > .01 ? tw / 2 / Math.abs(c) : 1e3, th / 2 / Math.abs(s));
+      const r0 = ar + 7, r1 = R - half - 4;
+      const l = el('path', 'hf-spoke', 1); l.dataset.i = i;
+      l.setAttribute('d', `M${(cx + r1 * c).toFixed(1)} ${(cy - r1 * s).toFixed(1)}L${(cx + r0 * c).toFixed(1)} ${(cy - r0 * s).toFixed(1)}`);
+      const p = el('circle', 'hf-port', 1); p.setAttribute('cx', (cx + r0 * c).toFixed(1)); p.setAttribute('cy', (cy - r0 * s).toFixed(1)); p.setAttribute('r', '2.2');
+      spokes.append(l, p);
+    });
+  } else { // tira sobre el borde: arriba en tablet, abajo en movil (alineada con la columna de texto de la tarjeta)
+    const mob = innerWidth <= 640, ids = mob ? MOBILE : N.map(n => n[0]);
+    const y = mob ? H : 0, x0 = mob ? av.offsetLeft + ar * 2 + 14 + 13 : 34, x1 = W - (mob ? 24 : 34);
+    const step = Math.min(mob ? 46 : 56, (x1 - x0) / (ids.length - 1));
+    const start = mob ? x0 : (W - step * (ids.length - 1)) / 2;
+    pts = N.map(([id]) => { const i = ids.indexOf(id); return i < 0 ? null : [start + i * step, y]; });
+    const v = pts.filter(Boolean);
+    d = `M${(v[0][0] - 20).toFixed(1)} ${y}H${(v[v.length - 1][0] + 20).toFixed(1)}`;
+  }
+  for (const p of [track, lit, ...dots]) p.setAttribute('d', d);
+  const used = pts.filter(Boolean).length;
+  let j = 0;
+  nodes.forEach((n, i) => {
+    const p = pts[i];
+    n.hidden = !p;
+    if (!p) return;
+    n._f = used > 1 ? j++ / (used - 1) : 0; // posicion en el recorrido: el pulso llega a este nodo en f * RUN
+    n.style.cssText = `left:${p[0].toFixed(1)}px;top:${p[1].toFixed(1)}px;--f:${n._f.toFixed(3)}`;
+    const top = ring && p[1] < cy - R * .9; // tooltip hacia dentro de la tarjeta: nunca ensancha la pagina
+    n.dataset.tx = top ? 'c' : innerWidth <= 640 ? 'r' : p[0] < W / 2 ? 'l' : 'r';
+    n.dataset.ty = ring && !top ? 'u' : 'd';
   });
-  measure();
-  for (const n of nodes) {
-    n.hx = ox + n.u * c.width; n.hy = strip ? oy + n.v : oy + n.v * c.height;
-    if (!strip && n.u <= 0) n.hx = ox + 3 - n.w / 2; // lateral: pegado a la tarjeta, solo 3 px por detras, para que la etiqueta se lea entera
-    else if (!strip && n.u >= 1) n.hx = ox + c.width - 3 + n.w / 2;
-    n.hx = Math.max(n.w / 2 + 2, Math.min(cw - n.w / 2 - 2, n.hx)); n.hy = Math.max(n.h / 2 + 2, Math.min(ch - n.h / 2 - 2, n.hy));
-    if (n.x == null) { n.x = n.hx; n.y = n.hy; n.vx = n.vy = 0; n.gl = n.beat = n.act = 0; n.ph = Math.random() * 6.28; }
-  }
-  const by = new Map(nodes.map(n => [n.id, n]));
-  edges = (strip ? EM : E).map(([a, b]) => ({ a: by.get(a), b: by.get(b), hot: 0 })).filter(e => e.a && e.b);
-  for (const n of nodes) n.out = edges.filter(e => e.a === n);
-  pulses.length = 0;
+  Object.assign(glow.style, { left: (cx - ar) + 'px', top: (cy - ar) + 'px', width: ar * 2 + 'px', height: ar * 2 + 'px' });
+  const bo = ar * Math.SQRT1_2; // ✓ final sobre el aro, abajo a la derecha
+  Object.assign(badge.style, { left: (cx + bo) + 'px', top: (cy + bo) + 'px' });
 }
 
-function spawn(e, hop) { if (lvl < 2 && pulses.length < (lvl ? 6 : 12)) pulses.push({ e, t: 0, hop, sp: .28 + Math.random() * .12 }); }
-function activate(n) {
-  n.act = 1; n.beat = 1; ripples.push({ n, t: 0 });
-  for (const e of n.out) spawn(e, 3);
-  for (const e of edges) if (e.b === n) spawn(e, 4);
+/* Un run: pulso por el trazo + estados por nodo + ✓ final en el retrato */
+const later = (f, ms) => timers.push(setTimeout(f, ms));
+function run(first) {
+  next = 0;
+  if (!live) return;
+  const vis = nodes.filter(n => !n.hidden);
+  box.dataset.run = 'on'; delete box.dataset.done;
+  vis.forEach(n => (n.dataset.s = 'wait'));
+  const kf = (o, w) => [{ strokeDashoffset: w, opacity: 0 }, { opacity: o, offset: .05 }, { opacity: o, offset: .93 }, { strokeDashoffset: -1, opacity: 0 }];
+  dots[0].animate(kf(first ? .24 : .14, .1), { duration: RUN, easing: 'linear' });
+  dots[1].animate(kf(first ? 1 : .8, .05), { duration: RUN, easing: 'linear' });
+  for (const n of vis) {
+    const t = n._f * RUN * .95; // el punto avanza a velocidad constante
+    later(() => (n.dataset.s = 'run'), Math.max(0, t - 260));
+    later(() => (n.dataset.s = 'ok'), t + 240);
+  }
+  later(() => { box.dataset.done = first ? 'first' : 'on'; delete box.dataset.run; }, RUN + 200);
+  later(() => vis.forEach(n => (n.dataset.s = 'idle')), RUN + 6200); // vuelve a reposo, suave
+  later(() => schedule(), RUN + 6200);
 }
-
-function update(dt) {
-  const k = 1 - Math.exp(-dt * 3);
-  for (let i = 0; i < cur.length; i++) cur[i] += (tgt[i] - cur[i]) * k;
-  const R = coarse ? 130 : 170, px = P.cx - cr.left, py = P.cy - cr.top;
-  for (const n of nodes) {
-    let tx = n.hx + Math.sin(t * .45 + n.ph) * 1.6, ty = n.hy + Math.cos(t * .37 + n.ph * 1.3) * 1.6, g = 0;
-    if (P.on) {
-      const dx = px - n.hx, dy = py - n.hy, d = Math.hypot(dx, dy);
-      if (d < R) { g = 1 - d / R; g = g * g * (3 - 2 * g); const m = Math.min(d * .4, 22) * g; tx += dx / (d || 1) * m; ty += dy / (d || 1) * m; }
-    }
-    n.gl += (g - n.gl) * Math.min(1, dt * 9); n.beat *= Math.exp(-dt * 2.6); n.act *= Math.exp(-dt * 1.6);
-    n.vx += ((tx - n.x) * 75 - n.vx * 11) * dt; n.vy += ((ty - n.y) * 75 - n.vy * 11) * dt;
-    n.x += n.vx * dt; n.y += n.vy * dt;
-  }
-  for (const e of edges) e.hot *= Math.exp(-dt * 2);
-  spawnIn -= dt;
-  if (spawnIn < 0) { spawnIn = (lvl ? 3 : 1.4) + Math.random() * 1.6; spawn(edges[(Math.random() * edges.length) | 0], 0); }
-  for (let i = pulses.length - 1; i >= 0; i--) {
-    const p = pulses[i], e = p.e;
-    p.t += p.sp * dt * 260 / (Math.hypot(e.b.x - e.a.x, e.b.y - e.a.y) + 40); e.hot = 1;
-    if (p.t >= 1) {
-      e.b.beat = 1; pulses.splice(i, 1);
-      if (p.hop < 6 && e.b.out.length && Math.random() < .85) spawn(e.b.out[(Math.random() * e.b.out.length) | 0], p.hop + 1);
-    }
-  }
-  for (let i = ripples.length - 1; i >= 0; i--) { ripples[i].t += dt / .75; if (ripples[i].t >= 1) ripples.splice(i, 1); }
-}
-
-const ctl = e => { // control de la curva: arquea hacia fuera de la tarjeta
-  const mx = (e.a.x + e.b.x) / 2, my = (e.a.y + e.b.y) / 2, dx = e.b.x - e.a.x, dy = e.b.y - e.a.y;
-  let nx = -dy, ny = dx; if (nx * (mx - cc[0]) + ny * (my - cc[1]) < 0) { nx = -nx; ny = -ny; }
-  const l = Math.hypot(nx, ny) || 1, s = Math.hypot(dx, dy) * .2;
-  return [mx + nx / l * s, my + ny / l * s];
-};
-const bez = (e, c, u) => { const q = 1 - u; return [q * q * e.a.x + 2 * q * u * c[0] + u * u * e.b.x, q * q * e.a.y + 2 * q * u * c[1] + u * u * e.b.y]; };
-
-function draw() {
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, cw, ch);
-  const light = cur[15] > .5, base = light ? .32 : .26, cs = edges.map(ctl);
-  ctx.lineCap = 'round';
-  edges.forEach((e, i) => {
-    const c = cs[i], lit = Math.max(e.a.gl, e.b.gl, e.hot * .35);
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = lit > .02 ? K(ACC[e.a.kind], base + lit * .6) : K(9, base);
-    ctx.beginPath(); ctx.moveTo(e.a.x, e.a.y); ctx.quadraticCurveTo(c[0], c[1], e.b.x, e.b.y); ctx.stroke();
-  });
-  for (const p of pulses) { // cola de 5 tramos con alfa creciente y cabeza mas gruesa
-    const i = edges.indexOf(p.e), c = cs[i];
-    for (let s = 0; s < 5; s++) {
-      const u0 = Math.max(0, p.t - .16 + s * .032), u1 = Math.max(0, p.t - .16 + (s + 1) * .032);
-      if (u1 <= 0) continue;
-      const a = bez(p.e, c, u0), b = bez(p.e, c, Math.min(1, u1));
-      ctx.strokeStyle = K(ACC[p.e.a.kind], .15 + s * .21); ctx.lineWidth = s === 4 ? 2.8 : 1.6;
-      ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
-    }
-  }
-  for (const n of nodes) {
-    const x = n.x - n.w / 2, y = n.y - n.h / 2, hub = n.kind === 3, lit = Math.max(n.gl, n.beat * .8, n.act);
-    rr(ctx, x, y, n.w, n.h, hub ? 9 : 7);
-    if (hub) { ctx.fillStyle = K(0, .95); ctx.fill(); }
-    else { ctx.fillStyle = K(12, .9); ctx.fill(); ctx.lineWidth = 1; ctx.strokeStyle = lit > .03 ? K(ACC[n.kind], .3 + lit * .7) : K(9, light ? .2 : .16); ctx.stroke(); }
-    if (!hub) { rr(ctx, x + 5, y + 5, 3, n.h - 10, 1.5); ctx.fillStyle = K(ACC[n.kind], .55 + lit * .45); ctx.fill(); }
-    ctx.font = `${hub ? 700 : 400} ${strip ? (hub ? 10 : 9) : (hub ? 13 : 11.5)}px ${fontStr}`;
-    ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
-    ctx.fillStyle = hub ? (lum([cur[0], cur[1], cur[2]]) > .5 ? 'rgba(10,10,12,.95)' : 'rgba(255,255,255,.96)') : K(9, (light ? .8 : .66) + lit * .3);
-    ctx.fillText(labelOf(n), x + (hub ? 13 : strip ? 13 : 16), n.y + .5);
-  }
-  for (const r of ripples) {
-    const n = r.n, g = 2 + r.t * 16;
-    rr(ctx, n.x - n.w / 2 - g, n.y - n.h / 2 - g, n.w + 2 * g, n.h + 2 * g, 8 + g);
-    ctx.strokeStyle = K(ACC[n.kind], (1 - r.t) * .7); ctx.lineWidth = 1.2; ctx.stroke();
-  }
-}
-
-function frame(now) {
-  raf = 0;
-  if (!running) return;
-  raf = requestAnimationFrame(frame);
-  const gap = now - last, dt = Math.min(gap / 1000, .05) || .016; last = now; t += dt;
-  // gobernador de fps (media de 30 fotogramas > 24 ms), por pasos; el WebGL tiene su propio gobernador y a veces es el que carga el fotograma
-  if (warm < 8) warm++;
-  else if (gap < 250) {
-    acc += gap;
-    if (++frames === 30) {
-      const avg = acc / 30; acc = frames = 0;
-      if (avg > 24) { if (lvl > 1) return shutdown(); warm = 4; if (++lvl === 1) { dpr = 1; layout(); } else pulses.length = 0; } // 1: dpr 1 y menos pulsos; 2: sin pulsos; 3: fundido y apagado
-    }
-  }
-  if (++tick % 40 === 0 && cv.isConnected) { const c = card.getBoundingClientRect(), h = hero.getBoundingClientRect(); if ([c.left, c.top, c.width, c.height, h.left, h.top].map(Math.round).join() !== cardKey) layout(); }
-  cr = cv.getBoundingClientRect();
-  update(dt); draw();
-  if (!shown) { shown = true; cv.style.opacity = '1'; cv.dataset.ag = 'on'; }
-}
-function start() { if (dead || running) return; running = true; last = performance.now(); warm = 0; acc = frames = 0; raf = requestAnimationFrame(frame); }
-function stop() { running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
-function shutdown() { dead = true; stop(); cv.style.opacity = '0'; cv.dataset.ag = 'off'; }
-function still() { // reduced-motion: un unico fotograma estatico (se repinta solo si cambia tema, idioma o tamano)
-  layout(); cur = tgt.slice(); cr = cv.getBoundingClientRect(); draw(); cv.style.opacity = '1'; cv.dataset.ag = 'still';
-}
+function schedule() { if (live && !next) next = setTimeout(() => run(false), 4200); }
+function pause() { live = false; clearTimeout(next); next = 0; timers.forEach(clearTimeout); timers = []; for (const n of nodes) n.dataset.s = 'ok'; box.dataset.done = 'on'; delete box.dataset.run; }
+function resume() { if (live) return; live = true; schedule(); }
 
 function init() {
-  cv = document.createElement('canvas'); cv.id = 'ag-cv'; cv.setAttribute('aria-hidden', 'true');
-  cv.style.cssText = 'position:absolute;z-index:0;pointer-events:none;opacity:0;transition:opacity 1.2s ease';
-  ctx = cv.getContext('2d');
-  if (!ctx) return;
-  hero.insertBefore(cv, hero.querySelector('.hero-inner'));
-  dpr = Math.min(devicePixelRatio || 1, coarse ? 1 : 1.5);
-  cur = readTheme(); tgt = cur.slice();
-  const relayout = () => { layout(); if (calm) still(); }; // el layout depende del ancho de las etiquetas (fuente del tema, idioma)
-  const retheme = () => { tgt = readTheme(); relayout(); };
-  new MutationObserver(retheme).observe(root, { attributes: true, attributeFilter: ['data-theme', 'lang'] });
-  document.fonts && document.fonts.addEventListener('loadingdone', () => { if (!dead) relayout(); });
-  new ResizeObserver(relayout).observe(hero);
-  if (calm) return still();
+  build();
   layout();
-
-  const set = e => { P.cx = e.clientX; P.cy = e.clientY; P.on = true; };
-  addEventListener('pointermove', set, { passive: true });
-  addEventListener('pointerdown', e => {
-    set(e);
-    if (e.target.closest && e.target.closest('a,button,.pcard,input')) return;
-    const x = e.clientX - cv.getBoundingClientRect().left, y = e.clientY - cv.getBoundingClientRect().top, s = coarse ? 12 : 6;
-    for (const n of nodes) if (Math.abs(x - n.x) < n.w / 2 + s && Math.abs(y - n.y) < n.h / 2 + s) { activate(n); break; }
-  }, { passive: true });
-  const off = () => { P.on = false; };
-  addEventListener('pointerup', e => e.pointerType !== 'mouse' && off(), { passive: true });
-  addEventListener('pointercancel', off, { passive: true });
-  root.addEventListener('mouseleave', off);
-  new IntersectionObserver(([e]) => (e.isIntersecting ? start() : stop())).observe(hero);
-  document.addEventListener('visibilitychange', () => (document.hidden ? stop() : (hero.getBoundingClientRect().bottom > 0 && start())));
-  if (!document.hidden) start();
+  new ResizeObserver(() => layout()).observe(card);
+  new MutationObserver(() => { relang(); key = ''; layout(); }).observe(root, { attributes: true, attributeFilter: ['lang'] });
+  if (calm) { box.classList.add('hf-in', 'hf-still'); for (const n of nodes) n.dataset.s = 'ok'; box.dataset.done = 'on'; return; } // reduced-motion: resultado final estatico
+  for (const n of nodes) n.dataset.s = 'idle';
+  let inView = true;
+  const sync = () => { const on = inView && !document.hidden; box.classList.toggle('is-paused', !on); on ? resume() : pause(); };
+  new IntersectionObserver(([e]) => { inView = e.isIntersecting; sync(); }).observe(hero);
+  document.addEventListener('visibilitychange', sync);
+  nodes.forEach((n, i) => { // hover: ilumina el radio del nodo; toque (movil): muestra su tooltip 2 s
+    const sp = () => spokes.querySelector(`[data-i="${i}"]`);
+    n.addEventListener('pointerenter', () => sp()?.classList.add('on'));
+    n.addEventListener('pointerleave', () => sp()?.classList.remove('on'));
+    if (!fine) n.addEventListener('click', () => { n.classList.add('tap'); clearTimeout(n._t); n._t = setTimeout(() => n.classList.remove('tap'), 2000); });
+  });
+  if (fine) { // micro-parallax: la capa del flujo se desplaza unos px opuesta al cursor (la transicion CSS suaviza)
+    let q = 0, ex = 0, ey = 0;
+    addEventListener('pointermove', e => {
+      ex = e.clientX; ey = e.clientY;
+      q || (q = requestAnimationFrame(() => { q = 0; if (live) box.style.translate = `${((.5 - ex / innerWidth) * 8).toFixed(1)}px ${((.5 - ey / innerHeight) * 6).toFixed(1)}px`; }));
+    }, { passive: true });
+  }
+  requestAnimationFrame(() => requestAnimationFrame(() => box.classList.add('hf-in')));
+  setTimeout(() => box.classList.add('hf-ready'), 1100); // tras la entrada, el hover responde sin retardos escalonados
+  later(() => run(true), 650);
 }
 
-if (hero && card) init();
+if (hero && card && av) init();

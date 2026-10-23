@@ -43,6 +43,14 @@
 /* (1/18) H1 de escritorio normal con interlineado 1.04 y máx. 4 líneas */
 .hero-h { line-height: 1.04; }
 
+/* Retrato 981-1199: el avatar cabe en la tarjeta con aire para el flujo de agentes (antes desbordaba por la derecha) */
+@media (min-width: 981px) and (max-width: 1199px) {
+  .pcard .av-wrap { width: min(340px, calc(100% - 96px)); height: auto; aspect-ratio: 1; }
+  .hero-inner .pcard { margin-top: 22px; } /* el nodo superior del flujo, apoyado en el borde, no roza la barra */
+}
+/* Móvil: hueco bajo el rol para la tira de nodos que se apoya en el borde inferior de la tarjeta */
+@media (max-width: 640px) { [data-theme] .pcard { padding-bottom: calc(.7rem + 8px); } }
+
 /* (17) Móvil: cuerpo serif a 16/1.6 en editorial y hud; grano al 4 % */
 @media (max-width: 640px) {
   [data-theme="editorial"] :is(.hero-sub, .sb, .bc-d, .lab-d, .tq, .vp, .about p),

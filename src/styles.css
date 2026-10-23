@@ -1082,7 +1082,7 @@ body[data-cursor="mira"]::after {
   box-shadow: 0 34px 90px rgba(0,0,0,.32), inset 0 1px 0 rgba(255,255,255,.04);
 }
 .av-wrap { width: clamp(220px, 65vw, 340px); height: clamp(220px, 65vw, 340px); margin: 0 auto clamp(1.2rem, 3vw, 2rem); position: relative; isolation: isolate; }
-.av-wrap::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(var(--a1), var(--a2), var(--a3), var(--a1)); animation: spinconic 5s linear infinite; }
+.av-wrap::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: conic-gradient(var(--a1), var(--a2), var(--a3), var(--a1)); animation: spinconic 14s linear infinite; }
 @keyframes spinconic { to { transform: rotate(360deg); } }
 .av-wrap::after { content: ''; position: absolute; inset: 0; border-radius: 50%; background: var(--surf); }
 .av { position: relative; z-index: 1; width: 100% !important; height: 100% !important; border-radius: 50% !important; object-fit: cover !important; object-position: center top !important; background: var(--bg3); max-width: none !important;}
@@ -2641,19 +2641,9 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 
 /* ═══ MOMENTO 1 — foto con vida, CV como tarjeta de descarga, CTAs con intención ═══ */
 
-/* Foto: entrada con enfoque (una vez) + órbita + pulso de "disponible" */
+/* Foto: entrada con enfoque (una vez) */
 .av { animation: av-focus 1s cubic-bezier(0.23, 1, 0.32, 1) .25s both; }
 @keyframes av-focus { from { opacity: 0; transform: scale(1.08); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
-.av-wrap { will-change: transform; }
-.av-orbit { position: absolute; inset: -16px; border-radius: 50%; pointer-events: none; z-index: 2; animation: av-orbit 10s linear infinite; }
-.av-orbit::before {
-  content: ''; position: absolute; top: 0; left: 50%; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%;
-  background: #35e08a; box-shadow: 0 0 0 3px color-mix(in srgb, #35e08a 28%, transparent), 0 0 18px #35e08a;
-}
-.av-pulse { position: absolute; inset: -3px; border-radius: 50%; pointer-events: none; z-index: 0; border: 2px solid var(--a2); opacity: 0; animation: av-pulse 3.6s cubic-bezier(0.23, 1, 0.32, 1) 1.4s infinite; }
-@keyframes av-orbit { to { transform: rotate(360deg); } }
-@keyframes av-pulse { 0% { transform: scale(1); opacity: .55; } 70%, 100% { transform: scale(1.22); opacity: 0; } }
-
 /* CV: tarjeta de descarga */
 .btn-s.btn-dl { gap: 10px; padding-inline: 7px 16px; height: 46px; text-align: left; }
 .btn-dl .dl-ic {
@@ -2685,10 +2675,8 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 
 @media (prefers-reduced-motion: reduce) {
   .av { animation: none; }
-  .av-orbit, .av-pulse, .cta-row .btn-p::after, .status-available .logo-dot, .btn-dl:hover .dl-ic svg { animation: none !important; }
-  .av-pulse { display: none; }
+  .cta-row .btn-p::after, .status-available .logo-dot, .btn-dl:hover .dl-ic svg { animation: none !important; }
 }
-@media (max-width: 640px) { .av-orbit { inset: -9px; } .av-orbit::before { width: 8px; height: 8px; margin: -4px 0 0 -4px; } }
 
 /* ═══ MENÚ — barra limpia: marca, enlaces en sans, una acción ═══ */
 #nav { backdrop-filter: none; -webkit-backdrop-filter: none; background: color-mix(in srgb, var(--bg) 92%, transparent); }

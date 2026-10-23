@@ -1,0 +1,33 @@
+/* ═══ PULSO DE DATOS — hilo conductor visual de la portada (nace en el hero: src/agent-graph.js) ═══
+   Una linea fina de acento por la que viaja un punto de luz. Reutilizable en cualquier seccion:
+
+   <svg aria-hidden="true">
+     <path class="pulse-line is-draw" pathLength="1" d="…"/>      ← traza fina; .is-draw la dibuja de principio a fin
+     <path class="pulse-line-dot" pathLength="1" d="…"/>          ← punto de luz que recorre la misma d (en bucle)
+   </svg>
+
+   pathLength="1" es obligatorio (los dash se expresan en fraccion del trazo).
+   Custom properties (todas opcionales):
+     --pl-color  color del punto (por defecto el acento del tema: var(--a2, var(--a1)))
+     --pl-track  color de la traza (por defecto t1 al 22 %)
+     --pl-w      grosor de la traza en px (1.25); el punto es el doble
+     --pl-dur    duracion de un recorrido (2.6s)
+     --pl-delay  retardo inicial (0s)
+     --pl-iter   repeticiones (infinite). Con 0 el punto queda quieto y se puede lanzar desde JS (WAAPI), como hace el hero.
+   Tokens compartidos: --ease-pulse (cubic-bezier(.22,1,.36,1)) y duraciones --pl-fast/--pl-base/--pl-slow (240/520/900 ms).
+   Pausa: cualquier ancestro con .is-paused. reduced-motion: traza completa y sin punto. */
+:root { --ease-pulse: cubic-bezier(.22, 1, .36, 1); --pl-fast: 240ms; --pl-base: 520ms; --pl-slow: 900ms; }
+.pulse-line { fill: none; stroke: var(--pl-track, color-mix(in srgb, var(--t1) 22%, transparent)); stroke-width: var(--pl-w, 1.25); }
+.pulse-line.is-draw { stroke-dasharray: 1 1; stroke-dashoffset: 1; animation: pl-draw var(--pl-slow) var(--ease-pulse) var(--pl-delay, 0s) forwards; }
+.pulse-line-dot {
+  fill: none; stroke: var(--pl-color, var(--a2, var(--a1))); stroke-width: calc(var(--pl-w, 1.25) * 2); stroke-linecap: round;
+  stroke-dasharray: .05 3; stroke-dashoffset: .05; opacity: 0;
+  animation: pl-run var(--pl-dur, 2.6s) linear var(--pl-delay, 0s) var(--pl-iter, infinite);
+}
+@keyframes pl-draw { to { stroke-dashoffset: 0; } }
+@keyframes pl-run { 0% { stroke-dashoffset: .05; opacity: 0; } 6%, 94% { opacity: 1; } 100% { stroke-dashoffset: -1; opacity: 0; } }
+.is-paused .pulse-line, .is-paused .pulse-line-dot { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .pulse-line.is-draw { animation: none; stroke-dashoffset: 0; }
+  .pulse-line-dot { display: none; }
+}

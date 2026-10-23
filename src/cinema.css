@@ -23,28 +23,9 @@
   [data-theme="hud"] .cin-mesh { opacity: .55; }
 
   /* Pausa cuando el hero sale de pantalla (la clase la pone cinema.js) */
-  .cin-off .cin-mesh i, .cin-off .cin-halo, .cin-off .cin-dot { animation-play-state: paused; }
+  .cin-off .cin-mesh i { animation-play-state: paused; }
 
-  /* Halo del retrato: anillo parcial enmascarado que gira por detrás de la tarjeta */
-  .pcard-wrap { position: relative; isolation: isolate; }
-  .cin-halo {
-    position: absolute; z-index: -1; left: 50%; top: 0; width: min(120%, 580px); aspect-ratio: 1; margin-left: calc(min(120%, 580px) / -2);
-    border-radius: 50%; pointer-events: none; opacity: .55;
-    background: conic-gradient(from 0deg, transparent 0 18%, var(--a1) 30%, transparent 44% 62%, var(--a2, var(--a1)) 78%, transparent 92%);
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px), #000 100%, transparent);
-            mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px), #000 100%, transparent);
-    animation-name: cin-spin; animation-duration: 28s; animation-timing-function: linear; animation-iteration-count: infinite;
-  }
-  @keyframes cin-spin { to { rotate: 360deg; } }
-  .cin-dot {
-    position: absolute; z-index: 2; width: 12px; height: 12px; border-radius: 50%; pointer-events: none;
-    background: var(--a1); opacity: .85;
-    animation-name: cin-bob; animation-duration: 6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: alternate;
-  }
-  .cin-dot[data-z="34"] { top: 14%; left: -3%; }
-  .cin-dot[data-z="52"] { width: 7px; height: 7px; bottom: 22%; right: -2%; background: var(--a2, var(--a1)); animation-duration: 8s; animation-delay: -3s; }
-  @keyframes cin-bob { from { transform: translateY(-7px); } to { transform: translateY(7px); } }
-  @media (max-width: 979px) { .cin-halo, .cin-dot, .cin-mesh i:nth-child(3) { display: none; } }
+  @media (max-width: 979px) { .cin-mesh i:nth-child(3) { display: none; } }
 
   /* Tipografía cinética: los caracteres (main.js, .sc-char) entran además girando desde la base de la palabra */
   .split-chars .sc-char {

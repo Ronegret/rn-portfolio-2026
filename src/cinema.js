@@ -6,13 +6,11 @@ if (matchMedia('(prefers-reduced-motion: no-preference)').matches) {
   const $ = s => document.querySelector(s);
   const clamp = (v, m) => Math.max(-m, Math.min(m, v));
 
-  /* (1) Hero: malla + halo + puntos; el puntero mueve cada capa (translate inline, no choca con las animaciones en transform/rotate) */
+  /* (1) Hero: malla de profundidad; el puntero mueve cada capa (translate inline, no choca con las animaciones en transform/rotate) */
   const hero = $('#hero');
   if (hero) {
     hero.querySelector('#lr-canvas')?.insertAdjacentHTML('afterend',
       '<div class="cin-mesh" aria-hidden="true"><i data-z="14"></i><i data-z="26"></i><i data-z="40"></i></div>');
-    $('.pcard-wrap')?.insertAdjacentHTML('afterbegin',
-      '<div class="cin-halo" data-z="-18" aria-hidden="true"></div><span class="cin-dot" data-z="34" aria-hidden="true"></span><span class="cin-dot" data-z="52" aria-hidden="true"></span>');
 
     let inView = true;
     new IntersectionObserver(([e]) => { inView = e.isIntersecting; hero.classList.toggle('cin-off', !inView); }).observe(hero);
