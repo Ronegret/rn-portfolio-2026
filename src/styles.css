@@ -106,136 +106,23 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--a1); outline-of
 
 
 /* ══════════════════════════════════════════
-   PRELOADER — intro minimalista y profesional (~2s)
+   INTRO — contenedor (el contenido vive en intro.css)
 ════════════════════════════════════════════ */
 #preloader {
   position: fixed; inset: 0; z-index: 100000;
-  background: #08090f;
-  color: #fff;
+  background: var(--bg, #08090f);
+  color: var(--t1, #fff);
   overflow: hidden;
   pointer-events: auto;
-  transition: opacity .5s ease-out, visibility 0s .5s;
+  clip-path: inset(0);
+  transition: clip-path .45s cubic-bezier(.76,0,.24,1), visibility 0s .45s;
 }
 #preloader.pl-out {
-  opacity: 0;
+  clip-path: inset(0 0 100% 0);
   pointer-events: none;
 }
 #preloader.pl-gone { visibility: hidden; }
 html.pl-locked, body.pl-locked { overflow: hidden !important; }
-
-/* Metadatos en las 4 esquinas — texto discreto tipo Awwwards */
-.pl-meta {
-  position: absolute;
-  font-family: 'Space Mono', 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, .48);
-  padding: clamp(1rem, 2.4vw, 2rem);
-  opacity: 0;
-  animation: pl-meta-in .8s .1s ease-out forwards;
-}
-.pl-meta-tl { top: 0; left: 0; }
-.pl-meta-tr { top: 0; right: 0; }
-.pl-meta-bl { bottom: 0; left: 0; }
-.pl-meta-br { bottom: 0; right: 0; color: rgba(255,255,255,.72); font-variant-numeric: tabular-nums; }
-@keyframes pl-meta-in { to { opacity: 1; } }
-@media (max-width: 640px) {
-  .pl-meta-tr, .pl-meta-bl { display: none; }
-}
-
-/* Centro — nombre y línea decorativa */
-.pl-center {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  padding: 0 clamp(1rem, 4vw, 2rem);
-}
-
-.pl-name {
-  font-family: 'Outfit', 'Inter', system-ui, sans-serif;
-  font-weight: 700;
-  font-size: clamp(2rem, 5.5vw, 4.4rem);
-  letter-spacing: -.03em;
-  line-height: 1;
-  margin: 0;
-  color: #fff;
-  display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0;
-  white-space: nowrap;
-}
-.pl-first, .pl-last {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(18px);
-  animation: pl-name-in .9s cubic-bezier(.22,1,.36,1) forwards;
-}
-.pl-first { color: #ffffff; animation-delay: .12s; }
-.pl-last { color: #a89aff; animation-delay: .28s; }
-.pl-space {
-  display: inline-block;
-  width: .28em;
-}
-.pl-dot {
-  display: inline-block;
-  width: .16em; height: .16em;
-  border-radius: 50%;
-  background: #a89aff;
-  margin-left: .06em;
-  margin-bottom: .04em;
-  vertical-align: baseline;
-  transform: scale(0);
-  animation: pl-dot-pop .5s .95s cubic-bezier(.34,1.7,.64,1) forwards;
-}
-@keyframes pl-name-in {
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes pl-dot-pop {
-  to { transform: scale(1); }
-}
-
-/* Línea de progreso finita bajo el nombre */
-.pl-line {
-  margin: 1.6rem 0 0;
-  width: min(360px, 60vw);
-  height: 1px;
-  background: rgba(255, 255, 255, .12);
-  position: relative;
-  overflow: hidden;
-}
-.pl-line::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: linear-gradient(90deg, #7c5cff 0%, #a89aff 50%, #3de7ff 100%);
-  transform: scaleX(0);
-  transform-origin: left center;
-  animation: pl-line-grow 1.6s .15s cubic-bezier(.22,1,.36,1) forwards;
-}
-@keyframes pl-line-grow {
-  to { transform: scaleX(1); }
-}
-
-/* Salida ligeramente elevada del nombre — subtle, no zoom agresivo */
-#preloader.pl-out .pl-first,
-#preloader.pl-out .pl-last,
-#preloader.pl-out .pl-dot,
-#preloader.pl-out .pl-line,
-#preloader.pl-out .pl-meta {
-  transition: opacity .45s ease-out, transform .45s ease-out;
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pl-first, .pl-last, .pl-dot, .pl-line::before, .pl-meta {
-    animation-duration: .01ms !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
 
 /* Skip link — a11y quick nav for keyboard/screen-reader users */
 .skip-link {
