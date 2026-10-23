@@ -384,17 +384,19 @@ try {
 
 /* ═══════════════════════════════════════
    FIRMA WEBGL DEL HERO — gobernanza: el modulo (y ogl) solo se descargan si el dispositivo lo aguanta
-   y tras el LCP (load + idle). Interruptor de depuracion: ?webgl=0
+   y tras el LCP (primera interaccion o 5 s tras load, en idle). Sin WebGL, ogl falla en try/catch y no pasa nada. Interruptor de depuracion: ?webgl=0
 ═══════════════════════════════════════ */
 (()=>{
   const nav=navigator, cn=nav.connection||{};
   const desktop=matchMedia('(hover:hover) and (pointer:fine)').matches;
   const mem=nav.deviceMemory?nav.deviceMemory>=4:(nav.hardwareConcurrency||0)>=4;
-  let ok=document.getElementById('lr-canvas')&&!cn.saveData&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&(mem||desktop)&&!/[?&]webgl=0\b/.test(location.search);
-  if(ok){ try{ const t=document.createElement('canvas'); ok=!!(t.getContext('webgl2')||t.getContext('webgl')); }catch(e){ ok=false; } }
+  const ok=document.getElementById('lr-canvas')&&!cn.saveData&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&(mem||desktop)&&!/[?&]webgl=0(?!\d)/.test(location.search);
   if(!ok) return;
-  const go=()=>{ const run=()=>import('./webgl-hero.js').catch(()=>{}); 'requestIdleCallback' in window?requestIdleCallback(run,{timeout:4000}):setTimeout(run,1500); };
-  document.readyState==='complete'?go():addEventListener('load',go,{once:true});
+  // arranque: primera interaccion o, como mucho, 5 s despues del load (y en idle): nunca compite con LCP/TBT
+  const run=()=>import('./webgl-hero.js').catch(()=>{}); let fired=0;
+  const go=()=>{ if(fired++) return; ['pointermove','touchstart','scroll','keydown'].forEach(e=>removeEventListener(e,go)); 'requestIdleCallback' in window?requestIdleCallback(run,{timeout:2000}):setTimeout(run,300); };
+  const arm=()=>{ setTimeout(go,5000); ['pointermove','touchstart','scroll','keydown'].forEach(e=>addEventListener(e,go,{once:true,passive:true})); };
+  document.readyState==='complete'?arm():addEventListener('load',arm,{once:true});
 })();
 
 /* ═══════════════════════════════════════
