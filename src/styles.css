@@ -3089,3 +3089,8 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 /* cyber: el púrpura #b026ff queda para fondos y bordes; el texto pequeño usa una variante más clara (≈6:1) */
 [data-theme="cyber"] .sc-ttl, [data-theme="cyber"] .tlv.lv-a, [data-theme="cyber"] .bc-link, [data-theme="cyber"] .lab-link,
 [data-theme="cyber"] .lab-tag, [data-theme="cyber"] .tl-co, [data-theme="cyber"] .edu-school, [data-theme="cyber"] .eyebrow { color: #c05cff; }
+
+/* "Leer más" de las tarjetas: al abrir, quitar también el recorte por líneas (-webkit-line-clamp)
+   que dejaba el texto cortado y el botón encima del párrafo (reporte móvil iOS, 23-oct) */
+.bc-d.bc-d-open { display: block; -webkit-line-clamp: unset; line-clamp: unset; max-height: none; overflow: visible; }
+.bc-d + .bc-d-more { position: relative; z-index: 1; }
