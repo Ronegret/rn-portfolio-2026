@@ -156,13 +156,17 @@ html.sx-vt::view-transition-new(root) { z-index: 2; }
 
 /* ───── (B5) Footer: nombre gigante recortado por el borde inferior, reloj, volver arriba ───── */
 footer.fx-footer { padding-bottom: 0; }
+/* El nombre se ve ENTERO (antes se recortaba por abajo y se desvanecía arriba: «se ve muy cortado»);
+   solo un velo suave en el borde superior y un respiro bajo las letras. */
 .fx-wordmark {
   margin-top: clamp(1.5rem, 4vw, 3rem);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 30%); mask-image: linear-gradient(180deg, transparent 0, #000 30%);
+  padding-bottom: clamp(.6rem, 1.8vw, 1.4rem);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%); mask-image: linear-gradient(180deg, transparent 0, #000 14%);
 }
 .fx-wordmark span {
-  margin-bottom: -.3em;   /* la caja termina antes que el glifo: el borde del footer lo corta */
-  background-image: linear-gradient(180deg, color-mix(in srgb, var(--t1) 46%, transparent), color-mix(in srgb, var(--t1) 12%, transparent));
+  margin-bottom: 0;
+  line-height: 1.06;
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--t1) 44%, transparent), color-mix(in srgb, var(--t1) 20%, transparent));
 }
 .sx-clock { display: flex; align-items: center; gap: .5rem; margin-top: .7rem; font-family: var(--fm); font-size: 12px; letter-spacing: .08em; color: color-mix(in srgb, var(--t2) 70%, var(--t1)); font-variant-numeric: tabular-nums; }
 .sx-clock i { width: 7px; height: 7px; border-radius: 50%; background: var(--a2, var(--a1)); flex: none; }
@@ -188,4 +192,8 @@ a.cc-v.sx-ok .sx-copy { background: var(--a1); border-color: var(--a1); color: v
 @media (prefers-reduced-motion: no-preference) {
   a.cc-v.sx-ok .sx-copy { animation-name: sx-pop; animation-duration: .3s; animation-timing-function: cubic-bezier(.34, 1.56, .64, 1); }
   @keyframes sx-pop { from { scale: .85; } }
+}
+/* Mismos degradados completos en los temas claros (antes se desvanecían a transparente por abajo) */
+[data-theme="editorial"] .fx-wordmark span, [data-theme="diario"] .fx-wordmark span {
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--t1) 24%, transparent), color-mix(in srgb, var(--t1) 12%, transparent));
 }
