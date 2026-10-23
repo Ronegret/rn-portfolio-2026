@@ -300,7 +300,7 @@ function buildSheet() {
   dlg = document.createElement('dialog');
   dlg.className = 'tj-sheet';
   dlg.setAttribute('aria-labelledby', 'tj-sh-t');
-  dlg.innerHTML = `<div class="tj-scrim"></div><div class="tj-panel"><div class="tj-head"><button type="button" class="tj-grab"></button><button type="button" class="tj-x">${ICON.x}</button></div><div class="tj-body"><figure class="tj-thumb"><img alt="" decoding="async"></figure><div class="tj-tags"></div><h2 id="tj-sh-t"></h2><p class="tj-sum"></p><p class="tj-meta"></p><a class="btn-p tj-cta"></a></div></div>`;
+  dlg.innerHTML = `<div class="tj-scrim"></div><div class="tj-panel"><div class="tj-head"><button type="button" class="tj-grab"></button><button type="button" class="tj-x">${ICON.x}</button></div><div class="tj-body"><figure class="tj-thumb"><img alt="" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" decoding="async"></figure><div class="tj-tags"></div><h2 id="tj-sh-t"></h2><p class="tj-sum"></p><p class="tj-meta"></p><a class="btn-p tj-cta"></a></div></div>`;
   document.body.append(dlg);
   panel = $('.tj-panel', dlg); scrim = $('.tj-scrim', dlg);
   const lab = () => { $('.tj-x', dlg).setAttribute('aria-label', tx().close); $('.tj-grab', dlg).setAttribute('aria-label', tx().grab); };
