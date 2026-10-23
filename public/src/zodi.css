@@ -873,3 +873,5 @@ body {
   .z-hero, .section, .z-footer { width: calc(100% - 96px); }
 }
 @media (max-width: 980px) { .hero-art { margin: 0 0 1.6rem; } }
+/* Tarot: en tablet/escritorio las cartas hacen wrap (antes fila con scroll horizontal y cartas cortadas por el borde) */
+@media (min-width: 641px) { .tarot-row { flex-wrap: wrap; justify-content: center; overflow: visible; contain: none; } .tarot-row img { scroll-snap-align: none; } }

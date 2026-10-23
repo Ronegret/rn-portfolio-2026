@@ -319,7 +319,7 @@ h2 {
   overflow: hidden;
   border: 1px solid rgba(0,212,255,.18);
   border-radius: 22px;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 1024 / 575;
   background: #06101e;
 }
 .dd-xray-frame img {
@@ -581,7 +581,7 @@ h2 {
 }
 .dd-lens-visual img {
   width: 100%;
-  aspect-ratio: 1.28 / 1;
+  aspect-ratio: 1 / 1;
   display: block;
   object-fit: cover;
   opacity: .9;

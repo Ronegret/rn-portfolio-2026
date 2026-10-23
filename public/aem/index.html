@@ -312,6 +312,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 
 /* Tabla */
 .tabla{width:100%;border-collapse:collapse;margin:24px 0;font-size:.94rem}
+@media(max-width:640px){.tabla{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}}
 .tabla th{
   padding:14px 12px;background:var(--tinta);color:#fff;
   text-align:left;font-size:.72rem;font-weight:700;
@@ -721,7 +722,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 }
 .galeria a{
   display:block;overflow:hidden;
-  aspect-ratio:1/1;position:relative;
+  aspect-ratio:3/2;position:relative;
   border-radius:2px;
 }
 .galeria a::after{

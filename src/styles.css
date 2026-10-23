@@ -3040,3 +3040,25 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
   .dk::after { content: ""; position: absolute; inset: -10px; border-radius: 50%; }
   .mob-themes .dk::after { display: none; } /* en el menú móvil ya miden 44px */
 }
+/* ═══ sin recortes ═══
+   Las capturas se ven enteras. Antes: reveal con clip-path inset(5%) (effects.css) + Ken Burns/parallax
+   (scroll-fx.css, motion.css) + zoom de hover sobre cajas con object-fit:cover. */
+
+/* (1) Reveal de tarjetas: sin recorte en reposo (el inset(5%) quitaba ~19 % del área de cada imagen) */
+.bc .bc-img img { clip-path: none; }
+
+/* (2) Marcos de laptop/teléfono: la pantalla se ve completa, sin parallax ni zoom.
+   Teléfono: la caja toma la proporción real del póster (width/height del <img>), no 390:800 fijo. */
+.bc-img .pv-screen img, .bc-img .pv-screen video { animation: none !important; translate: none !important; scale: none !important; clip-path: none !important; }
+.bc-img .pv--phone .pv-screen { aspect-ratio: auto; }
+.bc-img .pv--phone .pv-screen img { position: relative; display: block; height: auto; }
+
+/* (3) Tarjeta "Este portfolio": el hero compuesto (4:3) entero sobre su propio fondo grafito */
+.pf-card .bc-img > img { object-fit: contain !important; animation: none !important; translate: none !important; scale: none !important; }
+.pf-card .bc:hover .bc-img > img { transform: none !important; }
+
+/* (4) AIbueno (Laboratorio): captura entera (proporción real 1374:1272), centrada sobre panel oscuro, sin Ken Burns */
+.lab-feat .lab-img-web { align-items: center; justify-content: center; }
+.lab-feat .lab-img-web img { width: 100%; height: auto; object-fit: contain; transform: none !important; animation: none !important; translate: none !important; }
+.lab-feat:hover .lab-img-web img { scale: 1.02 !important; }
+@media (max-width: 768px) { .lab-feat .lab-img-web { height: auto; } }
