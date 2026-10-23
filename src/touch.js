@@ -271,6 +271,13 @@ function openSheet(card, from) {
   const cta = $('.tj-cta', dlg);
   cta.href = a.href; cta.textContent = t('.bc-link') || a.href;
   if (a.target) { cta.target = a.target; cta.rel = a.rel; } else { cta.removeAttribute('target'); cta.removeAttribute('rel'); }
+  // Tarjetas con caso interno y web externa (.bc-ext): segunda acción en la hoja
+  const ext = $('.bc-ext', card);
+  let cta2 = $('.tj-cta2', dlg);
+  if (ext) {
+    if (!cta2) { cta2 = document.createElement('a'); cta2.className = 'btn-s tj-cta tj-cta2'; cta.after(cta2); }
+    Object.assign(cta2, { hidden: false, href: ext.href, target: '_blank', rel: 'noopener', textContent: ext.textContent.trim() });
+  } else if (cta2) cta2.hidden = true;
   doc.classList.add('tj-lock');
   dlg.showModal();
   openedAt = performance.now();

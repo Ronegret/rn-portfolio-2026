@@ -1719,6 +1719,18 @@ body[data-cursor="mira"]::after {
   .db-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; }
 }
 
+/* Capsule Corp: acción secundaria "Abrir la web" (la tarjeta principal enlaza al caso interno) */
+.db-card .bc-ext {
+  position: absolute; z-index: 6; right: clamp(14px, 2vw, 22px); bottom: clamp(14px, 2vw, 20px);
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px;
+  border: 1.5px solid rgba(255,207,46,.55); background: rgba(7,5,15,.82); color: #ffcf2e;
+  font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+@media (hover:hover) and (pointer:fine) { .db-card .bc-ext:hover { background: #ffcf2e; color: #07050f; } }
+.db-card .bc-ext:focus-visible { outline: 3px solid #ffcf2e; outline-offset: 3px; }
+@media(max-width: 860px) { .db-card .bc-bd { padding-bottom: calc(1.4rem + 56px); } }
+
 .dedicalo-play-card .bc-img {
   background:
     radial-gradient(circle at 20% 50%, rgba(255,107,43,.18), transparent 40%),

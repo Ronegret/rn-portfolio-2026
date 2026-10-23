@@ -17,7 +17,7 @@ Source of my portfolio site — an Astro build with five interchangeable visual 
 - i18n language switching (es/ca/en)
 - Optimised images via `astro:assets` (WebP + srcset)
 - Lighthouse mobile: accessibility, best practices and SEO at 100
-- Case studies for every project, plus a linked Dragon Ball themed build: [db.rodrigonegrete.es](https://db.rodrigonegrete.es)
+- Case studies for every project, plus a linked Dragon Ball themed build: [db.rodrigonegrete.es](https://db.rodrigonegrete.es), with its own case study at public/capsule-corp/ (/capsule-corp/)
 
 ## 🛠️ Built with
 `Astro` · `HTML/CSS/JS` · `Design tokens` · `Vercel`

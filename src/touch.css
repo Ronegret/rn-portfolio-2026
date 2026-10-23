@@ -135,6 +135,7 @@ html.tj-lock, html.tj-lock body { overflow: hidden; }
 .tj-meta { margin: 0 0 1.1rem; }
 .tj-sheet .tj-meta .bc-m { display: inline-flex; }
 .tj-cta { width: 100%; text-decoration: none; }
+.tj-cta2 { margin-top: 10px; }
 .tj-sheet .tj-cta:focus-visible, .tj-sheet button:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; }
 
 /* ───────────── (3) Tacto vivo ───────────── */
