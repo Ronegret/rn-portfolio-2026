@@ -1,4 +1,4 @@
-import './cursor2.css';
+import cssUrl from './cursor2.css?url'; // ?url: el CSS no se inyecta en el <head> de todas las paginas (movil no lo carga)
 
 /* Cursor 2.0. main.js solo lo importa con (hover:hover)+(pointer:fine)+sin reduced-motion+>1024px.
    Un unico rAF (muelle del halo, imanes, estela, inercia del arrastre, progreso) que se apaga en reposo.
@@ -6,6 +6,7 @@ import './cursor2.css';
    Forzables con data-cursor="<estado>" y data-cursor-label="..." en cualquier elemento. */
 
 const D = document, root = D.documentElement, body = D.body;
+await new Promise(r => { const l = D.createElement('link'); l.rel = 'stylesheet'; l.href = cssUrl; l.onload = l.onerror = r; D.head.append(l); });
 const T = {
   es: { view: 'Ver caso', web: 'Abrir web', clip: 'Ver clip', drag: 'Arrastra' },
   ca: { view: 'Veure cas', web: 'Obrir web', clip: 'Veure clip', drag: 'Arrossega' },
@@ -34,10 +35,10 @@ const N = 7, C = 2 * Math.PI * 18;
 const c2 = D.createElement('div');
 c2.id = 'c2'; c2.dataset.s = ''; c2.setAttribute('aria-hidden', 'true');
 c2.innerHTML = '<i class="c2-t"></i>'.repeat(N) +
-  '<div class="c2-r"><b class="c2-b"><svg viewBox="0 0 40 40"><circle class="c2-tk" cx="20" cy="20" r="18"/><circle class="c2-pg" cx="20" cy="20" r="18"/></svg></b><span class="c2-l"></span></div>' +
+  '<div class="c2-r"><b class="c2-b"><svg viewBox="0 0 40 40"><circle class="c2-tk" cx="20" cy="20" r="18"/><circle class="c2-pg" cx="20" cy="20" r="18"/></svg></b></div><div class="c2-lw"><span class="c2-l"></span></div>' +
   '<div class="c2-p"><i class="c2-d"></i><i class="c2-i"></i></div>';
 body.append(c2);
-const ring = c2.querySelector('.c2-r'), pt = c2.querySelector('.c2-p'), lbl = c2.querySelector('.c2-l'), pg = c2.querySelector('.c2-pg');
+const ring = c2.querySelector('.c2-r'), pt = c2.querySelector('.c2-p'), lw = c2.querySelector('.c2-lw'), lbl = c2.querySelector('.c2-l'), pg = c2.querySelector('.c2-pg');
 const trail = [...c2.querySelectorAll('.c2-t')].map((el, i) => ({ el, x: 0, y: 0, k: 1 - i / (N + 1) }));
 pg.style.strokeDasharray = C.toFixed(2);
 
@@ -152,7 +153,7 @@ function tick(now) {
   // muelle ligeramente subamortiguado
   vx += (tx - rx) * .17 * dt; vy += (ty - ry) * .17 * dt;
   const dd = .6 ** dt; vx *= dd; vy *= dd; rx += vx * dt; ry += vy * dt;
-  ring.style.transform = `translate3d(${rx.toFixed(2)}px,${ry.toFixed(2)}px,0)`;
+  ring.style.transform = lw.style.transform = `translate3d(${rx.toFixed(2)}px,${ry.toFixed(2)}px,0)`;
   pt.style.transform = `translate3d(${px}px,${py}px,0)`;
   if (Math.abs(tx - rx) > .1 || Math.abs(ty - ry) > .1 || Math.abs(vx) > .05 || Math.abs(vy) > .05) busy = true;
 
