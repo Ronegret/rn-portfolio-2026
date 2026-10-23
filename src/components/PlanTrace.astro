@@ -1,0 +1,25 @@
+---
+// Traza del agente en cada tarjeta: Problema → Decisión → Resultado (+ Siguiente en las destacadas).
+// Texto = resumen (≤ 9 palabras) de la página de caso real (public/<slug>/index.html, hilo data-thread). Claves tr_<k>_<p|d|r|n> en content.js.
+// Un pulso de datos (pulse-line.css) recorre la traza de nodo a nodo: al hover/foco en escritorio, una vez al entrar en vista en táctil.
+// rich: siempre visible en el cuerpo y con la sección del caso de la que sale cada línea (§NN).
+import { T } from '../content.js';
+interface Props { k: string; rich?: boolean; src?: string[] }
+const { k, rich = false, src = [] } = Astro.props;
+const es = T.es as Record<string, string>;
+const rows = ['p', 'd', 'r', 'n'].filter((r) => es[`tr_${k}_${r}`]);
+---
+<div class:list={['pt', { 'pt--rich': rich }]} style={`--pt-n:${rows.length}`}>
+  {!rich && <p class="pt-h" aria-hidden="true"><span data-i="pt_p">Problema</span> → <span data-i="pt_d">Decisión</span> → <span data-i="pt_r">Resultado</span></p>}
+  <dl>
+    {rows.map((r, i) => (
+      <div class={`pt-row pt-${r}`} style={`--i:${i}`}>
+        {i < rows.length - 1 && (
+          <svg class="pt-wire" aria-hidden="true" focusable="false"><line class="pulse-line" pathLength="1" x1="1" y1="0" x2="1" y2="100%" /><line class="pulse-line-dot" pathLength="1" x1="1" y1="0" x2="1" y2="100%" /></svg>
+        )}
+        <dt data-i={`pt_${r}`}>{es[`pt_${r}`]}</dt>
+        <dd><span data-i={`tr_${k}_${r}`}>{es[`tr_${k}_${r}`]}</span>{src[i] && <span class="pt-src" aria-hidden="true">{src[i]}</span>}</dd>
+      </div>
+    ))}
+  </dl>
+</div>

@@ -2,6 +2,9 @@
 import ProjectFilter from '../islands/ProjectFilter.jsx';
 import ProjectPreview from './ProjectPreview.astro';
 import CardImg from './CardImg.astro';
+import PlanTrace from './PlanTrace.astro';
+import '../pulse-line.css';
+import '../sx-proyectos.css';
 import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
 ---
 <section class="sec" id="proyectos">
@@ -22,6 +25,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="cc_h">Capsule Corp — Mi CV convertido en un power-up Saiyan</h3>
             <p class="bc-d" data-i="cc_d">¿Y si un CV se jugara en vez de leerse? Seis transformaciones Saiyan sincronizadas con etapas reales de mi carrera, siete esferas del dragón escondidas, Modo Reclutador y un fondo que evoluciona con el scroll. Nada de accesibilidad de cartón: WCAG 2.2 AA verificado con axe-core, 100 en accesibilidad, buenas prácticas y SEO en Lighthouse.</p>
             <div class="bc-m" data-i="cc_m">6 transformaciones · 7 esferas · Modo Reclutador · WCAG 2.2 AA · db.rodrigonegrete.es</div>
+            <PlanTrace k="cc" rich src={['§01', '§04', '§09', '§12']} />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -37,6 +41,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="pf_h">Este portfolio — Cada animación es una decisión</h3>
             <p class="bc-d" data-i="pf_d">Un portfolio visual corre el riesgo de que el movimiento sea decoración. Documento cada animación, tema, sonido e interacción de este sitio: qué problema resuelve, qué investigué, qué descarté y cuánto cuesta. Con mini-demos que se pueden probar, Lighthouse móvil de 64 a 96-98 y los errores que encontré por el camino.</p>
             <div class="bc-m" data-i="pf_m">9 piezas de movimiento · 6 demos · 5 temas · Astro + React · Lighthouse 96-98</div>
+            <PlanTrace k="pf" rich src={['§02', '§05', '§08', '§12']} />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -51,6 +56,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p11_h">Rodd.es — 287 recursos web que se prueban en vivo, no se describen</h3>
             <p class="bc-d" data-i="p11_d">Ves el efecto funcionando antes de copiar el código: 287 recursos — animaciones, componentes React, microinteracciones, fondos animados, escenas 3D — en 7 idiomas, con preview en vivo y código listo para editar. Lo llevé end-to-end: research, arquitectura UX/UI, testing y publicación.</p>
             <div class="bc-m" data-i="rd_m">6 categorías · 7 idiomas · Live preview · Framer Motion · Three.js · Vercel</div>
+            <PlanTrace k="rd" />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -65,6 +71,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="kb_h">KETTELBRO — Una sesión nueva de pesa rusa cada día, con la ciencia a la vista</h3>
             <p class="bc-d" data-i="kb_d">Un entrenador de bolsillo para quien entrena con una o dos pesas, con las manos con magnesia y el móvil a metros. Diseñé una PWA que da cada día una sesión de 10 a 25 minutos, la guía serie a serie con números enormes y cita el estudio de cada bloque, con sus límites. Caso completo: contexto, proto-personas, decisiones con su alternativa descartada, sistema visual nocturno, accesibilidad y stack.</p>
             <div class="bc-m" data-i="kb_m">Sesión diaria · Acompañante en vivo · Evidencia A–D · PWA offline · Next.js · Firebase</div>
+            <PlanTrace k="kb" />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -79,6 +86,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="ep_h">Events Planner — El sistema operativo para wedding planners que trabajan sin cobertura</h3>
             <p class="bc-d" data-i="ep_d">Tres personas coordinan hasta 12 bodas al año, de pie, en fincas sin cobertura: Wedding + Events necesitaba herramientas que funcionaran sin internet. Diseñé y construí una web para planificar bodas entre el equipo y las parejas: panel de inicio, espacio de trabajo por boda, invitados y plano de mesas, proveedores y rincones, presupuesto, contrato imprimible, portal privado para cada pareja y dossieres. Funciona en móvil, tablet y escritorio, se instala como app y abre sin conexión.</p>
             <div class="bc-m" data-i="ep_m">Panel · Portal novios · Mesas · Proveedores · Contrato · Presupuesto · PWA offline · Supabase · aem.rodd.es</div>
+            <PlanTrace k="ep" />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -93,6 +101,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="zodi_h">ZODI — Oráculo astral con IA, sin filtro y con humor ácido</h3>
             <p class="bc-d" data-i="zodi_d">Horóscopo, tarot, carta natal, numerología y comunidad en un solo producto digital, con un humor que no edulcora las respuestas. Diseñé la experiencia de IA personalizada: 17 tipos de lectura, 4 tonos de respuesta, planes premium y una identidad visual que no pasa desapercibida.</p>
             <div class="bc-m" data-i="zodi_m">17 lecturas · 4 tonos · PWA · modelo freemium</div>
+            <PlanTrace k="zo" />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -107,6 +116,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="pdp_h">Dedícalo Play — Dedica canciones y compite con tus amigos en tiempo real</h3>
             <p class="bc-d" data-i="pdp_d">App multijugador para dedicar canciones, sumar puntos y competir con amigos en tiempo real. Diseñé la UX, el branding, las mecánicas de juego y el lanzamiento end-to-end.</p>
             <div class="bc-m" data-i="pdp_m">Multijugador · Tiempo real · play.dedicalo.es</div>
+            <PlanTrace k="dp" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -119,6 +129,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="je_h">Just Enjoy — Agentes IA que planifican tu viaje de punta a punta</h3>
             <p class="bc-d" data-i="je_d">TFM en equipo del Máster EBIS: un planificador que convierte tus preferencias en un itinerario completo — vuelos, hotel, actividades, mapa y PDF — con agentes IA y datos reales. Mi parte: frontend, diseño UX/UI e interfaces y parte de la automatización en n8n.</p>
             <div class="bc-m" data-i="je_m">27 nodos n8n · Supabase · Firebase · SerpAPI · Tavily</div>
+            <PlanTrace k="je" />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -131,6 +142,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="ib_h">Iberdata — Oficina de IA y Automatización</h3>
             <p class="bc-d" data-i="ib_d">Business case para una empresa de 450 empleados: Centro de Excelencia, gobierno, arquitectura, dos pilotos, sprints, KPIs y riesgos.</p>
             <div class="bc-m" data-i="ib_m">n8n · Supabase · OpenAI API · Playwright · 12 semanas</div>
+            <PlanTrace k="ib" />
             <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
@@ -145,6 +157,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="zb_h">ZODI BTO — Oráculo conversacional</h3>
             <p class="bc-d" data-i="zb_d">Primer prototipo de ZODI: terminal de consulta con Botpress, personalidad mística, memoria contextual y tono honesto antes de escalar al producto PWA actual.</p>
             <div class="bc-m" data-i="zb_m">Botpress · WordPress · personaje IA</div>
+            <PlanTrace k="zb" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -157,6 +170,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p1_h">Invitoo — Invitaciones digitales con IA</h3>
             <p class="bc-d" data-i="p1_d">Marca propia creada desde cero: UX/UI, web design, RSVP, automatizaciones, canciones generadas con IA, animaciones e invitaciones interactivas personalizadas.</p>
             <div class="bc-m" data-i="p1_m">Founder único · Suno · React · Make</div>
+            <PlanTrace k="iv" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -171,6 +185,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p10_h">PDF Rodd — Editor PDF gratuito y rápido</h3>
             <p class="bc-d" data-i="p10_d">Herramienta web para editar, firmar, resaltar, corregir y comprimir PDFs desde el navegador. Minimalista, funcional y pensada para resolver tareas reales sin instalación.</p>
             <div class="bc-m">PDF.js · PDF-lib · Fabric.js · descarga local</div>
+            <PlanTrace k="pr" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -183,6 +198,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p3_h">Estudio CCSE — Simulador para nacionalidad española</h3>
             <p class="bc-d" data-i="p3_d">Herramienta digital para estudiar la prueba CCSE con preguntas verificadas, interfaz accesible y simulador en vivo desplegado en GitHub Pages.</p>
             <div class="bc-m">Contenido verificado · acceso gratuito · mobile-first</div>
+            <PlanTrace k="cs" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -195,6 +211,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p4_h">Dedícalo — Canciones personalizadas con IA</h3>
             <p class="bc-d" data-i="p4_d">Producto propio para convertir historias en canciones: brainstorming, benchmark, flujo de 3 pasos, audio IA, portadas, video y entrega emocional.</p>
             <div class="bc-m">7 demos · Suno/Udio · WordPress · CapCut</div>
+            <PlanTrace k="de" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -207,6 +224,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p5_h">ParaTuMundo — Estrategia UX para marketplace</h3>
             <p class="bc-d" data-i="p5_d">Research competitivo, DAFO, encuestas, personas, journey map, arquitectura de información y prototipo Figma para un e-commerce multcategoría.</p>
             <div class="bc-m">33 encuestas · Shopify · BigBuy</div>
+            <PlanTrace k="pm" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -219,6 +237,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p6_h">Te Atiendo — UX para servicio en mesa</h3>
             <p class="bc-d" data-i="p6_d">Producto digital para restaurantes: research, DAFO, benchmarking, journey map, gamificación del staff, feedback en tiempo real y prototipo Figma.</p>
             <div class="bc-m">20 encuestas y entrevistas · benchmark · Figma</div>
+            <PlanTrace k="ta" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -230,6 +249,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <div class="bc-tags"><span class="bc-tag" data-i="p7_tag">App Móvil</span></div>
             <h3 class="bc-h">Aquae</h3>
             <p class="bc-d" data-i="p7_d">Aplicación móvil concebida para la sostenibilidad. Adopta técnicas de gamificación y ciencia de datos para incentivar el ahorro hídrico.</p>
+            <PlanTrace k="aq" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -242,6 +262,7 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h" data-i="p8_h">Travel of Vapers — Marca sensorial</h3>
             <p class="bc-d" data-i="p8_d">Identidad visual, packaging, sistema de 21 sabores/destinos, marketing social, venta directa, eventos y logística nacional para una marca de producto físico.</p>
             <div class="bc-m">21 destinos · Photoshop · escala nacional</div>
+            <PlanTrace k="tv" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
@@ -254,12 +275,13 @@ import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
             <h3 class="bc-h">Tomapoly — UX aplicado a un juego físico</h3>
             <p class="bc-d" data-i="p9_d">Proyecto propio de gamificación física: diseñé mecánicas sociales, tablero de 113 casillas, packaging waterproof, preprensa, testing y producción audiovisual.</p>
             <div class="bc-m">113 casillas · PVC · Photoshop · Premiere</div>
+            <PlanTrace k="tp" />
             <span class="bc-link" data-i="see_proj">Ver proyecto →</span>
           </div>
         </a>
       </div>
     </div>
-    <script is:inline>try{var f=sessionStorage.getItem('rn-f');if(f&&f!=='all'){document.querySelectorAll('#proyectos .bento>[data-cats]').forEach(function(c){c.classList.toggle('fhid',(' '+c.dataset.cats+' ').indexOf(' '+f+' ')<0)});document.querySelectorAll('#proyectos .fb').forEach(function(b){var on=b.dataset.f===f;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}}catch(e){}</script><!-- filtro activo al volver de un caso: se aplica antes del primer pintado, sin esperar a la hidratación -->
+    <script is:inline>try{var f=sessionStorage.getItem('rn-f');if(f&&f!=='all'){document.querySelectorAll('#proyectos .bento>[data-cats]').forEach(function(c){c.classList.toggle('fhid',(' '+c.dataset.cats+' ').indexOf(' '+f+' ')<0)})}}catch(e){}</script><!-- filtro activo al volver de un caso: se aplica antes del primer pintado, sin esperar a la hidratación -->
     </ProjectFilter>
   </div>
 </section>
