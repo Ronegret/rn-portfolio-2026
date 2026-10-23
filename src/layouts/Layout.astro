@@ -24,10 +24,15 @@ import fonts from '../fonts.css?raw';
    Sin intro (misma sesion, ?intro=0) o llegando desde otra pagina del sitio (volver de un caso, view transition) no se oculta nada.
    window.__css = promesa que main.js espera antes de arrancar. */
 (function(d){var h=d.documentElement,res,skip=false;window.__css=new Promise(function(r){res=r});
+/* Las islas (client:load) esperan a la portada revelada: ~60 KB de React que si no compiten con el primer pintado (Astro.load lo define Astro mas abajo) */
+var A=self.Astro=self.Astro||{},L;Object.defineProperty(A,'load',{configurable:true,get:function(){return L},set:function(f){L=function(t){return window.__css.then(function(){return f(t)})}}});
+/* Chunks de JS que importa el script de entrada (los rellena astro.config.mjs): se precargan al revelar, no antes del primer pintado */
+window.__pre=/*PRE*/[];
+function pre(){window.__pre.forEach(function(u){var l=d.createElement('link');l.rel='modulepreload';l.href=u;d.head.appendChild(l)})}
 try{skip=!!(d.referrer&&new URL(d.referrer).origin===location.origin)||sessionStorage.getItem('intro_seen')==='1'||/[?&]intro=0/.test(location.search)}catch(e){}
-if(skip){res();return}
+if(skip){pre();res();return}
 h.classList.add('cp');
-var go=0;function done(){if(go)return;go=1;h.classList.add('cp2');h.classList.remove('cp');
+var go=0;function done(){if(go)return;go=1;pre();h.classList.add('cp2');h.classList.remove('cp');
 function end(){h.classList.remove('cp2');res()}
 requestAnimationFrame(function(){requestAnimationFrame(end)});setTimeout(end,300)}
 try{new PerformanceObserver(function(l,o){if(l.getEntriesByName('first-contentful-paint').length){o.disconnect();setTimeout(done,0)}}).observe({type:'paint',buffered:true})}catch(e){}

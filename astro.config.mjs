@@ -1,7 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import react from '@astrojs/react';
-import { readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const site = 'https://rodrigonegrete.es';
@@ -12,7 +12,7 @@ const staticPages = ['zodi', 'dedicalo-play', 'pdf-rodd', 'rodd-es', 'aem', 'ket
 // portada incrustadas tambien en <style>. Asi no hay ningun <link rel=stylesheet> que bloquee el primer frame (Chrome movil lo retenia ~2 s
 // segun una carrera) y el contenido se revela en cuanto la intro ha pintado, sin esperar un viaje de red extra por el CSS.
 // Los chunks de JS importados dinamicamente no vuelven a pedir las hojas ya incrustadas (se quitan de su lista de dependencias de Vite)
-// y se precargan (modulepreload) porque el script de entrada los importa tras ese primer pintado.
+// y se precargan (modulepreload, desde el script inline de Layout.astro) al revelar, porque el script de entrada los importa tras el primer pintado.
 const inlineCss = () => ({
   name: 'inline-css',
   hooks: {
@@ -43,7 +43,9 @@ const inlineCss = () => ({
           for (const css of inlined) if (js.includes(`"${css}"`)) { js = js.split(`"${css}"`).join(`"${sink}"`); changed = true; }
           if (changed) writeFileSync(p, js);
         }
-        for (const d of deps) if (d !== entry[1].slice(1)) extra += `<link rel="modulepreload" href="/${d}">`;
+        // la lista la precarga (modulepreload) el script inline de Layout.astro al revelar la portada, no antes del primer pintado
+        const pre = [...deps].filter((d) => d !== entry[1].slice(1)).map((d) => '/' + d);
+        html = html.replace('/*PRE*/[]', JSON.stringify(pre));
       }
       writeFileSync(file, html.replace('</head>', extra + '</head>'));
     },
