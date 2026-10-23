@@ -56,8 +56,8 @@ if (bento) {
     };
     let raf = 0;
     const later = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(measure); };
-    new ResizeObserver(later).observe(bento);
-    new MutationObserver(later).observe(bento, { attributes: true, attributeFilter: ['class'], subtree: true });
-    measure();
+    new ResizeObserver(later).observe(bento); // dispara al observar: mide en el primer frame, sin layout forzado durante la carga
+    new MutationObserver(rs => { if (rs.some(r => r.target === bento || r.target.parentElement === bento)) later(); }) // solo .fhid / m-collapsed, no cada .vis o hover del interior
+      .observe(bento, { attributes: true, attributeFilter: ['class'], subtree: true });
   }
 }

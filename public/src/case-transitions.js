@@ -43,7 +43,7 @@
     }
     if (d.d === 'nav' && fresh) d = { d: 'nav', ...rectOf(clickEl) };
     if (named) named.style.viewTransitionName = NAME;
-    try { sessionStorage.setItem(KEY, JSON.stringify(d)); } catch {}
+    try { sessionStorage.setItem(KEY, JSON.stringify({ ...d, ts: Date.now() })); } catch {}
     vt.finished.catch(() => {}).then(() => { if (named) named.style.viewTransitionName = ''; });
   });
 
@@ -54,6 +54,7 @@
     if (!vt) return;
     let d = null;
     try { d = JSON.parse(sessionStorage.getItem(KEY) || 'null'); sessionStorage.removeItem(KEY); } catch {}
+    if (d && Date.now() - d.ts > 15000) d = null; // dato viejo: otra navegación sin esta lógica
     if (reduce.matches) return;
     const set = r => ['t', 'r', 'b', 'l', 'br'].forEach(k => root.style.setProperty('--rn-' + k, Math.round(r[k]) + 'px'));
     let named;
