@@ -2978,7 +2978,7 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
    contain-intrinsic-size = altura real medida a 1440 y 390 con todo renderizado menos el padding vertical de .sec (el tamano intrinseco es el del contenido); con "auto" el navegador recuerda la altura real tras renderizar.
    html.cv-off (la pone main.js al pulsar un ancla) renderiza todo antes de hacer scroll para que el destino sea exacto. */
 main > section.sec { content-visibility: auto; contain-intrinsic-size: auto calc(900px - 2 * var(--sec-y)); }
-#sobre-mi { contain-intrinsic-size: auto calc(830px - 2 * var(--sec-y)); }
+#sobre-mi { contain-intrinsic-size: auto calc(1350px - 2 * var(--sec-y)); }
 #stack { contain-intrinsic-size: auto calc(970px - 2 * var(--sec-y)); }
 #proyectos { contain-intrinsic-size: auto calc(6080px - 2 * var(--sec-y)); }
 #laboratorio { contain-intrinsic-size: auto calc(1830px - 2 * var(--sec-y)); }
@@ -2987,7 +2987,7 @@ main > section.sec { content-visibility: auto; contain-intrinsic-size: auto calc
 #estilos { contain-intrinsic-size: auto calc(820px - 2 * var(--sec-y)); }
 #contacto { contain-intrinsic-size: auto calc(1000px - 2 * var(--sec-y)); }
 @media (max-width: 640px) {
-  #sobre-mi { contain-intrinsic-size: auto calc(990px - 2 * var(--sec-y)); }
+  #sobre-mi { contain-intrinsic-size: auto calc(2020px - 2 * var(--sec-y)); }
   #stack { contain-intrinsic-size: auto calc(1390px - 2 * var(--sec-y)); }
   #proyectos { contain-intrinsic-size: auto calc(1140px - 2 * var(--sec-y)); }
   #laboratorio { contain-intrinsic-size: auto calc(1800px - 2 * var(--sec-y)); }

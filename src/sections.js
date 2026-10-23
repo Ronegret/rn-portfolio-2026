@@ -50,32 +50,7 @@ if ('IntersectionObserver' in window) {
   document.querySelectorAll('.sx-mq').forEach(m => { m.classList.add('sx-off'); io.observe(m); });
 }
 
-/* ───── (B1) Sobre mí: palabras que se iluminan con el scroll (texto real, spans en línea) ───── */
-if (motion.matches && CSS.supports('animation-timeline: view()')) {
-  const split = p => {
-    if (p.querySelector('.sx-w')) return;
-    let k = 0;
-    const walk = node => [...node.childNodes].forEach(n => {
-      if (n.nodeType === 1) return walk(n);
-      if (n.nodeType !== 3) return;
-      const f = document.createDocumentFragment();
-      n.data.split(/(\s+)/).forEach(part => {
-        if (!part) return;
-        if (!part.trim()) return f.append(part);
-        const s = document.createElement('span');
-        s.className = 'sx-w'; s.style.setProperty('--k', k++ % 8); s.textContent = part;
-        f.append(s);
-      });
-      n.replaceWith(f);
-    });
-    walk(p);
-    p.classList.add('sx-split');
-  };
-  document.querySelectorAll('#sobre-mi p[data-i^="about_p"]').forEach(p => {
-    split(p);
-    new MutationObserver(() => split(p)).observe(p, { childList: true }); // applyLang reescribe el innerHTML
-  });
-}
+/* (B1) Sobre mí: vive en sx-about.js (importado desde About.astro) */
 
 /* ───── (B2) Laboratorio: spotlight que sigue al puntero (un rAF que se apaga al asentarse) ───── */
 const grid = $('#laboratorio .lab-grid');
