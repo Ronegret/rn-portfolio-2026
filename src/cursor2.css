@@ -85,3 +85,13 @@ body.c2[data-cursor="mira"], body.c2[data-cursor="mira"] * { cursor: crosshair !
 
 /* arrastre: el carrusel no se selecciona y se desactiva el snap mientras dura (lo gestiona JS) */
 .c2-dragging { user-select: none; -webkit-user-select: none; }
+
+/* Esfera translúcida: en los estados con etiqueta se ve lo que hay debajo (antes era un círculo opaco que tapaba botones y texto) */
+#c2:is([data-s="view"],[data-s="web"],[data-s="clip"],[data-s="drag"],[data-s="zoom"]) .c2-r { mix-blend-mode: normal; }
+#c2:is([data-s="view"],[data-s="web"],[data-s="clip"],[data-s="drag"],[data-s="zoom"]) .c2-b {
+  background: color-mix(in srgb, var(--c2) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c2) 70%, transparent), 0 0 24px color-mix(in srgb, var(--c2) 25%, transparent);
+  backdrop-filter: blur(1.5px) saturate(1.2); -webkit-backdrop-filter: blur(1.5px) saturate(1.2);
+}
+#c2:is([data-s="view"],[data-s="web"],[data-s="clip"],[data-s="drag"],[data-s="zoom"]) .c2-l { color: var(--t1); text-shadow: 0 1px 6px color-mix(in srgb, var(--bg) 80%, transparent); }
+#c2[data-s="mag"] .c2-b { background: color-mix(in srgb, var(--c2) 12%, transparent); }

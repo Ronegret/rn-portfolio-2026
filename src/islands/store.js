@@ -11,8 +11,8 @@ const watch = (attr) => (cb) => {
 const subTheme = watch('data-theme');
 const subLang = watch('lang');
 
-// El servidor siempre renderiza 'saas'/'es' (HTML estatico); el cliente corrige tras hidratar.
-export const useTheme = () => useSyncExternalStore(subTheme, () => document.documentElement.dataset.theme || 'saas', () => 'saas');
+// El servidor siempre renderiza 'cyber' (tema principal)/'es' (HTML estatico); el cliente corrige tras hidratar.
+export const useTheme = () => useSyncExternalStore(subTheme, () => document.documentElement.dataset.theme || 'cyber', () => 'cyber');
 export const useLang = () => useSyncExternalStore(subLang, () => document.documentElement.lang || 'es', () => 'es');
 
 export function setTheme(t) {

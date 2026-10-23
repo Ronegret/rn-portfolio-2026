@@ -498,7 +498,7 @@ try {
       return;
     }
     t=ts*.001;
-    const th=document.documentElement.getAttribute('data-theme')||'saas';
+    const th=document.documentElement.getAttribute('data-theme')||'cyber';
     cv.style.opacity=OP[th]||.82;
     ctx.clearRect(0,0,W,H);
     if(th==='saas') drawSaas(t,mx,my);
