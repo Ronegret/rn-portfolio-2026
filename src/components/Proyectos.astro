@@ -1,5 +1,6 @@
 ---
 import CardImg from './CardImg.astro';
+import ProjectFilter from '../islands/ProjectFilter.jsx';
 import dbHero from '../assets/cards/db-hero.webp';
 import roddFondo from '../assets/cards/roddfondo.webp';
 import eventsLogin from '../assets/cards/events-login.webp';
@@ -12,13 +13,7 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
     <p class="eyebrow rv" data-i="proj_ey">Casos de estudio</p>
     <h2 class="sh rv" data-i="proj_h">Proceso, decisiones <em>y aprendizajes.</em></h2>
     <p class="sb rv" data-i="proj_sub">Proyectos propios, prototipos y productos lanzados donde muestro research, arquitectura, UI, automatización, validación y criterio de negocio.</p>
-    <div class="fbar rv">
-      <button class="fb on" data-f="all" data-i="f_all">Todos</button>
-      <button class="fb" data-f="ux" data-i="f_ux">UX / UI</button>
-      <button class="fb" data-f="ia" data-i="f_ia">IA & Auto.</button>
-      <button class="fb" data-f="ecom" data-i="f_ecom">E-commerce</button>
-      <button class="fb" data-f="saas" data-i="f_saas">SaaS</button>
-    </div>
+    <ProjectFilter client:idle>
     <div class="bento">
       <div class="bfeat rv db-card" data-cats="ux ia">
         <a href="https://db.rodrigonegrete.es/" target="_blank" rel="noopener" class="bc trigger-flash">
@@ -236,5 +231,6 @@ import dedicaloPlay from '../assets/cards/dedicalo-play-hero.png';
         </a>
       </div>
     </div>
+    </ProjectFilter>
   </div>
 </section>

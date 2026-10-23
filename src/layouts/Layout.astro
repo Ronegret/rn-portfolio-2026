@@ -4,6 +4,7 @@ import Chrome from '../components/Chrome.astro';
 import Dock from '../components/Dock.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import { AVATARS } from '../islands/themes.js';
 ---
 <!DOCTYPE html>
 <html lang="es" data-theme="saas">
@@ -84,6 +85,8 @@ import Footer from '../components/Footer.astro';
 <script>
   import '../main.js';
 </script>
+<!-- Tema persistido: se aplica antes del primer pintado (el body ya esta parseado); las islas hidratan despues sin salto -->
+<script is:inline define:vars={{ AVATARS }}>try{var t=sessionStorage.getItem('rn-theme');if(t&&AVATARS[t]){document.documentElement.setAttribute('data-theme',t);var a=document.getElementById('av');if(a)a.src=AVATARS[t];document.querySelectorAll('.dk,.tc').forEach(function(b){var on=(b.dataset.t||b.dataset.tc)===t;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}}catch(e){}</script>
 <script is:inline>addEventListener("load",()=>setTimeout(()=>document.querySelectorAll("img[data-src]").forEach(i=>{if(i.dataset.srcset)i.srcset=i.dataset.srcset;i.src=i.dataset.src}),300))</script>
 </body>
 </html>
