@@ -1,17 +1,27 @@
 ---
-// Clip en bucle dentro de un marco de laptop (CSS puro). El poster WebP es un <img> nativo diferido
+// Clip en bucle dentro de un marco de laptop o movil (CSS puro). El poster WebP es un <img> nativo diferido
 // (alt, width/height); el <video> no pide nada hasta que preview.js lo ve en pantalla.
+// live: URL del sitio real que preview.js monta en un iframe dentro del movil (solo en pantalla, tras idle); el clip queda de respaldo.
 import '../previews.css';
-interface Props { video: string; poster: string; alt: string; width?: number; height?: number; device?: 'laptop' | 'phone'; }
-const { video, poster, alt, device = 'laptop' } = Astro.props;
+interface Props { video: string; poster: string; alt: string; width?: number; height?: number; device?: 'laptop' | 'phone'; live?: string; liveTitle?: string; }
+const { video, poster, alt, device = 'laptop', live, liveTitle } = Astro.props;
 const phone = device === 'phone';
 const { width = phone ? 390 : 960, height = phone ? 844 : 600 } = Astro.props;
 ---
-<div class:list={['pv', { 'pv--phone': phone }]}>
-  <div class="pv-screen">
-    <img src={poster} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
-    <video muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true" data-src={video} width={width} height={height}></video>
+<div class:list={['pv', { 'pv--phone': phone, 'pv--live': live }]} data-live={live} data-live-title={liveTitle}>
+  <div class="pv-dev">
+    <div class="pv-screen">
+      <img src={poster} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
+      <video muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true" data-src={live ? undefined : video} data-clip={live ? video : undefined} width={width} height={height}></video>
+    </div>
   </div>
+  {live && (
+    <div class="pv-ctl">
+      <button type="button" class="pv-btn pv-play" aria-label="Toca para jugar con la web real dentro del móvil">Toca para jugar</button>
+      <button type="button" class="pv-btn pv-load" aria-label="Ver animación: carga la web real dentro del móvil">Ver animación</button>
+      <button type="button" class="pv-btn pv-exit" aria-label="Salir del modo juego (Esc)">Salir <kbd aria-hidden="true">Esc</kbd></button>
+    </div>
+  )}
   {!phone && <div class="pv-base" aria-hidden="true"></div>}
 </div>
 <script>import '../preview.js';</script>

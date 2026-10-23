@@ -68,7 +68,8 @@ function resolve(t) {
   if (dr && dr.scrollWidth > dr.clientWidth + 2) return ['drag', dr];
   const card = t.closest(CARD);
   if (card) {
-    if (t.closest('.pv-host') && card.querySelector('video')) return ['clip', card];
+    if (t.closest('.pv-btn')) return ['mag', t.closest('.pv-btn')]; // controles del movil vivo (preview.js)
+    if (t.closest('.pv-host') && card.querySelector('video[data-src]')) return ['clip', card]; // el movil vivo (data-clip) no es un clip: lleva al caso
     return [card.target === '_blank' ? 'web' : 'view', card];
   }
   if (t.closest(BTN)) return ['mag', t.closest(BTN)];

@@ -58,7 +58,61 @@
   transform: translateX(-50%); border-radius: 99px; background: #05060a; box-shadow: 0 0 0 1px rgba(255,255,255,.06);
 }
 .pv--phone .pv-screen::after { z-index: 3; border-radius: 26px; background: linear-gradient(112deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,.05) 26%, transparent 42%); }
-.pv--phone::before, .pv--phone::after { content: ""; position: absolute; width: 3px; background: #3b3f49; }
-.pv--phone::before { left: -5px; top: 17%; height: 22px; border-radius: 2px 0 0 2px; box-shadow: 0 34px 0 #3b3f49; }
-.pv--phone::after { right: -5px; top: 27%; height: 46px; border-radius: 0 2px 2px 0; }
+.pv-dev { position: relative; }
+.pv--phone .pv-dev::before, .pv--phone .pv-dev::after { content: ""; position: absolute; width: 3px; background: #3b3f49; }
+.pv--phone .pv-dev::before { left: -5px; top: 17%; height: 22px; border-radius: 2px 0 0 2px; box-shadow: 0 34px 0 #3b3f49; }
+.pv--phone .pv-dev::after { right: -5px; top: 27%; height: 46px; border-radius: 0 2px 2px 0; }
 @media (max-width: 860px) { .pv--phone { width: min(100%, 200px); } }
+
+/* Capsule Corp (pv--live): la web real en un iframe 390x844 escalado al cristal (--s lo escribe preview.js), con el poster nitido
+   debajo hasta que el iframe carga y el clip como respaldo. Inclinacion con el cursor (--rx/--ry) en .pv-dev, que no pisa la
+   animacion de scroll de .pv; aura amarilla/azul de la saga detras. */
+.pv--live { width: min(100%, 236px); isolation: isolate; }
+.pv--live .pv-screen { aspect-ratio: 390 / 844; border-width: 7px; border-radius: 38px; background: #120a24; }
+.pv--live .pv-screen::before { top: 9px; width: 31%; height: 15px; }
+.pv--live .pv-screen::after { border-radius: 31px; translate: calc(var(--ry, 0) * 1.6%) 0; transition: translate .4s ease; }
+.pv--live .pv-dev {
+  transform: perspective(900px) rotateX(calc(var(--rx, 0) * 1deg)) rotateY(calc(var(--ry, 0) * 1deg));
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.pv--live.is-tilting .pv-dev { transition-duration: .12s; }
+.pv--live::before {
+  content: ""; position: absolute; z-index: -1; inset: 6% -38% 10%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(255,207,46,.7), rgba(255,207,46,.24) 45%, transparent 72%),
+              radial-gradient(closest-side at 50% 70%, rgba(56,132,255,.6), transparent 70%);
+  filter: blur(18px); opacity: .75; transition: opacity .6s ease;
+}
+.pv--live.is-live::before { opacity: 1; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes pv-aura { 50% { scale: 1.08; opacity: .95; } }
+  .pv--live::before { animation: pv-aura 4.5s ease-in-out infinite; }
+}
+.pv-screen iframe {
+  position: absolute; top: 0; left: 0; width: 390px; height: 844px; max-width: none; max-height: none; border: 0; z-index: 1;
+  transform: scale(var(--s, .57)); transform-origin: 0 0; background: #120a24;
+  opacity: 0; transition: opacity .6s ease; pointer-events: none;
+}
+.pv.is-live .pv-screen iframe { opacity: 1; }
+.pv.is-on .pv-screen iframe { pointer-events: auto; }
+.pv.is-on .pv-screen { box-shadow: 0 0 0 2px #ffcf2e, 0 0 0 5px rgba(255,207,46,.25), 0 30px 50px -20px rgba(0,0,0,.7); }
+.pv.is-on .pv-screen::after { opacity: 0; }
+/* Controles: fuera del cristal, debajo del movil. Solo se muestra el que toca segun el estado. */
+.pv-ctl { position: relative; z-index: 4; display: flex; justify-content: center; margin: 14px -80px 0; min-height: 36px; }
+.pv-btn {
+  display: none; align-items: center; gap: 8px; min-height: 36px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+  border: 1.5px solid rgba(255,207,46,.6); background: rgba(7,5,15,.82); color: #ffcf2e;
+  font-family: inherit; font-size: 11px; font-weight: 800; line-height: 1; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+.pv-btn kbd { font: inherit; font-size: 9px; padding: 3px 5px; border-radius: 4px; border: 1px solid currentColor; opacity: .7; }
+@media (hover:hover) and (pointer:fine) { .pv-btn:hover { background: #ffcf2e; color: #07050f; } }
+.pv-btn:focus-visible { outline: 3px solid #ffcf2e; outline-offset: 3px; }
+.pv.is-live:not(.is-on) .pv-play, .pv.is-still:not(.is-live):not(.is-loading) .pv-load, .pv.is-on .pv-exit { display: inline-flex; }
+.pv.is-on .pv-exit { background: #ffcf2e; color: #07050f; }
+@media (max-width: 860px) { .pv--live { width: min(100%, 210px); } }
+/* Baraja movil: el movil vivo necesita alto; su caja deja el 4/3 y crece hasta que caben cristal y boton sin recorte */
+#proyectos.tj-deck-on .db-card .bc-img.pv-host { aspect-ratio: auto; padding: 62px 12px 14px; }
+#proyectos.tj-deck-on .bc-img .pv--live { width: min(100%, 150px); }
+#proyectos.tj-deck-on .bc-img .pv-ctl { margin-top: 10px; }
+@media (prefers-reduced-motion: reduce) { .pv--live .pv-dev { transform: none; } }
+.pv.is-on .pv-dev { transform: none; } /* jugando, el cristal quieto: los toques caen donde se ve */
