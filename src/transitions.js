@@ -50,6 +50,7 @@ if (bento) {
       feats.slice(0, -1).forEach((f, i) => {
         f.dataset.stk = '';
         f.style.setProperty('--k', i);
+        f.style.setProperty('--bch', f.firstElementChild.offsetHeight + 'px'); // alto de la tarjeta: lo usa el enlace secundario (.bc-ext) para pegarse con ella
         f.style.setProperty('--stk-tl', '--stk' + (i + 1));
         f.style.setProperty('--stk', Math.max(0, end - (f.offsetTop + f.firstElementChild.offsetHeight)) + 'px');
       });

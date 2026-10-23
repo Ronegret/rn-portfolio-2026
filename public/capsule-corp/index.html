@@ -1,0 +1,802 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><style>@view-transition{navigation:auto}</style>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Capsule Corp — Un CV que se juega en vez de leerse · Caso de estudio · Rodrigo Negrete</title>
+<meta name="description" content="Caso de estudio de Capsule Corp, el portfolio gamificado de Rodrigo Negrete: seis transformaciones Saiyan ligadas a etapas reales de su carrera, siete esferas escondidas y un Modo Reclutador. Research, decisiones UX/UI, motion, accesibilidad, rendimiento y los límites que conozco.">
+<meta name="theme-color" content="#07050f">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://rodrigonegrete.es/capsule-corp/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2307050f'/%3E%3Ccircle cx='32' cy='32' r='17' fill='%23ffb02e'/%3E%3Cpath d='M32 22l3 7 7 .6-5.4 4.6 1.7 7L32 37.6 25.7 41.2l1.7-7L22 29.600l7-.6z' fill='%23c81e3a'/%3E%3C/svg%3E">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Rodrigo Negrete">
+<meta property="og:title" content="Capsule Corp — Un CV que se juega en vez de leerse · Rodrigo Negrete">
+<meta property="og:description" content="Seis transformaciones Saiyan ligadas a etapas reales de una carrera, siete esferas escondidas y un Modo Reclutador: decisiones de diseño, motion, accesibilidad y los límites del proyecto.">
+<meta property="og:image" content="https://rodrigonegrete.es/assets/capsule-corp/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Titular Tu evolución profesional es un power-up Saiyan junto a las seis formas del personaje, de la forma base a Super Saiyan Fase 4">
+<meta property="og:url" content="https://rodrigonegrete.es/capsule-corp/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Capsule Corp — Caso de estudio">
+<meta name="twitter:description" content="Un CV que se juega en vez de leerse: decisiones, motion, accesibilidad y límites conocidos.">
+<meta name="twitter:image" content="https://rodrigonegrete.es/assets/capsule-corp/og.jpg">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Capsule Corp — Un CV que se juega en vez de leerse: caso de estudio",
+  "description":"Caso de estudio de un portfolio gamificado: concepto de seis transformaciones ligadas a la carrera, investigación, decisiones UX/UI, motion, accesibilidad, rendimiento y limitaciones conocidas.",
+  "inLanguage":"es",
+  "image":"https://rodrigonegrete.es/assets/capsule-corp/og.jpg",
+  "url":"https://rodrigonegrete.es/capsule-corp/",
+  "datePublished":"2026-10-23",
+  "author":{"@type":"Person","name":"Rodrigo Negrete","url":"https://rodrigonegrete.es/"},
+  "about":{"@type":"WebSite","name":"Rodrigo Negrete · Capsule Corp","url":"https://db.rodrigonegrete.es/"}
+}
+</script>
+
+<link rel="preload" href="/assets/capsule-corp/luckiest-guy.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
+
+<style>
+@font-face{font-family:"Luckiest Guy";font-style:normal;font-weight:400;font-display:swap;src:url(/assets/capsule-corp/luckiest-guy.woff2) format("woff2")}
+@font-face{font-family:"Luckiest Guy Fallback";src:local("Impact"),local("Arial Black");size-adjust:92%}
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107%;ascent-override:90%}
+:root{
+  color-scheme:dark;
+  --night:#07050f; --night-2:#0e0a1d; --night-3:#171230; --seam:#2f2852;
+  --paper:#f4f2fb; --paper-dim:#c9c5dc; --paper-mute:#a8a4c2;
+  --gold:#ffcf2e; --on-gold:#07050f; --red:#e0383b; --red-lift:#ff8f92; --radar:#49f08a; --blue:#4cc3ff; --vio:#c4b2ff;
+  --aura:#39d8c6;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:"Inter","Inter Fallback",system-ui,sans-serif;background:var(--night);color:var(--paper);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,video{max-width:100%;height:auto;display:block}
+a{color:var(--gold)}
+code{font-family:var(--mono);font-size:.86em;background:var(--night);border:1px solid var(--seam);border-radius:6px;padding:.08em .4em;color:var(--paper);overflow-wrap:anywhere}
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--paper);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--paper);color:var(--night);padding:.6rem 1rem;border-radius:10px;z-index:200;font-weight:700}
+.skip:focus{left:8px}
+.disp{font-family:"Luckiest Guy","Luckiest Guy Fallback",Impact,sans-serif;font-weight:400;line-height:1.04;letter-spacing:.012em;text-shadow:3px 3px 0 #a3172f}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* barra superior */
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left));background:rgba(7,5,15,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--seam)}
+.bar a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none}
+.back{color:var(--paper);border:1px solid var(--seam)}
+.back:hover{background:var(--night-3)}
+.live{background:var(--gold);color:var(--on-gold)}
+.live span[aria-hidden]{margin-left:.35em}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .18s var(--ease-out),background .2s}
+.btn:active{transform:scale(.97)}
+.btn-gold{background:var(--gold);color:var(--on-gold);box-shadow:inset 0 1px 0 rgba(255,255,255,.4)}
+.btn-gold:hover{background:#ffdf6b}
+.btn-ghost{background:var(--night-3);color:var(--paper);border:1px solid var(--seam)}
+.btn-ghost:hover{background:var(--seam)}
+
+/* hero */
+.hero{position:relative;padding:112px 20px 72px;background:radial-gradient(90% 70% at 90% -10%,#3a1d6e 0%,transparent 60%),radial-gradient(70% 60% at 0% 100%,#4a2208 0%,transparent 60%),var(--night);border-bottom:1px solid var(--seam)}
+.wrap{max-width:1100px;margin:0 auto}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero-grid>*{min-width:0}
+.eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.hero h1{font-size:clamp(2.4rem,6vw,4.6rem);margin-bottom:20px;overflow-wrap:break-word}
+.hero h1 em,.s h2 em{font-style:normal;color:var(--gold)}
+.lead{font-size:1.18rem;color:var(--paper-dim);max-width:34em;margin-bottom:28px}
+.lead strong{color:var(--paper)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
+.ficha{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;padding-top:24px;border-top:1px solid var(--seam)}
+.ficha dt{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute)}
+.ficha dd{font-weight:600;font-size:1rem}
+.phone{position:relative;width:100%;max-width:300px;margin:0 auto}
+.phone-f{position:relative;border-radius:30px;overflow:hidden;border:2px solid var(--seam);box-shadow:0 30px 60px -24px rgba(0,0,0,.9);aspect-ratio:9/16;background:var(--night-2)}
+.phone-f img,.phone-f video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.phone-f video{opacity:0;transition:opacity .4s}
+.phone-f video.on{opacity:1}
+.phone .tgl{margin:14px auto 0;display:flex;width:100%;justify-content:center;align-items:center}
+.cap{font-size:.86rem;color:var(--paper-mute);margin-top:10px;line-height:1.5}
+
+/* secciones */
+section.s{padding:96px 20px;border-bottom:1px solid var(--seam)}
+section.s:nth-of-type(even){background:var(--night-2)}
+.s h2{font-size:clamp(1.9rem,4.4vw,3.1rem);margin-bottom:22px;max-width:19em}
+.s h3{font-size:1.3rem;line-height:1.2;font-weight:700;margin:0 0 10px;letter-spacing:-.01em}
+.s p{max-width:46em;margin-bottom:16px;color:var(--paper-dim)}
+.s p strong,.s li strong{color:var(--paper)}
+.intro{font-size:1.15rem;color:var(--paper)!important}
+.grid{display:grid;gap:18px;margin:30px 0}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid>*{min-width:0}
+.card{background:var(--night-3);border:1px solid var(--seam);border-radius:22px;padding:26px}
+.s:nth-of-type(even) .card{background:var(--night)}
+.card p:last-child{margin-bottom:0}
+.card p{font-size:.98rem}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 11px;border-radius:999px;margin-bottom:12px;border:1px solid var(--seam);color:var(--paper);white-space:nowrap}
+.tag-hip{background:rgba(255,207,46,.1);color:#ffd96b;border-color:rgba(255,217,107,.45)}
+.tag-doc{background:rgba(73,240,138,.09);color:#6af4a0;border-color:rgba(106,244,160,.4)}
+.tag-ext{background:rgba(76,195,255,.1);color:#8fd8ff;border-color:rgba(143,216,255,.45)}
+.tag-me{background:rgba(196,178,255,.1);color:var(--vio);border-color:rgba(196,178,255,.45)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:.9rem;color:var(--paper-dim);margin:22px 0}
+.legend .tag{margin:0}
+.note{border:1px dashed var(--seam);border-radius:18px;padding:18px 22px;margin:28px 0;color:var(--paper-dim);font-size:.96rem;max-width:52em}
+.note b{color:var(--paper)}
+.src{display:block;margin-top:12px;font-size:.82rem;color:var(--paper-mute);line-height:1.45}
+ul.l{margin:0 0 18px 1.2rem;max-width:46em;color:var(--paper-dim)}
+ul.l li{margin-bottom:8px}
+.num{font-family:"Luckiest Guy","Luckiest Guy Fallback",Impact,sans-serif;font-size:3rem;line-height:1;color:var(--gold)}
+
+/* decisiones */
+.dec{border:1px solid var(--seam);border-radius:22px;overflow:hidden;margin:18px 0;background:var(--night-3)}
+.s:nth-of-type(even) .dec{background:var(--night)}
+.dec header{padding:22px 26px 6px}
+.dec header span{font-weight:700;font-size:.78rem;letter-spacing:.16em;color:var(--gold)}
+.dec header h3{margin:6px 0 0}
+.dec-b{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.dec-b div{padding:14px 26px 24px}
+.dec-b div+div{border-left:1px solid var(--seam)}
+.dec-b h4{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);margin-bottom:6px}
+.dec-b p{margin:0 0 8px;font-size:.95rem}
+.dec-b p:last-child{margin-bottom:0}
+.dec-tags{padding:0 26px 18px;display:flex;flex-wrap:wrap;gap:6px}
+.dec-tags .tag{margin:0}
+
+/* tablas, árbol */
+.tree{font-family:var(--mono);font-size:.86rem;line-height:1.8;background:var(--night);border:1px solid var(--seam);border-radius:18px;padding:20px 24px;color:var(--paper-dim);overflow-x:auto;margin:24px 0;white-space:pre;max-width:100%}
+.tree b{color:var(--paper);font-weight:600}
+.tbl{width:100%;border-collapse:collapse;margin:22px 0;font-size:.94rem}
+.tbl caption{text-align:left;font-size:.86rem;color:var(--paper-mute);padding-bottom:8px}
+.tbl th{text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-mute);padding:10px 12px;border-bottom:1px solid var(--seam)}
+.tbl td{padding:12px;border-bottom:1px solid var(--seam);vertical-align:top;color:var(--paper-dim)}
+.tbl td:first-child{color:var(--paper);font-weight:600}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll-x .tbl{min-width:620px}
+
+/* sistema visual */
+.sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:26px 0}
+.sw div{border-radius:16px;padding:14px 12px;font-size:.78rem;font-weight:700;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end;line-height:1.35;border:1px solid var(--seam)}
+.sw small{display:block;font-weight:500;opacity:.92;overflow-wrap:anywhere}
+.sw .dk{color:#07050f}.sw .lt{color:#fff}
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:26px 0}
+.types>*{min-width:0}
+.types .card b{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);margin-bottom:10px}
+.t-disp{font-size:2rem}
+.t-body{font-size:1.05rem;color:var(--paper)}
+.t-mono{font-family:var(--mono);font-size:.95rem;color:var(--paper)}
+
+/* capturas */
+.shots{display:grid;gap:22px;margin:30px 0;align-items:start}
+.s2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.shots>*{min-width:0}
+.shots figure img,figure.fig img{border-radius:18px;border:1px solid var(--seam)}
+
+/* demos */
+.demo{border:1px solid var(--seam);border-radius:22px;background:var(--night);padding:20px;margin:24px 0 8px}
+.s:nth-of-type(even) .demo{background:var(--night-3)}
+.demo-h{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px}
+.demo-h b{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.tgl,.dbtn{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--seam);background:var(--night-2);color:var(--paper);font:600 .9rem "Inter","Inter Fallback",system-ui,sans-serif;cursor:pointer}
+.tgl:hover,.dbtn:hover{border-color:var(--gold)}
+.tgl[aria-pressed="true"],.dbtn[aria-pressed="true"],.dbtn.hot{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.rm-note{display:none;font-size:.88rem;color:#ffd96b;margin:0 0 12px!important}
+@media (prefers-reduced-motion:reduce){.rm-note{display:block}}
+.dcap{font-size:.88rem;color:var(--paper-mute);margin:12px 0 0!important}
+/* demo 1: selector */
+.evo{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:26px;align-items:center}
+.evo-stage{position:relative;aspect-ratio:3/4;border-radius:20px;border:2px solid var(--aura);background:radial-gradient(circle at 50% 70%,color-mix(in srgb,var(--aura) 38%,transparent),transparent 70%),var(--night-2);display:grid;place-items:end center;transition:border-color .4s,background .4s;overflow:hidden}
+.evo-stage img{height:94%;width:auto;max-width:100%;object-fit:contain}
+.evo-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.evo-tabs button{min-height:44px;min-width:44px;padding:0 14px;border-radius:999px;border:2px solid var(--seam);background:var(--night-2);color:var(--paper);font:700 .88rem "Inter","Inter Fallback",sans-serif;cursor:pointer}
+.evo-tabs button[aria-selected="true"]{background:var(--aura);color:#07050f;border-color:var(--aura)}
+.evo-info h3{font-size:1.5rem;line-height:1.15;margin-bottom:6px;font-family:"Luckiest Guy","Luckiest Guy Fallback",Impact,sans-serif;font-weight:400;letter-spacing:.01em}
+.evo-info p{margin:0 0 10px!important}
+.evo-lv{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.8rem;color:var(--paper-mute)}
+.evo-lv i{display:block;flex:1;height:10px;border-radius:99px;background:var(--seam);overflow:hidden}
+.evo-lv i b{display:block;height:100%;width:0;background:var(--aura);transition:width .5s var(--ease-out),background .4s}
+/* demo 2: scrub */
+.scr{display:grid;gap:14px}
+.scr-v{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:2px solid var(--aura);background:#000;transition:border-color .3s}
+.scr-v img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
+.scr-v img.on{opacity:1}
+.scr-c{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.scr-c input[type=range]{flex:1 1 240px;min-height:44px;accent-color:var(--gold)}
+.scr-o{font-family:var(--mono);font-size:.82rem;color:var(--paper-dim)}
+/* demo 3: esferas */
+.dbs-map{position:relative;height:clamp(240px,34vw,340px);border-radius:18px;border:1px solid var(--seam);background:radial-gradient(60% 80% at 80% 0%,rgba(150,60,255,.28),transparent 70%),radial-gradient(60% 80% at 10% 100%,rgba(255,120,0,.18),transparent 70%),#0a0716;overflow:hidden}
+.dbs-map p{position:absolute;left:14px;top:10px;font-size:.78rem!important;margin:0!important;color:var(--paper-mute)!important}
+.dbs-ball{position:absolute;width:var(--bs,48px);height:var(--bs,48px);padding:0;border:0;background:none;cursor:pointer;border-radius:50%;transition:transform .5s var(--ease-out),opacity .4s}
+.dbs-ball img{width:100%;height:100%}
+.dbs-ball:hover{transform:scale(1.15)}
+.demo[data-on="1"] .dbs-ball{animation:bob 3.6s ease-in-out infinite}
+@keyframes bob{50%{translate:0 -8px}}
+.dbs-ball[hidden]{display:none}
+.dbs-hud{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:14px 0}
+.dbs-slots{display:flex;gap:6px;padding:7px 12px;border:1px solid var(--seam);border-radius:999px;background:var(--night-2)}
+.dbs-slots span{width:24px;height:24px;border-radius:50%;border:1px dashed var(--seam);display:grid;place-items:center}
+.dbs-slots span.f{border-style:solid;border-color:transparent}
+.dbs-slots img{width:24px;height:24px}
+.dbs-cnt{font-family:var(--mono);font-weight:700;color:var(--radar)}
+.dbs-msg{min-height:1.6em;font-size:.95rem;color:var(--paper)}
+/* vídeo */
+.vid{max-width:360px;margin:26px auto}
+.vid .phone-f video{opacity:1}
+
+footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-size:.92rem}
+.cta{text-align:center}
+.cta h2,.cta p{margin-left:auto;margin-right:auto}
+.cta .actions{justify-content:center}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}.btn{transition:none}.phone-f video{transition:none}.dbs-ball,.evo-stage,.evo-lv i b{transition:none}}
+
+@media(max-width:860px){
+  .hero{padding:96px 16px 56px}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  section.s{padding:64px 16px}
+  .g2,.g3,.s2,.types{grid-template-columns:minmax(0,1fr)}
+  .dec-b{grid-template-columns:1fr}
+  .dec-b div+div{border-left:0;border-top:1px solid var(--seam)}
+  .sw{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bar .back span.long{display:none}
+  .evo{grid-template-columns:1fr}
+  .dbs-map{--bs:40px}
+  .evo-stage{max-width:220px;margin:0 auto}
+  .demo{padding:14px}
+}
+</style>
+<link rel="stylesheet" href="/src/case-fold.css">
+<link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<nav class="bar" aria-label="Caso de estudio">
+  <a class="back" href="/#proyectos">&larr;&nbsp;<span class="long">Volver al&nbsp;</span>portfolio</a>
+  <a class="live" href="https://db.rodrigonegrete.es" target="_blank" rel="noopener">Abrir la web <span aria-hidden="true">&#8599;</span><span class="sr"> (se abre en una pestaña nueva)</span></a>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Caso de estudio · Proyecto principal · 2026</p>
+      <h1 class="disp">Tu evolución profesional es <em>un power-up Saiyan.</em></h1>
+      <p class="lead">Capsule Corp es mi CV convertido en juego: <strong>seis transformaciones</strong> ligadas a etapas reales de mi carrera, <strong>siete esferas del dragón</strong> escondidas y un <strong>Modo Reclutador</strong> para quien solo tiene unos segundos. Este caso cuenta qué decidí, por qué, qué me costó y qué haría distinto.</p>
+      <div class="actions">
+        <a class="btn btn-gold" href="https://db.rodrigonegrete.es" target="_blank" rel="noopener">Abrir la web &#8599;<span class="sr"> (se abre en una pestaña nueva)</span></a>
+        <a class="btn btn-ghost" href="#decisiones">Ver las decisiones de diseño</a>
+      </div>
+      <dl class="ficha">
+        <div><dt>Mi rol</dt><dd>Concepto, UX/UI, dirección de arte, desarrollo y vídeo</dd></div>
+        <div><dt>Plataforma</dt><dd>Web de una página larga, escritorio y móvil</dd></div>
+        <div><dt>Stack</dt><dd>Vite · React · TypeScript · Framer Motion · GSAP · Lenis · Howler · Remotion</dd></div>
+        <div><dt>Estado</dt><dd>Publicada · construida del 21 al 23 de octubre de 2026 (25 commits) · sin analítica</dd></div>
+      </dl>
+    </div>
+    <div class="phone">
+      <div class="phone-f">
+        <img src="/assets/capsule-corp/teaser-poster.webp" width="540" height="960" alt="Fotograma del teaser de Capsule Corp: Rodrigo con chaleco azul de Capsule Corp y el rótulo AI Product Designer, Barcelona, Remoto UE, Full-time y freelance" fetchpriority="high" decoding="async">
+        <video id="hero-vid" muted loop playsinline preload="none" poster="/assets/capsule-corp/teaser-poster.webp" width="540" height="960" aria-label="Teaser de 14 segundos de Capsule Corp, sin sonido"><source src="/assets/capsule-corp/teaser.webm" type="video/webm"></video>
+      </div>
+      <button class="tgl" type="button" id="hero-tgl" aria-pressed="false">Reproducir teaser</button>
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+<div class="wrap" style="padding:56px 20px 0">
+  <p class="eyebrow">Las pantallas, de un vistazo</p>
+  <div data-carousel aria-label="Capturas reales de Capsule Corp: haz clic en una para ampliarla">
+    <figure><img src="/assets/capsule-corp/web-hero.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Portada en escritorio: titular Diseño flujos, interfaces y automatizaciones sobre un cielo espacial, el personaje con la pregunta Pulsa sobre mí y el contador de esferas 0 de 7"><figcaption>Portada en escritorio</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/web-poderes-ssj.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Sección Poderes en la fase 2, Super Saiyan: título Diseño UX/UI, línea de cinco fases y escena con aura dorada"><figcaption>Poderes: fase 2, Super Saiyan</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/web-poderes-blue.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Sección Poderes en la fase 3, Super Saiyan Blue: Producto digital y Frontend, herramientas React, Tailwind, Framer Motion, Three.js y Vercel, y nivel de poder del 80 por ciento"><figcaption>Poderes: fase 3, Blue</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/web-poderes-ssj4.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Sección Poderes en la última fase, Super Saiyan 4, con el nivel de poder al máximo"><figcaption>Poderes: fase 5, el nivel actual</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/web-sagas.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Sección Sagas con la cabecera Mis batallas encapsuladas, filtros por categoría y una fila de cápsulas Hoi-Poi numeradas con los proyectos"><figcaption>Sagas: los proyectos, en cápsulas</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/web-invocar-cerrado.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Sección Invocar bloqueada: siete esferas apagadas, el texto El cielo aún está en calma y el botón Soy reclutador: reunirlas ahora"><figcaption>Invocar, con el contacto bloqueado</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/web-invocar-abierto.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Sección Invocar desbloqueada: Shen Long sobre un cielo de tormenta, el contador 7 de 7 y el titular Has reunido las 7 esferas"><figcaption>Invocar, con las 7 esferas reunidas</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/movil-hero.webp" width="390" height="844" loading="lazy" decoding="async" alt="Portada en móvil: personaje grande con aura de Super Saiyan Fase 3, etiqueta Disponible ahora y barra superior con contador de esferas"><figcaption>Portada en móvil</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/movil-poderes-blue.webp" width="390" height="844" loading="lazy" decoding="async" alt="Poderes en móvil: selector de cinco fases, vídeo de la forma Ultra Instinto, texto de la etapa, herramientas y nivel de poder, con el dock Contactar, WhatsApp y CV abajo"><figcaption>Poderes en móvil, con el dock de contacto</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/movil-sagas.webp" width="390" height="844" loading="lazy" decoding="async" alt="Sagas en móvil: cabecera, filtros y cápsulas de proyectos en una columna"><figcaption>Sagas en móvil</figcaption></figure>
+    <figure><img src="/assets/capsule-corp/movil-invocar-abierto.webp" width="390" height="844" loading="lazy" decoding="async" alt="Invocar desbloqueado en móvil: Shen Long y el titular Has reunido las 7 esferas"><figcaption>Invocar en móvil</figcaption></figure>
+  </div>
+</div>
+
+<section class="s" id="contexto">
+  <div class="wrap rv">
+    <p class="eyebrow">01 · Contexto y problema</p>
+    <h2 class="disp">Un CV estático cuenta <em>lo que fui, no cómo cambié.</em></h2>
+    <p class="intro">Mi perfil es una progresión: más de 17 años en B2B enterprise, luego UX/UI, producto digital, IA generativa y agentes. Un PDF la aplana en una lista. La pregunta de partida fue: ¿y si el CV se jugara en vez de leerse?</p>
+    <div class="legend" aria-label="Leyenda de etiquetas">
+      <span class="tag tag-doc">Del repo</span><span class="tag tag-ext">Referencia externa</span><span class="tag tag-me">Lectura mía</span><span class="tag tag-hip">Hipótesis</span>
+    </div>
+    <div class="grid g3">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>La progresión es el activo</h3><p>El repositorio la declara así: cada forma es una etapa real (fundamentos B2B y web, UX/UI en Neoland, producto y frontend, máster de IA generativa en UDIA, agentes en EBIS, AI Product Designer). El diseño nace de ahí, no de un tema Dragon Ball puesto encima.</p></article>
+      <article class="card"><span class="tag tag-ext">Referencia externa</span><h3>El reclutador lee en segundos</h3><p>El estudio de eye-tracking de The Ladders (2018) cifró en 7,4 s el tiempo medio de la primera criba de un CV (6 s en 2012). Lo uso como orden de magnitud. Mide una criba rápida, no una lectura completa, y los CV con maquetación simple lo hicieron mejor: es la tensión que este proyecto tiene que resolver.</p><span class="src">Fuente: The Ladders, «Eye-Tracking Study», 2018 (resumen en HR Dive). No lo he reproducido.</span></article>
+      <article class="card"><span class="tag tag-me">Lectura mía</span><h3>Destacar sin caer en el cliché</h3><p>Un portfolio «gamer» puede ser un disfraz. La tesis solo se sostiene si el juego explica algo del trabajo (la evolución) y si quien tiene prisa puede saltárselo sin pagar peaje.</p></article>
+    </div>
+    <p class="note"><b>Qué no sé (y no invento).</b> No hay analítica ni cookies (lo declara el README) y no he hecho tests con reclutadores. Por eso este caso habla de decisiones y de hipótesis, no de resultados de contratación ni de tasas de conversión.</p>
+  </div>
+</section>
+
+<section class="s" id="objetivos">
+  <div class="wrap rv">
+    <p class="eyebrow">02 · Objetivos y restricciones</p>
+    <h2 class="disp">Qué tenía que conseguir <em>y qué no podía romper.</em></h2>
+    <p class="intro">Defino los objetivos como criterios de diseño que se pueden comprobar en el producto. Ninguno está medido con usuarios: son hipótesis de éxito.</p>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-hip">Hipótesis</span><h3>Objetivos</h3>
+        <ul class="l"><li><strong>Que la progresión se entienda al recorrer la página</strong>, sin leer la trayectoria entera.</li><li><strong>Que contactar nunca dependa del juego:</strong> quien llegue con prisa debe poder escribirme en un clic.</li><li><strong>Que se recuerde</strong> (impresión, no métrica): un CV con personalidad.</li><li><strong>Que sea una pieza de oficio:</strong> accesible, rápida en lo que importa y robusta.</li></ul></article>
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Restricciones</h3>
+        <ul class="l"><li>Sin backend: el formulario solo compone un <code>mailto:</code> y limita la longitud de los campos.</li><li>Sin terceros: tipografías alojadas en la propia web, CSP estricta (<code>script-src 'self'</code>), sin analítica ni cookies; solo <code>localStorage</code> para esferas, cápsulas vistas y sonido, validado al leerlo.</li><li>Tiempo: del 21 al 23 de octubre de 2026 (25 commits, según el historial del repo).</li><li>Material: ilustraciones, animaciones y vídeo propios.</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="investigacion">
+  <div class="wrap rv">
+    <p class="eyebrow">03 · Investigación y referencias</p>
+    <h2 class="disp">Qué leí, <em>qué asumí y qué evité.</em></h2>
+    <p class="intro">No hice entrevistas para este proyecto. La investigación fue de referencias y de criterio propio, y la separo de lo que es suposición.</p>
+    <div class="grid g3">
+      <article class="card"><span class="tag tag-ext">Referencia externa</span><h3>Gamificación</h3><p>Deterding y colegas definen gamificación como el uso de elementos de diseño de juegos en contextos que no son juegos (MindTrek, 2011). La revisión de Hamari, Koivisto y Sarsa (HICSS, 2014) encuentra efectos mayoritariamente positivos pero dependientes del contexto y del usuario. No prometo ningún efecto: lo trato como una apuesta.</p><span class="src">Deterding et al., «From game design elements to gamefulness», 2011. Hamari et al., «Does Gamification Work?», 2014.</span></article>
+      <article class="card"><span class="tag tag-hip">Hipótesis</span><h3>Dragon Ball como lenguaje compartido</h3><p>Una transformación es una metáfora de progresión que mucha gente reconoce sin explicación: la forma base, el primer estallido, el «nivel máximo». Supongo que ese reconocimiento es amplio entre perfiles de producto y tecnología de mi edad. No lo he medido, y puede no valer para todos los lectores.</p></article>
+      <article class="card"><span class="tag tag-me">Lectura mía</span><h3>Qué evitar</h3><ul class="l"><li>Bloquear el contacto detrás del juego sin salida.</li><li>Sonido que arranca solo.</li><li>Fondo animado que dificulte leer.</li><li>Movimiento sin respeto a «reducir movimiento».</li><li>Cifras de impacto inventadas.</li></ul></article>
+    </div>
+    <p>Los criterios de WCAG 2.2 que más pesan en un proyecto así son 2.2.2 (pausar, detener u ocultar), 2.4.7 (foco visible), 2.4.11 (foco no oculto), 2.5.8 (tamaño de objetivo) y la preferencia <code>prefers-reduced-motion</code>. Más adelante cuento dónde se cumple y dónde no.</p>
+    <p class="note"><b>Derechos.</b> Es un homenaje no comercial. El universo Dragon Ball pertenece a sus titulares; lo trato como un riesgo de marca personal que acepto con conciencia, no como un activo mío.</p>
+  </div>
+</section>
+
+<section class="s" id="concepto">
+  <div class="wrap rv">
+    <p class="eyebrow">04 · Concepto: seis transformaciones</p>
+    <h2 class="disp">Cada forma es <em>una etapa real.</em></h2>
+    <p class="intro">El personaje del hero tiene seis formas. Se cambia de una a otra pulsando sobre él y cada una enseña la etapa de estudios o carrera que representa. Prueba el selector.</p>
+    <div class="demo" id="demo-evo" data-on="1">
+      <div class="demo-h"><b>Prueba 1 &middot; selector de transformaciones</b>
+        <div class="ctl"><button class="tgl" type="button" data-act="toggle" aria-pressed="true">Pausar ciclo</button></div></div>
+      <p class="rm-note">Tu sistema pide menos movimiento: el ciclo empieza detenido. Elige tú la forma.</p>
+      <div class="evo">
+        <div class="evo-stage" id="evo-stage"><img id="evo-img" src="/assets/capsule-corp/forma-base.webp" width="246" height="720" alt="Rodrigo en forma base: camiseta negra y pantalón de carga verde" loading="lazy" decoding="async"></div>
+        <div class="evo-info">
+          <div class="evo-tabs" role="tablist" aria-label="Transformaciones">
+            <button type="button" role="tab" aria-selected="true" data-i="0">1 · Base</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-i="1">2 · SSJ</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-i="2">3 · Fase 3</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-i="3">4 · Blue</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-i="4">5 · Ultra</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-i="5">6 · Fase 4</button>
+          </div>
+          <div role="tabpanel" aria-live="polite">
+            <h3 id="evo-name">Forma Base</h3>
+            <p id="evo-stage-t">Fundamentos · +17 años B2B + Desarrollo Web</p>
+          </div>
+        </div>
+      </div>
+      <p class="dcap">Qué observar: el color del aura cambia con la forma y el nombre se anuncia (<code>aria-live</code>), como en la web. Las seis imágenes son <code>f1..f6.webp</code> del repo, reordenadas como en <code>ORDER = [1, 2, 5, 3, 4, 6]</code>.</p>
+    </div>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de las seis formas"><table class="tbl">
+      <caption>Las seis formas y su etapa (textos y orden del repo: <code>Character3D.tsx</code>)</caption>
+      <thead><tr><th>Forma</th><th>Etapa de mi carrera</th><th>Dónde aparece</th></tr></thead>
+      <tbody>
+        <tr><td>Forma Base</td><td>Fundamentos · +17 años B2B + Desarrollo Web</td><td>Hero y fase 1 de Poderes</td></tr>
+        <tr><td>Super Saiyan</td><td>Diseño UX/UI · Bootcamp Neoland</td><td>Hero y fase 2</td></tr>
+        <tr><td>Super Saiyan Fase 3</td><td>Producto Digital &amp; Frontend · React · Figma</td><td>Solo hero</td></tr>
+        <tr><td>Super Saiyan Blue</td><td>Máster en IA Generativa · UDIA</td><td>Hero; en Poderes la fase 3 (Blue) habla de producto y frontend</td></tr>
+        <tr><td>Ultra Instinto</td><td>Agentes IA &amp; Hiperautomatización · EBIS</td><td>Hero; en Poderes la fase 4 habla de IA generativa</td></tr>
+        <tr><td>Super Saiyan Fase 4</td><td>AI Product Designer · nivel máximo actual</td><td>Hero y fase 5</td></tr>
+      </tbody></table></div>
+    <p class="note"><b>Una incoherencia que he encontrado al documentarlo.</b> Los textos de etapa del hero (seis) y los de la sección Poderes (cinco fases, sin Fase 3) no asignan la misma etapa a cada forma. Lo he verificado en <code>Character3D.tsx</code> y <code>data.ts</code>. Lo dejo escrito aquí y lo recojo en los próximos pasos. El «nivel de poder» (45, 64, 80, 92, 100 %) es decorativo: no mide nada.</p>
+  </div>
+</section>
+
+<section class="s" id="ia">
+  <div class="wrap rv">
+    <p class="eyebrow">05 · Arquitectura de la información</p>
+    <h2 class="disp">Una página larga, <em>un CV real debajo.</em></h2>
+    <p class="intro">La estructura es la de un CV normal. El juego es una capa de presentación sobre ella: si lo quitas, el contenido sigue siendo un currículum ordenado.</p>
+<pre class="tree" tabindex="0" aria-label="Estructura de la página"><b>Capsule Corp</b> (una página larga, <code>&lt;main&gt;</code> con ocho secciones)
+├─ <b>Intro</b>: cartela con música opcional («Comenzar» / «Entrar sin sonido»)
+├─ <b>HUD fijo</b>: Perfil · Poderes · Sagas · Trayectoria · Invocar | 0/7 esferas | Contactar | Modo Reclutador | Sonido
+├─ <b>#hero</b>       titular, estado, cifras y el personaje que evoluciona
+├─ <b>#perfil</b>     ficha de guerrero (datos, idiomas)
+├─ <b>#poderes</b>    fondo de fotogramas + 5 fases con su etapa real
+├─ <b>#stack</b>      herramientas, plegado por defecto
+├─ <b>#sagas</b>      proyectos como cápsulas Hoi-Poi, con filtros
+├─ <b>#trayectoria</b> experiencia y formación, plegado por defecto
+├─ <b>#referencias</b>
+├─ <b>#shenron</b>    «Invocar»: contacto (se abre con las 7 esferas o con el Modo Reclutador)
+└─ <b>Pie</b> + dock móvil (Contactar · WhatsApp · CV)</pre>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Todo plegado por defecto</h3><p>Experiencia, stack, competencias, referencias y formación se abren a demanda. Cada desplegable lleva una frase humana en el resumen. Así la página se recorre en seguida y el detalle está disponible para quien lo busca.</p></article>
+      <article class="card"><span class="tag tag-me">Lectura mía</span><h3>Navegación corta</h3><p>El menú tiene cinco destinos. Stack y Referencias existen como secciones, pero no están en el menú: se descubren al hacer scroll. Es una decisión de economía que habría que validar.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="decisiones">
+  <div class="wrap rv">
+    <p class="eyebrow">06 · Decisiones UX/UI</p>
+    <h2 class="disp">Qué decidí, por qué <em>y qué dejé fuera.</em></h2>
+    <p class="intro">Cada decisión lleva su porqué. La alternativa descartada es verificable (historial del repo) cuando lo indico; si no, es una alternativa habitual que no he probado aquí.</p>
+
+    <article class="dec">
+      <header><span>DECISIÓN 1</span><h3>Un fondo de vídeo fijo que sube de nivel con el scroll</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>Un canvas fijo detrás del contenido dibuja 192 fotogramas (JPG de 900 px, uno de cada cinco del vídeo original). <code>ScrollTrigger</code> con <code>scrub</code> elige el fotograma según el avance y, al cruzar cada umbral, cambia el color de aura y la tarjeta del currículum.</p></div>
+        <div><h4>Por qué</h4><p>El scroll es el gesto que ya hace quien lee: avanzar por la página es avanzar por mi carrera. La forma del fondo y el texto coinciden fase a fase.</p></div>
+        <div><h4>Alternativa descartada</h4><p><span class="tag tag-hip">Hipótesis</span> Reproducir un <code>&lt;video&gt;</code> moviendo <code>currentTime</code>: puede ir a saltos por los fotogramas clave. No lo probé aquí. Coste de lo elegido: ~6,3 MB de fotogramas (se piden solo cuando Poderes está a 1.500 px).</p></div>
+      </div>
+      <div class="dec-tags"><span class="tag tag-doc">Del repo</span></div>
+    </article>
+
+    <div class="demo" id="demo-scrub" data-on="1">
+      <div class="demo-h"><b>Prueba 2 &middot; el scroll como línea de tiempo</b>
+        <div class="ctl"><button class="tgl" type="button" data-act="toggle" aria-pressed="true">Pausar barrido</button></div></div>
+      <p class="rm-note">Tu sistema pide menos movimiento: el barrido empieza detenido. Mueve el deslizador tú.</p>
+      <div class="scr">
+        <div class="scr-v" id="scr-v"></div>
+        <div class="scr-c"><label for="scr-r" class="scr-o">Avance del scroll</label><input id="scr-r" type="range" min="0" max="100" value="0" aria-describedby="scr-o"><output id="scr-o" class="scr-o" for="scr-r">0 % · fase 1 · Base</output></div>
+      </div>
+      <p class="dcap">Qué observar: diez de los 192 fotogramas reales (se muestra el más cercano). Los umbrales de fase son los de <code>data.ts</code>: 0, 19, 38, 66 y 82 %.</p>
+    </div>
+
+    <article class="dec">
+      <header><span>DECISIÓN 2</span><h3>Un personaje interactivo con aura</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>Una imagen estática con un aura de ki dibujada en canvas 2D, ajustada a su silueta. El aura se agita con la velocidad del ratón; al hacer clic, un destello revela la siguiente forma. La evolución se anuncia con <code>aria-live</code>.</p></div>
+        <div><h4>Por qué</h4><p>Una invitación a jugar en el primer vistazo («Pulsa sobre mí y mira cómo me transformo») que además enseña el concepto antes de explicarlo.</p></div>
+        <div><h4>Alternativa descartada</h4><p>El fichero se llama <code>Character3D.tsx</code> por una idea anterior; hoy no hay 3D: es imagen más canvas 2D. El aura se pinta a 1x porque es un brillo difuso y así pinta cuatro veces menos píxeles en pantallas retina.</p></div>
+      </div>
+      <div class="dec-tags"><span class="tag tag-doc">Del repo</span></div>
+    </article>
+
+    <article class="dec">
+      <header><span>DECISIÓN 3</span><h3>El Radar del Dragón como logo y como cursor</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>El radar es el logo de la barra y, en escritorio con ratón, el cursor: sigue al puntero con inercia y se «fija» sobre lo interactivo. En táctil se oculta. Al pulsar un elemento interactivo sale un estallido de ki.</p></div>
+        <div><h4>Por qué</h4><p>Un solo símbolo une marca, juego (el radar busca esferas) e interacción. El bucle de animación solo corre mientras el radar alcanza al puntero.</p></div>
+        <div><h4>Alternativa descartada</h4><p><span class="tag tag-hip">Hipótesis</span> Dejar el cursor del sistema: es lo más seguro, pero pierde el símbolo. Un cursor propio puede estorbar a quien usa lupa o ampliación; por eso solo se activa con ratón (<code>hover:hover</code> y <code>pointer:fine</code>). El historial del repo no recoge ninguna alternativa descartada aquí.</p></div>
+      </div>
+    </article>
+
+    <article class="dec">
+      <header><span>DECISIÓN 4</span><h3>Siete esferas escondidas</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>Siete esferas en los márgenes de siete secciones elegidas al azar en cada visita. Un contador de la barra cuenta cuántas llevas, un aviso lo anuncia (<code>aria-live</code>) y también se pueden coger con teclado (Enter o Espacio). El estado se guarda en <code>localStorage</code> y se valida al leerlo.</p></div>
+        <div><h4>Por qué</h4><p>Es el juego mínimo que premia explorar sin pedir nada a quien no quiere jugar. Van siempre en los márgenes para no tapar contenido.</p></div>
+        <div><h4>Alternativa descartada</h4><p><span class="tag tag-doc">Del repo</span> Siete «universos» extra en el pie de página: se añadieron con el footer del multiverso y se quitaron el 22 de octubre a las 00:04 («Footer: quita los siete universos extra y los enlaces pasan a ser botones»). <span class="tag tag-me">Lectura mía</span> Sobraba juego en una zona de salida.</p></div>
+      </div>
+      <div class="dec-tags"><span class="tag tag-doc">Del repo</span></div>
+    </article>
+
+    <article class="dec">
+      <header><span>DECISIÓN 5</span><h3>Modo Reclutador: contactar nunca depende del juego</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>Un botón en la barra («Modo Reclutador») y otro en la sección Invocar («Soy reclutador: reunirlas ahora»). Recoge las siete esferas que falten con un vuelo escalonado, baja a Invocar y abre las vías de contacto.</p></div>
+        <div><h4>Por qué existe</h4><p>Porque bloquear el contacto tras una búsqueda del tesoro es el modo más rápido de perder a quien tiene unos segundos. El juego es una recompensa, no una puerta. <span class="tag tag-me">Lectura mía</span></p></div>
+        <div><h4>Lo que no hace (límite)</h4><p>No apaga el juego: no oculta animaciones ni desactiva el sonido ni limpia la interfaz. Solo evita el peaje del contacto. Un «modo sin juego» de verdad sería el paso siguiente.</p></div>
+      </div>
+      <div class="dec-tags"><span class="tag tag-doc">Del repo</span><span class="tag tag-me">Lectura mía</span></div>
+    </article>
+
+    <div class="demo" id="demo-balls" data-on="1">
+      <div class="demo-h"><b>Prueba 3 &middot; siete esferas y Modo Reclutador</b>
+        <div class="ctl"><button class="tgl" type="button" data-act="toggle" aria-pressed="true">Pausar flotación</button></div></div>
+      <p class="rm-note">Tu sistema pide menos movimiento: las esferas no flotan ni vuelan. Todo funciona igual.</p>
+      <div class="dbs-map" id="dbs-map"><p>Pulsa una esfera (o llega con el teclado) para cogerla</p></div>
+      <div class="dbs-hud">
+        <div class="dbs-slots" id="dbs-slots" aria-hidden="true"></div>
+        <span class="dbs-cnt" id="dbs-cnt">0/7</span>
+        <button class="dbtn hot" type="button" id="dbs-rec">Modo Reclutador: reunirlas ahora</button>
+        <button class="dbtn" type="button" id="dbs-reset">Reiniciar</button>
+      </div>
+      <p class="dbs-msg" id="dbs-msg" role="status">Contacto bloqueado: llevas 0 de 7.</p>
+      <p class="dcap">Qué observar: en la web real el vuelo termina en el contador de la barra y, con las siete, se abre la sección Invocar. Aquí solo reproduzco la mecánica, no el vuelo exacto.</p>
+    </div>
+
+    <article class="dec">
+      <header><span>DECISIÓN 6</span><h3>Los proyectos son cápsulas Hoi-Poi</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>Cada proyecto es una cápsula numerada con filtros por categoría. Al abrirla sale un holograma con ficha. El diálogo lleva el foco dentro, vuelve inerte el resto de la página y devuelve el foco al cerrar. En móvil se presenta como hoja inferior.</p></div>
+        <div><h4>Por qué</h4><p>La metáfora de la cápsula guarda un proyecto entero en un objeto pequeño y pide un gesto concreto (abrirla), lo que da un momento de recompensa por proyecto.</p></div>
+        <div><h4>Alternativa descartada</h4><p><span class="tag tag-hip">Hipótesis</span> Una cuadrícula de tarjetas con enlace directo: más rápida, menos reconocible.</p></div>
+      </div>
+      <div class="dec-tags"><span class="tag tag-doc">Del repo</span></div>
+    </article>
+
+    <article class="dec">
+      <header><span>DECISIÓN 7</span><h3>«Pide tu deseo»: contacto sin backend</h3></header>
+      <div class="dec-b">
+        <div><h4>Qué es</h4><p>Un formulario dentro de un panel de piedra rodeado por Shen Long. Al enviarlo compone un <code>mailto:</code>. Además hay WhatsApp, LinkedIn, GitHub, CV, copiar el email y, en móvil, un dock con Contactar, WhatsApp y CV.</p></div>
+        <div><h4>Por qué</h4><p>Cero servidores, cero datos que custodiar. Varias vías para que cada persona use la suya.</p></div>
+        <div><h4>Alternativa descartada</h4><p><span class="tag tag-doc">Del repo</span> Una escena con la mirada que sigue al cursor (<code>MesaStage</code>): se hizo el 22 de octubre a la 01:25, se probó una segunda versión (01:47) y se quitó del hero a la 01:50. El código y los fotogramas siguen en el repo, sin montar. <span class="tag tag-me">Lectura mía</span> Probablemente competía con el titular.</p></div>
+      </div>
+      <div class="dec-tags"><span class="tag tag-doc">Del repo</span></div>
+    </article>
+  </div>
+</section>
+
+<section class="s" id="sistema">
+  <div class="wrap rv">
+    <p class="eyebrow">07 · Sistema visual y tipografía</p>
+    <h2 class="disp">Cómic con contornos, <em>sombras duras y mucho cielo.</em></h2>
+    <p class="intro">El sistema es de cómic Dragon Ball sobre una base oscura de cielo espacial: contornos marcados, sombras duras, tipografía display gruesa y un color de aura por fase.</p>
+    <div class="sw" role="list" aria-label="Paleta de Capsule Corp">
+      <div role="listitem" class="lt" style="background:#05070c">Noche<small>#05070c</small></div>
+      <div role="listitem" class="lt" style="background:#13224e">Capsule navy<small>#13224e</small></div>
+      <div role="listitem" class="dk" style="background:#e0383b">Capsule rojo<small>#e0383b</small></div>
+      <div role="listitem" class="dk" style="background:#ffb800">Oro<small>#ffb800</small></div>
+      <div role="listitem" class="dk" style="background:#2fe4c6">Acento<small>#2fe4c6</small></div>
+      <div role="listitem" class="dk" style="background:#49f08a">Radar<small>#49f08a</small></div>
+    </div>
+    <div class="sw" role="list" aria-label="Color de aura por forma">
+      <div role="listitem" class="dk" style="background:#39d8c6">Base<small>#39d8c6</small></div>
+      <div role="listitem" class="dk" style="background:#ffc23a">Super Saiyan<small>#ffc23a</small></div>
+      <div role="listitem" class="dk" style="background:#ffd23a">Fase 3<small>#ffd23a</small></div>
+      <div role="listitem" class="dk" style="background:#37b7ff">Blue<small>#37b7ff</small></div>
+      <div role="listitem" class="dk" style="background:#e4eef9">Ultra Instinto<small>#e4eef9</small></div>
+      <div role="listitem" class="dk" style="background:#ff3b3b">Fase 4<small>#ff3b3b</small></div>
+    </div>
+    <p><span class="tag tag-doc">Del repo</span> Colores de <code>index.css</code> (variables) y del array <code>AURA</code> de <code>Character3D.tsx</code>. En Poderes el aura de cada fase es ligeramente distinta (<code>data.ts</code>: <code>#9fb6d4</code>, <code>#ffb800</code>, <code>#2fb8ff</code>, <code>#d7e6f2</code>, <code>#ff4d4d</code>).</p>
+    <div class="types">
+      <div class="card"><b>Display · Luckiest Guy</b><p class="t-disp disp">Cada forma, una etapa</p><p>Titulares y rótulos de cómic. Con contorno y sombra dura.</p></div>
+      <div class="card"><b>Titulares y texto · Syne e Inter</b><p class="t-body"><strong>Syne</strong> en títulos de sección; <strong>Inter</strong> en el texto corrido.</p><p>Legible sobre fondo oscuro, con <code>text-wrap: balance</code> en titulares.</p></div>
+      <div class="card"><b>Datos · JetBrains Mono</b><p class="t-mono">ESFERAS 3/7 · NIVEL 9001</p><p>Etiquetas del HUD, cifras y rótulos técnicos.</p></div>
+    </div>
+    <p><span class="tag tag-doc">Del repo</span> Las cuatro fuentes están alojadas en la propia web (WOFF2, 17 a 48 KB cada una) y las que pinta el primer vistazo se precargan. Así no se envía la IP del visitante a Google.</p>
+    <p><span class="tag tag-me">Lectura mía</span> El foco visible es un anillo amarillo (<code>#ffcf2e</code>) de 3 px: es de los pocos elementos que no son cómic, para que siempre se vea.</p>
+  </div>
+</section>
+
+<section class="s" id="motion">
+  <div class="wrap rv">
+    <p class="eyebrow">08 · Motion y sonido</p>
+    <h2 class="disp">Mucho movimiento, <em>con salida de emergencia.</em></h2>
+    <p class="intro">Tres librerías con un reparto claro y un criterio común: el movimiento explica o recompensa, y se apaga si el sistema lo pide.</p>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de piezas de movimiento"><table class="tbl">
+      <caption>Piezas de movimiento y a qué responden (del repo y de su código)</caption>
+      <thead><tr><th>Pieza</th><th>Con qué</th><th>Para qué</th><th>Con «reducir movimiento»</th></tr></thead>
+      <tbody>
+        <tr><td>Revelados de sección</td><td>Framer Motion</td><td>Entrada suave del contenido</td><td><code>MotionConfig reducedMotion="user"</code>: sin animación de transformación</td></tr>
+        <tr><td>Intro: cartela</td><td>GSAP (línea de tiempo)</td><td>La bola estalla y caen las letras del nombre</td><td>No se monta la línea de tiempo</td></tr>
+        <tr><td>Fondo de la evolución</td><td>GSAP ScrollTrigger</td><td>Elegir fotograma y fase con el scroll</td><td>—</td></tr>
+        <tr><td>Scroll suave</td><td>Lenis (lerp 0,1)</td><td>Inercia del desplazamiento</td><td>Lenis no se crea; se detiene con el diálogo abierto</td></tr>
+        <tr><td>Aura del personaje</td><td>Canvas 2D</td><td>Reaccionar al ratón</td><td>No escucha el movimiento del ratón</td></tr>
+        <tr><td>Universo de fondo</td><td>Canvas 2D</td><td>Partículas, nebulosa, planetas con parallax</td><td>Dibuja un solo fotograma estático; se detiene con la pestaña oculta y durante la intro</td></tr>
+        <tr><td>Esferas en vuelo</td><td>GSAP</td><td>Del margen al contador</td><td>—</td></tr>
+      </tbody></table></div>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Sonido con Howler</h3><p>Seis efectos (cápsula, intro, power-up, radar, teletransporte y Shen Long). Nada suena hasta el primer gesto del visitante, la intro ofrece «Entrar sin sonido», el estado se recuerda y hay un botón con <code>aria-pressed</code>. La música de apertura baja a las 4,2 s y se apaga sola hacia las 11 s.</p></article>
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Sonidos más sobrios</h3><p>El 22 de octubre un commit rebaja el sonido («sonidos más sobrios»): los efectos de interfaz van unos 10 dB por debajo de la música. <span class="tag tag-me">Lectura mía</span> Un portfolio no debe sonar a máquina recreativa.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="a11y">
+  <div class="wrap rv">
+    <p class="eyebrow">09 · Accesibilidad</p>
+    <h2 class="disp">Lo que cumple, <em>lo que declara y lo que le falta.</em></h2>
+    <p class="intro">El README declara WCAG 2.2 AA comprobado con axe-core 4.10 en escritorio y móvil, con el contacto bloqueado y desbloqueado y con el diálogo y el menú abiertos. Eso es lo que declara; a continuación, lo que hay en el código y lo que echo en falta.</p>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Lo que hay</h3>
+        <ul class="l"><li>Enlace «Saltar al contenido» que además mueve el foco; los saltos de sección también.</li><li>Foco visible en toda la web.</li><li>El diálogo de cápsulas lleva el foco dentro, hace inerte el resto (<code>inert</code>) y lo devuelve al cerrar.</li><li>Evolución del personaje y avisos de esferas con <code>aria-live</code>; sonido con <code>aria-pressed</code>.</li><li>Todo <code>:hover</code> va dentro de <code>(hover:hover) and (pointer:fine)</code>: en móvil no se queda «pegado».</li><li>Esferas escondidas alcanzables con teclado.</li></ul></article>
+      <article class="card"><span class="tag tag-me">Lectura mía</span><h3>Lo que echo en falta</h3>
+        <ul class="l"><li><strong>Pausa del fondo animado.</strong> WCAG 2.2.2 pide un control para detener el movimiento automático de más de 5 s. En el código solo respeta «reducir movimiento»; no encontré un botón de pausa. axe no detecta este criterio.</li><li><strong>Contraste de los portales del pie.</strong> El README dice que axe avisaba de ellos y que era un falso positivo por el trazo negro del texto. En mi pasada de axe 4.14 (reglas WCAG 2.0/2.1/2.2 A y AA más buenas prácticas, escritorio y móvil, tras la intro) no salió ninguna violación; el contraste real sobre el fondo animado sigue sin medirse a mano.</li><li><strong>Etiquetas de las imágenes del fondo</strong> y texto sobre fondo animado: habría que auditarlos con lector de pantalla. No lo he hecho.</li></ul></article>
+    </div>
+    <p class="note"><b>Lo que no he probado.</b> No he usado lectores de pantalla (NVDA, VoiceOver) para recorrer la web ni he medido contraste sobre el fondo animado en cada fase. «Cumple AA» aquí significa «axe no encontró fallos reales y revisé estos puntos a mano», no una auditoría formal.</p>
+  </div>
+</section>
+
+<section class="s" id="rendimiento">
+  <div class="wrap rv">
+    <p class="eyebrow">10 · Rendimiento y decisiones técnicas</p>
+    <h2 class="disp">Rápido donde importa, <em>pesado donde lo elegí.</em></h2>
+    <p class="intro">Vite, React y TypeScript con versiones fijadas: framer-motion 11.15.0, gsap 3.12.5, lenis 1.1.18, howler 2.2.4, react 18.3.1, vite 6.4.5 y typescript 5.6.3 (<code>package.json</code>).</p>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de decisiones de rendimiento"><table class="tbl">
+      <caption>Decisiones de rendimiento y su coste (del repo)</caption>
+      <thead><tr><th>Decisión</th><th>Qué hace</th><th>Coste / límite</th></tr></thead>
+      <tbody>
+        <tr><td>LCP precargado</td><td>El personaje del hero (<code>f1.webp</code>) se pide desde el HTML con <code>fetchpriority="high"</code>, no al arrancar el JS</td><td>—</td></tr>
+        <tr><td>Intro y audio en reposo</td><td>El contexto de audio (~0,3 s de hilo principal) se crea con la web ociosa; estrellas y aura no animan mientras la intro los tapa</td><td>—</td></tr>
+        <tr><td>Fotogramas bajo demanda</td><td>Los 192 JPG (6,3 MB) se piden solo cuando Poderes está a 1.500 px</td><td>Es lo más pesado de la web</td></tr>
+        <tr><td>Aura a 1x</td><td>El canvas no se escala por el <code>devicePixelRatio</code></td><td>Menos nitidez, imperceptible en un brillo difuso</td></tr>
+        <tr><td>Sin terceros</td><td>Fuentes propias, CSP <code>script-src 'self'</code>, sin analítica</td><td>Más peso propio que servir</td></tr>
+      </tbody></table></div>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Lo que declara</h3><p>Lighthouse móvil sobre producción: accesibilidad, buenas prácticas y SEO en <strong>100</strong>; rendimiento <strong>56–61</strong> con ralentización de CPU x4. El README añade que el TBT incluye ~1,5 s de la propia instrumentación de Lighthouse.</p></article>
+      <article class="card"><span class="tag tag-me">Lectura mía</span><h3>El límite conocido</h3><p>El rendimiento es el punto débil y lo cuento tal cual: un 56–61 no es bueno. Es el precio de un fondo de 6 MB de fotogramas, varias librerías de animación y un canvas de partículas. Lo acepté para una página que es sobre todo un escaparate; <strong>no es la forma de trabajar que recomendaría para un producto</strong>.</p></article>
+    </div>
+    <p class="note"><span class="tag tag-me">Lectura mía</span> <b>Mi comprobación.</b> Pasé Lighthouse móvil (simulación estándar) dos veces sobre <code>db.rodrigonegrete.es</code>: rendimiento <strong>50 y 65</strong> (LCP de 3,8 y 3,5 s; TBT de 2.460 y 830 ms) y accesibilidad, buenas prácticas y SEO en <strong>100</strong> en las dos. La variación entre pasadas es grande en un equipo ocupado, así que lo leo como «entre 50 y 65», coherente con el 56–61 del README y lejos de lo que considero bueno.</p>
+  </div>
+</section>
+
+<section class="s" id="remotion">
+  <div class="wrap rv">
+    <p class="eyebrow">11 · El teaser, una pieza de marketing</p>
+    <h2 class="disp">Catorce segundos <em>programados, no editados.</em></h2>
+    <p class="intro">Para compartir la web hice un teaser vertical y la imagen para redes con Remotion, que renderiza vídeo a partir de componentes React. Usa los mismos assets y la misma tipografía que la web.</p>
+    <figure class="vid">
+      <div class="phone-f"><video id="rem-vid" muted loop playsinline preload="none" poster="/assets/capsule-corp/teaser-poster.webp" aria-label="Teaser de Capsule Corp de 14 segundos, sin sonido" width="540" height="960"><source src="/assets/capsule-corp/teaser.webm" type="video/webm"></video></div>
+      <button class="tgl" type="button" id="rem-tgl" aria-pressed="false" style="margin:14px auto 0;display:flex;align-items:center">Reproducir teaser</button>
+      <figcaption class="cap" style="text-align:center">Render propio de la composición <code>Teaser</code> a media escala (540×960, 15 fps, VP9, sin audio, 0,6 MB). El original es de 1080×1920 a 30 fps y lleva música; las tarjetas del portfolio usan una versión aún más ligera.</figcaption>
+    </figure>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de planos del teaser"><table class="tbl">
+      <caption>Composición <code>Teaser</code> (<code>remotion/src/Teaser.tsx</code>): 420 fotogramas a 30 fps = 14 s</caption>
+      <thead><tr><th>Plano</th><th>Fotogramas</th><th>Qué pasa</th></tr></thead>
+      <tbody>
+        <tr><td>1 · Apertura</td><td>100 (3,3 s)</td><td>La bola se enciende con dos latidos, estalla con ondas de choque y caen las letras del nombre</td></tr>
+        <tr><td>2 · Barcelona</td><td>80 (2,7 s)</td><td>AI Product Designer · Barcelona · Remoto UE · Full-time y freelance</td></tr>
+        <tr><td>3 · Evolución</td><td>80</td><td>«Mi evolución, fase a fase» y tres cifras animadas</td></tr>
+        <tr><td>4 · Equipo</td><td>80</td><td>Diseño con IA y agentes: Claude, GPT, Gemini, Make, n8n, Figma</td></tr>
+        <tr><td>5 · Llamada a la acción</td><td>80</td><td>«¿Hablamos?» con las siete esferas orbitando y la dirección de la web</td></tr>
+      </tbody></table></div>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Cómo está hecho</h3><p>Cada plano es un componente React con <code>spring()</code> e <code>interpolate()</code> que dependen del fotograma actual. Los planos se encadenan con <code>Sequence</code>. La música de apertura entra con una rampa de 12 fotogramas y se apaga en los dos últimos segundos. Remotion 4.0.537, con Rspack y fotogramas JPEG.</p></article>
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Cómo se renderiza</h3><p><code>npm run assets</code> copia los assets de la web; <code>npm run teaser</code> ejecuta <code>remotion render … Teaser out/teaser.mp4 --codec=h264 --crf=20</code>; <code>npm run og</code> saca la imagen Open Graph de 1200×630. El proyecto está aparte del build de la web.</p></article>
+    </div>
+    <p><span class="tag tag-me">Lectura mía</span> Programar el vídeo tiene una ventaja que valoro: se puede cambiar un texto y volver a renderizar sin tocar un editor. Y un coste: un ajuste fino de ritmo es más lento que en un timeline visual.</p>
+  </div>
+</section>
+
+<section class="s" id="aprendizajes">
+  <div class="wrap rv">
+    <p class="eyebrow">12 · Aprendizajes y próximos pasos</p>
+    <h2 class="disp">Lo que aprendí <em>y lo que haría distinto.</em></h2>
+    <div class="grid g2">
+      <article class="card"><h3>Qué funcionó</h3><ul class="l"><li>Atar cada forma a una etapa real: el juego dice algo del trabajo.</li><li>Una salida clara para quien tiene prisa (Modo Reclutador y contacto en barra y dock).</li><li>Recortar a tiempo: la escena de la mirada y los siete universos del pie salieron en el mismo día en que entraron.</li><li>Un README honesto que recoge los límites, incluido el rendimiento.</li></ul></article>
+      <article class="card"><h3>Qué corregiría</h3><ul class="l"><li><strong>Rendimiento:</strong> sustituir 6 MB de JPG por AVIF/WebP o por un vídeo con fotogramas clave cercanos; medir antes y después.</li><li><strong>Coherencia:</strong> unificar las etapas del hero (seis) con las de Poderes (cinco).</li><li><strong>Modo sin juego:</strong> que el Modo Reclutador pueda también apagar movimiento, sonido y esferas.</li><li><strong>Pausa de fondo</strong> para cumplir 2.2.2.</li></ul></article>
+    </div>
+    <h3>Próximos pasos (hipótesis a validar)</h3>
+    <ul class="l">
+      <li><strong>Probarlo con 5 o 6 reclutadores o managers</strong> de producto, con una tarea simple («encuentra cómo contactarme»), para ver si el juego ayuda, es neutro o estorba. Hoy no hay datos.</li>
+      <li><strong>Definir qué es éxito</strong> antes de añadir analítica: ¿mensajes recibidos?, ¿tiempo hasta el contacto?</li>
+      <li><strong>Auditar con lectores de pantalla</strong> el recorrido completo.</li>
+      <li><strong>Revisar los derechos</strong> de los materiales de audio e imagen inspirados en la serie.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="s cta" id="probar" data-fold="off">
+  <div class="wrap rv">
+    <p class="eyebrow">Pruébala</p>
+    <h2 class="disp">Reúne las siete esferas <em>o entra por el atajo.</em></h2>
+    <p>La web es pública. Abre Capsule Corp, pulsa sobre el personaje y sigue la evolución; si tienes prisa, el botón del rayo de la barra te lleva al contacto.</p>
+    <div class="actions">
+      <a class="btn btn-gold" href="https://db.rodrigonegrete.es" target="_blank" rel="noopener">Abrir db.rodrigonegrete.es &#8599;<span class="sr"> (se abre en una pestaña nueva)</span></a>
+      <a class="btn btn-ghost" href="https://github.com/Ronegret/dragonball_porfolio_RN" target="_blank" rel="noopener">Ver el repositorio &#8599;<span class="sr"> (se abre en una pestaña nueva)</span></a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Caso de estudio escrito y diseñado por <a href="/">Rodrigo Negrete</a>. Vuelve al <a href="/#proyectos">portfolio</a>.</p>
+</footer>
+
+<script>
+(function(){
+  var d=document,RM=matchMedia('(prefers-reduced-motion: reduce)');
+  var els=d.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)||RM.matches){els.forEach(function(e){e.classList.add('on')})}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.04});els.forEach(function(e){io.observe(e)})}
+
+  /* vídeos: no arrancan solos con reduced-motion; botón de pausa siempre */
+  function vid(v,b,auto){
+    if(!v||!b)return;
+    function lab(){b.textContent=v.paused?'Reproducir teaser':'Pausar teaser';b.setAttribute('aria-pressed',String(!v.paused))}
+    b.addEventListener('click',function(){if(v.paused){v.play().catch(function(){})}else v.pause()});
+    v.addEventListener('playing',function(){v.classList.add('on');lab()});v.addEventListener('pause',lab);lab();
+    if(auto&&!RM.matches&&'IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){if(!v.dataset.user&&v.paused)v.play().catch(function(){})}else if(!v.paused){v.pause()}})},{threshold:.35}).observe(v)}
+    b.addEventListener('click',function(){v.dataset.user='1'});
+  }
+  vid(d.getElementById('hero-vid'),d.getElementById('hero-tgl'),false); /* el hero no descarga el vídeo hasta que se pulsa */
+  vid(d.getElementById('rem-vid'),d.getElementById('rem-tgl'),true);
+
+  /* estado de cada demo: data-on="1" reproduce; con reduced-motion arrancan paradas */
+  var demos={};
+  function label(dm){var b=dm.querySelector('[data-act=toggle]');if(!b)return;var on=dm.dataset.on==='1';b.setAttribute('aria-pressed',String(on));b.textContent=on?b.dataset.off||(b.textContent.replace(/^Reanudar|^Reproducir/,'Pausar')):(RM.matches?'Reproducir (tú decides)':'Reanudar')}
+  d.querySelectorAll('.demo').forEach(function(dm){
+    var b=dm.querySelector('[data-act=toggle]');if(b)b.dataset.off=b.textContent;
+    dm.dataset.on=RM.matches?'0':'1';label(dm);demos[dm.id]=dm;
+    if(b)b.addEventListener('click',function(){dm.dataset.on=dm.dataset.on==='1'?'0':'1';label(dm);dm.dispatchEvent(new CustomEvent('demo-toggle'))});
+    /* el plegable reinicia las demos al abrir (case-fold.js) */
+    dm.addEventListener('demo-toggle',function(){label(dm)});
+  });
+  RM.addEventListener('change',function(){Object.keys(demos).forEach(function(k){var dm=demos[k];dm.dataset.on=RM.matches?'0':'1';label(dm);dm.dispatchEvent(new CustomEvent('demo-toggle'))})});
+  function on(dm){return dm.dataset.on==='1'}
+  function visible(el){return !!(el.offsetParent||el.getClientRects().length)}
+
+  /* 1 · selector de transformaciones */
+  (function(){
+    var dm=d.getElementById('demo-evo'),st=d.getElementById('evo-stage'),im=d.getElementById('evo-img'),nm=d.getElementById('evo-name'),tx=d.getElementById('evo-stage-t');
+    var tabs=[].slice.call(dm.querySelectorAll('[role=tab]'));
+    var F=[
+      ['base','Forma Base','#39d8c6','Fundamentos · +17 años B2B + Desarrollo Web',246,'Rodrigo en forma base: camiseta negra y pantalón de carga verde'],
+      ['ssj','Super Saiyan','#ffc23a','Diseño UX/UI · Bootcamp Neoland',246,'Rodrigo como Super Saiyan: pelo y barba dorados con aura amarilla'],
+      ['ssj3','Super Saiyan Fase 3','#ffd23a','Producto Digital & Frontend · React · Figma',270,'Rodrigo como Super Saiyan Fase 3: melena y barba doradas muy largas'],
+      ['blue','Super Saiyan Blue','#37b7ff','Máster en IA Generativa · UDIA',266,'Rodrigo como Super Saiyan Blue: pelo y barba azules con rayos'],
+      ['ui','Ultra Instinto','#e4eef9','Agentes IA & Hiperautomatización · EBIS',260,'Rodrigo en Ultra Instinto: barba y cejas plateadas'],
+      ['ssj4','Super Saiyan Fase 4','#ff3b3b','AI Product Designer · nivel máximo actual',274,'Rodrigo como Super Saiyan Fase 4: torso rojo y cola']
+    ];
+    var cur=0,t=0;
+    function set(i,focus){
+      cur=i;var f=F[i];
+      im.src='/assets/capsule-corp/forma-'+f[0]+'.webp';im.width=f[4];im.alt=f[5];
+      nm.textContent=f[1];tx.textContent=f[3];
+      dm.style.setProperty('--aura',f[2]);
+      tabs.forEach(function(b,k){b.setAttribute('aria-selected',String(k===i));b.tabIndex=k===i?0:-1});
+      if(focus)tabs[i].focus();
+    }
+    function tick(){clearInterval(t);if(on(dm)){t=setInterval(function(){if(visible(dm)&&!d.hidden)set((cur+1)%F.length)},2600)}}
+    tabs.forEach(function(b,i){b.addEventListener('click',function(){set(i);tick()});
+      b.addEventListener('keydown',function(e){var k=e.key,n=-1;if(k==='ArrowRight')n=(i+1)%6;else if(k==='ArrowLeft')n=(i+5)%6;else if(k==='Home')n=0;else if(k==='End')n=5;if(n>-1){e.preventDefault();set(n,true);tick()}})});
+    dm.addEventListener('demo-toggle',tick);set(0);tick();
+  })();
+
+  /* 2 · scroll como línea de tiempo */
+  (function(){
+    var dm=d.getElementById('demo-scrub'),box=d.getElementById('scr-v'),r=d.getElementById('scr-r'),o=d.getElementById('scr-o');
+    var P=[0,.12,.19,.30,.38,.52,.66,.74,.82,1],AT=[0,.19,.38,.66,.82],NM=['Base','Super Saiyan','Blue','Ultra Instinto','Super Saiyan 4'],AU=['#9fb6d4','#ffb800','#2fb8ff','#d7e6f2','#ff4d4d'];
+    var imgs=P.map(function(p,i){var m=d.createElement('img');m.src='/assets/capsule-corp/fotograma-'+(i<9?'0':'')+(i+1)+'.webp';m.width=640;m.height=360;m.loading='lazy';m.decoding='async';m.alt=i===0?'Fotograma del vídeo de evolución de la web, del avance indicado':'';if(i)m.setAttribute('aria-hidden','true');box.appendChild(m);return m});
+    var cur=-1;
+    function set(v){
+      var p=v/100,k=0,n=0;
+      P.forEach(function(q,i){if(Math.abs(q-p)<Math.abs(P[n]-p))n=i});
+      AT.forEach(function(a,i){if(p>=a)k=i});
+      if(n!==cur){if(cur>-1)imgs[cur].classList.remove('on');imgs[n].classList.add('on');cur=n}
+      box.style.borderColor=AU[k];
+      o.textContent=Math.round(v)+' % · fotograma ~'+(Math.round(p*191)+1)+'/192 · fase '+(k+1)+' · '+NM[k];
+    }
+    r.addEventListener('input',function(){set(+r.value)});
+    var t=0,dir=1;
+    function tick(){clearInterval(t);if(on(dm)){t=setInterval(function(){if(!visible(dm)||d.hidden)return;var v=+r.value+dir*.8;if(v>=100){v=100;dir=-1}else if(v<=0){v=0;dir=1}r.value=v;set(v)},40)}}
+    dm.addEventListener('demo-toggle',tick);r.addEventListener('pointerdown',function(){clearInterval(t)});r.addEventListener('keydown',function(){clearInterval(t)});
+    set(0);tick();
+  })();
+
+  /* 3 · esferas y Modo Reclutador */
+  (function(){
+    var dm=d.getElementById('demo-balls'),map=d.getElementById('dbs-map'),slots=d.getElementById('dbs-slots'),cnt=d.getElementById('dbs-cnt'),msg=d.getElementById('dbs-msg');
+    var POS=[[6,34],[20,64],[34,26],[48,62],[62,30],[74,60],[86,24]],got={},balls=[];
+    for(var s=1;s<=7;s++){(function(s){
+      var sl=d.createElement('span');sl.dataset.s=s;slots.appendChild(sl);
+      var b=d.createElement('button');b.type='button';b.className='dbs-ball';b.style.left=POS[s-1][0]+'%';b.style.top=POS[s-1][1]+'%';b.style.animationDelay=(s*.4)+'s';
+      b.setAttribute('aria-label','Esfera del dragón de '+s+(s>1?' estrellas':' estrella')+': recoger');
+      b.innerHTML='<img src="/assets/capsule-corp/esfera-'+s+'.webp" width="200" height="200" alt="" loading="lazy" decoding="async">';
+      b.addEventListener('click',function(){take(s)});map.appendChild(b);balls[s]=b})(s)}
+    function n(){return Object.keys(got).length}
+    function take(s){
+      if(got[s])return;got[s]=1;balls[s].hidden=true;
+      var sl=slots.children[s-1];sl.className='f';sl.innerHTML='<img src="/assets/capsule-corp/esfera-'+s+'.webp" width="24" height="24" alt="">';
+      cnt.textContent=n()+'/7';
+      msg.textContent=n()===7?'¡Las 7 esferas! En la web real se abre Invocar con todas las vías de contacto.':'Contacto bloqueado: llevas '+n()+' de 7.';
+    }
+    d.getElementById('dbs-rec').addEventListener('click',function(){
+      var p=[];for(var s=1;s<=7;s++)if(!got[s])p.push(s);
+      p.forEach(function(s,k){if(on(dm)){setTimeout(function(){take(s)},k*180)}else take(s)});
+    });
+    d.getElementById('dbs-reset').addEventListener('click',function(){
+      got={};for(var s=1;s<=7;s++){balls[s].hidden=false;slots.children[s-1].className='';slots.children[s-1].textContent=''}
+      cnt.textContent='0/7';msg.textContent='Contacto bloqueado: llevas 0 de 7.';
+    });
+  })();
+})();
+</script>
+<script type="module" src="/src/case-fold.js"></script>
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>
