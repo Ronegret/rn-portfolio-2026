@@ -1,43 +1,52 @@
+---
+import '../sx-testimonios.css';
+
+/* Testimonios como "respuesta citada": la cita se ilumina al leerse y su fuente (pestaña) se enciende al terminar.
+   Mismos testimonios y textos de siempre (claves data-i de content.js); sin estrellas. */
+const items = [
+  { ini: 'LD', q: ['t1_q', 'Mientras todos entregaban lo mínimo, él pulía cada detalle como si fuera a salir en producción al día siguiente. Tiene algo distinto que es difícil de explicar — es criterio real.'], n: ['t1_n', 'Compañero · Programa de Diseño UX/UI'] },
+  { ini: 'CH', q: ['t2_q', 'Me presentó el proyecto con datos y retorno potencial — no con sensaciones. En tres meses conseguimos más leads cualificados online que en todo el año anterior combinado.'], n: ['t2_n', 'Director · Despacho Profesional'] },
+  { ini: 'CA', q: ['t3_q', 'Escucha de verdad, no impone. El resultado fue exactamente lo que necesitábamos. Y siguió disponible para iteraciones sin dramas ni costes extras.'], n: ['t3_n', 'Fundadora · Proyecto e-commerce'] },
+];
+---
 <section class="sec" id="testimonios">
   <div class="wrap">
     <p class="eyebrow rv" data-i="test_ey">Referencias verificadas</p>
     <h2 class="sh rv" data-i="test_h">Lo que dicen quienes<br><em>han trabajado conmigo.</em></h2>
     <p class="sb rv" data-i="test_sub">Opiniones reales de colaboradores y clientes. Solo publico referencias con permiso explícito de cada persona.</p>
 
-    <div class="test-g">
-      <!-- Tarjeta 1 -->
-      <div class="test-c rv" data-d="1">
-        <div class="tstars" aria-label="5 estrellas">★★★★★</div>
-        <p class="tq" data-i="t1_q">Mientras todos entregaban lo mínimo, él pulía cada detalle como si fuera a salir en producción al día siguiente. Tiene algo distinto que es difícil de explicar — es criterio real.</p>
-        <div class="tp">
-          <div class="tav ta1"><span>LD</span></div>
-          <div class="tm">
-            <div class="tname" data-i="t1_n">Compañero · Programa de Diseño UX/UI</div>
+    <div class="sx-ts rv" data-cur="1">
+      <p class="sx-ts-ask"><span class="sx-ts-caret" aria-hidden="true">›</span><span data-i="ts_ask">¿Cómo es trabajar con Rodrigo?</span></p>
+
+      <div class="sx-ts-stage">
+        {items.map((t, i) => (
+          <div class:list={['sx-ts-panel', { on: i === 0 }]} id={`sx-ts-p${i + 1}`} role="tabpanel" aria-labelledby={`sx-ts-t${i + 1}`} inert={i !== 0}>
+            <blockquote class="sx-ts-q"><p><span class="sx-ts-txt" data-i={t.q[0]}>{t.q[1]}</span><sup class="sx-ts-ref" aria-hidden="true">{i + 1}</sup></p></blockquote>
           </div>
-        </div>
+        ))}
       </div>
-      <!-- Tarjeta 2 -->
-      <div class="test-c rv" data-d="2">
-        <div class="tstars" aria-label="5 estrellas">★★★★★</div>
-        <p class="tq" data-i="t2_q">Me presentó el proyecto con datos y retorno potencial — no con sensaciones. En tres meses conseguimos más leads cualificados online que en todo el año anterior combinado.</p>
-        <div class="tp">
-          <div class="tav ta2"><span>CH</span></div>
-          <div class="tm">
-            <div class="tname" data-i="t2_n">Director · Despacho Profesional</div>
-          </div>
+
+      <div class="sx-ts-wire" aria-hidden="true"><i></i></div>
+
+      <div class="sx-ts-bar">
+        <span class="sx-ts-lbl" id="sx-ts-lbl" data-i="ts_src">Fuentes</span>
+        <div class="sx-ts-tabs" role="tablist" aria-labelledby="sx-ts-lbl">
+          {items.map((t, i) => (
+            <button type="button" role="tab" class:list={['sx-ts-tab', { lit: i === 0 }]} id={`sx-ts-t${i + 1}`} aria-controls={`sx-ts-p${i + 1}`} aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? '0' : '-1'}>
+              <span class="sx-ts-n" aria-hidden="true">{i + 1}</span>
+              <span class="sx-ts-av" aria-hidden="true">{t.ini}</span>
+              <span class="sx-ts-who" data-i={t.n[0]}>{t.n[1]}</span>
+              <i class="sx-ts-prog" aria-hidden="true"></i>
+            </button>
+          ))}
         </div>
+        <button type="button" class="sx-ts-play" hidden>
+          <svg class="i-pause" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+          <span class="sx-ts-pl-pause" data-i="ts_pause">Pausar</span><span class="sx-ts-pl-play" data-i="ts_play">Reanudar</span>
+        </button>
       </div>
-      <!-- Tarjeta 3 -->
-      <div class="test-c rv" data-d="3">
-        <div class="tstars" aria-label="5 estrellas">★★★★★</div>
-        <p class="tq" data-i="t3_q">Escucha de verdad, no impone. El resultado fue exactamente lo que necesitábamos. Y siguió disponible para iteraciones sin dramas ni costes extras.</p>
-        <div class="tp">
-          <div class="tav ta3"><span>CA</span></div>
-          <div class="tm">
-            <div class="tname" data-i="t3_n">Fundadora · Proyecto e-commerce</div>
-          </div>
-        </div>
-      </div>
+      <p class="sx-ts-cur" aria-hidden="true">{items.map((t) => <span data-i={t.n[0]}>{t.n[1]}</span>)}</p>
     </div>
 
     <div class="test-cta-box rv">
@@ -52,3 +61,4 @@
     </div>
   </div>
 </section>
+<script>import '../sx-testimonios.js';</script>
