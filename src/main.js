@@ -942,3 +942,4 @@ if (avWrap) {
 }
 
 import('./cinema.js'); // capa cinematográfica: al final para que el DOM generado (pills, hero) ya exista
+import('./sections.js'); // separadores entre secciones + firmas por seccion (despues de cinema)
