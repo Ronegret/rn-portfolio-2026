@@ -1,0 +1,26 @@
+/* Transiciones de página (casos): la cortinilla nace de la tarjeta pulsada y el hero se forma desde su imagen.
+   Los nombres (rn-hero) y las variables --rn-* los pone case-transitions.js; sin ellos queda un fundido corto. */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: .15s; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Elemento compartido: la imagen de la tarjeta viaja y se recorta (cover) hasta el hero */
+  ::view-transition-group(rn-hero) { animation-duration: .56s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); }
+  ::view-transition-image-pair(rn-hero) { overflow: clip; animation-name: rn-rad; animation-duration: .56s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both; }
+  ::view-transition-old(rn-hero), ::view-transition-new(rn-hero) { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: normal; }
+  @keyframes rn-rad { from { border-radius: var(--rn-br, 16px); } to { border-radius: 12px; } }
+
+  /* Cortinilla: la página nueva se abre desde el rectángulo pulsado; la vieja se hunde y oscurece */
+  :root:active-view-transition-type(rn-open)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-old(root) { animation-name: rn-sink; z-index: 1; }
+  :root:active-view-transition-type(rn-open)::view-transition-new(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) { animation-name: rn-open; z-index: 2; }
+  :root:active-view-transition-type(rn-open)::view-transition-old(root), :root:active-view-transition-type(rn-open)::view-transition-new(root),
+  :root:active-view-transition-type(rn-nav)::view-transition-old(root), :root:active-view-transition-type(rn-nav)::view-transition-new(root) { mix-blend-mode: normal; animation-duration: .56s; animation-timing-function: cubic-bezier(.76, 0, .24, 1); animation-fill-mode: both; }
+  @keyframes rn-sink { to { transform: scale(.95); filter: brightness(.55); } }
+  @keyframes rn-open {
+    from { clip-path: inset(var(--rn-t, 50%) var(--rn-r, 50%) var(--rn-b, 50%) var(--rn-l, 50%) round var(--rn-br, 24px)); }
+    to { clip-path: inset(0 round 0); }
+  }
+}

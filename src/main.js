@@ -13,6 +13,8 @@ let LANG = 'es';
 (()=>{
   const pl = document.getElementById('preloader');
   if(!pl) return;
+  // Llegada desde un caso (transicion de pagina): sin intro; public/src/case-transitions.js marca html.rn-skip-intro
+  if(document.documentElement.classList.contains('rn-skip-intro')){ pl.remove(); document.documentElement.classList.remove('pl-locked'); document.body.classList.remove('pl-locked'); return; }
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   // Query ?intro=0 fuerza saltar (solo para debug); si no, SIEMPRE se muestra
   const params = new URLSearchParams(location.search);

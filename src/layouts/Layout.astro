@@ -5,11 +5,13 @@ import Dock from '../components/Dock.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import { AVATARS } from '../islands/themes.js';
+import vtCore from '../../public/src/case-transitions.js?raw';
 ---
 <!DOCTYPE html>
 <html lang="es" data-theme="saas">
 <head>
 <meta charset="UTF-8">
+<style is:inline>@view-transition{navigation:auto}</style><!-- opt-in antes de los <link> que bloquean el render: si llega despues Chrome aborta la transicion -->
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' text-anchor='middle' fill='%23fff'%3ERN%3C/text%3E%3Ccircle cx='51' cy='13' r='5' fill='%23ff2d2d'/%3E%3C/svg%3E">
   <meta name="description" content="Rodrigo Negrete — AI Product Designer especializado en agentes IA, hiperautomatización y diseño de producto con IA aplicada. Máster EBIS en Agentes de IA. +17 años previos en negocio B2B enterprise (Movistar/Telefónica). Proyectos reales en producción: Rodd.es, ZODI, Dedícalo Play. Barcelona · Remoto EU · Freelance.">
@@ -72,6 +74,9 @@ import { AVATARS } from '../islands/themes.js';
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 </noscript>
 
+<!-- Transiciones de pagina: logica compartida con los casos (public/src/case-transitions.js), inline para estar lista antes del primer pintado -->
+<script is:inline set:html={vtCore}></script>
+<script is:inline>try{if((sessionStorage.getItem('rn-vt')||'').includes('back')){var l=document.createElement('link');l.rel='expect';l.href='#proyectos';l.setAttribute('blocking','render');document.head.appendChild(l)}}catch(e){}</script>
 <script defer is:inline src="https://cdn.jsdelivr.net/npm/ogl@1.0.10/dist/ogl.umd.js"></script>
 </head>
 <body>
@@ -84,6 +89,7 @@ import { AVATARS } from '../islands/themes.js';
 <Footer />
 <script>
   import '../main.js';
+  import '../transitions.js';
 </script>
 <!-- Tema persistido: se aplica antes del primer pintado (el body ya esta parseado); las islas hidratan despues sin salto -->
 <script is:inline define:vars={{ AVATARS }}>try{var t=sessionStorage.getItem('rn-theme');if(t&&AVATARS[t]){document.documentElement.setAttribute('data-theme',t);var a=document.getElementById('av');if(a)a.src=AVATARS[t];document.querySelectorAll('.dk,.tc').forEach(function(b){var on=(b.dataset.t||b.dataset.tc)===t;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}}catch(e){}</script>
