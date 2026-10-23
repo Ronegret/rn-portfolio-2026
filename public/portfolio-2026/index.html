@@ -79,7 +79,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .btn-ghost:hover{background:var(--line)}
 .wrap{max-width:1100px;margin:0 auto}
 .hero{padding:112px 20px 72px;background:radial-gradient(110% 70% at 85% -10%,#173b3a 0%,transparent 60%),radial-gradient(80% 60% at 0% 0%,#271f4d 0%,transparent 55%),var(--bg);border-bottom:1px solid var(--line)}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.hero .wrap{max-width:1280px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,620px);gap:44px;align-items:center}
 .eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
 h1{font-size:clamp(2.5rem,6.2vw,4.7rem);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin-bottom:20px}
 h1 em,h2 em{font-style:normal;color:var(--acc)}
@@ -89,6 +90,7 @@ h1 em,h2 em{font-style:normal;color:var(--acc)}
 .ficha{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;padding-top:22px;border-top:1px solid var(--line)}
 .ficha dt{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
 .ficha dd{font-weight:600;font-size:.98rem}
+.hero-grid figure{max-width:640px;justify-self:end;width:100%}
 .cap{font-size:.86rem;color:var(--mute);margin-top:10px;line-height:1.5}
 figure img{border-radius:16px;border:1px solid var(--line)}
 section.s{padding:92px 20px;border-bottom:1px solid var(--line)}
@@ -250,6 +252,12 @@ footer a{color:var(--acc)}
   .toc{columns:1}
   section.s{padding:68px 16px}
   .hero{padding:96px 16px 56px}
+  .hero-grid>div:first-child{display:contents}
+  .hero-grid>div:first-child>*{grid-column:1}
+  .hero-grid{gap:0}
+  .hero .eyebrow{order:1}.hero h1{order:2}.hero-grid figure{order:3;margin:0 0 24px;justify-self:center}.hero .lead{order:4}.hero .actions{order:5}.hero .ficha{order:6}
+  .hero-grid figure img{width:min(100%,calc(38svh*1.538));margin:0 auto}
+  .hero-grid figcaption{display:none}
   .piece>header{padding:20px 18px 4px}
   .pf>div{padding:12px 18px 16px}
   .piece-x{padding:4px 16px 20px}
@@ -287,8 +295,8 @@ footer a{color:var(--acc)}
       </dl>
     </div>
     <figure>
-      <img src="/assets/portfolio-2026/tema-saas.webp" width="720" height="450" alt="Portada del portfolio en el tema Dual Core AI: titular Diseño flujos, interfaces y automatizaciones sobre fondo oscuro con tarjeta de perfil y selector de temas a la derecha">
-      <figcaption class="cap">Portada del portfolio, tema por defecto. Captura real a 1440 px.</figcaption>
+      <img src="/assets/portfolio-2026/hero-retrato.webp" width="1400" height="910" alt="Tarjeta de perfil de la portada del portfolio en el tema Dual Core AI: retrato, AI Product Designer, 2+ años de UX/IA, 11 casos, 50+ herramientas y selector de temas">
+      <figcaption class="cap">Tarjeta de perfil de la portada, tema por defecto. Captura real.</figcaption>
     </figure>
   </div>
 </section>
