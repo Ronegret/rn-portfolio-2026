@@ -5,6 +5,9 @@
 /* ───── (A0) Sustituye el separador scaleX y el tinte radial de scroll-fx.css ───── */
 .sec::after { content: none; }                  /* la regla del separador la dibuja ahora .sx-div */
 .sx-div + .sec { border-top: 0; }
+/* overflow:hidden convertia cada .sec en el "scroller" de sus animation-timeline: view() (timeline inactiva, todo lo scroll-driven de
+   cinema/scroll-fx/motion dentro de las secciones no corria). clip recorta igual sin crear contenedor de scroll. */
+.sec { overflow: clip; }
 
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
@@ -18,6 +21,15 @@
       animation-timeline: view(); animation-range: cover 0% cover 100%;
     }
     @keyframes sx-tint { 0% { opacity: 0; } 30%, 70% { opacity: 1; } 100% { opacity: 0; } }
+  }
+}
+
+/* La cortinilla de cinema.css animaba opacity (.2 -> 1) con fill backwards: con la timeline ya activa, las secciones por debajo del
+   pliegue quedan a opacity .2 y axe/Lighthouse miden contraste 1.3:1. Misma cortinilla, solo clip-path. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sec.sec:not(#proyectos) > .wrap { animation-name: sx-curtain; }
+    @keyframes sx-curtain { from { clip-path: inset(0 46% 0 46%); } to { clip-path: inset(-120px -5% -120px -5%); } }
   }
 }
 
@@ -81,7 +93,7 @@
     }
     @keyframes sx-lit { from { opacity: .7; } to { opacity: 1; } }
     /* protagonista unica: aqui la cortinilla de cinema.css sobra */
-    #sobre-mi > .wrap { animation-name: none; }
+    #sobre-mi.sec.sec > .wrap { animation-name: none; }
   }
 }
 
@@ -167,7 +179,8 @@ footer.fx-footer { padding-bottom: 0; }
 }
 
 /* ───── (B6) Contacto: email que se copia al clic ───── */
-.sx-copy { display: inline-flex; align-items: center; gap: .35rem; margin-left: .55rem; padding: 2px 8px; border: 1px solid var(--bord2); border-radius: var(--rb, 100px); font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--t2); vertical-align: middle; white-space: nowrap; transition: background-color .16s, color .16s, border-color .16s; }
+#contacto a.cc-v[href^="mailto:"] { display: block; }
+.sx-copy { display: flex; width: fit-content; align-items: center; gap: .35rem; margin: .5rem auto 0; padding: 3px 9px; border: 1px solid var(--bord2); border-radius: var(--rb, 100px); font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--t2); white-space: nowrap; transition: background-color .16s, color .16s, border-color .16s; }
 .sx-copy b { font-weight: 700; }
 a.cc-v:hover .sx-copy, a.cc-v:focus-visible .sx-copy { border-color: var(--a1); color: var(--t1); }
 a.cc-v.sx-ok .sx-copy { background: var(--a1); border-color: var(--a1); color: var(--bg); }

@@ -9,13 +9,13 @@ const pad = n => String(n).padStart(2, '0');
 
 const I = {
   es: { names: ['Sobre mí', 'Stack', 'Proyectos', 'Laboratorio', 'Trayectoria', 'Testimonios', 'Estilos', 'Contacto'],
-    copy: 'Copiar', copied: 'Copiado', live: 'Email copiado al portapapeles', copyLbl: 'copiar al portapapeles',
+    copy: 'Copiar', copied: 'Copiado', live: 'Email copiado al portapapeles',
     clock: 'Hora en Barcelona', car: 'Testimonios', prev: 'Testimonio anterior', next: 'Testimonio siguiente' },
   ca: { names: ['Sobre mi', 'Stack', 'Projectes', 'Laboratori', 'Trajectòria', 'Testimonis', 'Estils', 'Contacte'],
-    copy: 'Copiar', copied: 'Copiat', live: 'Email copiat al porta-retalls', copyLbl: 'copiar al porta-retalls',
+    copy: 'Copiar', copied: 'Copiat', live: 'Email copiat al porta-retalls',
     clock: 'Hora a Barcelona', car: 'Testimonis', prev: 'Testimoni anterior', next: 'Testimoni següent' },
   en: { names: ['About', 'Stack', 'Projects', 'Lab', 'Career', 'Testimonials', 'Styles', 'Contact'],
-    copy: 'Copy', copied: 'Copied', live: 'Email copied to clipboard', copyLbl: 'copy to clipboard',
+    copy: 'Copy', copied: 'Copied', live: 'Email copied to clipboard',
     clock: 'Local time in Barcelona', car: 'Testimonials', prev: 'Previous testimonial', next: 'Next testimonial' },
 };
 const tr = () => I[doc.lang] || I.es;
@@ -122,9 +122,14 @@ if (tg && tg.children.length > 1) {
     tg.scrollTo({ left: s.offsetLeft - (parseFloat(getComputedStyle(tg).paddingLeft) || 0), behavior: motion.matches ? 'smooth' : 'auto' });
   };
   prev.addEventListener('click', () => go(-1)); next.addEventListener('click', () => go(1));
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { cur = slides.indexOf(e.target); paint(); }
-  }), { root: tg, threshold: .6 });
+  // Slide actual = el mas cercano al borde izquierdo; al final del recorrido, el ultimo (el ultimo puede no llegar al borde)
+  const sync = () => {
+    const pl = parseFloat(getComputedStyle(tg).paddingLeft) || 0;
+    cur = tg.scrollLeft >= tg.scrollWidth - tg.clientWidth - 2 ? n - 1
+      : slides.reduce((b, s, i) => Math.abs(s.offsetLeft - pl - tg.scrollLeft) < Math.abs(slides[b].offsetLeft - pl - tg.scrollLeft) ? i : b, 0);
+    paint();
+  };
+  const io = new IntersectionObserver(sync, { root: tg, threshold: [.5, 1] });
   slides.forEach(s => io.observe(s));
 }
 
@@ -167,12 +172,12 @@ if (tag) {
 const mail = $('#contacto a.cc-v[href^="mailto:"]');
 if (mail) {
   const addr = mail.textContent.trim();
-  mail.insertAdjacentHTML('beforeend', '<span class="sx-copy" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg><b></b></span>');
+  mail.insertAdjacentHTML('beforeend', '<span class="sx-copy"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg><b></b></span>');
   const hint = $('.sx-copy b', mail);
   const live = document.createElement('span');
   live.className = 'sx-sr'; live.setAttribute('role', 'status'); live.setAttribute('aria-live', 'polite');
   mail.after(live);
-  const text = () => { hint.textContent = mail.classList.contains('sx-ok') ? tr().copied : tr().copy; mail.setAttribute('aria-label', `${addr}, ${tr().copyLbl}`); };
+  const text = () => { hint.textContent = mail.classList.contains('sx-ok') ? tr().copied : tr().copy; };
   text(); onLang.push(text);
   const ok = () => {
     mail.classList.add('sx-ok'); text();
