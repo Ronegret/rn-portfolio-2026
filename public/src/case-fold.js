@@ -162,6 +162,7 @@ const allOpen = () => folds.length > 0 && folds.every((f) => f.open);
 function syncSwitch() {
   if (!sw) return;
   const full = allOpen();
+  root.toggleAttribute('data-cf-full', full); // los respiros (.cf-breath) son más bajos en el modo Resumen
   sw.setAttribute('aria-pressed', String(full));
   status.textContent = full ? L.fullSt : L.sumSt;
 }
@@ -247,7 +248,65 @@ function initCarousels() {
   });
 }
 
+/* ---------- Hilo narrativo: Problema → Decisión → Resultado ----------
+   Cada <section> puede llevar data-thread="problema|decision|resultado|aprendido|estado".
+   Aquí se pinta un chip en el antetítulo («DECISIÓN · 05») y una cinta con ancla a la primera sección de cada tramo.
+   «resultado» solo con datos o producto en uso que el propio caso presenta; si no, «aprendido» (lo aprendido) o «estado» (estado actual). */
+const TH = {
+  es: { problema: 'Problema', decision: 'Decisión', resultado: 'Resultado', aprendido: 'Lo aprendido', estado: 'Estado actual', mix: 'Estado y aprendizaje', none: 'Sin resultado medido', nav: 'Hilo del caso: problema, decisión, resultado' },
+  ca: { problema: 'Problema', decision: 'Decisió', resultado: 'Resultat', aprendido: 'Allò après', estado: 'Estat actual', mix: 'Estat i aprenentatge', none: 'Sense resultat mesurat', nav: 'Fil del cas: problema, decisió, resultat' },
+  en: { problema: 'Problem', decision: 'Decision', resultado: 'Result', aprendido: 'What I learned', estado: 'Current status', mix: 'Status and learning', none: 'No measured result', nav: 'Case thread: problem, decision, result' },
+};
+const TL = TH[(root.lang || 'es').slice(0, 2)] || TH.es;
+function initThread() {
+  const secs = [...d.querySelectorAll('section')].filter((s) => !s.parentElement.closest('section') && !s.closest('header,footer,nav') && !s.matches('.hero') && !s.querySelector('h1') && heading(s));
+  const tagged = secs.filter((s) => TL[s.dataset.thread] && s.dataset.thread !== 'mix' && s.dataset.thread !== 'none' && s.dataset.thread !== 'nav');
+  if (!tagged.length) return;
+  tagged.forEach((s) => {
+    const k = s.dataset.thread, h = heading(s);
+    if (!s.id) s.id = `cf-t${secs.indexOf(s) + 1}`;
+    let a = s.querySelector('.eyebrow,[class*="eyebrow"]');
+    if (!a || (a.compareDocumentPosition(h) & Node.DOCUMENT_POSITION_PRECEDING)) {
+      const p = h.previousElementSibling;
+      a = p && !/^H\d$/.test(p.tagName) && p.textContent.trim().length < 80 ? p : h;
+    }
+    const m = a.textContent.trim().match(/^(\d{1,2})\s*[·.\-–]/);
+    const chip = el('span', 'cf-th');
+    chip.dataset.k = k;
+    chip.textContent = `${TL[k]} · ${String(m ? m[1] : secs.indexOf(s) + 1).padStart(2, '0')}`;
+    const cs = getComputedStyle(a);
+    s.style.setProperty('--cf-th', cs.color);
+    if (cs.textAlign === 'center') chip.classList.add('cf-ctr');
+    a.before(chip);
+  });
+  const by = (f) => tagged.filter(f);
+  const P = by((s) => s.dataset.thread === 'problema'), D = by((s) => s.dataset.thread === 'decision'), C = by((s) => !/^(problema|decision)$/.test(s.dataset.thread));
+  const kinds = new Set(C.map((s) => s.dataset.thread));
+  const cl = kinds.size === 1 ? TL[[...kinds][0]] : kinds.has('resultado') ? TL.resultado : TL.mix;
+  const steps = [['problema', TL.problema, P], ['decision', TL.decision, D], [kinds.has('resultado') ? 'resultado' : 'estado', cl, C]].filter((x) => x[2].length);
+  if (!C.length && (P.length || D.length)) steps.push(['none', TL.none, []]);
+  const nav = el('nav', 'cf-thread', { 'aria-label': TL.nav });
+  const ol = el('ol');
+  ol.style.setProperty('--n', steps.length);
+  steps.forEach(([k, label, list], i) => {
+    const li = el('li', list.length ? '' : 'cf-none');
+    li.dataset.k = k;
+    const inner = list.length ? el('a', '', { href: `#${list[0].id}` }) : el('span');
+    const t = list.length ? heading(list[0]).textContent.replace(/\s+/g, ' ').trim() : '';
+    inner.innerHTML = `<span class="cf-tl"><span class="cf-tn" aria-hidden="true">${i + 1}</span>${label}</span>${t ? '<span class="cf-tt"></span>' : ''}`;
+    if (t) inner.querySelector('.cf-tt').textContent = t;
+    li.append(inner);
+    ol.append(li);
+  });
+  nav.append(ol);
+  secs[0].before(nav);
+}
+
+function start() {
+  initThread();
+  if (!root.hasAttribute('data-cf-thread-only')) initFolds();
+}
 themeVars();
 initCarousels();
-if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', initFolds);
-else initFolds();
+if (d.readyState === 'loading') d.addEventListener('DOMContentLoaded', start);
+else start();
