@@ -932,6 +932,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
     <button class="tab-btn" data-tab="pagos" role="tab"><span class="tab-num">04</span>Presupuesto y pagos</button>
     <button class="tab-btn" data-tab="contrato" role="tab"><span class="tab-num">05</span>Contrato</button>
     <button class="tab-btn" data-tab="portal" role="tab"><span class="tab-num">06</span>Portal novios</button>
+    <button class="tab-btn" data-tab="boda" role="tab"><span class="tab-num">07</span>Espacio de boda</button>
   </div>
 
   <div class="tab-panels">
@@ -1094,6 +1095,31 @@ footer a:hover{border-bottom-color:var(--mostaza)}
       </div>
       <div class="mock-wrap">
         <img src="/assets/events-planner/screens/desktop-portal.webp" alt="Portal privado de la pareja Ainhoa y Diego: portada con foto de la boda, 19 días hasta el enlace, ocho apartados y resumen del gran día" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="boda">
+      <div class="tab-info">
+        <h3>Espacio de trabajo de <em>cada boda</em></h3>
+        <p class="tab-lead">
+          Cada boda abre su propio espacio con seis bloques: Resumen,
+          Planificación, Personas, Producción, Gestión y Herramientas.
+        </p>
+        <p>
+          La cabecera da la preparación calculada (10 de 12 bloques), los
+          días que faltan, los invitados confirmados, los proveedores
+          cerrados y el presupuesto pagado. Debajo, el siguiente hito del
+          timeline.
+        </p>
+        <ul>
+          <li><strong>Planificación</strong>: timeline, tareas y Wedding Day.</li>
+          <li><strong>Personas</strong>: invitados, mesas con plano, menús y alergias.</li>
+          <li><strong>Producción</strong>: proveedores propuestos a la pareja y catálogo de rincones con seguimiento de compra.</li>
+          <li><strong>Gestión y Herramientas</strong>: presupuesto, contrato, documentos y dossier imprimible.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-boda.webp" alt="Espacio de trabajo de la boda de Ainhoa y Diego (datos de ejemplo): resumen con 83 % de preparación, 52 invitados, 9 proveedores y 27.650 euros de presupuesto" class="mock-img" width="1440" height="900" loading="lazy">
       </div>
     </div>
   </div>
@@ -1383,8 +1409,8 @@ punto (151,683) → responde el botón que está en (721,984)</div>
     </tbody>
   </table>
 
-  <h3>Mejoras entregadas en la hoja de ruta</h3>
-  <p>Más allá del alcance inicial, dejé documentadas y priorizadas una serie de evoluciones que suman valor al producto en el medio plazo. Son las piezas que convierten una app en una plataforma viva:</p>
+  <h3>Hoja de ruta</h3>
+  <p>Evoluciones documentadas y priorizadas que aún no están hechas. Son las piezas que convertirían una app en una plataforma viva:</p>
   <ol>
     <li><strong>Cola de cambios sin conexión</strong> con reintento inteligente y resolución de conflictos avanzada, para equipos distribuidos en fincas remotas.</li>
     <li><strong>Navegación mobile-first del portal</strong> con tabs scroll-snap y centrado automático de la sección activa.</li>
@@ -1393,6 +1419,59 @@ punto (151,683) → responde el botón que está en (721,984)</div>
     <li><strong>Modos de boda diferenciados</strong> (reales, referencia y demostración) con separación visual clara dentro de la herramienta.</li>
     <li><strong>Mejoras WCAG AAA</strong> en contraste y jerarquía, reforzando los estados con texto y forma además del color.</li>
   </ol>
+</section>
+
+
+<!-- 09 · FICHA TÉCNICA -->
+<section class="seccion narrow rv" id="ficha">
+  <span class="sec-num">09 · Ficha técnica</span>
+  <h2 class="sec-h">Qué incluye, cómo está hecho y <em>qué falta</em></h2>
+
+  <p class="entradilla">
+    Todo lo que sigue sale del repositorio del producto. Lo que todavía no
+    está hecho se dice igual de claro que lo que sí.
+  </p>
+
+  <h3>Funcionalidades</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:34%">Área</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td>Panel de inicio</td><td>Lo que necesita atención hoy: preparación calculada, días restantes y alertas accionables.</td></tr>
+      <tr><td>Bodas y agenda</td><td>Listado de bodas, calendario mensual o en lista y espacio de trabajo por boda: timeline, tareas y Wedding Day.</td></tr>
+      <tr><td>Invitados y mesas</td><td>Invitados, plano de mesas, menús y alergias.</td></tr>
+      <tr><td>Proveedores</td><td>Proveedores reutilizables, valorables y propuestos a cada pareja. Buscador de proveedores en la web, apoyado en una función de servidor que guarda la clave de Google fuera del navegador y cachea 14 días.</td></tr>
+      <tr><td>Rincones</td><td>Catálogo con foto y descripción, y seguimiento de compra.</td></tr>
+      <tr><td>Presupuesto</td><td>Partidas y plazos, parte facturada y no facturada, pagos y comprobantes.</td></tr>
+      <tr><td>Contrato</td><td>Contrato imprimible a partir de los servicios contratados, con firma dibujada o marcado como firmado en papel.</td></tr>
+      <tr><td>Portal de parejas</td><td>Cada pareja ve solo su boda, nunca notas internas ni datos del equipo, y puede tener tareas asignadas.</td></tr>
+      <tr><td>Exportación</td><td>Centro de exportación con selección de contenido y destinatario (equipo, parejas o proveedores) y dossier imprimible con portada y paleta de la boda.</td></tr>
+      <tr><td>Dispositivos</td><td>Barra lateral en escritorio, barra de tablet y barra inferior en móvil. Se instala como app y abre sin conexión.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Stack</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:34%">Pieza</th><th>Cómo está resuelta</th></tr></thead>
+    <tbody>
+      <tr><td>Interfaz</td><td>HTML, CSS y JavaScript con módulos ES nativos, sin framework. Un paso de compilación une los módulos en un solo paquete y estampa cada versión para que ningún móvil se quede con una copia antigua.</td></tr>
+      <tr><td>Sin conexión</td><td>Manifiesto de app y service worker con red primero. Supabase y cualquier API van siempre por red, nunca desde caché.</td></tr>
+      <tr><td>Datos</td><td>Supabase (PostgreSQL) con ocho migraciones versionadas, seguridad por filas en todas las tablas expuestas, almacenamiento privado para documentos y estado compartido con control de concurrencia y tiempo real.</td></tr>
+      <tr><td>Auditoría</td><td>Puente relacional para bodas y tareas con registro de servidor del actor y de los datos antes y después.</td></tr>
+      <tr><td>Pruebas</td><td>15 pruebas pgTAP de base de datos: sincronización, estados, responsables, auditoría, borrado lógico y aislamiento por membresía.</td></tr>
+      <tr><td>Seguridad</td><td>Escapado HTML sistemático en las filas de datos, contra XSS almacenado.</td></tr>
+      <tr><td>Demo</td><td>Tres bodas inventadas con semilla fija cuyas fechas se desplazan al cargar. Sin credenciales de nube: guarda en el navegador de quien visita y caduca a la semana.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Lo que aún no está</h3>
+  <ul>
+    <li>Migración de los módulos restantes a tablas relacionales dedicadas: hoy el estado compartido sigue como origen compatible.</li>
+    <li>Cola de cambios sin conexión con reintento y resolución de conflictos.</li>
+    <li>Pasarela de pago real (hoy hay aviso y comprobante) y firma electrónica cualificada (hoy es un dibujo).</li>
+    <li>Dossier en PDF generado en servidor: hoy usa la impresión del navegador.</li>
+    <li>Tests de frontend, integración completa y E2E; CI/CD, copias de seguridad y restauración.</li>
+    <li>Versión en tres idiomas (es, ca, en).</li>
+  </ul>
 </section>
 
 <!-- CITA -->
