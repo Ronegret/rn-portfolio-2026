@@ -18,7 +18,7 @@ export const cv = {
     headline: 'Product Designer UX/UI | AI Product Designer',
     tagline: 'Figma · Design Systems · IA generativa · Automatización · CRO',
     location: 'Barcelona, España',
-    availability: 'Incorporación inmediata · Barcelona, remoto UE o híbrido · Residencia legal en España',
+    availability: 'Incorporación inmediata · Barcelona, remoto UE o híbrido · Nacionalidad española',
     targetRoles: 'Disponible para roles de AI Product Designer, Product Designer, UX/UI Designer, AI Automation Specialist o Design Technologist.',
     h: { summary: 'Resumen profesional', experience: 'Experiencia profesional', projects: 'Proyectos', skills: 'Habilidades', education: 'Educación', languages: 'Idiomas' },
     summary:
@@ -84,7 +84,7 @@ export const cv = {
     projects: [
       { name: 'ZODI · AI Product, PWA, freemium', url: 'rodrigonegrete.es/zodi/', text: 'Producto de astrología, tarot, numerología y comunidad con chat conversacional personalizado por IA. 17 tipos de lectura, 4 tonos de respuesta, planes premium. Botpress, Make y OpenAI.' },
       { name: 'Just Enjoy · TFM en equipo del máster, calificación 10/10', url: 'rodrigonegrete.es/just-enjoy/', text: 'Trabajo en equipo (3 integrantes): plataforma de hiperautomatización de viajes con agentes de IA (workflow de n8n con 27 nodos, GPT-4.1 y Next.js). Mi parte: frontend, diseño UX/UI e interfaces y parte de la automatización en n8n.' },
-      { name: 'Iberdata · business case final del máster, examen 10/10', url: 'rodrigonegrete.es/iberdata/', text: 'Centro de Excelencia de IA para una empresa de 450 empleados: gobierno, arquitectura RAG, 2 pilotos, plan de 12 semanas, KPIs y matriz de riesgos.' },
+      { name: 'Iberdata · business case final del máster, proyecto individual, examen 10/10', url: 'rodrigonegrete.es/iberdata/', text: 'Centro de Excelencia de IA para una empresa de 450 empleados: gobierno, arquitectura RAG, 2 pilotos, plan de 12 semanas, KPIs y matriz de riesgos.' },
       { name: 'Events Planner · PWA para wedding planners', url: 'rodrigonegrete.es/aem/', text: 'Aplicación web sin conexión para un estudio de bodas: portal de la pareja, plano de mesas, contrato imprimible; 15 pruebas de base de datos (pgTAP).' },
       { name: 'Dedícalo Play · juego multijugador en tiempo real', url: 'rodrigonegrete.es/dedicalo-play/', text: 'Party game musical para navegador con React y Supabase: mecánicas, UX/UI y lanzamiento. 3 modos de juego.' },
       { name: 'Invitoo · wedding tech con IA (founder)', url: 'rodrigonegrete.es/invitoo/', text: 'Invitaciones digitales con RSVP, canciones generadas con IA (Suno) y automatizaciones con Make; UX/UI y publicación web.' },
@@ -122,7 +122,7 @@ export const cv = {
     headline: 'Product Designer UX/UI | AI Product Designer',
     tagline: 'Figma · Design Systems · Generative AI · Automation · CRO',
     location: 'Barcelona, Spain',
-    availability: 'Available immediately · Barcelona, remote EU or hybrid · Legal residence in Spain',
+    availability: 'Available immediately · Barcelona, remote EU or hybrid · Spanish national',
     targetRoles: 'Open to AI Product Designer, Product Designer, UX/UI Designer, AI Automation Specialist or Design Technologist roles.',
     h: { summary: 'Professional Summary', experience: 'Professional Experience', projects: 'Projects', skills: 'Skills', education: 'Education', languages: 'Languages' },
     summary:
@@ -188,7 +188,7 @@ export const cv = {
     projects: [
       { name: 'ZODI · AI product, PWA, freemium', url: 'rodrigonegrete.es/zodi/', text: 'Astrology, tarot, numerology and community product with a personalized AI conversational chat, UX writing and its own visual identity. 17 reading types, 4 response tones, premium plans. Botpress, Make and OpenAI.' },
       { name: 'Just Enjoy · Team master thesis, grade 10/10', url: 'rodrigonegrete.es/just-enjoy/', text: 'Team project (3 members): travel hyperautomation platform with AI agents (27-node n8n workflow, GPT-4.1 and Next.js). My part: frontend, UX/UI design and interfaces, and part of the n8n automation.' },
-      { name: 'Iberdata · Master final business case, exam 10/10', url: 'rodrigonegrete.es/iberdata/', text: 'AI Center of Excellence for a 450-employee company: governance, RAG architecture, 2 pilots, 12-week plan, KPIs and risk matrix.' },
+      { name: 'Iberdata · Master final business case, solo project, exam 10/10', url: 'rodrigonegrete.es/iberdata/', text: 'AI Center of Excellence for a 450-employee company: governance, RAG architecture, 2 pilots, 12-week plan, KPIs and risk matrix.' },
       { name: 'Events Planner · PWA for wedding planners', url: 'rodrigonegrete.es/aem/', text: 'Offline-capable web app for a wedding studio, with a private couple portal, seating plan and printable contract; 15 database tests (pgTAP).' },
       { name: 'Dedícalo Play · real-time multiplayer game', url: 'rodrigonegrete.es/dedicalo-play/', text: 'Browser-based musical party game built with React and Supabase: concept, mechanics, branding, UX/UI and launch. 3 game modes.' },
       { name: 'Invitoo · wedding tech with AI (founder)', url: 'rodrigonegrete.es/invitoo/', text: 'Digital invitations with RSVP, animations, AI-generated songs (Suno) and Make automations. End-to-end UX/UI and web publishing.' },
