@@ -383,117 +383,18 @@ try {
 })();
 
 /* ═══════════════════════════════════════
-   LIGHT RAYS — WebGL via OGL
+   FIRMA WEBGL DEL HERO — gobernanza: el modulo (y ogl) solo se descargan si el dispositivo lo aguanta
+   y tras el LCP (load + idle). Interruptor de depuracion: ?webgl=0
 ═══════════════════════════════════════ */
 (()=>{
-  const canvas = document.getElementById('lr-canvas');
-  if(!canvas) return;
-
-  function initLR(){
-    if(typeof window.ogl === 'undefined'){
-      setTimeout(initLR, 120);
-      return;
-    }
-    const { Renderer, Program, Triangle, Mesh } = window.ogl;
-    let renderer, mesh, uniforms, animId;
-    let mousePos = {x:.5, y:.5};
-    let smoothMouse = {x:.5, y:.5};
-
-    const hexToRgb = hex => {
-      const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-      return m ? [parseInt(m[1],16)/255, parseInt(m[2],16)/255, parseInt(m[3],16)/255] : [1,1,1];
-    };
-
-    const vert = `attribute vec2 position; varying vec2 vUv; void main(){vUv=position*.5+.5;gl_Position=vec4(position,0.,1.);}`;
-    const frag = `precision highp float; uniform float iTime; uniform vec2 iResolution; uniform vec2 rayPos; uniform vec2 rayDir; uniform vec3 raysColor; uniform float raysSpeed; uniform float lightSpread; uniform float rayLength; uniform float fadeDistance; uniform vec2 mousePos; uniform float mouseInfluence; uniform float distortion; varying vec2 vUv;
-float rayStrength(vec2 raySource,vec2 rayRefDirection,vec2 coord,float seedA,float seedB,float speed){
-  vec2 s2c=coord-raySource; vec2 dn=normalize(s2c); float cosA=dot(dn,rayRefDirection);
-  float da=cosA+distortion*sin(iTime*2.+length(s2c)*.01)*.2; float sf=pow(max(da,0.),1./max(lightSpread,.001));
-  float dist=length(s2c); float maxDist=iResolution.x*rayLength; float lf=clamp((maxDist-dist)/maxDist,0.,1.);
-  float ff=clamp((iResolution.x*fadeDistance-dist)/(iResolution.x*fadeDistance),.5,1.);
-  float bs=clamp((.45+.15*sin(da*seedA+iTime*speed))+(.3+.2*cos(-da*seedB+iTime*speed)),0.,1.);
-  return bs*lf*ff*sf;
-}
-void main(){
-  vec2 coord=vec2(gl_FragCoord.x,iResolution.y-gl_FragCoord.y); vec2 frd=rayDir;
-  if(mouseInfluence>0.){ vec2 msp=mousePos*iResolution.xy; vec2 md=normalize(msp-rayPos); frd=normalize(mix(rayDir,md,mouseInfluence)); }
-  vec4 r1=vec4(1.)*rayStrength(rayPos,frd,coord,36.2214,21.11349,1.5*raysSpeed);
-  vec4 r2=vec4(1.)*rayStrength(rayPos,frd,coord,22.3991,18.0234,1.1*raysSpeed);
-  vec4 fc=r1*.5+r2*.4; float br=1.-(coord.y/iResolution.y); fc.x*=.1+br*.8;fc.y*=.3+br*.6;fc.z*=.5+br*.5; fc.rgb*=raysColor; gl_FragColor=fc;
-}`;
-
-    function setup(){
-      if(renderer) return;
-      try{
-        renderer = new Renderer({canvas, dpr:Math.min(devicePixelRatio,2), alpha:true});
-        const gl = renderer.gl;
-        uniforms = {
-          iTime:{value:0}, iResolution:{value:[1,1]}, rayPos:{value:[0,0]}, rayDir:{value:[0,1]},
-          raysColor:{value:hexToRgb('#00d4d4')}, raysSpeed:{value:1.4}, lightSpread:{value:.65},
-          rayLength:{value:1.5}, fadeDistance:{value:1.0}, mousePos:{value:[.5,.5]}, mouseInfluence:{value:.12}, distortion:{value:.04}
-        };
-        const geometry = new Triangle(gl);
-        const program = new Program(gl, {vertex:vert, fragment:frag, uniforms});
-        mesh = new Mesh(gl, {geometry, program});
-        resize();
-      } catch(e){}
-    }
-
-    function resize(){
-      if(!renderer || !canvas) return;
-      const w=canvas.clientWidth, h=canvas.clientHeight;
-      renderer.setSize(w, h);
-      const dpr=renderer.dpr;
-      uniforms.iResolution.value=[w*dpr, h*dpr];
-      uniforms.rayPos.value=[w*dpr*.5, -h*dpr*.18];
-      uniforms.rayDir.value=[0,1];
-    }
-
-    function loop(t){
-      if(!renderer || !mesh || !uniforms){ animId=requestAnimationFrame(loop); return; }
-      if(document.body.classList.contains('is-scrolling')) {
-        animId=requestAnimationFrame(loop);
-        return;
-      }
-      uniforms.iTime.value=t*.001;
-      smoothMouse.x=smoothMouse.x*.92+mousePos.x*.08;
-      smoothMouse.y=smoothMouse.y*.92+mousePos.y*.08;
-      uniforms.mousePos.value=[smoothMouse.x,smoothMouse.y];
-      const theme=document.documentElement.getAttribute('data-theme');
-      if(theme==='saas') uniforms.raysColor.value=hexToRgb('#00d4d4');
-      try{ renderer.render({scene:mesh}); } catch(e){}
-      animId=requestAnimationFrame(loop);
-    }
-
-    function show(){ canvas.style.opacity='0.4'; setup(); animId=requestAnimationFrame(loop); }
-    function hide(){ canvas.style.opacity='0'; if(animId){cancelAnimationFrame(animId);animId=null;} }
-
-    window.addEventListener('mousemove', e=>{
-      const rect = canvas.getBoundingClientRect();
-      mousePos.x=(e.clientX-rect.left)/rect.width;
-      mousePos.y=(e.clientY-rect.top)/rect.height;
-    },{passive:true});
-    window.addEventListener('resize',resize,{passive:true});
-
-    const moTarget = document.documentElement;
-    if(moTarget && moTarget.nodeType === 1){
-      const mo=new MutationObserver(()=>{
-        const th=moTarget.getAttribute('data-theme');
-        if(th==='saas') show(); else hide();
-      });
-      mo.observe(moTarget,{attributes:true,attributeFilter:['data-theme']});
-    }
-
-    const th=document.documentElement.getAttribute('data-theme');
-    if(th==='saas'){ show(); } else { hide(); }
-
-    document.addEventListener('visibilitychange',()=>{
-      if(document.hidden&&animId){ cancelAnimationFrame(animId);animId=null; }
-      else if(!document.hidden&&document.documentElement.getAttribute('data-theme')==='saas'){ animId=requestAnimationFrame(loop); }
-    });
-  }
-
-  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',initLR); } else { initLR(); }
+  const nav=navigator, cn=nav.connection||{};
+  const desktop=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  const mem=nav.deviceMemory?nav.deviceMemory>=4:(nav.hardwareConcurrency||0)>=4;
+  let ok=document.getElementById('lr-canvas')&&!cn.saveData&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&(mem||desktop)&&!/[?&]webgl=0\b/.test(location.search);
+  if(ok){ try{ const t=document.createElement('canvas'); ok=!!(t.getContext('webgl2')||t.getContext('webgl')); }catch(e){ ok=false; } }
+  if(!ok) return;
+  const go=()=>{ const run=()=>import('./webgl-hero.js').catch(()=>{}); 'requestIdleCallback' in window?requestIdleCallback(run,{timeout:4000}):setTimeout(run,1500); };
+  document.readyState==='complete'?go():addEventListener('load',go,{once:true});
 })();
 
 /* ═══════════════════════════════════════

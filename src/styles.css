@@ -1069,8 +1069,10 @@ body[data-cursor="mira"]::after {
   height: 100%;
   display: block;
   pointer-events: none;
-  opacity: 0.58;
+  opacity: 0;
+  transition: opacity 1.4s ease;
 }
+#lr-canvas.is-on { opacity: 1; }
 .hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr; gap: clamp(2.5rem, 4vw, 4rem); width: 100%; max-width: 1280px; margin-inline: auto; align-items: center;}
 @media(min-width: 980px) {
   #hero { padding-top: clamp(96px, 8vw, 120px); }
@@ -1078,7 +1080,6 @@ body[data-cursor="mira"]::after {
 }
 @media(max-width: 768px) {
   #hero { padding-top: max(96px, calc(env(safe-area-inset-top) + 84px)); padding-bottom: 22px; }
-  #lr-canvas { opacity: 0.32; }
   .hero-inner { gap: 1.35rem; }
   .hero-copy,
   .pcard-wrap { min-width: 0; max-width: 100%; }
