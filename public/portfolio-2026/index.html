@@ -257,6 +257,7 @@ footer a{color:var(--acc)}
   .demo{padding:14px}
 }
 </style>
+<link rel="stylesheet" href="/src/case-fold.css">
 </head>
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
@@ -386,7 +387,7 @@ footer a{color:var(--acc)}
   </div>
 </section>
 
-<section class="s" id="sistema">
+<section class="s" id="sistema" data-fold-items="article.piece">
   <div class="wrap">
     <div class="rv">
     <p class="eyebrow">05 &middot; Sistema de movimiento</p>
@@ -607,7 +608,7 @@ footer a{color:var(--acc)}
     <p class="eyebrow">06 &middot; Sistema de 5 temas</p>
     <h2>Una sola base, <em>cinco personalidades.</em></h2>
     <p class="intro">El sitio se puede ver en cinco temas con <code>data-theme</code> (<code>saas</code>, <code>editorial</code>, <code>cyber</code>, <code>diario</code>, <code>hud</code>). Cambian tipografía, paleta y carácter; el contenido y la estructura son los mismos.</p>
-    <div class="grid g3">
+    <div data-carousel aria-label="Los cinco temas del portfolio: haz clic en una captura para ampliarla">
       <figure><img src="/assets/portfolio-2026/tema-saas.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema Dual Core AI, oscuro con acentos teal y rojo"><figcaption class="cap"><b>Dual Core AI</b> &middot; Inter, teal y rojo</figcaption></figure>
       <figure><img src="/assets/portfolio-2026/tema-editorial.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema El Diario Digital, papel sepia, serifa y tinta roja"><figcaption class="cap"><b>El Diario Digital</b> &middot; Lora, sepia y tinta</figcaption></figure>
       <figure><img src="/assets/portfolio-2026/tema-cyber.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema Abstract Cyber, fondo oscuro con neón violeta y cian"><figcaption class="cap"><b>Abstract Cyber</b> &middot; Outfit, neón y plasma</figcaption></figure>
@@ -865,5 +866,6 @@ footer a{color:var(--acc)}
   })();
 })();
 </script>
+<script type="module" src="/src/case-fold.js"></script>
 </body>
 </html>

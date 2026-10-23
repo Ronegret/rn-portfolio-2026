@@ -1,0 +1,74 @@
+/* Casos de estudio: vista Resumen / Caso completo, secciones plegables, índice y carruseles.
+   Mejora progresiva: sin JS no se aplica nada de esto (salvo el carrusel, que sigue siendo una tira con scroll). */
+
+.cf-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; max-width: 1100px; margin: 0 auto; padding: 24px 20px 0; color: var(--cf-fg); box-sizing: border-box; }
+.cf-bar p { margin: 0; font-size: 14px; line-height: 1.4; opacity: .85; max-width: 46ch; }
+
+/* Conmutador segmentado */
+.cf-sw { display: inline-flex; align-items: center; padding: 4px; min-height: 48px; font: inherit; color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 999px; cursor: pointer; }
+.cf-sw span { display: inline-flex; align-items: center; min-height: 38px; padding: 0 16px; border-radius: 999px; font-size: 14px; font-weight: 700; letter-spacing: .01em; transition: background-color .2s, color .2s; }
+.cf-sw[aria-pressed="false"] span:first-child,
+.cf-sw[aria-pressed="true"] span:last-child { background: var(--cf-fg); color: var(--cf-bg); }
+
+/* Plegable */
+.cf-fold { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.23, 1, .32, 1); }
+.cf-fold[data-open="1"] { grid-template-rows: 1fr; }
+.cf-fold > .cf-inner { min-height: 0; min-width: 0; overflow: hidden; display: flow-root; }
+.cf-fold.cf-done > .cf-inner { overflow: visible; }
+.cf-fold.cf-inst { transition: none; }
+section.cf-sec.cf-closed { padding-bottom: 48px; }
+
+.cf-btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; margin: 20px auto 0; padding: 0 24px; font: inherit; font-size: 14px; font-weight: 700; color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 999px; cursor: pointer; transition: background-color .2s, transform .16s cubic-bezier(.23, 1, .32, 1); }
+.cf-btn svg { transition: transform .3s cubic-bezier(.23, 1, .32, 1); }
+.cf-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.cf-btn:active, .cf-sw:active { transform: scale(.97); }
+@media (hover: hover) { .cf-btn:hover { background: color-mix(in srgb, currentColor 10%, transparent); } }
+.cf-btn.cf-sub { min-height: 44px; margin: 12px auto 18px; padding: 0 18px; font-size: 13px; }
+.cf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+:is(.cf-btn, .cf-sw, .cf-fab, .cf-idx a, .cf-idx button, .cf-nav, .cf-zoom, .cf-car):focus-visible { outline: 3px solid var(--cf-fg, currentColor); outline-offset: 3px; box-shadow: 0 0 0 6px var(--cf-bg, transparent); }
+.cf-btn:focus-visible { outline-color: currentColor; box-shadow: none; }
+
+/* Índice flotante */
+.cf-fab { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 90; display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px; font: inherit; font-size: 14px; font-weight: 700; color: var(--cf-fg); background: var(--cf-bg); border: 1.5px solid var(--cf-fg); border-radius: 999px; box-shadow: 0 6px 24px rgba(0, 0, 0, .28); cursor: pointer; }
+.cf-idx { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: calc(max(16px, env(safe-area-inset-bottom)) + 60px); z-index: 90; width: min(360px, calc(100vw - 32px)); max-height: min(70vh, 560px); overflow: auto; overscroll-behavior: contain; padding: 8px; color: var(--cf-fg); background: var(--cf-bg); border: 1.5px solid var(--cf-fg); border-radius: 18px; box-shadow: 0 12px 40px rgba(0, 0, 0, .35); box-sizing: border-box; }
+.cf-idx[hidden] { display: none; }
+.cf-idx ol { list-style: none; margin: 0; padding: 0; }
+.cf-idx a { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 6px 12px; color: inherit; font-size: 14px; line-height: 1.3; text-decoration: none; border-radius: 12px; }
+.cf-idx a[aria-current="location"] { background: var(--cf-fg); color: var(--cf-bg); font-weight: 700; }
+@media (hover: hover) { .cf-idx a:not([aria-current]):hover { background: color-mix(in srgb, var(--cf-fg) 12%, transparent); } }
+.cf-idx .cf-all { display: flex; gap: 8px; padding: 4px 4px 8px; margin-bottom: 4px; border-bottom: 1px solid color-mix(in srgb, var(--cf-fg) 30%, transparent); }
+.cf-idx .cf-all button { flex: 1; min-height: 44px; font: inherit; font-size: 13px; font-weight: 700; color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 999px; cursor: pointer; }
+
+/* Carrusel: sin JS ya es una tira con scroll-snap; con JS suma botones y ampliar */
+.cf-carw { position: relative; margin: 28px 0; }
+.cf-car { display: flex; gap: 16px; align-items: flex-start; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-inline: 4px; padding: 4px 4px 14px; overscroll-behavior-x: contain; scrollbar-width: thin; --cf-h: clamp(220px, 46vw, 420px); }
+.cf-car > figure { flex: 0 0 auto; margin: 0; scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; }
+.cf-car img { display: block; height: var(--cf-h); width: auto; max-width: none; border-radius: 12px; }
+.cf-car figcaption { width: 0; min-width: 100%; font-size: 13px; line-height: 1.4; opacity: .85; }
+.cf-car.cf-tall { --cf-h: clamp(300px, 70vw, 520px); }
+.cf-zoom { display: block; padding: 0; margin: 0; border: 0; background: none; color: inherit; cursor: zoom-in; border-radius: 12px; }
+.cf-nav { position: absolute; top: calc(50% - 40px); z-index: 2; width: 48px; height: 48px; display: grid; place-items: center; padding: 0; font: inherit; color: var(--cf-fg); background: var(--cf-bg); border: 1.5px solid var(--cf-fg); border-radius: 50%; box-shadow: 0 4px 16px rgba(0, 0, 0, .3); cursor: pointer; }
+.cf-nav[disabled] { opacity: 0; pointer-events: none; }
+.cf-nav.p { left: 6px; } .cf-nav.n { right: 6px; }
+.cf-nav svg { width: 20px; height: 20px; }
+.cf-lb { width: min(96vw, 1400px); max-height: 94vh; padding: 12px; color: var(--cf-fg); background: var(--cf-bg); border: 1.5px solid var(--cf-fg); border-radius: 16px; box-sizing: border-box; }
+.cf-lb::backdrop { background: rgba(0, 0, 0, .82); }
+.cf-lb img { display: block; max-width: 100%; max-height: calc(94vh - 110px); margin: 0 auto; border-radius: 8px; }
+.cf-lb p { margin: 10px 4px 0; font-size: 14px; }
+.cf-lb button { display: block; min-height: 44px; margin: 10px auto 0; padding: 0 22px; font: inherit; font-weight: 700; color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 999px; cursor: pointer; }
+
+@media (max-width: 640px) {
+  .cf-bar { padding-top: 16px; }
+  .cf-nav { display: none; }
+  section.cf-sec.cf-closed { padding-bottom: 36px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cf-fold, .cf-btn, .cf-btn svg, .cf-sw span { transition: none; }
+  .cf-btn:active, .cf-sw:active { transform: none; }
+}
+@media print {
+  .cf-bar, .cf-btn, .cf-fab, .cf-idx, .cf-nav { display: none !important; }
+  .cf-fold { grid-template-rows: 1fr; }
+  .cf-inner[hidden] { content-visibility: visible !important; display: flow-root !important; }
+}
