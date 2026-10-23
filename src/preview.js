@@ -17,7 +17,10 @@ if (vids.length && !still && 'IntersectionObserver' in window) {
     sync(v);
   }), { threshold: 0.35 });
   vids.forEach((v) => {
-    v.addEventListener('playing', () => v.closest('.pv').classList.add('is-playing'), { once: true });
+    // is-playing fuerza el vídeo visible solo mientras corre; al pausarse vuelve el póster (si no, quedaba congelado en un fotograma)
+    const pv = v.closest('.pv');
+    v.addEventListener('playing', () => pv.classList.add('is-playing'));
+    v.addEventListener('pause', () => pv.classList.remove('is-playing'));
     io.observe(v);
   });
   document.addEventListener('visibilitychange', () => vids.forEach(sync));
