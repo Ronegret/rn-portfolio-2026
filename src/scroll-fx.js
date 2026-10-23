@@ -5,10 +5,10 @@ if (matchMedia('(prefers-reduced-motion: no-preference)').matches && 'Intersecti
   const io = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     io.unobserve(e.target);
-    e.target.classList.add('sfx-in');
+    e.target.querySelector('.sfx-rev').classList.add('sfx-in');
   }), { threshold: .15 });
   document.querySelectorAll('.bc-img, .lab-card-img').forEach(el => {
     el.classList.add('sfx-rev');
-    io.observe(el);
+    io.observe(el.parentElement); // observar el padre: IO respeta el clip-path del propio elemento (quedaría con área 0)
   });
 }
