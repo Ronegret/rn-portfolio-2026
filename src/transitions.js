@@ -69,7 +69,13 @@ if (bento) {
       });
     };
     let raf = 0;
-    const later = () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(measure); };
+    // Durante los primeros 2,5 s (imágenes/fuentes asentándose, p. ej. al volver de un caso) se mide una sola vez al calmarse el layout: evita 16819→16765→16819 px
+    const t0 = performance.now(); let to = 0;
+    const later = () => {
+      cancelAnimationFrame(raf); clearTimeout(to);
+      if (performance.now() - t0 < 2500) to = setTimeout(() => { raf = requestAnimationFrame(measure); }, 220);
+      else raf = requestAnimationFrame(measure);
+    };
     new ResizeObserver(later).observe(bento); // dispara al observar: mide en el primer frame, sin layout forzado durante la carga
     new MutationObserver(rs => { if (rs.some(r => r.target === bento || r.target.parentElement === bento)) later(); }) // solo .fhid / m-collapsed, no cada .vis o hover del interior
       .observe(bento, { attributes: true, attributeFilter: ['class'], subtree: true });

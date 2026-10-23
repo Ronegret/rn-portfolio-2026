@@ -380,7 +380,7 @@ function openSheet(card, from) {
   openedAt = performance.now();
   calc();
   // si la altura media ya es la máxima, el cuerpo hace scroll desde el primer gesto (sin gastar el swipe en subir la hoja)
-  const maxed = snapPos[1] < 2;
+  const maxed = snapPos[1] < 2 || innerHeight <= 700; // en pantallas bajas abre ya a altura máxima: el CTA queda alcanzable con un solo gesto
   panel.classList.toggle('tj-full', maxed);
   snapI = maxed ? 0 : 1; setY(H + 24, false); scrim.style.opacity = 0;
   animateTo(snapPos[snapI], 620, SHEET_SPRING);
