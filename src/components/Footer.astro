@@ -1,3 +1,16 @@
+---
+import '../sx-contacto.css';
+import { execSync } from 'node:child_process';
+import pkg from '../../package.json';
+// System card: datos reales del build. Fecha, commit y stack se leen aquí; peso de la portada y nº de páginas los escribe
+// scripts/sx-system-card.mjs al terminar el build (sustituye los "—" de [data-sys]).
+const built = new Date();
+const iso = built.toISOString().slice(0, 10);
+let commit = (process.env.VERCEL_GIT_COMMIT_SHA || '').slice(0, 7);
+if (!commit) { try { commit = execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch { commit = ''; } }
+const major = (r) => (r || '').replace(/[^\d.]/g, '').split('.')[0];
+const stack = `Astro ${major(pkg.dependencies.astro)} · React ${major(pkg.dependencies.react)} · CSS/JS`;
+---
 <footer class="fx-footer" aria-labelledby="fx-brand">
   <div class="fx-glow" aria-hidden="true"></div>
   <div class="fx-grid-bg" aria-hidden="true"></div>
@@ -74,6 +87,20 @@
           </a>
         </div>
       </div>
+    </div>
+
+    <!-- SYSTEM CARD: métricas reales del build (sin cifras a mano) -->
+    <div class="sys" data-sys-card aria-labelledby="sys-h" role="group">
+      <div class="sys-head">
+        <p class="sys-h" id="sys-h"><span class="sys-dot" aria-hidden="true"></span>system card <span class="sys-dim">· rodrigonegrete.es</span></p>
+        <p class="sys-src sys-dim" data-i="sys_src">Datos medidos en el build, no escritos a mano</p>
+      </div>
+      <dl class="sys-grid">
+        <div class="sys-m"><dt data-i="sys_kb">Peso de la portada</dt><dd><span class="sys-v">≈ <b data-sys="kb">—</b> KB</span><small data-i="sys_kb_n">gzip · HTML, CSS, JS, fuentes e imágenes iniciales</small></dd></div>
+        <div class="sys-m"><dt data-i="sys_pages">Páginas publicadas</dt><dd><span class="sys-v"><b data-sys="pages">—</b></span><small data-i="sys_pages_n">HTML en el build</small></dd></div>
+        <div class="sys-m"><dt data-i="sys_date">Último build</dt><dd><span class="sys-v"><time datetime={built.toISOString()}>{iso}</time></span><small>{commit ? <>commit <code>{commit}</code></> : 'local'}</small></dd></div>
+        <div class="sys-m"><dt>Stack</dt><dd><span class="sys-v sys-v-sm">{stack}</span><small data-i="sys_stack_n">Estático · islas React · sin plantillas</small></dd></div>
+      </dl>
     </div>
 
     <!-- BOTTOM LINE: idioma + copyright + made-with -->

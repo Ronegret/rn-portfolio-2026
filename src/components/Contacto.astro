@@ -1,3 +1,11 @@
+---
+import '../sx-contacto.css';
+const INTENTS = [
+  { k: 'job', n: '01', i: 'hx_i_job', t: 'Oferta de empleo', hi: 'hx_h_job', h: 'Rol, empresa y siguiente paso' },
+  { k: 'free', n: '02', i: 'hx_i_free', t: 'Proyecto freelance', hi: 'hx_h_free', h: 'Qué necesitas, plazo y presupuesto' },
+  { k: 'chat', n: '03', i: 'hx_i_chat', t: 'Solo charlar', hi: 'hx_h_chat', h: 'Una conversación, sin compromiso' },
+];
+---
 <section class="sec" id="contacto">
   <div class="wrap">
     <div class="contact-box">
@@ -6,9 +14,36 @@
         <p class="eyebrow" style="justify-content:center" data-i="contact_ey">Contacto</p>
         <h2 class="c-h" data-i="contact_h">¿Construimos algo<br><em>que marque la diferencia?</em></h2>
         <p class="c-s" data-i="contact_sub">Disponible para roles de AI Product Designer, Product Designer con IA, AI Automation Specialist o Design Technologist. Barcelona o remoto EU.</p>
+
+        <!-- Traspaso a humano: la intención prepara el email/WhatsApp; tú lo revisas y lo envías (mejora progresiva, sin JS no se muestra) -->
+        <div class="hx" data-hx hidden>
+          <p class="hx-step"><span class="hx-tick" aria-hidden="true"></span><span data-i="hx_step">Recorrido completado · siguiente paso: una persona</span></p>
+          <p class="hx-q" id="hx-q" data-i="hx_q">¿Qué te trae por aquí?</p>
+          <div class="hx-intents" role="group" aria-labelledby="hx-q">
+            {INTENTS.map((x) => (
+              <button type="button" class="hx-i" data-k={x.k} aria-pressed="false" aria-controls="hx-draft">
+                <span class="hx-n" aria-hidden="true">{x.n}</span>
+                <span class="hx-t" data-i={x.i}>{x.t}</span>
+                <span class="hx-h" data-i={x.hi}>{x.h}</span>
+              </button>
+            ))}
+          </div>
+
+          <div class="hx-draft" id="hx-draft" data-state="idle">
+            <div class="hx-top">
+              <span class="hx-chip"><i aria-hidden="true"></i><span class="hx-st">Esperando intención</span></span>
+              <span class="hx-to"><span data-i="hx_to">Para</span>: <b class="hx-addr"></b></span>
+            </div>
+            <div class="hx-row"><span class="hx-k" data-i="hx_subj">Asunto</span><span class="hx-subj">—</span></div>
+            <div class="hx-body"><span class="hx-ph" data-i="hx_ph">Elige una intención y preparo el mensaje: asunto, estructura y huecos para tus datos.</span></div>
+            <p class="hx-note" data-i="hx_note">Nada se envía solo: se abre tu email o WhatsApp con el texto listo y tú decides.</p>
+            <span class="hx-sr" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+
         <div class="c-links">
-          <a href="mailto:rodrigo.negrete.aros@gmail.com" class="btn-p trigger-flash" data-i="cta_email">✉ Enviar email</a>
-          <a href="https://wa.me/34653567610" class="btn-s trigger-flash" target="_blank" rel="noopener">💬 WhatsApp</a>
+          <a href="mailto:rodrigo.negrete.aros@gmail.com" class="btn-p trigger-flash" data-i="cta_email" data-hx-mail>✉ Enviar email</a>
+          <a href="https://wa.me/34653567610" class="btn-s trigger-flash" target="_blank" rel="noopener" data-hx-wa>💬 WhatsApp</a>
           <a href="https://linkedin.com/in/rodrigonegretearos" class="btn-s trigger-flash" target="_blank" rel="noopener">🔗 LinkedIn</a>
           <a href="/cv/" class="btn-s trigger-flash">📄 CV</a>
         </div>
@@ -21,3 +56,4 @@
     </div>
   </div>
 </section>
+<script>import '../sx-contacto.js';</script>

@@ -1,5 +1,17 @@
 export const T = {
   es:{
+    // Lab (lab.log) y contacto (traspaso a humano) + system card del footer
+    lx_entries:'entradas',lx_filter_l:'Filtrar por tipo',lx_f_all:'Todo',lx_f_ia:'IA',lx_f_web:'Web',lx_f_proto:'Prototipos',lx_f_marca:'Marca personal',
+    lx_src:'año del commit que añadió cada pieza',lx_open:'Abrir',lx_empty:'Sin entradas de este tipo.',
+    hx_step:'Recorrido completado · siguiente paso: una persona',hx_q:'¿Qué te trae por aquí?',
+    hx_i_job:'Oferta de empleo',hx_h_job:'Rol, empresa y siguiente paso',hx_i_free:'Proyecto freelance',hx_h_free:'Qué necesitas, plazo y presupuesto',hx_i_chat:'Solo charlar',hx_h_chat:'Una conversación, sin compromiso',
+    hx_to:'Para',hx_subj:'Asunto',hx_ph:'Elige una intención y preparo el mensaje: asunto, estructura y huecos para tus datos.',
+    hx_note:'Nada se envía solo: se abre tu email o WhatsApp con el texto listo y tú decides.',
+    hx_st_idle:'Esperando intención',hx_st_busy:'Preparando borrador…',hx_st_ready:'Listo para enviar',hx_live:'Borrador preparado. Asunto: ',
+    hx_job_s:'Oferta de empleo — AI Product Designer',hx_job_b:'Hola Rodrigo:\n\nTe escribo desde [empresa]. Buscamos [rol] y tu perfil encaja con lo que necesitamos.\n\n· Modalidad: [remoto / híbrido / Barcelona]\n· Siguiente paso: [llamada / entrevista]\n\nUn saludo,\n[nombre]',hx_job_w:'Hola Rodrigo, te escribo desde tu portfolio por una oferta de empleo: [empresa] · [rol].',
+    hx_free_s:'Proyecto freelance — [tipo de proyecto]',hx_free_b:'Hola Rodrigo:\n\nTengo un proyecto en el que podrías ayudarme: [qué necesito].\n\n· Plazo: [fecha]\n· Presupuesto orientativo: [rango]\n\nUn saludo,\n[nombre]',hx_free_w:'Hola Rodrigo, te escribo desde tu portfolio por un proyecto freelance: [qué necesito].',
+    hx_chat_s:'Hola Rodrigo, ¿hablamos?',hx_chat_b:'Hola Rodrigo:\n\nHe visto tu portfolio y me gustaría charlar sobre [tema].\n\n¿Te va bien [día / hora]?\n\nUn saludo,\n[nombre]',hx_chat_w:'Hola Rodrigo, he visto tu portfolio y me gustaría charlar sobre [tema].',
+    sys_src:'Datos medidos en el build, no escritos a mano',sys_kb:'Peso de la portada',sys_kb_n:'gzip · HTML, CSS, JS, fuentes e imágenes iniciales',sys_pages:'Páginas publicadas',sys_pages_n:'HTML en el build',sys_date:'Último build',sys_stack_n:'Estático · islas React · sin plantillas',
     nav_about:'Sobre mí',nav_stack:'Stack',nav_projects:'Proyectos',nav_lab:'Lab',nav_career:'Trayectoria',nav_contact:'Contacto',
     nav_cta:'Hablemos →',fcta:'✉ Hablemos',
     avail_tag:'Disponible ahora',tag_remote:'Barcelona · Remoto',tag_mode:'Full-time · Freelance',
@@ -100,6 +112,18 @@ export const T = {
     foot_contact_h:'Contacto directo'
   },
   ca:{
+    // Lab (lab.log) i contacte (traspàs a una persona) + system card del footer
+    lx_entries:'entrades',lx_filter_l:'Filtrar per tipus',lx_f_all:'Tot',lx_f_ia:'IA',lx_f_web:'Web',lx_f_proto:'Prototips',lx_f_marca:'Marca personal',
+    lx_src:'any del commit que va afegir cada peça',lx_open:'Obrir',lx_empty:'Cap entrada d’aquest tipus.',
+    hx_step:'Recorregut completat · següent pas: una persona',hx_q:'Què et porta per aquí?',
+    hx_i_job:'Oferta de feina',hx_h_job:'Rol, empresa i següent pas',hx_i_free:'Projecte freelance',hx_h_free:'Què necessites, termini i pressupost',hx_i_chat:'Només xerrar',hx_h_chat:'Una conversa, sense compromís',
+    hx_to:'Per a',hx_subj:'Assumpte',hx_ph:'Tria una intenció i preparo el missatge: assumpte, estructura i espais per a les teves dades.',
+    hx_note:'Res no s’envia sol: s’obre el teu email o WhatsApp amb el text a punt i tu decideixes.',
+    hx_st_idle:'Esperant intenció',hx_st_busy:'Preparant l’esborrany…',hx_st_ready:'A punt per enviar',hx_live:'Esborrany preparat. Assumpte: ',
+    hx_job_s:'Oferta de feina — AI Product Designer',hx_job_b:'Hola Rodrigo:\n\nT’escric des de [empresa]. Busquem [rol] i el teu perfil encaixa amb el que necessitem.\n\n· Modalitat: [remot / híbrid / Barcelona]\n· Següent pas: [trucada / entrevista]\n\nSalutacions,\n[nom]',hx_job_w:'Hola Rodrigo, t’escric des del teu portfolio per una oferta de feina: [empresa] · [rol].',
+    hx_free_s:'Projecte freelance — [tipus de projecte]',hx_free_b:'Hola Rodrigo:\n\nTinc un projecte en què em podries ajudar: [què necessito].\n\n· Termini: [data]\n· Pressupost orientatiu: [rang]\n\nSalutacions,\n[nom]',hx_free_w:'Hola Rodrigo, t’escric des del teu portfolio per un projecte freelance: [què necessito].',
+    hx_chat_s:'Hola Rodrigo, en parlem?',hx_chat_b:'Hola Rodrigo:\n\nHe vist el teu portfolio i m’agradaria xerrar sobre [tema].\n\nEt va bé [dia / hora]?\n\nSalutacions,\n[nom]',hx_chat_w:'Hola Rodrigo, he vist el teu portfolio i m’agradaria xerrar sobre [tema].',
+    sys_src:'Dades mesurades en el build, no escrites a mà',sys_kb:'Pes de la portada',sys_kb_n:'gzip · HTML, CSS, JS, fonts i imatges inicials',sys_pages:'Pàgines publicades',sys_pages_n:'HTML al build',sys_date:'Últim build',sys_stack_n:'Estàtic · illes React · sense plantilles',
     nav_about:'Sobre mi',nav_stack:'Stack',nav_projects:'Projectes',nav_lab:'Lab',nav_career:'Trajectòria',nav_contact:'Contacte',
     nav_cta:'Parlem →',fcta:'✉ Parlem',
     avail_tag:'Disponible ara',tag_remote:'Barcelona · Remot',tag_mode:'Full-time · Freelance',
@@ -200,6 +224,18 @@ export const T = {
     foot_contact_h:'Contacte directe'
   },
   en:{
+    // Lab (lab.log) and contact (human handoff) + footer system card
+    lx_entries:'entries',lx_filter_l:'Filter by type',lx_f_all:'All',lx_f_ia:'AI',lx_f_web:'Web',lx_f_proto:'Prototypes',lx_f_marca:'Personal brand',
+    lx_src:'year of the commit that added each piece',lx_open:'Open',lx_empty:'No entries of this type.',
+    hx_step:'Run complete · next step: a human',hx_q:'What brings you here?',
+    hx_i_job:'Job offer',hx_h_job:'Role, company and next step',hx_i_free:'Freelance project',hx_h_free:'What you need, timeline and budget',hx_i_chat:'Just chat',hx_h_chat:'A conversation, no strings attached',
+    hx_to:'To',hx_subj:'Subject',hx_ph:'Pick an intent and I will draft the message: subject, structure and blanks for your details.',
+    hx_note:'Nothing is sent on its own: your email or WhatsApp opens with the text ready, and you decide.',
+    hx_st_idle:'Waiting for intent',hx_st_busy:'Drafting…',hx_st_ready:'Ready to send',hx_live:'Draft ready. Subject: ',
+    hx_job_s:'Job offer — AI Product Designer',hx_job_b:'Hi Rodrigo,\n\nI am writing from [company]. We are looking for [role] and your profile fits what we need.\n\n· Setup: [remote / hybrid / Barcelona]\n· Next step: [call / interview]\n\nBest,\n[name]',hx_job_w:'Hi Rodrigo, I found your portfolio and I am writing about a job offer: [company] · [role].',
+    hx_free_s:'Freelance project — [project type]',hx_free_b:'Hi Rodrigo,\n\nI have a project you could help me with: [what I need].\n\n· Timeline: [date]\n· Rough budget: [range]\n\nBest,\n[name]',hx_free_w:'Hi Rodrigo, I found your portfolio and I am writing about a freelance project: [what I need].',
+    hx_chat_s:'Hi Rodrigo, shall we talk?',hx_chat_b:'Hi Rodrigo,\n\nI saw your portfolio and would like to chat about [topic].\n\nDoes [day / time] work for you?\n\nBest,\n[name]',hx_chat_w:'Hi Rodrigo, I saw your portfolio and would like to chat about [topic].',
+    sys_src:'Measured at build time, not typed by hand',sys_kb:'Home page weight',sys_kb_n:'gzip · HTML, CSS, JS, fonts and initial images',sys_pages:'Published pages',sys_pages_n:'HTML in the build',sys_date:'Last build',sys_stack_n:'Static · React islands · no templates',
     nav_about:'About',nav_stack:'Stack',nav_projects:'Projects',nav_lab:'Lab',nav_career:'Career',nav_contact:'Contact',
     nav_cta:'Let\'s talk →',fcta:'✉ Let\'s talk',
     avail_tag:'Available now',tag_remote:'Barcelona · Remote',tag_mode:'Full-time · Freelance',
