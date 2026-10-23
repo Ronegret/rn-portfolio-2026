@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html data-cf-thread-only lang="es">
 <head>
   <meta charset="UTF-8"><style>@view-transition{navigation:auto}</style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -237,6 +237,7 @@
     @keyframes fp-move{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
   </style>
 <link rel="stylesheet" href="/src/case-bar.css">
+<link rel="stylesheet" href="/src/case-fold.css">
 <link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
 </head>
 <body>
@@ -301,7 +302,7 @@
 <hr class="divider">
 
 <!-- ── 01 · MANIFIESTO OPEN SOURCE ── -->
-<section id="motivacion">
+<section data-thread="problema" id="motivacion">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">01 · Manifiesto</p>
@@ -348,7 +349,7 @@
 
 <hr class="divider">
 
-<section class="band" id="research">
+<section data-thread="problema" class="band" id="research">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">02 · Análisis de competencia open source</p>
@@ -412,7 +413,7 @@
 
 <hr class="divider">
 
-<section id="arquitectura">
+<section data-thread="decision" id="arquitectura">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">03 · Arquitectura de información</p>
@@ -496,7 +497,7 @@
 
 <hr class="divider">
 
-<section class="band" id="visual">
+<section data-thread="decision" class="band" id="visual">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">04 · Sistema visual y color</p>
@@ -552,7 +553,7 @@
 
 <hr class="divider">
 
-<section id="proceso">
+<section data-thread="decision" id="proceso">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">05 · Proceso UX/UI</p>
@@ -621,7 +622,7 @@
 
 <hr class="divider">
 
-<section class="band">
+<section data-thread="decision" class="band">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">06 · Responsive y usabilidad</p>
@@ -655,7 +656,7 @@
 
 <hr class="divider">
 
-<section id="stack">
+<section data-thread="decision" id="stack">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">07 · Stack técnico</p>
@@ -677,7 +678,7 @@
 
 <hr class="divider">
 
-<section class="band">
+<section data-thread="resultado" class="band">
   <div class="wrap">
     <div class="section-head rv">
       <p class="eyebrow">08 · Testing y aprendizajes</p>
@@ -762,6 +763,7 @@
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 </script>
 
+<script type="module" src="/src/case-fold.js"></script>
 <script type="module" src="/src/case-mobile.js"></script>
 </body>
 </html>
