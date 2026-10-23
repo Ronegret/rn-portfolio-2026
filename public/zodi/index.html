@@ -13,9 +13,13 @@
   <meta property="og:url" content="https://rodrigonegrete.es/zodi/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://rodrigonegrete.es/assets/zodi/Hero-principal-portada.webp">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* Fuentes en el propio dominio: mismo fichero latin que servia Google Fonts (Inter variable 400-900), sin la hoja externa que bloqueaba el render */
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400 900; font-display: swap; src: url(/fonts/inter-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/space-mono-400-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url(/fonts/space-mono-700-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  </style>
   <link rel="stylesheet" href="/src/zodi.css">
 <link rel="stylesheet" href="/src/case-type.css">
 <link rel="stylesheet" href="/src/case-fold.css">
@@ -32,7 +36,7 @@
     <div class="hero-grid">
       <div class="hero-copy">
         <a href="https://zodi.aibueno.es" target="_blank" rel="noopener" class="z-logo-link" aria-label="Abrir web ZODI">
-          <img src="/assets/zodi/zodi-logo.png" alt="Logo ZODI" class="z-logo" width="640" height="427">
+          <img src="/assets/zodi/zodi-logo-240.webp" srcset="/assets/zodi/zodi-logo-240.webp 240w, /assets/zodi/zodi-logo-480.webp 480w" sizes="120px" alt="Logo ZODI" class="z-logo" width="640" height="427" fetchpriority="high">
         </a>
         <p class="eyebrow">AI Product · UX/UI · Marca viral</p>
         <h1>Un oráculo moderno con IA, humor ácido y estética callejera.</h1>
@@ -43,7 +47,7 @@
         </div>
       </div>
       <figure class="hero-art tarot-frame">
-        <img src="/assets/zodi/Hero-principal-portada.webp" alt="Oráculo cyberpunk ZODI" width="1672" height="941" fetchpriority="high">
+        <img src="/assets/zodi/Hero-principal-portada-800.webp" srcset="/assets/zodi/Hero-principal-portada-480.webp 480w, /assets/zodi/Hero-principal-portada-800.webp 800w, /assets/zodi/Hero-principal-portada-1120.webp 1120w, /assets/zodi/Hero-principal-portada.webp 1672w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) calc(100vw - 96px), 560px" alt="Oráculo cyberpunk ZODI" width="1672" height="941" fetchpriority="high">
       </figure>
     </div>
 
@@ -155,7 +159,7 @@
         </article>
       </div>
     </section>
-<figure class="cf-breath" style="--pos:50% 30%"><div class="cf-bi"><img src="/assets/zodi/ZODI-con-cartas-flotando.webp" width="1448" height="1086" loading="lazy" decoding="async" alt="ZODI, el personaje encapuchado con máscara de sonrisa verde neón, con cartas de tarot flotando alrededor de su mano"></div><figcaption>Fuente: ilustración de marca de ZODI (assets del propio caso).</figcaption></figure>
+<figure class="cf-breath" style="--pos:50% 30%"><div class="cf-bi"><img src="/assets/zodi/ZODI-con-cartas-flotando-1024.webp" srcset="/assets/zodi/ZODI-con-cartas-flotando-640.webp 640w, /assets/zodi/ZODI-con-cartas-flotando-1024.webp 1024w, /assets/zodi/ZODI-con-cartas-flotando.webp 1448w" sizes="(max-width: 640px) 140vw, 100vw" width="1448" height="1086" loading="lazy" decoding="async" alt="ZODI, el personaje encapuchado con máscara de sonrisa verde neón, con cartas de tarot flotando alrededor de su mano"></div><figcaption>Fuente: ilustración de marca de ZODI (assets del propio caso).</figcaption></figure>
 
     <section data-thread="decision" class="section">
       <div class="split">
@@ -171,7 +175,7 @@
           </ul>
         </div>
         <figure class="tarot-frame">
-          <img src="/assets/zodi/ZODI-senalando-al-usuario.webp" alt="ZODI apuntando al usuario">
+          <img src="/assets/zodi/ZODI-senalando-al-usuario-1024.webp" srcset="/assets/zodi/ZODI-senalando-al-usuario-640.webp 640w, /assets/zodi/ZODI-senalando-al-usuario-1024.webp 1024w, /assets/zodi/ZODI-senalando-al-usuario.webp 1536w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) calc(100vw - 96px), 560px" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI apuntando al usuario">
         </figure>
       </div>
     </section>
@@ -183,10 +187,10 @@
         <p>La arquitectura de contenido permite empezar gratis, elegir tipo de lectura y ajustar cómo quieres recibir la respuesta: suave, directa, brutal o sarcástica.</p>
       </div>
       <div class="reading-grid">
-        <article><img src="/assets/zodi/Horoscopo-diario.webp" alt="Horóscopo personal"><h3>Horóscopo personal</h3><p>Amor, dinero, trabajo, energía y señales útiles para el día.</p></article>
-        <article><img src="/assets/zodi/Tarot-acido.webp" alt="Tarot ácido"><h3>Tarot y tiradas</h3><p>Situación, bloqueo, consejo y esa verdad incómoda que ya intuías.</p></article>
-        <article><img src="/assets/zodi/Numerologia.webp" alt="Numerología profunda"><h3>Numerología</h3><p>Camino vital, vibración del nombre, ciclos y patrones.</p></article>
-        <article><img src="/assets/zodi/Consejo-cosmico-sin-filtro.webp" alt="Consejo cósmico sin filtro"><h3>Consejo sin filtro</h3><p>Lecturas con carácter para responder preguntas personales.</p></article>
+        <article><img src="/assets/zodi/Horoscopo-diario-800.webp" srcset="/assets/zodi/Horoscopo-diario-400.webp 400w, /assets/zodi/Horoscopo-diario-800.webp 800w, /assets/zodi/Horoscopo-diario.webp 1402w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 50vw, 300px" width="1402" height="1122" loading="lazy" decoding="async" alt="Horóscopo personal"><h3>Horóscopo personal</h3><p>Amor, dinero, trabajo, energía y señales útiles para el día.</p></article>
+        <article><img src="/assets/zodi/Tarot-acido-800.webp" srcset="/assets/zodi/Tarot-acido-400.webp 400w, /assets/zodi/Tarot-acido-800.webp 800w, /assets/zodi/Tarot-acido.webp 1254w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 50vw, 300px" width="1254" height="1254" loading="lazy" decoding="async" alt="Tarot ácido"><h3>Tarot y tiradas</h3><p>Situación, bloqueo, consejo y esa verdad incómoda que ya intuías.</p></article>
+        <article><img src="/assets/zodi/Numerologia-800.webp" srcset="/assets/zodi/Numerologia-400.webp 400w, /assets/zodi/Numerologia-800.webp 800w, /assets/zodi/Numerologia.webp 1254w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 50vw, 300px" width="1254" height="1254" loading="lazy" decoding="async" alt="Numerología profunda"><h3>Numerología</h3><p>Camino vital, vibración del nombre, ciclos y patrones.</p></article>
+        <article><img src="/assets/zodi/Consejo-cosmico-sin-filtro-800.webp" srcset="/assets/zodi/Consejo-cosmico-sin-filtro-400.webp 400w, /assets/zodi/Consejo-cosmico-sin-filtro-800.webp 800w, /assets/zodi/Consejo-cosmico-sin-filtro.webp 1536w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) 50vw, 300px" width="1536" height="1024" loading="lazy" decoding="async" alt="Consejo cósmico sin filtro"><h3>Consejo sin filtro</h3><p>Lecturas con carácter para responder preguntas personales.</p></article>
       </div>
     </section>
 
@@ -232,7 +236,7 @@
         </article>
       </div>
     </section>
-<figure class="cf-breath" style="--pos:50% 20%;--pos-m:100% 20%"><div class="cf-bi"><img src="/assets/zodi/ZODI-riendose-con-sarcasmo.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI sentado entre cartas de tarot junto al mensaje «¿Creías que la vida sería fácil? Jajaja… qué inocente»"></div><figcaption>Fuente: ilustración de marca de ZODI (assets del propio caso).</figcaption></figure>
+<figure class="cf-breath" style="--pos:50% 20%;--pos-m:100% 20%"><div class="cf-bi"><img src="/assets/zodi/ZODI-riendose-con-sarcasmo-1024.webp" srcset="/assets/zodi/ZODI-riendose-con-sarcasmo-640.webp 640w, /assets/zodi/ZODI-riendose-con-sarcasmo-1024.webp 1024w, /assets/zodi/ZODI-riendose-con-sarcasmo.webp 1536w" sizes="(max-width: 640px) 140vw, 100vw" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI sentado entre cartas de tarot junto al mensaje «¿Creías que la vida sería fácil? Jajaja… qué inocente»"></div><figcaption>Fuente: ilustración de marca de ZODI (assets del propio caso).</figcaption></figure>
 
     <section data-thread="decision" class="section dark-band">
       <div class="section-head">
@@ -299,7 +303,7 @@
           <div class="turntable" aria-hidden="true">
             <span class="vinyl-disc">
               <span class="vinyl-label">
-                <img src="/assets/zodi/zodi-logo.png" alt="Logo de ZODI en el vinilo">
+                <img src="/assets/zodi/zodi-logo-240.webp" srcset="/assets/zodi/zodi-logo-240.webp 240w, /assets/zodi/zodi-logo-480.webp 480w" sizes="120px" width="640" height="427" loading="lazy" decoding="async" alt="Logo de ZODI en el vinilo">
               </span>
             </span>
             <span class="tonearm"></span>
@@ -318,12 +322,12 @@
             <div class="track-line">
               <span></span>
             </div>
-            <audio preload="metadata" src="/assets/zodi/zodi-te-lo-dijo.mp3"></audio>
+            <audio preload="none" src="/assets/zodi/zodi-te-lo-dijo.mp3"></audio>
           </div>
         </div>
       </div>
     </section>
-<figure class="cf-breath" style="--pos:50% 35%"><div class="cf-bi"><img src="/assets/zodi/ZODI-senalando-al-usuario.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI señalando de frente al usuario: silueta encapuchada con sonrisa verde neón sobre un fondo oscuro con luna y rayos"></div><figcaption>Fuente: ilustración de marca de ZODI (assets del propio caso).</figcaption></figure>
+<figure class="cf-breath" style="--pos:50% 35%"><div class="cf-bi"><img src="/assets/zodi/ZODI-senalando-al-usuario-1024.webp" srcset="/assets/zodi/ZODI-senalando-al-usuario-640.webp 640w, /assets/zodi/ZODI-senalando-al-usuario-1024.webp 1024w, /assets/zodi/ZODI-senalando-al-usuario.webp 1536w" sizes="(max-width: 640px) 140vw, 100vw" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI señalando de frente al usuario: silueta encapuchada con sonrisa verde neón sobre un fondo oscuro con luna y rayos"></div><figcaption>Fuente: ilustración de marca de ZODI (assets del propio caso).</figcaption></figure>
 
     <section data-thread="decision" class="section">
       <div class="split reverse">
@@ -336,7 +340,7 @@
           </div>
         </div>
         <figure class="tarot-frame">
-          <img src="/assets/zodi/ZODI-con-energia-en-la-mano.webp" alt="ZODI con energía en la mano">
+          <img src="/assets/zodi/ZODI-con-energia-en-la-mano-1024.webp" srcset="/assets/zodi/ZODI-con-energia-en-la-mano-640.webp 640w, /assets/zodi/ZODI-con-energia-en-la-mano-1024.webp 1024w, /assets/zodi/ZODI-con-energia-en-la-mano.webp 1536w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) calc(100vw - 96px), 560px" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI con energía en la mano">
         </figure>
       </div>
     </section>
@@ -347,13 +351,13 @@
         <h2>Cartas con personalidad de marca.</h2>
       </div>
       <div class="tarot-row" aria-label="Cartas de tarot ZODI">
-        <img src="/assets/zodi/La-Red-Flag.webp" alt="Carta ZODI La Red Flag">
-        <img src="/assets/zodi/El-Karma.webp" alt="Carta ZODI El Karma">
-        <img src="/assets/zodi/La-Verdad.webp" alt="Carta ZODI La Verdad">
-        <img src="/assets/zodi/El-Destino.webp" alt="Carta ZODI El Destino">
-        <img src="/assets/zodi/El-Ego.webp" alt="Carta ZODI El Ego">
-        <img src="/assets/zodi/La-Mala-Idea.webp" alt="Carta ZODI La Mala Idea">
-        <img src="/assets/zodi/La-Venganza-Cosmica.webp" alt="Carta ZODI La Venganza Cósmica">
+        <img src="/assets/zodi/La-Red-Flag-360.webp" srcset="/assets/zodi/La-Red-Flag-360.webp 360w, /assets/zodi/La-Red-Flag.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI La Red Flag">
+        <img src="/assets/zodi/El-Karma-360.webp" srcset="/assets/zodi/El-Karma-360.webp 360w, /assets/zodi/El-Karma.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI El Karma">
+        <img src="/assets/zodi/La-Verdad-360.webp" srcset="/assets/zodi/La-Verdad-360.webp 360w, /assets/zodi/La-Verdad.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI La Verdad">
+        <img src="/assets/zodi/El-Destino-360.webp" srcset="/assets/zodi/El-Destino-360.webp 360w, /assets/zodi/El-Destino.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI El Destino">
+        <img src="/assets/zodi/El-Ego-360.webp" srcset="/assets/zodi/El-Ego-360.webp 360w, /assets/zodi/El-Ego.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI El Ego">
+        <img src="/assets/zodi/La-Mala-Idea-360.webp" srcset="/assets/zodi/La-Mala-Idea-360.webp 360w, /assets/zodi/La-Mala-Idea.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI La Mala Idea">
+        <img src="/assets/zodi/La-Venganza-Cosmica-360.webp" srcset="/assets/zodi/La-Venganza-Cosmica-360.webp 360w, /assets/zodi/La-Venganza-Cosmica.webp 1055w" sizes="(max-width: 640px) 138px, 170px" width="1055" height="1491" loading="lazy" decoding="async" alt="Carta ZODI La Venganza Cósmica">
       </div>
     </section>
 
@@ -372,7 +376,7 @@
 
     <section data-thread="estado" class="section final-cta">
       <figure>
-        <img src="/assets/zodi/ZODI-riendose-con-sarcasmo.webp" alt="ZODI riéndose con sarcasmo">
+        <img src="/assets/zodi/ZODI-riendose-con-sarcasmo-1024.webp" srcset="/assets/zodi/ZODI-riendose-con-sarcasmo-640.webp 640w, /assets/zodi/ZODI-riendose-con-sarcasmo-1024.webp 1024w, /assets/zodi/ZODI-riendose-con-sarcasmo.webp 1536w" sizes="(max-width: 640px) calc(100vw - 28px), (max-width: 980px) calc(100vw - 96px), 560px" width="1536" height="1024" loading="lazy" decoding="async" alt="ZODI riéndose con sarcasmo">
       </figure>
       <div>
         <p class="eyebrow">Resultado</p>
