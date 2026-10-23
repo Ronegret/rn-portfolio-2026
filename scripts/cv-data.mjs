@@ -26,7 +26,7 @@ export const cv = {
     stats: [
       { n: '17+', l: 'años de trayectoria en negocio B2B y operaciones' },
       { n: '80+', l: 'cuentas corporativas gestionadas en Movistar Empresas' },
-      { n: '27', l: 'nodos en el workflow n8n de Just Enjoy (TFM)' },
+      { n: '27', l: 'nodos en el workflow n8n del TFM Just Enjoy (trabajo en equipo)' },
       { n: '287', l: 'recursos web open source en 7 idiomas (Rodd.es)' },
     ],
     experience: [
@@ -83,7 +83,7 @@ export const cv = {
     ],
     projects: [
       { name: 'ZODI · AI Product, PWA, freemium', url: 'rodrigonegrete.es/zodi/', text: 'Producto de astrología, tarot, numerología y comunidad con chat conversacional personalizado por IA. 17 tipos de lectura, 4 tonos de respuesta, planes premium. Botpress, Make y OpenAI.' },
-      { name: 'Just Enjoy · TFM del máster, calificación 10/10', url: 'rodrigonegrete.es/just-enjoy/', text: 'Plataforma de hiperautomatización de viajes con agentes de IA: workflow de n8n con 27 nodos, GPT-4.1 y Next.js que automatiza preferencias, vuelos, hoteles, actividades, mapa y PDF.' },
+      { name: 'Just Enjoy · TFM en equipo del máster, calificación 10/10', url: 'rodrigonegrete.es/just-enjoy/', text: 'Trabajo en equipo (3 integrantes): plataforma de hiperautomatización de viajes con agentes de IA (workflow de n8n con 27 nodos, GPT-4.1 y Next.js). Mi parte: frontend, diseño UX/UI e interfaces y parte de la automatización en n8n.' },
       { name: 'Iberdata · business case final del máster, examen 10/10', url: 'rodrigonegrete.es/iberdata/', text: 'Centro de Excelencia de IA para una empresa de 450 empleados: gobierno, arquitectura RAG, 2 pilotos, plan de 12 semanas, KPIs y matriz de riesgos.' },
       { name: 'Events Planner · PWA para wedding planners', url: 'rodrigonegrete.es/aem/', text: 'Aplicación web sin conexión para un estudio de bodas: portal de la pareja, plano de mesas, contrato imprimible; 15 pruebas de base de datos (pgTAP).' },
       { name: 'Dedícalo Play · juego multijugador en tiempo real', url: 'rodrigonegrete.es/dedicalo-play/', text: 'Party game musical para navegador con React y Supabase: mecánicas, UX/UI y lanzamiento. 3 modos de juego.' },
@@ -109,7 +109,7 @@ export const cv = {
     ],
     languages: [
       { l: 'Español', level: 'nativo' },
-      { l: 'Inglés', level: 'A2 (elemental)' },
+      { l: 'Inglés', level: 'B2 (intermedio-alto)' },
       { l: 'Catalán', level: 'A2 (elemental)' },
     ],
     ui: { certLabel: 'Certificado (PDF)' },
@@ -130,7 +130,7 @@ export const cv = {
     stats: [
       { n: '17+', l: 'years of B2B business and operations experience' },
       { n: '80+', l: 'corporate accounts managed at Movistar Empresas' },
-      { n: '27', l: 'nodes in the Just Enjoy n8n workflow (master thesis)' },
+      { n: '27', l: 'nodes in the n8n workflow of the Just Enjoy master thesis (team project)' },
       { n: '287', l: 'open source web resources in 7 languages (Rodd.es)' },
     ],
     experience: [
@@ -187,7 +187,7 @@ export const cv = {
     ],
     projects: [
       { name: 'ZODI · AI product, PWA, freemium', url: 'rodrigonegrete.es/zodi/', text: 'Astrology, tarot, numerology and community product with a personalized AI conversational chat, UX writing and its own visual identity. 17 reading types, 4 response tones, premium plans. Botpress, Make and OpenAI.' },
-      { name: 'Just Enjoy · Master thesis, grade 10/10', url: 'rodrigonegrete.es/just-enjoy/', text: 'Travel hyperautomation platform with AI agents: 27-node n8n workflow, GPT-4.1 and Next.js that automates preferences, flights, hotels, activities, map and PDF.' },
+      { name: 'Just Enjoy · Team master thesis, grade 10/10', url: 'rodrigonegrete.es/just-enjoy/', text: 'Team project (3 members): travel hyperautomation platform with AI agents (27-node n8n workflow, GPT-4.1 and Next.js). My part: frontend, UX/UI design and interfaces, and part of the n8n automation.' },
       { name: 'Iberdata · Master final business case, exam 10/10', url: 'rodrigonegrete.es/iberdata/', text: 'AI Center of Excellence for a 450-employee company: governance, RAG architecture, 2 pilots, 12-week plan, KPIs and risk matrix.' },
       { name: 'Events Planner · PWA for wedding planners', url: 'rodrigonegrete.es/aem/', text: 'Offline-capable web app for a wedding studio, with a private couple portal, seating plan and printable contract; 15 database tests (pgTAP).' },
       { name: 'Dedícalo Play · real-time multiplayer game', url: 'rodrigonegrete.es/dedicalo-play/', text: 'Browser-based musical party game built with React and Supabase: concept, mechanics, branding, UX/UI and launch. 3 game modes.' },
@@ -213,7 +213,7 @@ export const cv = {
     ],
     languages: [
       { l: 'Spanish', level: 'native' },
-      { l: 'English', level: 'A2 (elementary)' },
+      { l: 'English', level: 'B2 (upper intermediate)' },
       { l: 'Catalan', level: 'A2 (elementary)' },
     ],
     ui: { certLabel: 'Certificate (PDF)' },
