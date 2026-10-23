@@ -388,19 +388,21 @@ try {
 })();
 
 /* ═══════════════════════════════════════
-   FIRMA WEBGL DEL HERO — gobernanza: el modulo (y ogl) solo se descargan si el dispositivo lo aguanta
+   FIRMA DEL HERO (aurora WebGL + grafo de agentes 2D) — gobernanza unica: los modulos (y ogl) solo se descargan si el dispositivo lo aguanta
    y tras el LCP (primera interaccion o 5 s tras load, en idle). Sin WebGL, ogl falla en try/catch y no pasa nada. Interruptor de depuracion: ?webgl=0
+   Con reduced-motion no hay aurora y el grafo dibuja un unico fotograma estatico (se carga ya en idle: no anima).
 ═══════════════════════════════════════ */
 (()=>{
   const nav=navigator, cn=nav.connection||{};
   const desktop=matchMedia('(hover:hover) and (pointer:fine)').matches;
   const mem=nav.deviceMemory?nav.deviceMemory>=4:(nav.hardwareConcurrency||0)>=4;
-  const ok=document.getElementById('lr-canvas')&&!cn.saveData&&!matchMedia('(prefers-reduced-motion: reduce)').matches&&(mem||desktop)&&!/[?&]webgl=0(?!\d)/.test(location.search);
+  const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ok=document.getElementById('lr-canvas')&&!cn.saveData&&(mem||desktop)&&!/[?&]webgl=0(?!\d)/.test(location.search);
   if(!ok) return;
   // arranque: primera interaccion o, como mucho, 5 s despues del load (y en idle): nunca compite con LCP/TBT
-  const run=()=>import('./webgl-hero.js').catch(()=>{}); let fired=0;
+  const run=()=>{ if(!calm) import('./webgl-hero.js').catch(()=>{}); import('./agent-graph.js').catch(()=>{}); }; let fired=0;
   const go=()=>{ if(fired++) return; ['pointermove','touchstart','scroll','keydown'].forEach(e=>removeEventListener(e,go)); 'requestIdleCallback' in window?requestIdleCallback(run,{timeout:2000}):setTimeout(run,300); };
-  const arm=()=>{ setTimeout(go,5000); ['pointermove','touchstart','scroll','keydown'].forEach(e=>addEventListener(e,go,{once:true,passive:true})); };
+  const arm=()=>{ if(calm) return go(); setTimeout(go,5000); ['pointermove','touchstart','scroll','keydown'].forEach(e=>addEventListener(e,go,{once:true,passive:true})); };
   document.readyState==='complete'?arm():addEventListener('load',arm,{once:true});
 })();
 
