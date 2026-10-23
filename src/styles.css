@@ -3013,3 +3013,6 @@ main > section.sec { content-visibility: auto; contain-intrinsic-size: auto calc
   #contacto { contain-intrinsic-size: auto calc(1230px - 2 * var(--sec-y)); }
 }
 html.cv-off main > section.sec { content-visibility: visible; }
+/* Tema principal (cyber): el violeta #b026ff no llega a 4.5:1 como texto pequeño sobre negro, ni con texto negro encima */
+[data-theme="cyber"] .ag-ctx a { color: #c45cff; }
+[data-theme="cyber"] .nav-cta { color: #fff; }

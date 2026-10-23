@@ -193,3 +193,4 @@ html.tj-lock, html.tj-lock body { overflow: hidden; }
 }
 
 }
+[data-theme="cyber"] .tj-seg button[aria-pressed="true"] { color: #fff; }
