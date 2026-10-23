@@ -1,0 +1,62 @@
+/* Capa de pulido de la portada (auditoría de dirección de arte). Va después de styles.css: solo reglas de override, sin tocar el desktop premium (>=981 y <1800).
+   Escala: H1 clamp(2.25rem,5vw,4.5rem)/1.04 · cuerpo 16-17/1.6 · radios 12/16/999 · entrada 520 ms cubic-bezier(.16,1,.3,1) · micro 140-180 ms. */
+
+/* (18) Jerarquía de CTAs: primario sólido, secundarios fantasma, música = icono de 40 px */
+.cta-row .btn-s { background: transparent; }
+.cta-row button.btn-music { font-size: 0; line-height: 0; gap: 0; width: 40px; padding: 0; justify-content: center; border-style: solid; border-color: var(--bord2); }
+.btn-music svg { width: 16px; height: 16px; }
+.btn-music[data-state="paused"] { border-style: solid; }
+
+/* (7) Cabecera de altura estable entre temas: los chips no cambian de nº de líneas al cambiar de fuente */
+.tag-row { min-height: 44px; flex-wrap: nowrap; align-content: flex-start; }
+.tag-row .tag { white-space: nowrap; }
+@media (max-width: 1099px) { .tag-row .tag:nth-child(n+3) { display: none; } }
+
+/* (19) Retrato: 7 etiquetas visibles legibles (12 px) y "+N" que despliega el resto */
+.cb { font-size: 12px; padding: 3px 8px; }
+.cbadges:not(.open) > .cb:nth-of-type(n+8) { display: none; }
+.cb-more { font: 700 12px/1.15 var(--fb, inherit); padding: 3px 9px; min-height: 24px; border-radius: 100px; border: 1px solid var(--a1); background: transparent; color: var(--a1); cursor: pointer; transition: background-color .16s, color .16s; }
+.cb-more:hover, .cb-more:focus-visible { background: var(--a1); color: var(--bg); }
+.cbadges.open > .cb-more { display: none; }
+
+/* (3) Tablet 768-980: hero en dos columnas 58/42 (retrato ya no queda cortado por el pliegue) */
+@media (min-width: 768px) and (max-width: 980px) {
+  .hero-inner { grid-template-columns: 58fr 42fr; gap: 2rem; }
+  .hero-inner .pcard-wrap { margin-top: 0; }
+  .hero-h { font-size: clamp(2.25rem, 5vw, 3.25rem); }
+  .vp-list { flex-direction: row; flex-wrap: wrap; max-width: none; gap: .5rem; margin-bottom: 1.2rem; }
+  .vp { padding: .5rem .95rem; border-radius: 100px; font-size: 13px; align-items: center; }
+  .vp .vp-desc { display: none; }
+  .pcard .cdiv, .pcard .cbadges { display: none; }
+  .pcard .av-wrap { max-width: 100%; }
+}
+@media (min-width: 768px) and (max-width: 980px) { #hero { min-height: auto; } }
+
+/* (3) Móvil: retrato primero y legible */
+@media (max-width: 640px) {
+  .pcard .av-wrap { width: 104px; height: 104px; }
+  .pcard .cname { font-size: 20px; }
+  .pcard .crole { font-size: 12.5px; }
+  .hero-h { font-size: min(clamp(2.25rem, 9vw, 3rem), calc((100vw - 2 * var(--gut)) / 8.8)); line-height: 1.04; }
+}
+
+/* (1/18) H1 de escritorio normal con interlineado 1.04 y máx. 4 líneas */
+.hero-h { line-height: 1.04; }
+
+/* (17) Móvil: cuerpo serif a 16/1.6 en editorial y hud; grano al 4 % */
+@media (max-width: 640px) {
+  [data-theme="editorial"] :is(.hero-sub, .sb, .bc-d, .lab-d, .tq, .vp, .about p),
+  [data-theme="hud"] :is(.hero-sub, .sb, .bc-d, .lab-d, .tq, .vp, .about p) { font-size: 16px; line-height: 1.6; }
+  [data-theme="editorial"] body::before { opacity: .04; }
+}
+
+/* (11) Ultra-ancho: contenido ~1480 px, titular escalado, 112 % de tipografía base, hero a pantalla completa, estadísticas una sola vez */
+@media (min-width: 1800px) {
+  .wrap { max-width: calc(1480px + 2 * var(--gut)); }
+  .fx-wrap { max-width: calc(1480px + 2 * var(--gut)); }
+  .hero-inner { max-width: 1480px; }
+  .hero-h { font-size: clamp(3rem, 3.8vw, 6.5rem); }
+  #hero { min-height: 100svh; display: flex; align-items: center; }
+  .pcard .cstats, .pcard .cdiv { display: none; }
+}
+@media (min-width: 2200px) { html { font-size: 112%; } }

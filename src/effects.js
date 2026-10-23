@@ -12,14 +12,15 @@ if (!reduced) {
   const scramble = el => {
     const node = el.firstChild;
     if (!node || node.nodeType !== 3) return;
-    const final = node.data, t0 = performance.now(), dur = 700;
+    const final = node.data, t0 = performance.now(), dur = 450;
+    el.dataset.txt = final; // el chip de capitulo (transitions.js) lee el texto final, nunca el mezclado
     const tick = now => {
       // Si applyLang reescribió el nodo, se aborta sin tocar nada
-      if (el.firstChild !== node) return;
+      if (el.firstChild !== node) { delete el.dataset.txt; return; }
       const p = Math.min((now - t0) / dur, 1);
       node.data = p >= 1 ? final : [...final].map((c, i) =>
         c === ' ' || i < p * final.length ? c : CH[(Math.random() * CH.length) | 0]).join('');
-      if (p < 1) requestAnimationFrame(tick);
+      if (p < 1) requestAnimationFrame(tick); else delete el.dataset.txt;
     };
     requestAnimationFrame(tick);
   };

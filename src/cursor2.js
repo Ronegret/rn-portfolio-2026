@@ -222,7 +222,12 @@ D.addEventListener('pointermove', e => {
   if (body.classList.contains('c2-kb') && Math.hypot(nx - px, ny - py) > 2) body.classList.remove('c2-kb');
   if (!started) { // primer movimiento: aparece sin viajar desde (0,0)
     started = true; scan(); rx = nx; ry = ny; for (const q of trail) { q.x = nx; q.y = ny; }
-    body.classList.add('c2'); c2.classList.add('on');
+    body.classList.add('c2');
+    // posicion aplicada ya, antes de mostrarlo: ni un frame en (0,0)
+    const tf = `translate3d(${nx}px,${ny}px,0)`;
+    ring.style.transform = lw.style.transform = pt.style.transform = tf;
+    for (const q of trail) q.el.style.transform = tf;
+    requestAnimationFrame(() => c2.classList.add('on'));
   }
   px = nx; py = ny; moved = true;
   if (dg) {

@@ -89,6 +89,7 @@ import vtCore from '../../public/src/case-transitions.js?raw';
 <script>
   import '../main.js';
   import '../transitions.js';
+  import '../hero-polish.js';
 </script>
 <!-- Tema persistido: se aplica antes del primer pintado (el body ya esta parseado); las islas hidratan despues sin salto -->
 <script is:inline define:vars={{ AVATARS }}>try{var t=sessionStorage.getItem('rn-theme');if(t&&AVATARS[t]){document.documentElement.setAttribute('data-theme',t);var a=document.getElementById('av');if(a)a.src=AVATARS[t];document.querySelectorAll('.dk,.tc').forEach(function(b){var on=(b.dataset.t||b.dataset.tc)===t;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)})}}catch(e){}</script>

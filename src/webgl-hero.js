@@ -150,13 +150,33 @@ function setPointer(cx, cy) {
   mouse.y = Math.max(0, Math.min(1, 1 - (cy - r.top) / r.height));
 }
 
-function init() {
+/* Compilacion repartida: KHR_parallel_shader_compile compila/enlaza fuera del hilo principal; ogl solo construye su Program
+   (que consulta LINK_STATUS, bloqueante) cuando el driver ya tiene el binario listo. Sin la extension: tras un frame de espera. */
+function warmCompile(gl) {
+  return new Promise(done => {
+    const ext = gl.getExtension('KHR_parallel_shader_compile');
+    if (!ext) return requestAnimationFrame(() => setTimeout(done, 0));
+    try {
+      const pr = gl.createProgram();
+      [[gl.VERTEX_SHADER, VERT], [gl.FRAGMENT_SHADER, FRAG]].forEach(([t, src]) => { const sh = gl.createShader(t); gl.shaderSource(sh, src); gl.compileShader(sh); gl.attachShader(pr, sh); });
+      gl.linkProgram(pr);
+      const poll = () => (gl.getProgramParameter(pr, ext.COMPLETION_STATUS_KHR) ? done() : setTimeout(poll, 16));
+      poll();
+    } catch (e) { done(); }
+  });
+}
+
+async function init() {
   try {
+    res = floorRes; // arranca a baja resolucion y sube cuando ya hay fotogramas estables
     renderer = new Renderer({ canvas, alpha: true, premultipliedAlpha: true, antialias: false, depth: false, powerPreference: 'low-power', dpr: res });
     const gl = renderer.gl;
+    await warmCompile(gl);
+    if (dead) return;
     program = new Program(gl, { vertex: VERT, fragment: FRAG, uniforms: U, transparent: true, depthTest: false, depthWrite: false });
     mesh = new Mesh(gl, { geometry: new Triangle(gl), program });
   } catch (e) { return; }
+  setTimeout(() => { if (!dead && res < base) { res = base; resize(); warm = 4; acc = frames = 0; } }, 1200);
   resize();
 
   new ResizeObserver(resize).observe(hero);

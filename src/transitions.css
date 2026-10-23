@@ -70,7 +70,7 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
   position: fixed; left: clamp(14px, 2vw, 28px); bottom: 22px; z-index: 6500; pointer-events: none;
   display: flex; align-items: baseline; gap: 6px; font-family: var(--fm); font-size: 11px; line-height: 1.2; letter-spacing: .14em; text-transform: uppercase;
   color: var(--t3); padding: 8px 14px; border-radius: 100px; border: 1px solid var(--bord);
-  background: color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
 }
 .chap-n { display: inline-block; height: 1.2em; overflow: hidden; color: var(--t1); font-weight: 700; }
 .chap-col { display: block; transform: translateY(calc(var(--i, 0) * -1.2em)); transition: transform .6s cubic-bezier(.16, 1, .3, 1); }
@@ -82,6 +82,8 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
   .chap { bottom: 14px; font-size: 10px; padding: 6px 10px; }
   .chap-t { display: none; }
 }
+/* Teléfono: sin chip (tapaba el CTA del hero y contenido interactivo); la navegación ya tiene el menú */
+@media (max-width: 599px) { .chap { display: none; } }
 @media (prefers-reduced-motion: reduce) { .chap-col { transition: none; } }
 
 @media (prefers-reduced-motion: no-preference) {
