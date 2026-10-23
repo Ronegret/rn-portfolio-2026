@@ -1,5 +1,4 @@
-/* Firma WebGL del hero: aurora de ruido simplex con distorsion por puntero/toque y ondas de scroll,
-   mas un orbe de vidrio con refraccion falsa. Se importa DINAMICAMENTE desde main.js solo si pasa la gobernanza.
+/* Firma WebGL del hero: aurora de ruido simplex con distorsion por puntero/toque y ondas de scroll. Se importa DINAMICAMENTE desde main.js solo si pasa la gobernanza.
    Decorativo: el CSS del hero (degradado) es siempre el fondo; si algo falla, el canvas simplemente no aparece. */
 import { Renderer, Program, Mesh, Triangle } from 'ogl';
 
@@ -15,7 +14,7 @@ precision highp float;
 #else
 precision mediump float;
 #endif
-uniform vec2 uRes,uM,uOrb;uniform float uPhase,uWave,uEnergy,uR,uStr,uLight,uSpin;
+uniform vec2 uRes,uM;uniform float uPhase,uWave,uEnergy,uStr;
 uniform vec3 uC1,uC2,uC3;
 vec3 pm(vec3 x){return x-floor(x*(1./289.))*289.;}
 vec3 perm(vec3 x){return pm((x*34.+1.)*x);}
@@ -55,22 +54,6 @@ void main(){
   float a=f.a*tm*mix(.45,1.,uv.y)*(1.-.35*smoothstep(.5,1.4,length(uv-vec2(.5,.9))*1.2));
   a=(a+g*.22*(.4+uEnergy))*uStr;
   vec3 col=f.rgb;
-  // orbe de vidrio: refraccion falsa (muestrea el mismo campo desplazado por la normal de la esfera)
-  vec2 o=p-(uOrb-.5)*vec2(asp,1.)*1.7;
-  float r=length(o),R=uR;
-  if(r<R*1.04){
-    float z=sqrt(max(R*R-r*r,0.))/R;
-    vec3 n=normalize(vec3(o/R,z+.001));
-    float s=sin(uSpin),c2=cos(uSpin);
-    vec2 nr=vec2(c2*n.x-s*n.y,s*n.x+c2*n.y);
-    vec4 rf=field(p*.55-nr*.5+vec2(0.,.12));
-    float fr=pow(1.-z,2.6);
-    vec3 spec=vec3(pow(max(dot(n,normalize(vec3(-.45+.15*sin(uSpin),.65,.6))),0.),38.));
-    vec3 oc=mix(rf.rgb,vec3(1.),fr*.5)+spec*(.55+.25*uLight);
-    float oa=clamp(.2+.5*rf.a+fr*.6+spec.x*.7,0.,1.)*uStr*2.;
-    float e=smoothstep(R*1.04,R*.98,r);
-    col=mix(col,oc,e*.85);a=mix(a,max(a,oa),e);
-  }
   a+=(hash(gl_FragCoord.xy)-.5)/255.;
   a=clamp(a,0.,1.);
   gl_FragColor=vec4(col*a,a);
@@ -97,15 +80,15 @@ function readTheme() {
 let renderer, program, mesh, raf = 0, running = false, dead = false, ready = false;
 let cur = readTheme(), tgt = cur.slice();
 const U = {
-  uRes: { value: [1, 1] }, uM: { value: [.5, .5] }, uOrb: { value: [.8, .6] }, uPhase: { value: 0 }, uWave: { value: 0 },
-  uEnergy: { value: 0 }, uR: { value: .3 }, uStr: { value: .5 }, uLight: { value: 0 }, uSpin: { value: 0 },
+  uRes: { value: [1, 1] }, uM: { value: [.5, .5] }, uPhase: { value: 0 }, uWave: { value: 0 },
+  uEnergy: { value: 0 }, uStr: { value: .5 },
   uC1: { value: [1, 1, 1] }, uC2: { value: [1, 1, 1] }, uC3: { value: [1, 1, 1] },
 };
 const base = coarse ? .55 : Math.min(devicePixelRatio || 1, 1.25);
 const floorRes = coarse ? .3 : .5;
 let res = base;
 const mouse = { x: .5, y: .5, sx: .5, sy: .5, has: false, lx: .5, ly: .5 };
-let energy = 0, wave = 0, lastY = scrollY, phase = 0, last = 0, spin = 0;
+let energy = 0, wave = 0, lastY = scrollY, phase = 0, last = 0,;
 let acc = 0, frames = 0, warm = 0;
 
 function resize() {
@@ -115,9 +98,6 @@ function resize() {
   renderer.setSize(w, h);
   canvas.style.width = canvas.style.height = '100%';
   U.uRes.value = [renderer.gl.drawingBufferWidth, renderer.gl.drawingBufferHeight];
-  const wide = w / h > 1.1;
-  U.uR.value = wide ? .4 : .21;
-  U.uOrb.value = wide ? [.68, .5] : [.82, .82];
 }
 
 function frame(now) {
@@ -146,13 +126,12 @@ function frame(now) {
   const sp = Math.hypot(mouse.sx - mouse.lx, mouse.sy - mouse.ly) / dt; mouse.lx = mouse.sx; mouse.ly = mouse.sy;
   energy = Math.min(1, energy * Math.exp(-dt * 1.6) + Math.min(sp, 3) * dt * 1.4 + Math.abs(dy) * .0006);
   phase += dt * (.045 + energy * .16); // en reposo casi quieto
-  spin += dt * (.18 + energy * .5);
   // tema: transicion de ~1 s
   const k = 1 - Math.exp(-dt * 3.4);
   for (let i = 0; i < cur.length; i++) cur[i] += (tgt[i] - cur[i]) * k;
   U.uC1.value = cur.slice(0, 3); U.uC2.value = cur.slice(3, 6); U.uC3.value = cur.slice(6, 9);
-  U.uLight.value = cur[9]; U.uStr.value = cur[10];
-  U.uPhase.value = phase; U.uWave.value = wave; U.uEnergy.value = energy; U.uSpin.value = spin;
+  U.uStr.value = cur[10];
+  U.uPhase.value = phase; U.uWave.value = wave; U.uEnergy.value = energy;
   U.uM.value = [mouse.sx, mouse.sy];
   renderer.render({ scene: mesh });
   if (!ready) { ready = true; canvas.classList.add('is-on'); canvas.dataset.wgl = 'on'; }
