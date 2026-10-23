@@ -386,13 +386,15 @@ h2 {
 }
 .journey-main {
   width: min(78%, 520px);
+  max-height: 92%;
+  object-fit: contain;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
 }
 .journey-mini-a { width: 30%; left: 4%; bottom: 4%; animation: floatSoft 8s ease-in-out infinite; }
 .journey-mini-b { width: 26%; right: 5%; top: 8%; animation: floatSoft 7s ease-in-out infinite reverse; }
-.learning-main { width: 70%; right: 0; bottom: 2%; }
+.learning-main { width: 70%; right: 0; bottom: 2%; max-height: 94%; object-fit: contain; object-position: right bottom; }
 .learning-mini-a { width: 32%; left: 3%; top: 8%; animation: floatSoft 8s ease-in-out infinite; }
 .learning-mini-b { width: 28%; left: 8%; bottom: 6%; animation: floatSoft 7s ease-in-out infinite reverse; }
 .model-board {
@@ -459,13 +461,13 @@ h2 {
 }
 .screen-card img {
   width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
+  aspect-ratio: 1200 / 552;
+  object-fit: contain;
   object-position: top;
   border-bottom: 1px solid var(--line);
   transition: transform .6s cubic-bezier(.16,1,.3,1);
 }
-.screen-card:hover img { transform: scale(1.035); }
+.screen-card:hover img { transform: scale(1.02); }
 .screen-card div { padding: 18px; }
 .screen-card h3 { font-size: 1rem; margin-bottom: 7px; }
 .screen-card p { color: var(--muted); font-size: 13px; line-height: 1.65; }
@@ -1169,7 +1171,7 @@ body.iberdata-page::before {
   .learning-collage { min-height: 330px; }
   .model-row { grid-template-columns: 1fr; }
   .journey-main { width: 92%; }
-  .learning-main { width: 90%; right: -12%; }
+  .learning-main { width: 88%; right: 0; }
   .learning-mini-a { width: 34%; }
   .learning-mini-b { width: 34%; }
   .matrix { display: table; width: 100%; table-layout: fixed; overflow: visible; }

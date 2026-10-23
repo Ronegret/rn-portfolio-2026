@@ -834,3 +834,6 @@ body {
   touch-action: pan-y;
   scrollbar-gutter: stable;
 }
+
+/* Tarot: en tablet/escritorio las cartas hacen wrap (antes fila con scroll horizontal y cartas cortadas por el borde) */
+@media (min-width: 641px) { .tarot-row { flex-wrap: wrap; justify-content: center; overflow: visible; contain: none; } .tarot-row img { scroll-snap-align: none; } }

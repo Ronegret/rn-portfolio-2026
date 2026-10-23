@@ -188,7 +188,7 @@ h3 { font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.2; }
 
 .oracle-card img {
   width: 100%;
-  aspect-ratio: 1.06;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: calc(var(--radius) - 8px);
   filter: contrast(1.08) saturate(.9);
@@ -448,7 +448,7 @@ h3 { font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.2; }
   .hero { min-height: auto; align-items: start; gap: 1.8rem; }
   h1 { max-width: 12.5ch; font-size: clamp(2.7rem, 10vw, 4.8rem); }
   .oracle-card { width: min(100%, 520px); justify-self: center; }
-  .oracle-card img { aspect-ratio: 16 / 10; }
+  .oracle-card img { aspect-ratio: 1; }
   .metric-strip,
   .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
@@ -464,7 +464,7 @@ h3 { font-size: clamp(1.15rem, 1.8vw, 1.45rem); line-height: 1.2; }
   .lead { width: 100%; overflow-wrap: anywhere; }
   .hero-actions { flex-direction: column; }
   .oracle-card { padding: .85rem; border-radius: 18px; }
-  .oracle-card img { aspect-ratio: 4 / 3; border-radius: 12px; }
+  .oracle-card img { aspect-ratio: 1; border-radius: 12px; }
   .metric-strip,
   .process-grid { grid-template-columns: 1fr; }
   .metric-strip article,
