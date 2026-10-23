@@ -1,0 +1,137 @@
+/* Stack · "Herramientas (tool calls)": grafo SVG por función + paleta ⌘K (<dialog>). Lo animado es CSS:
+   trazo con animation-timeline (con @supports y fallback estático), pulsos con stroke-dashoffset solo en vista (.sk-live). */
+.sk, .skp { --sk-a: var(--a1); --sk-line: color-mix(in srgb, var(--t1) 20%, transparent); }
+[data-theme="saas"] :is(.sk, .skp), [data-theme="cyber"] :is(.sk, .skp) { --sk-a: var(--a2); }
+.sk { margin: 0 0 clamp(2.2rem, 5vw, 3.4rem); }
+.sk-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Barra: botón de la paleta + línea "para qué la uso" */
+.sk-bar { display: flex; flex-wrap: wrap; align-items: center; gap: .8rem 1.4rem; margin-bottom: clamp(1.2rem, 2.6vw, 2rem); }
+.sk-open {
+  display: inline-flex; align-items: center; gap: .6rem; min-height: 44px; padding: .55rem .6rem .55rem .9rem;
+  font: 600 14px/1 var(--fb); color: var(--t1); background: var(--surf); border: 1px solid var(--bord2);
+  border-radius: var(--rs); cursor: pointer; transition: border-color .24s var(--ease), transform .24s var(--ease);
+}
+.sk-open svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+.sk-open:hover { border-color: var(--sk-a); }
+.sk-open:active { transform: scale(.98); }
+.sk-open:focus-visible, .sk-chip:focus-visible, .skp-pj a:focus-visible, .skp-x:focus-visible { outline: 2px solid var(--sk-a); outline-offset: 2px; }
+.sk-kbd { font: 700 11px/1 var(--fm); color: var(--t2); background: var(--bg3); border: 1px solid var(--bord2); border-radius: 4px; padding: 5px 7px; letter-spacing: .04em; }
+.sk-use { margin: 0; flex: 1 1 22rem; min-width: 0; font: 12.5px/1.5 var(--fm); color: var(--t2); }
+.sk-use-t { color: var(--sk-a); font-weight: 700; }
+
+/* Grafo (≥1000 px). Por debajo, lista agrupada con chips: composición propia, sin encoger el SVG. */
+.sk-svg { display: block; width: 100%; height: auto; overflow: visible; font-family: var(--fb); }
+.sk-list { display: none; }
+@media (max-width: 999px) {
+  .sk-svg, .sk-use { display: none; }
+  .sk-list { display: grid; grid-template-columns: 1fr; gap: 1.15rem; }
+}
+@media (min-width: 640px) and (max-width: 999px) { .sk-list { grid-template-columns: repeat(2, 1fr); gap: 1.4rem 2rem; } }
+@media (hover: none) { .sk-kbd { display: none; } }
+
+.sk-v { font: 700 11.5px var(--fm); letter-spacing: .1em; text-transform: uppercase; fill: var(--t2); color: var(--t2); }
+.sk-gn { font: 600 19px var(--fd); letter-spacing: -.01em; fill: var(--t1); transition: fill .24s var(--ease); }
+.sk-e { fill: none; stroke: var(--sk-line); stroke-width: 1.5; transition: stroke .24s var(--ease); }
+.sk-hub { fill: var(--bg); stroke: var(--sk-a); stroke-width: 2; }
+.sk-pill { fill: var(--surf); stroke: var(--bord2); stroke-width: 1; rx: clamp(0px, var(--rs), 20px); transition: fill .24s var(--ease), stroke .24s var(--ease); }
+.sk-tn { font: 600 15px var(--fb); fill: var(--t1); }
+.sk-pc { font: 13px var(--fm); fill: var(--t2); }
+.sk-pill, .sk-tn, .sk-pc { transition: fill .24s var(--ease), stroke .24s var(--ease), transform .24s var(--ease); }
+.sk-n { cursor: pointer; outline: none; }
+.sk-col { transition: opacity .24s var(--ease); }
+.sk-bp, .sk-pl { fill: none; stroke: var(--sk-a); stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 0 200; pointer-events: none; }
+.sk-br, .sk-bp { pointer-events: none; }
+
+/* Foco/hover: se ilumina el grupo, el resto se apaga; la píldora avanza 4 px y un pulso recorre su rama */
+.sk-svg:has(.sk-n:is(:hover, :focus-visible)) .sk-col { opacity: .3; }
+.sk-svg .sk-col:has(.sk-n:is(:hover, :focus-visible)) { opacity: 1; }
+.sk-col:has(.sk-n:is(:hover, :focus-visible)) .sk-gn { fill: var(--sk-a); }
+.sk-col:has(.sk-n:is(:hover, :focus-visible)) .sk-br { stroke: color-mix(in srgb, var(--sk-a) 40%, transparent); }
+.sk-n:is(:hover, :focus-visible) .sk-br { stroke: var(--sk-a); }
+.sk-n:is(:hover, :focus-visible) .sk-pill { stroke: var(--sk-a); fill: color-mix(in srgb, var(--sk-a) 10%, var(--surf)); }
+.sk-n:focus-visible .sk-pill { stroke-width: 2; }
+.sk-n:is(:hover, :focus-visible) :is(.sk-pill, .sk-tn, .sk-pc) { transform: translateX(4px); }
+.sk-n:is(:hover, :focus-visible) .sk-pc { fill: var(--sk-a); }
+
+/* Lista móvil: cada grupo es un tronco vertical con su nodo; los chips son las herramientas */
+.sk-lg { position: relative; padding-left: 20px; }
+.sk-lg::before { content: ""; position: absolute; left: 4px; top: 6px; bottom: 4px; width: 1.5px; background: var(--sk-line); }
+.sk-lg::after { content: ""; position: absolute; left: 0; top: 2px; width: 7px; height: 7px; border-radius: 50%; background: var(--bg); border: 2px solid var(--sk-a); }
+.sk-lh { margin: 0 0 .6rem; display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .6rem; line-height: 1.2; }
+.sk-lh .sk-v { font-size: 10.5px; }
+.sk-lh .sk-gn { font-size: 17px; color: var(--t1); }
+.sk-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.sk-chip {
+  min-height: 44px; padding: 0 14px; font: 600 14px/1 var(--fb); color: var(--t1); background: var(--surf);
+  border: 1px solid var(--bord2); border-radius: var(--rs); cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transition: border-color .24s var(--ease), background-color .24s var(--ease), transform .24s var(--ease);
+}
+.sk-chip:active { transform: scale(.97); border-color: var(--sk-a); background: color-mix(in srgb, var(--sk-a) 10%, var(--surf)); }
+@media (hover: hover) { .sk-chip:hover { border-color: var(--sk-a); } }
+
+/* Paleta ⌘K: <dialog> nativo (modal: foco atrapado, Esc, inert). Hoja inferior en móvil. */
+.skp {
+  padding: 0; margin: 12vh auto auto; width: min(640px, calc(100vw - 32px)); max-width: none; max-height: none;
+  color: var(--t1); background: var(--surf); border: 1px solid var(--bord2); border-radius: var(--r);
+  box-shadow: 0 32px 80px -24px rgba(0, 0, 0, .55); overflow: hidden;
+}
+.skp::backdrop { background: rgba(0, 0, 0, .5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
+[data-theme="editorial"] .skp::backdrop, [data-theme="diario"] .skp::backdrop { background: rgba(20, 20, 20, .28); }
+html:has(.skp[open]) { overflow: hidden; }
+.skp-in { display: flex; flex-direction: column; max-height: min(76vh, 660px); }
+.skp-hd { display: flex; align-items: center; gap: 10px; padding: 12px 14px 12px 16px; border-bottom: 1px solid var(--bord); transition: box-shadow .24s var(--ease); }
+.skp-hd:focus-within { box-shadow: inset 0 -2px 0 var(--sk-a); }
+.skp-hd > svg { width: 18px; height: 18px; flex-shrink: 0; fill: none; stroke: var(--t2); stroke-width: 1.6; stroke-linecap: round; }
+.skp-q { flex: 1; min-width: 0; height: 40px; padding: 0; background: transparent; border: 0; outline: none; font: 500 17px var(--fb); color: var(--t1); -webkit-appearance: none; appearance: none; }
+.skp-q::placeholder { color: var(--t2); opacity: 1; }
+.skp-q::-webkit-search-cancel-button { display: none; }
+.skp-x { flex-shrink: 0; min-width: 44px; min-height: 32px; font: 700 11px/1 var(--fm); color: var(--t2); background: var(--bg3); border: 1px solid var(--bord2); border-radius: 4px; cursor: pointer; text-transform: uppercase; letter-spacing: .06em; }
+.skp-ls { list-style: none; margin: 0; padding: 8px; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 2px; }
+.skp-it { padding: 12px; border: 1px solid transparent; border-radius: max(var(--rs), 4px); transition: background-color .24s var(--ease), border-color .24s var(--ease); }
+.skp-it[hidden] { display: none; }
+.skp-it:focus-within, .skp-it.is-hit { background: color-mix(in srgb, var(--sk-a) 7%, transparent); border-color: color-mix(in srgb, var(--sk-a) 28%, transparent); }
+@media (hover: hover) { .skp-it:hover { background: color-mix(in srgb, var(--sk-a) 5%, transparent); } }
+.skp-r1 { margin: 0 0 4px; display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.skp-nm { font: 600 15px/1.35 var(--fb); color: var(--t1); min-width: 0; }
+.skp-g { flex-shrink: 0; font: 700 10.5px/1 var(--fm); letter-spacing: .1em; text-transform: uppercase; color: var(--t2); }
+.skp-use { margin: 0 0 10px; font-size: 14px; line-height: 1.5; color: var(--t2); }
+.skp-pj { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.skp-lb { font: 11px/1 var(--fm); color: var(--t2); margin-right: 4px; }
+.skp-pj a { display: inline-flex; align-items: center; min-height: 32px; padding: 0 11px; font: 600 13px/1 var(--fb); color: var(--t1); text-decoration: none; border: 1px solid var(--bord2); border-radius: var(--rb); transition: border-color .24s var(--ease), color .24s var(--ease); }
+.skp-pj a::after { content: "↗"; margin-left: 6px; font-size: 11px; color: var(--t2); }
+.skp-pj a:is(:hover, :focus-visible) { border-color: var(--sk-a); color: var(--sk-a); }
+.skp-empty { margin: 0; padding: 28px 18px; color: var(--t2); font-size: 14px; }
+.skp-ft { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; border-top: 1px solid var(--bord); font: 11px/1.3 var(--fm); color: var(--t2); }
+@media (max-width: 640px) {
+  .skp { width: 100%; margin: auto 0 0; border-bottom: 0; border-radius: max(var(--r), 14px) max(var(--r), 14px) 0 0; padding-bottom: env(safe-area-inset-bottom); }
+  .skp-in { max-height: 86dvh; }
+  .skp-keys { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Trazado ligado al scroll (Chrome/Edge/Safari 26); sin soporte, el grafo queda dibujado (estado por defecto) */
+  @supports (animation-timeline: view()) {
+    .sk-svg { view-timeline: --skv block; }
+    .sk-e { stroke-dasharray: 100; animation: sk-draw linear both; animation-timeline: --skv; animation-range: entry 25% cover 42%; }
+    .sk-br { animation-range: entry calc(30% + var(--i) * 4%) cover calc(40% + var(--i) * 3% + var(--r) * 2.5%); }
+    :is(.sk-pill, .sk-tn, .sk-pc) { animation: sk-pop linear both; animation-timeline: --skv; animation-range: entry calc(38% + var(--i) * 4%) cover calc(44% + var(--i) * 3% + var(--r) * 2.5%); }
+    @keyframes sk-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+    @keyframes sk-pop { from { opacity: 0; } to { opacity: 1; } }
+  }
+  /* Pulsos de datos (hilo conductor): solo con la sección en vista */
+  .sk-live .sk-pl { stroke-dasharray: 5 195; animation: sk-run 3.6s var(--ease) infinite; }
+  .sk-live .sk-pl2 { animation-delay: 1.8s; }
+  .sk-n:is(:hover, :focus-visible) .sk-bp { stroke-dasharray: 10 190; animation: sk-run .9s var(--ease) both; }
+  @keyframes sk-run { 0% { stroke-dashoffset: 5; } 70%, 100% { stroke-dashoffset: -100; } }
+  .sk-live .sk-lg::after { animation: sk-ping 3.6s var(--ease) infinite; animation-delay: calc(var(--i, 0) * .45s); }
+  @keyframes sk-ping { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--sk-a) 45%, transparent); } 40% { box-shadow: 0 0 0 7px transparent; } }
+  .skp[open] { animation: skp-in .24s var(--ease); }
+  .skp[open]::backdrop { animation: skp-fade .24s var(--ease); }
+  @keyframes skp-in { from { opacity: 0; transform: translateY(8px) scale(.985); } }
+  @keyframes skp-fade { from { opacity: 0; } }
+  @media (max-width: 640px) {
+    .skp[open] { animation: skp-up .42s var(--ease); }
+    @keyframes skp-up { from { transform: translateY(100%); } }
+  }
+}
