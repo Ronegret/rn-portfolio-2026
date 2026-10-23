@@ -54,6 +54,10 @@
     { "source": "/Rodd", "destination": "/rodd-es/index.html" },
     { "source": "/Rodd/", "destination": "/rodd-es/index.html" },
 
+    { "source": "/kettelbro", "destination": "/kettelbro/index.html" },
+    { "source": "/kettelbro/", "destination": "/kettelbro/index.html" },
+    { "source": "/Kettelbro", "destination": "/kettelbro/index.html" },
+    { "source": "/Kettelbro/", "destination": "/kettelbro/index.html" },
     { "source": "/aem", "destination": "/aem/index.html" },
     { "source": "/aem/", "destination": "/aem/index.html" },
     { "source": "/AEM", "destination": "/aem/index.html" },

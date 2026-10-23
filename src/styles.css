@@ -3045,3 +3045,13 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 [data-theme="diario"] .cb2, [data-theme="editorial"] .cb2 { color: color-mix(in srgb, var(--a2) 65%, #000); }
 /* en móvil el dock tapaba texto de forma permanente; los temas ya están en el menú (.mob-themes) */
 @media (max-width: 600px) { #dock { display: none; } }
+
+/* KETTELBRO — hero compuesto móvil (grafito + tinta bermellón). Chips sólidos: legibles en todos los temas */
+.kb-card .bc-img { position: relative; overflow: hidden; background: #0b0e14; min-height: 340px; border: 0 !important; display: block; }
+.kb-card .bc-img > img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; object-fit: cover !important; object-position: center top !important; filter: none !important; transition: transform 1s var(--ease); }
+.kb-card .bc:hover .bc-img > img { transform: scale(1.04) !important; filter: none !important; }
+.kb-card .bc-img::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #f2432d; z-index: 2; }
+.kb-tag-hi { background: #f2432d !important; color: #0b0e14 !important; border-color: #f2432d !important; }
+.kb-tag, .kb-card .bc-m { background: #0b0e14 !important; color: #ffc2b7 !important; border-color: #8f1d10 !important; }
+@media(max-width: 860px) { .kb-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; } }
+@media (prefers-reduced-motion: reduce) { .kb-card .bc-img > img { transition: none; } }
