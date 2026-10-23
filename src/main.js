@@ -1,5 +1,6 @@
 import { T } from './content.js';
 import './mobile-ux.js';
+import './mobile-menu.js';
 import './motion.js';
 import './effects.js';
 import './scroll-fx.js';
