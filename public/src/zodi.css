@@ -869,3 +869,7 @@ body {
   .z-nav .back-link::before { margin-right: .3rem; }
   .z-hero { padding-top: 84px; }
 }
+@media (min-width: 641px) and (max-width: 1024px) {
+  .z-hero, .section, .z-footer { width: calc(100% - 96px); }
+}
+@media (max-width: 980px) { .hero-art { margin: 0 0 1.6rem; } }

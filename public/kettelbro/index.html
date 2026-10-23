@@ -173,7 +173,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
 .cta p{margin-left:auto;margin-right:auto}
 .cta .actions{justify-content:center}
 
-.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .52s var(--ease-out),transform .52s var(--ease-out)}
 .rv.on{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}.btn{transition:none}}
 
@@ -186,7 +186,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
   .eyebrow{order:1}.hero h1{order:2}.hero-shot{order:3;max-width:none;margin:0 0 24px}.lead{order:4}.actions{order:5}.ficha{order:6}
   .hero-grid{gap:0}
   .hero h1{margin-bottom:20px}.lead{margin-bottom:24px}
-  .hero-shot img:first-child{max-height:38svh;border-radius:18px}
+  .hero-shot img:first-child{max-height:38svh;border-radius:18px;margin:0}
   .actions{margin-bottom:28px}
   section.s{padding:64px 16px}
   .g2,.g3,.s2,.types{grid-template-columns:minmax(0,1fr)}
@@ -195,6 +195,7 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
   .sw{grid-template-columns:repeat(3,minmax(0,1fr))}
   .bar .back span.long{display:none}
 }
+@media(min-width:641px) and (max-width:1024px){.hero,section.s{padding-inline:48px}main>.wrap[style]{padding-inline:48px!important}footer{padding-inline:48px}}
 </style>
 <link rel="stylesheet" href="/src/case-fold.css">
 <link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>

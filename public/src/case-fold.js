@@ -54,10 +54,10 @@ function setOpen(f, open, { instant = false } = {}) {
     // Las demos con estado propio (.demo[data-on]) se reinician al abrir: arrancan de cero y no corren plegadas
     f.inner.querySelectorAll('.demo').forEach((dm) => dm.dispatchEvent(new CustomEvent('demo-toggle')));
     const done = () => { if (f.open) f.fold.classList.add('cf-done'); };
-    inst ? done() : (f.t = setTimeout(done, 520));
+    inst ? done() : (f.t = setTimeout(done, 300));
   } else {
     const done = () => { if (!f.open) f.inner.setAttribute('hidden', 'until-found'); };
-    inst ? done() : (f.t = setTimeout(done, 520));
+    inst ? done() : (f.t = setTimeout(done, 300));
     // Al plegar se cierra lo que las demos dejaron abierto (p. ej. el menú móvil de prueba, que escucha Escape)
     if (f.inner.querySelector('.demo')) d.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
   }

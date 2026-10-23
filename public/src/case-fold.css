@@ -11,7 +11,7 @@
 .cf-sw[aria-pressed="true"] span:last-child { background: var(--cf-fg); color: var(--cf-bg); }
 
 /* Plegable */
-.cf-fold { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.23, 1, .32, 1); }
+.cf-fold { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.23, 1, .32, 1); }
 .cf-fold[data-open="1"] { grid-template-rows: 1fr; }
 .cf-fold > .cf-inner { min-height: 0; min-width: 0; overflow: hidden; display: flow-root; }
 .cf-fold.cf-done > .cf-inner { overflow: visible; }
