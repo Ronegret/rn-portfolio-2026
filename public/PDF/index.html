@@ -119,6 +119,12 @@
             background: #cbd5e1;
             border-radius: 2px;
         }
+        /* dianas tactiles de 44px: boton con altura minima y enlaces pequenos con halo invisible */
+        @media (max-width: 844px), (pointer: coarse) {
+            #btn-export { min-height: 44px; }
+            a[href="https://rodd.es"] { position: relative; }
+            a[href="https://rodd.es"]::after { content: ""; position: absolute; inset: -16px -8px; }
+        }
     </style>
 </head>
 <body class="text-slate-800">

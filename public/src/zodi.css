@@ -795,7 +795,7 @@ h3 { margin: 0; font-size: clamp(1.1rem, 1.7vw, 1.45rem); line-height: 1.18; }
   .btn-primary, .btn-secondary, .live-link, .back-link { width: 100%; }
   .metric-strip, .feature-grid, .process-timeline, .reading-grid, .tool-matrix, .business-grid, .role-panel, .decision-grid, .proof-grid, .universe-grid { grid-template-columns: 1fr; }
   h1 { font-size: clamp(2.9rem, 14vw, 4.2rem); }
-  h2 { font-size: clamp(2.05rem, 12vw, 3.4rem); }
+  h2 { font-size: min(clamp(2.05rem, 12vw, 3.4rem), calc((100vw - 28px) / 8.4)); } /* "automatizaciones." cabe en 320-430px */
   .z-logo-link { width: min(280px, 86vw); }
   .role-panel div, .decision-grid article, .proof-grid article, .mystic-card { min-height: auto; }
   .process-timeline::before, .zodiac-orbit { display: none; }
@@ -834,3 +834,6 @@ body {
   touch-action: pan-y;
   scrollbar-gutter: stable;
 }
+
+/* auditoria 23-oct: en pantallas muy anchas "automatizaciones." no desborda la columna del chat */
+@media (min-width: 1100px) { .split.reverse h2 { font-size: clamp(2.25rem, 5vw, 4.4rem); } }

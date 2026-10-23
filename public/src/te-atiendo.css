@@ -645,3 +645,8 @@ body {
   touch-action: pan-y;
   scrollbar-gutter: stable;
 }
+
+/* auditoria 23-oct: el titular del hero nunca desborda su columna (solo en 2 columnas) */
+.hero-copy { min-width: 0; }
+@media (min-width: 981px) { .hero-copy > h1 { font-size: clamp(3rem, 5.2vw, 5.6rem); overflow-wrap: break-word; } }
+.final-card .eyebrow { margin-bottom: .9rem; } /* auditoria 23-oct: el eyebrow tocaba el titular */

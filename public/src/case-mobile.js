@@ -17,7 +17,7 @@ style.textContent = `
 @media (max-width: 640px) {
   section.cm-collapsed { max-height: ${COLLAPSED_H}px; overflow: hidden; -webkit-mask-image: linear-gradient(#000 62%, transparent); mask-image: linear-gradient(#000 62%, transparent); }
   .cm-more {
-    display: flex; align-items: center; justify-content: center; gap: 8px; width: calc(100% - 2rem); max-width: 420px; min-height: 46px; margin: -.25rem auto 1.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 8px; width: calc(100% - 2rem); max-width: 420px; min-height: 46px; margin: .25rem auto 1.5rem;
     font: inherit; font-size: 14px; font-weight: 700; color: inherit; background: transparent;
     border: 1.5px solid currentColor; border-radius: 100px; cursor: pointer; position: relative; z-index: 2;
     transition: transform .16s cubic-bezier(0.23, 1, 0.32, 1), opacity .2s;
