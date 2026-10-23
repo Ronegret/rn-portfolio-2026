@@ -32,7 +32,7 @@ h.classList.add('cp');
 var go=0;function done(){if(go)return;go=1;h.classList.add('cp2');h.classList.remove('cp');
 function end(){h.classList.remove('cp2');res()}
 requestAnimationFrame(function(){requestAnimationFrame(end)});setTimeout(end,300)}
-try{new PerformanceObserver(function(l,o){if(l.getEntriesByName('first-contentful-paint').length){o.disconnect();setTimeout(done,0)}}).observe({type:'paint',buffered:true})}catch(e){}
+try{new PerformanceObserver(function(l,o){var e=l.getEntriesByName('first-contentful-paint')[0];if(e){window.__t0=e.startTime;o.disconnect();setTimeout(done,0)}}).observe({type:'paint',buffered:true})}catch(e){}
 setTimeout(done,1500)})(document);
 </script>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' text-anchor='middle' fill='%23fff'%3ERN%3C/text%3E%3Ccircle cx='51' cy='13' r='5' fill='%23ff2d2d'/%3E%3C/svg%3E">
@@ -102,6 +102,8 @@ setTimeout(done,1500)})(document);
 <Footer />
 <script>
   // main.js mide el layout al arrancar: espera a las hojas de estilo (ya no bloquean el render)
+  // La intro solo necesita intro.js (~3 KB): se carga ya, para que su rafaga de lineas salga en el momento de la explosion CSS
+  import('../intro.js');
   await (window as any).__css;
   // y a que la pagina revelada se haya pintado (FCP/LCP) antes de ejecutar el JS
   await new Promise<void>((r) => {
