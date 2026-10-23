@@ -215,8 +215,8 @@ function morph(on, animate) {
   const first = cs.map(c => c.getBoundingClientRect());
   const sR = seg.getBoundingClientRect(), bR = bento.getBoundingClientRect();
   const kind = sR.bottom > 0 && sR.top < vh ? 'seg' : bR.bottom > 0 && bR.top < vh ? 'card' : bR.bottom <= 0 ? 'below' : 'above';
-  let act = clamp(idx, 0, cs.length - 1);
-  if (on) { let best = 0; first.forEach((r, i) => { const v = Math.min(r.bottom, vh) - Math.max(r.top, 70); if (r.width && v > best) { best = v; act = i; } }); } // la tarjeta con más superficie en pantalla
+  let act = clamp(idx, 0, cs.length - 1), vis = act; // act: la que queda activa; vis: la que el usuario tiene a la vista (ancla)
+  if (on) { let best = 0; first.forEach((r, i) => { const v = Math.min(r.bottom, vh) - Math.max(r.top, 70); if (r.width && v > best) { best = v; vis = i; } }); if (animate) act = vis; } // la tarjeta con más superficie en pantalla; sin interacción (carga/volver de un caso) manda la guardada
   const bel = belowAll(), belTop = bel.map(e => e.getBoundingClientRect().top);
   flights.forEach(a => a.cancel()); flights = [];
   // LAST
@@ -226,7 +226,7 @@ function morph(on, animate) {
   if (!on) cs.forEach(c => c.getAnimations().forEach(a => { if (a.animationName === 'rv-up') a.finish(); }));
   if (on) { idx = act; sl0 = 0; vx = tilt = 0; bento.scrollTo({ left: cs[act].offsetLeft - (bento.clientWidth - cs[act].offsetWidth) / 2, behavior: 'instant' }); rebuildDots(); sl0 = bento.scrollLeft; }
   // ancla: lo que el usuario estaba mirando no se mueve
-  if (kind === 'card') jump(cs[act].getBoundingClientRect().top - first[act].top);
+  if (kind === 'card') jump(cs[vis].getBoundingClientRect().top - first[vis].top);
   else if (kind === 'below') jump(bel[0].getBoundingClientRect().top - belTop[0]);
   else if (kind === 'seg') { const r = cs[act].getBoundingClientRect(); if (r.bottom < 120 || r.top > vh - 120) jump(cy(r) - vh / 2); } // la activa quedó fuera: se trae al centro
   if (!animate || kind === 'above') return;
