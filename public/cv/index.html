@@ -153,6 +153,19 @@
       letter-spacing: -0.01em;
     }
 
+    /* h2 con el aspecto del h1: la segunda hoja no repite h1 */
+    h2.cv-name {
+      margin: 0 0 4px;
+      padding-bottom: 0;
+      border-bottom: 0;
+      color: var(--ink);
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-transform: none;
+    }
+
     .headline {
       margin: 0 0 10px;
       color: var(--accent);
@@ -353,7 +366,7 @@
         padding: 20px;
         box-shadow: none;
       }
-      h1 { font-size: 24px; }
+      h1, h2.cv-name { font-size: 24px; }
       .headline { font-size: 13.5px; }
       .impact { grid-template-columns: 1fr 1fr; }
       .languages { grid-template-columns: 1fr; }
@@ -378,7 +391,7 @@
         box-shadow: none;
       }
       header { padding-bottom: 8px; }
-      h1 { font-size: 22pt; color: #000 !important; margin-bottom: 3px; }
+      h1, h2.cv-name { font-size: 22pt; color: #000 !important; margin-bottom: 3px; }
       .headline { font-size: 11.5pt; color: #1e3a8a !important; margin-bottom: 6px; }
       .contact { font-size: 9pt; line-height: 1.4; }
       .contact a { color: #000 !important; text-decoration: none; }
@@ -633,7 +646,7 @@
     ═══════════════════════════════════════ -->
     <article class="cv-panel" id="cv-ux">
       <header>
-        <h1>Rodrigo Negrete Aros</h1>
+        <h2 class="cv-name">Rodrigo Negrete Aros</h2>
         <p class="headline">AI Automation Specialist | Agentes IA, RAG &amp; Hiperautomatización de procesos</p>
         <p class="contact">
           Barcelona, España <span class="dot">·</span> Disponible en remoto EU
