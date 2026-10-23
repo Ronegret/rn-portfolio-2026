@@ -197,7 +197,32 @@ footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-siz
   .bar .back span.long{display:none}
 }
 @media(min-width:641px) and (max-width:1024px){.hero,section.s{padding-inline:48px}main>.wrap[style]{padding-inline:48px!important}footer{padding-inline:48px}}
+
+/* case-type */
+/* escalas compartidas (public/src/case-type.css); la identidad (condensada coral) no cambia */
+body{font-size:var(--t-body);line-height:var(--t-body-lh)}
+.hero h1{font-size:var(--t-h1);line-height:var(--t-h1-lh)}
+.s h2{font-size:var(--t-h2);line-height:var(--t-h2-lh)}
+.s h3{font-size:var(--t-h3);line-height:var(--t-h3-lh)}
+.lead,.intro{font-size:var(--t-lead);line-height:var(--t-lead-lh)}
+.s p{max-width:var(--t-measure)}
+.eyebrow,.tag,.ficha dt,.dec header span,.dec-b h4,.tbl th,.types .card b{font-size:var(--t-mini);letter-spacing:var(--t-mini-ls)}
+.hero{padding-inline:var(--gutter)}
+section.s{padding:var(--sec-y) var(--gutter)}
+.grid,.types{gap:var(--sp-2)}.shots{gap:var(--sp-3)}
+.card{padding:var(--pad-card);border-radius:var(--r-md)}
+.dec,.note,.tree{border-radius:var(--r-md)}
+.note{padding:var(--sp-2) var(--sp-3);margin:var(--sp-4) 0}
+.dec header{padding:var(--sp-3) var(--pad-card) 6px}
+.dec-b div{padding:14px var(--pad-card) var(--sp-3)}
+.flow li{border-radius:var(--r-sm)}
+.btn{border-radius:var(--r-pill);transition:transform var(--dur-micro) var(--ease-out),background var(--dur-micro)}
+.hero-shot img,.shots figure img{border-radius:var(--r-md)}
+.hero-shot img{box-shadow:var(--sh-card)}
+.rv{transition:opacity var(--dur-enter) var(--ease-out),transform var(--dur-enter) var(--ease-out)}
+@media(max-width:860px){.hero{padding-inline:var(--gutter)}section.s{padding:var(--sec-y) var(--gutter)}.hero-shot img:first-child{border-radius:var(--r-md)}}
 </style>
+<link rel="stylesheet" href="/src/case-type.css">
 <link rel="stylesheet" href="/src/case-fold.css">
 <link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
 </head>

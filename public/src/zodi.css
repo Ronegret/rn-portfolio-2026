@@ -875,3 +875,31 @@ body {
 @media (max-width: 980px) { .hero-art { margin: 0 0 1.6rem; } }
 /* Tarot: en tablet/escritorio las cartas hacen wrap (antes fila con scroll horizontal y cartas cortadas por el borde) */
 @media (min-width: 641px) { .tarot-row { flex-wrap: wrap; justify-content: center; overflow: visible; contain: none; } .tarot-row img { scroll-snap-align: none; } }
+
+/* ── escalas compartidas (public/src/case-type.css) ─────────────────────────
+   Identidad intacta: Inter 900 apretada, lima/violeta, glow violeta (--shadow) y tarot/vinilo.
+   Antes: H2 hasta 5 líneas a 390 px por -.055em e interlineado .96; ahora H1/H2 con interlineado legible. */
+body { font-size: var(--t-body); line-height: var(--t-body-lh); }
+h1, h2 { line-height: var(--t-h2-lh); letter-spacing: var(--t-h2-ls); }
+h1 { font-size: var(--t-h1); line-height: var(--t-h1-lh); letter-spacing: -.03em; }
+.hero-copy h1 { font-size: var(--t-h1); line-height: var(--t-h1-lh); letter-spacing: -.03em; max-width: 16ch; }
+h2, .music-card h2, .split.reverse h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); line-height: var(--t-h3-lh); }
+.hero-lead { font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+.section-head p, .split p, .feature-card p, .process-timeline p, .tool-matrix p, .reading-grid p, .final-cta p { font-size: var(--t-body); line-height: var(--t-body-lh); }
+.section-head p, .split p, .final-cta p { max-width: var(--t-measure); }
+.eyebrow { font-size: var(--t-mini); letter-spacing: var(--t-mini-ls); }
+.z-hero, .section, .z-footer { width: min(var(--max), calc(100% - 2 * var(--gutter))); }
+.dark-band { padding-left: max(var(--gutter), calc((100vw - var(--max)) / 2)); padding-right: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
+.zodiac-orbit { right: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
+.section { padding-block: var(--sec-y); }
+.back-link, .live-link, .btn-primary, .btn-secondary { border-radius: var(--r-pill); transition-duration: var(--dur-micro); }
+.metric-strip div, .feature-card, .process-timeline article, .tool-matrix > div, .business-grid article,
+.role-panel div, .decision-grid article, .proof-grid article, .mystic-card, .reading-grid article, .music-card, .final-cta figure img { border-radius: var(--r-md); }
+.check-list li { border-radius: var(--r-sm); }
+.feature-card, .tool-matrix > div { padding: var(--pad-card); }
+.role-panel div, .decision-grid article, .proof-grid article, .mystic-card, .business-grid article { padding: var(--sp-3); }
+.feature-card, .process-step, .tool-card, .decision-grid article, .proof-grid article, .business-grid article { transition-duration: var(--dur-micro); transition-timing-function: var(--ease-out); }
+.reveal { transition-duration: var(--dur-enter); transition-timing-function: var(--ease-out); }
+/* 320-380 px: copy largo en columna de 280 px; baja el suelo para no pasar de 4 líneas */
+@media (max-width: 380px) { h1, .hero-copy h1 { font-size: 1.875rem; } h2, .music-card h2 { font-size: 1.375rem; } }

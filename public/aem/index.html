@@ -183,7 +183,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
 .hero-media img{
   display:block;width:100%;height:auto;
   object-fit:cover;object-position:50% 40%;
-  aspect-ratio:1152/720;
+  aspect-ratio:1280/720;
 }
 /* Datos del proyecto fuera del marco, centrados abajo */
 .hero-datos{
@@ -230,7 +230,7 @@ button{font-family:inherit;cursor:pointer;border:none;background:none;color:inhe
   .hero-eyebrow{order:1;margin-bottom:16px}
   .hero h1{order:2;margin-bottom:20px}
   .hero-media{order:3;margin-bottom:28px}
-  .hero-media img{width:min(100%,calc(38svh*1.6));margin:0 auto}
+  .hero-media img{width:min(100%,calc(38svh*1.78));margin:0 auto}
   .hero-linea{order:4;margin:0 auto 20px}
   .hero-sub{order:5}
   .hero-datos{order:6}
@@ -840,7 +840,35 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   .venue-grid{grid-template-columns:repeat(3,1fr);gap:10px}
 }
 @media(min-width:641px) and (max-width:1024px){.hero{padding-inline:48px}.seccion{padding-inline:48px}#mirada{padding-inline:48px!important}}
+
+/* case-type */
+/* escalas compartidas (public/src/case-type.css). Identidad intacta: Cormorant/DM Sans, oliva y crema,
+   tarjetas de papel casi cuadradas y sombras teñidas de oliva (no se unifican a propósito).
+   Cormorant tiene menos altura de x: titulares x1.1 y x1.15 en H3 para igualar el peso óptico. */
+body{font-size:var(--t-body);line-height:var(--t-body-lh)}
+.hero h1{font-size:var(--t-h1);line-height:var(--t-h1-lh)}
+.sec-h,.demo-sec .sec-h{font-size:calc(var(--t-h2)*1.1);line-height:var(--t-h2-lh);letter-spacing:var(--t-h2-ls)}
+.seccion h3{font-size:calc(var(--t-h3)*1.15);line-height:var(--t-h3-lh)}
+.seccion p,.seccion ul,.seccion ol{font-size:var(--t-body);line-height:var(--t-body-lh);max-width:var(--t-measure)}
+.seccion li{line-height:var(--t-body-lh)}
+.entradilla,.hero-sub{font-size:var(--t-lead);line-height:var(--t-lead-lh)}
+.entradilla{max-width:var(--t-measure)}
+.hero-eyebrow,.sec-num,.sec-eyebrow,.seccion h4{font-size:var(--t-mini);letter-spacing:var(--t-mini-ls)}
+.hero{padding-inline:var(--gutter)}
+.seccion{padding:var(--sec-y) var(--gutter)}
+.app-tour{padding-block:var(--sec-y)}
+.app-tour .tour-h,.tabs{padding-inline:var(--gutter)}
+.cita{padding:var(--sec-y) var(--gutter)}
+.caso{padding:var(--sp-3) var(--pad-card);transition:border-color var(--dur-micro),box-shadow var(--dur-micro),transform var(--dur-micro)}
+.mock-wrap{border-radius:var(--r-md)}
+.landing-img,.mock{border-radius:var(--r-sm)}
+.volver,.demo-cta{transition:transform var(--dur-micro) var(--ease-out),background var(--dur-micro)}
+.demo-btn{transition:transform var(--dur-micro) var(--ease-out),background var(--dur-micro),box-shadow var(--dur-micro)}
+.rv{transition:opacity var(--dur-enter) var(--ease-out),transform var(--dur-enter) var(--ease-out)}
+@media(max-width:480px){.hero-eyebrow::before,.hero-eyebrow::after{width:16px}}
+@media(max-width:720px){.hero{padding-inline:var(--gutter)}.seccion{padding:var(--sec-y) var(--gutter)}.cita{padding:var(--sec-y) var(--gutter)}.caso{padding:var(--sp-3)}}
 </style>
+<link rel="stylesheet" href="/src/case-type.css">
 <link rel="stylesheet" href="/src/case-fold.css">
 <link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
 </head>
@@ -870,7 +898,7 @@ footer a:hover{border-bottom-color:var(--mostaza)}
   </div>
 
   <div class="hero-media">
-    <img src="/assets/previews/events-planner-poster.webp" width="1152" height="720" alt="Events Planner, pantalla de bienvenida: monograma EP y logotipo Events Planner · Wedding + Events sobre unas alianzas y eucalipto">
+    <img src="/assets/previews/events-planner-poster.webp" width="1280" height="720" alt="Events Planner, pantalla de bienvenida: monograma EP y logotipo Events Planner · Wedding + Events sobre unas alianzas y eucalipto">
   </div>
 
   <div class="hero-datos">
