@@ -88,7 +88,7 @@ const base = coarse ? .55 : Math.min(devicePixelRatio || 1, 1.25);
 const floorRes = coarse ? .3 : .5;
 let res = base;
 const mouse = { x: .5, y: .5, sx: .5, sy: .5, has: false, lx: .5, ly: .5 };
-let energy = 0, wave = 0, lastY = scrollY, phase = 0, last = 0,;
+let energy = 0, wave = 0, lastY = scrollY, phase = 0, last = 0;
 let acc = 0, frames = 0, warm = 0;
 
 function resize() {
