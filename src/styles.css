@@ -4,7 +4,24 @@
 :root {
   --ease: cubic-bezier(.22,1,.36,1);
   --ease-back: cubic-bezier(.34,1.56,.64,1);
+  /* Sistema tipográfico y de ritmo (mismo que public/src/case-type.css). Los temas siguen
+     mandando en familias, colores y radios (--r/--rs/--rb). */
+  --t-h1: clamp(2.25rem, 5vw, 4.5rem);   --t-h1-lh: 1.04;
+  --t-h2: clamp(1.75rem, 3.2vw, 2.75rem); --t-h2-lh: 1.1; --t-h2-ls: -.02em;
+  --t-h3: 1.375rem;                       --t-h3-lh: 1.25;
+  --t-body: clamp(1rem, .975rem + .1vw, 1.0625rem); --t-body-lh: 1.6;
+  --t-lead: clamp(1.0625rem, 1rem + .3vw, 1.25rem); --t-lead-lh: 1.55;
+  --t-measure: 66ch;
+  --t-mini: .75rem; --t-mini-ls: .14em;
+  --r-sm: 12px; --r-md: 16px; --r-pill: 999px;
+  --sh-card: 0 24px 60px -24px rgb(0 0 0/.5);
+  --ease-out: cubic-bezier(.16,1,.3,1);
+  --dur-enter: 520ms; --dur-micro: 160ms; --dur-fold: 280ms; --stagger: 60ms;
+  --sp-1: 8px; --sp-2: 16px; --sp-3: 24px; --sp-4: 32px; --sp-5: 48px;
+  --sec-y: clamp(72px, 10vw, 140px);
+  --pad-card: 24px; --gutter: 20px;
 }
+@media (min-width: 641px) { :root { --pad-card: 32px; --gutter: 48px; } }
 
 /* 01. TEMA HIGH-TECH (Dual Core AI) */
 [data-theme="saas"] {
@@ -16,7 +33,7 @@
   --a1g: rgba(255,255,255,0.15); --a2g: rgba(0,240,255,0.15);
   --fd: 'Inter', sans-serif; --fb: 'Inter', sans-serif; --fm: 'Space Mono', monospace;
   --r: 4px; --rs: 2px; --rb: 0px;
-  --sh-size: clamp(2.2rem, 5vw, 3.8rem);
+  --sh-size: var(--t-h2);
 }
 
 /* 02. TEMA EL DIARIO DIGITAL (Periódico Clásico) */
@@ -29,7 +46,7 @@
   --a1g: rgba(139,0,0,0.1); --a2g: rgba(26,26,26,0.1);
   --fd: 'Playfair Display', serif; --fb: 'Lora', serif; --fm: 'Space Mono', monospace;
   --r: 0px; --rs: 0px; --rb: 0px;
-  --sh-size: clamp(2.2rem, 5vw, 3.8rem);
+  --sh-size: var(--t-h2);
 }
 
 /* 03. TEMA ABSTRACT CYBER (Plasma y Neón) */
@@ -42,7 +59,7 @@
   --a1g: rgba(176,38,255,0.2); --a2g: rgba(0,240,255,0.2);
   --fd: 'Outfit', sans-serif; --fb: 'Outfit', sans-serif; --fm: 'Space Mono', monospace;
   --r: 24px; --rs: 12px; --rb: 100px;
-  --sh-size: clamp(2.4rem, 6vw, 4rem);
+  --sh-size: var(--t-h2);
 }
 
 /* 04. TEMA MINIMAL JOURNAL (Limpio, con sombras fluidas) */
@@ -55,7 +72,7 @@
   --a1g: rgba(0,82,204,.1); --a2g: rgba(255,107,107,.1);
   --fd: 'Inter', sans-serif; --fb: 'Inter', sans-serif; --fm: 'Space Mono', monospace;
   --r: 16px; --rs: 12px; --rb: 100px;
-  --sh-size: clamp(2.2rem, 5vw, 3.6rem);
+  --sh-size: var(--t-h2);
 }
 
 /* 05. TEMA FINE ART HUD (Mate Oscuro Elegante) */
@@ -68,7 +85,7 @@
   --a1g: rgba(212,184,122,0.07); --a2g: rgba(184,144,80,0.09);
   --fd: 'Playfair Display', serif; --fb: 'Outfit', sans-serif; --fm: 'Space Mono', monospace;
   --r: 4px; --rs: 2px; --rb: 4px;
-  --sh-size: clamp(2.2rem, 5vw, 3.8rem);
+  --sh-size: var(--t-h2);
 }
 
 /* ═══════════════════════════════════════
@@ -888,8 +905,8 @@ body[data-cursor="mira"]::after {
 /* ═══════════════════════════════════════
    LAYOUT Y ESPACIADO RESPONSIVO PERFECTO (ABISMO DESTRUIDO)
 ═══════════════════════════════════════ */
-.wrap { width: 100%; max-width: 1080px; margin-inline: auto; padding-inline: clamp(1.2rem, 5vw, 2.5rem); }
-.sec { padding-block: clamp(3rem, 6vw, 4.5rem); border-top: 1px solid var(--bord); position: relative; overflow: hidden; }
+.wrap { width: 100%; max-width: 1080px; margin-inline: auto; padding-inline: var(--gutter); }
+.sec { padding-block: var(--sec-y); border-top: 1px solid var(--bord); position: relative; overflow: hidden; }
 
 /* 🚀 HERO SECTION — respiración correcta bajo el nav sticky (66px) */
 #hero {
@@ -972,11 +989,11 @@ body[data-cursor="mira"]::after {
   .pcard-wrap { min-width: 0; max-width: 100%; }
 }
 
-.eyebrow { font-size: 11px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--a1); margin-bottom: 0.75rem; display: inline-flex; align-items: center; gap: 9px; transition: color 0.4s; }
+.eyebrow { font-size: 11px; font-weight: 800; letter-spacing: var(--t-mini-ls); text-transform: uppercase; color: var(--a1); margin-bottom: 0.75rem; display: inline-flex; align-items: center; gap: 9px; transition: color 0.4s; }
 .eyebrow::before { content: ''; display: inline-block; width: 0; height: 2px; background: var(--a1); transition: width 0.7s var(--ease), background 0.4s; }
 .eyebrow.vis::before, .vis .eyebrow::before { width: 30px; }
 
-.sh { font-family: var(--fd); font-size: var(--sh-size); font-weight: 400; line-height: 1.06; letter-spacing: 0; margin-bottom: 1.1rem; transition: font-family 0.5s, color 0.3s, font-size 0.4s; }
+.sh { font-family: var(--fd); font-size: var(--sh-size); font-weight: 400; line-height: var(--t-h2-lh); letter-spacing: 0; margin-bottom: 1.1rem; transition: font-family 0.5s, color 0.3s, font-size 0.4s; }
 .sh em {
   font-style: italic; color: var(--a1); transition: color 0.4s;
   position: relative; display: inline;
@@ -990,7 +1007,7 @@ body[data-cursor="mira"]::after {
 /* Editorial y diario: glow más suave, sin neón */
 [data-theme="editorial"] .sh.vis em,
 [data-theme="diario"] .sh.vis em { animation: none; }
-.sb { font-size: clamp(14px, 0.98rem, 16.5px); color: var(--t2); max-width: 60ch; line-height: 1.7; margin-bottom: clamp(1.5rem, 4vw, 2.5rem); transition: color 0.3s; }
+.sb { font-size: var(--t-body); color: var(--t2); max-width: var(--t-measure); line-height: var(--t-body-lh); margin-bottom: clamp(1.5rem, 4vw, 2.5rem); transition: color 0.3s; }
 .sb strong { color: var(--t1); font-weight: 600; }
 .sec-n { position: absolute; top: 1.2rem; right: clamp(0.9rem, 5vw, 3rem); font-family: var(--fd); font-size: clamp(4rem, 10vw, 7rem); font-weight: 700; color: var(--bord); line-height: 1; pointer-events: none; user-select: none; z-index: 0; transition: color 0.4s, font-family 0.5s; }
 .sec-n::before { content: attr(data-n); } /* pseudo-elemento: decorativo, fuera de la comprobación de contraste de axe */
@@ -2865,12 +2882,12 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 }
 /* ═══ MÁRGENES Y RITMO — una sola línea de contenido en toda la página ═══
    Antes: hero a x=73, secciones a x=213 y footer a x=171 (a 1440px). Ahora todo comparte el mismo borde (contenido de 1200px). */
-:root { --gut: clamp(1.2rem, 5vw, 2.5rem); }
+:root { --gut: var(--gutter); }
 .wrap { max-width: calc(1200px + 2 * var(--gut)); }
 .hero-inner { max-width: 1200px; }
 .fx-wrap { max-width: calc(1200px + 2 * var(--gut)); padding-inline: var(--gut); }
 /* Más aire vertical entre secciones (72px → hasta 104px en escritorio; en móvil se mantiene 48px) */
-.sec { padding-block: clamp(3rem, 7vw, 6.5rem); }
+.sec { padding-block: var(--sec-y); }
 
 @media (max-width: 640px) {
   /* Carruseles: la primera tarjeta alinea con el resto del contenido (antes la franja de pruebas empezaba pegada al borde) */
@@ -2941,7 +2958,7 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 .bc-tag, .lab-pills span, .tag { padding: 4px 11px; border-radius: var(--rb); line-height: 1.3; }
 .bc-tags { gap: 6px; margin-bottom: 10px; }
 /* ritmo vertical */
-.sec { padding-block: clamp(3rem, 6vw, 5rem); }
+.sec { padding-block: var(--sec-y); }
 .sec-n { opacity: .55; }
 .eyebrow { margin-bottom: 1rem; }
 .sh { margin-bottom: 1.25rem; }
