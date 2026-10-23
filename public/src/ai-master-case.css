@@ -46,7 +46,7 @@ body::before {
   gap: 14px;
 }
 .nav a {
-  min-height: 42px;
+  min-height: 44px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1124,7 +1124,7 @@ body.iberdata-page::before {
 }
 
 @media (max-width: 840px) {
-  .hero-grid, .section-head, .split, .split.reverse { grid-template-columns: 1fr; }
+  .hero-grid, .section-head, .section-head.compact, .split, .split.reverse { grid-template-columns: 1fr; }
   .hero-visual { transform: none; }
   .hero-visual.brand-stage { order: -1; }
   .metric-strip, .grid-3, .process, .evidence, .screen-gallery, .risk-grid, .capability-grid, .evidence-gallery.four, .flow-map, .priority-matrix, .roadmap-detail-grid, .control-table { grid-template-columns: repeat(2, 1fr); }
@@ -1182,4 +1182,10 @@ body.iberdata-page::before {
     overflow-wrap: anywhere;
     hyphens: auto;
   }
+}
+
+/* auditoria 23-oct: entre 841 y 1000px (movil apaisado) las columnas quedaban de ~100px */
+@media (min-width: 841px) and (max-width: 1000px) {
+  .blueprint-card { grid-template-columns: minmax(0, 1fr); }
+  .flow-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
