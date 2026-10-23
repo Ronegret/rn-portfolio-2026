@@ -9,16 +9,18 @@
 </div>
 
 ## 🧭 Overview
-Source of my portfolio site — a modular build with multiple interchangeable visual systems over the same codebase, cinematic transitions, per-theme canvas backgrounds and i18n.
+Source of my portfolio site — an Astro build with five interchangeable visual systems over the same codebase, scroll-driven motion, per-theme canvas backgrounds and i18n (es/ca/en). Case studies live as static pages under `public/`.
 
 ## ✨ Features
 - 5 interchangeable visual themes
-- Cinematic transitions & canvas backgrounds
-- i18n language switching
-- Case studies for every project
+- Scroll-driven motion (`animation-timeline`), View Transitions and magnetic interactions — all `prefers-reduced-motion` aware
+- i18n language switching (es/ca/en)
+- Optimised images via `astro:assets` (WebP + srcset)
+- Lighthouse mobile: accessibility, best practices and SEO at 100
+- Case studies for every project, plus a linked Dragon Ball themed build: [db.rodrigonegrete.es](https://db.rodrigonegrete.es)
 
 ## 🛠️ Built with
-`Vite` · `HTML/CSS/JS` · `Design tokens`
+`Astro` · `HTML/CSS/JS` · `Design tokens` · `Vercel`
 
 ## 🚀 Run locally
 ```bash
