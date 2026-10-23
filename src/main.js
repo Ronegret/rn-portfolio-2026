@@ -717,8 +717,9 @@ tiltCards.forEach(card => {
     const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left; const y = e.clientY - rect.top;
     const centerX = rect.width / 2; const centerY = rect.height / 2;
-    const rotateX = ((y - centerY) / centerY) * -8; const rotateY = ((x - centerX) / centerX) * 8;
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    const amp = card.classList.contains('pcard') ? 3 : 8; // retrato: tilt contenido (el flujo de agentes viaja con la tarjeta)
+    const rotateX = ((y - centerY) / centerY) * -amp; const rotateY = ((x - centerX) / centerX) * amp;
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)${amp > 3 ? ' scale3d(1.02, 1.02, 1.02)' : ''}`;
     card.style.transition = 'none'; card.style.zIndex = '10';
   });
   card.addEventListener('mouseleave', () => {
@@ -830,31 +831,7 @@ window.addEventListener('rn-theme',()=>{ if(mob.classList.contains('open')) clos
   syncMute();
   setHeroState('idle');
 })();
-/* Foto de perfil con vida: órbita + pulso + inclinación con muelle (decorativo, solo puntero fino) */
-const avWrap = document.querySelector('.av-wrap');
-if (avWrap) {
-  ['av-pulse', 'av-orbit'].forEach(c => { const i = document.createElement('i'); i.className = c; i.setAttribute('aria-hidden', 'true'); avWrap.appendChild(i); });
-  const fine = matchMedia('(hover: hover) and (pointer: fine)');
-  const calm = matchMedia('(prefers-reduced-motion: reduce)');
-  if (fine.matches && !calm.matches) {
-    const host = avWrap.closest('.pcard') || avWrap;
-    let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
-    const tick = () => {
-      cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;   // muelle suave: la imagen tiene inercia
-      avWrap.style.transform = `perspective(900px) rotateX(${cy.toFixed(2)}deg) rotateY(${cx.toFixed(2)}deg)`;
-      raf = (Math.abs(tx - cx) + Math.abs(ty - cy) > 0.02) ? requestAnimationFrame(tick) : 0;
-    };
-    const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
-    host.addEventListener('pointermove', e => {
-      const r = host.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width - 0.5) * 14;
-      ty = -((e.clientY - r.top) / r.height - 0.5) * 14;
-      kick();
-    });
-    host.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); });
-  }
-}
-
+/* El entorno del retrato (flujo de agentes y halo) vive en agent-graph.js; la tarjeta solo inclina, contenida (tiltCards) */
 import('./cinema.js'); // capa cinematográfica: al final para que el DOM generado (pills, hero) ya exista
 import('./sections.js'); // separadores entre secciones + firmas por seccion (despues de cinema)
 import('./fab.js'); // boton flotante: se oculta al bajar y junto al contacto
