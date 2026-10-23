@@ -2,14 +2,16 @@
 // Clip en bucle dentro de un marco de laptop (CSS puro). El poster WebP es un <img> nativo diferido
 // (alt, width/height); el <video> no pide nada hasta que preview.js lo ve en pantalla.
 import '../previews.css';
-interface Props { video: string; poster: string; alt: string; width?: number; height?: number; }
-const { video, poster, alt, width = 960, height = 600 } = Astro.props;
+interface Props { video: string; poster: string; alt: string; width?: number; height?: number; device?: 'laptop' | 'phone'; }
+const { video, poster, alt, device = 'laptop' } = Astro.props;
+const phone = device === 'phone';
+const { width = phone ? 390 : 960, height = phone ? 844 : 600 } = Astro.props;
 ---
-<div class="pv">
+<div class:list={['pv', { 'pv--phone': phone }]}>
   <div class="pv-screen">
     <img src={poster} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
-    <video muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true" data-src={video}width={width} height={height}></video>
+    <video muted loop playsinline preload="none" disablepictureinpicture tabindex="-1" aria-hidden="true" data-src={video} width={width} height={height}></video>
   </div>
-  <div class="pv-base" aria-hidden="true"></div>
+  {!phone && <div class="pv-base" aria-hidden="true"></div>}
 </div>
 <script>import '../preview.js';</script>

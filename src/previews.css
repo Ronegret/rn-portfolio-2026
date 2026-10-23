@@ -44,3 +44,21 @@
     }
   }
 }
+
+/* Variante telefono (ZODI, Dedicalo Play): bisel, isla, botones laterales (::before/::after de .pv), reflejo. */
+.bc-img.pv-host--phone { padding: clamp(14px, 2vw, 22px); }
+.pv--phone { width: min(100%, 188px); }
+.pv--phone .pv-screen {
+  aspect-ratio: 390 / 800; border: 6px solid #0e1015; border-radius: 32px;
+  box-shadow: 0 0 0 2px #3b3f49, 0 0 0 3px rgba(255,255,255,.14), 0 30px 50px -20px rgba(0,0,0,.7), 0 10px 18px -8px rgba(0,0,0,.45);
+}
+.bc-img .pv--phone .pv-screen img, .bc-img .pv--phone .pv-screen video { object-position: top center; }
+.pv--phone .pv-screen::before {
+  content: ""; position: absolute; z-index: 2; top: 7px; left: 50%; width: 30%; height: 12px;
+  transform: translateX(-50%); border-radius: 99px; background: #05060a; box-shadow: 0 0 0 1px rgba(255,255,255,.06);
+}
+.pv--phone .pv-screen::after { z-index: 3; border-radius: 26px; background: linear-gradient(112deg, rgba(255,255,255,.2) 0%, rgba(255,255,255,.05) 26%, transparent 42%); }
+.pv--phone::before, .pv--phone::after { content: ""; position: absolute; width: 3px; background: #3b3f49; }
+.pv--phone::before { left: -5px; top: 17%; height: 22px; border-radius: 2px 0 0 2px; box-shadow: 0 34px 0 #3b3f49; }
+.pv--phone::after { right: -5px; top: 27%; height: 46px; border-radius: 0 2px 2px 0; }
+@media (max-width: 860px) { .pv--phone { width: min(100%, 200px); } }
