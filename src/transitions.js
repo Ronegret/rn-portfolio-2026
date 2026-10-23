@@ -6,15 +6,16 @@ const $ = s => document.querySelector(s);
 const pad = n => String(n).padStart(2, '0');
 const motion = matchMedia('(prefers-reduced-motion: no-preference)');
 
-/* (A) Capítulos: 01/09 + título de la sección actual. Los títulos salen del eyebrow de cada sección (ya traducido por data-i). */
-const secs = [...document.querySelectorAll('#main > section')];
+/* (A) Capítulos: 00/08 + título de la sección actual. Misma numeración que los separadores de sections.js (01/08 = Sobre mí); el hero es el 00.
+   Los títulos salen del eyebrow de cada sección (ya traducido por data-i). */
+const secs = ['hero', 'sobre-mi', 'stack', 'proyectos', 'laboratorio', 'trayectoria', 'testimonios', 'estilos', 'contacto'].map(id => document.getElementById(id)).filter(Boolean);
 if (secs.length > 1) {
   const HOME = { es: 'Inicio', ca: 'Inici', en: 'Home' };
   const titleOf = i => (i ? secs[i].querySelector('.eyebrow')?.textContent : HOME[document.documentElement.lang.slice(0, 2)] || HOME.es)?.trim() || '';
   const el = document.createElement('div');
   el.className = 'chap';
   el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = `<span class="chap-n"><span class="chap-col">${secs.map((_, i) => `<i>${pad(i + 1)}</i>`).join('')}</span></span><span class="chap-of">/${pad(secs.length)}</span><span class="chap-t"></span><span class="chap-bar"></span>`;
+  el.innerHTML = `<span class="chap-n"><span class="chap-col">${secs.map((_, i) => `<i>${pad(i)}</i>`).join('')}</span></span><span class="chap-of">/${pad(secs.length - 1)}</span><span class="chap-t"></span><span class="chap-bar"></span>`;
   document.body.append(el);
   const col = el.querySelector('.chap-col'), tt = el.querySelector('.chap-t');
   let cur = 0;

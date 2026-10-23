@@ -48,9 +48,10 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
 
 /* ───────── 2. Indicador de capítulos (fijo, discreto) ───────── */
 .chap {
-  position: fixed; left: clamp(14px, 2vw, 28px); bottom: 24px; z-index: 6500; pointer-events: none;
+  position: fixed; left: clamp(14px, 2vw, 28px); bottom: 22px; z-index: 6500; pointer-events: none;
   display: flex; align-items: baseline; gap: 6px; font-family: var(--fm); font-size: 11px; line-height: 1.2; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--t3); opacity: .9;
+  color: var(--t3); padding: 8px 14px; border-radius: 100px; border: 1px solid var(--bord);
+  background: color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
 }
 .chap-n { display: inline-block; height: 1.2em; overflow: hidden; color: var(--t1); font-weight: 700; }
 .chap-col { display: block; transform: translateY(calc(var(--i, 0) * -1.2em)); transition: transform .6s cubic-bezier(.16, 1, .3, 1); }
@@ -59,7 +60,7 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
 .chap-bar { display: none; }
 /* Móvil: versión mínima, solo el número */
 @media (max-width: 1023px) {
-  .chap { bottom: 14px; font-size: 10px; opacity: .75; }
+  .chap { bottom: 14px; font-size: 10px; padding: 6px 10px; }
   .chap-t { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .chap-col { transition: none; } }
@@ -68,7 +69,7 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
   @supports (animation-timeline: scroll()) {
     /* Línea de progreso global: se dibuja con el scroll de la página */
     .chap-bar {
-      display: block; position: absolute; left: 0; right: 0; bottom: -7px; height: 1px; background: var(--a2, var(--a1)); transform-origin: 0 50%;
+      display: block; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 1px; background: var(--a2, var(--a1)); transform-origin: 0 50%;
       animation-name: chap-prog; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: scroll(root);
     }
     @keyframes chap-prog { from { transform: scaleX(0); } to { transform: scaleX(1); } }
@@ -107,13 +108,13 @@ html.rn-skip-intro.pl-locked, html.rn-skip-intro body.pl-locked { overflow: visi
     }
     @keyframes cin-away { to { transform: scale(.9) translateY(-3vh); opacity: .15; } }
 
-    /* Sobre mí se abre como un iris desde el centro superior */
+    /* Sobre mí se abre como un iris desde su centro mientras entra en pantalla */
     #sobre-mi {
-      animation-name: cin-iris; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: cover 0% cover 24%;
+      animation-name: cin-iris; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view(); animation-range: cover 10% cover 42%;
     }
     @keyframes cin-iris {
-      from { clip-path: circle(6% at 50% 0%); }
-      to { clip-path: circle(150% at 50% 0%); }
+      from { clip-path: circle(3% at 50% 42%); }
+      to { clip-path: circle(150% at 50% 42%); }
     }
   }
 }

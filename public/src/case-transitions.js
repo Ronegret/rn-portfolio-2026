@@ -26,10 +26,11 @@
 
   addEventListener('pageswap', e => {
     const vt = e.viewTransition, to = e.activation?.entry?.url;
-    if (!vt || !to || reduce.matches) return;
+    if (!vt || !to) return;
     const dest = new URL(to);
     if (dest.origin !== location.origin) return;
     root.classList.add('rn-leaving'); // la portada usa esta clase para apagar el flash de cámara: si no, queda congelado en la instantánea
+    if (reduce.matches) return;
     const fresh = clickEl && performance.now() - click < 2000;
     let d = { d: 'nav' }, named;
     if (isHome(location.pathname) && !isHome(dest.pathname)) {
