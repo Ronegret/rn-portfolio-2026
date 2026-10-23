@@ -3,6 +3,7 @@ import ProjectFilter from '../islands/ProjectFilter.jsx';
 import ProjectPreview from './ProjectPreview.astro';
 import CardImg from './CardImg.astro';
 import kettelbroHero from '../assets/cards/kettelbro-hero.webp';
+import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
 ---
 <section class="sec" id="proyectos">
   <div class="wrap">
@@ -23,6 +24,20 @@ import kettelbroHero from '../assets/cards/kettelbro-hero.webp';
             <p class="bc-d">¿Y si un CV se jugara en vez de leerse? Seis transformaciones Saiyan sincronizadas con etapas reales de mi carrera, siete esferas del dragón escondidas, Modo Reclutador y un fondo que evoluciona con el scroll. Nada de accesibilidad de cartón: WCAG 2.2 AA verificado con axe-core, 100 en accesibilidad, buenas prácticas y SEO en Lighthouse.</p>
             <div class="bc-m">6 transformaciones · 7 esferas · Modo Reclutador · WCAG 2.2 AA · db.rodrigonegrete.es</div>
             <span class="bc-link">Ver el portfolio ↗</span>
+          </div>
+        </a>
+      </div>
+      <div class="bfeat rv pf-card" data-cats="ux ia">
+        <a href="/portfolio-2026/" class="bc trigger-flash">
+          <div class="bc-img pf-img">
+            <CardImg defer src={portfolioHero} alt="Cada animación es una decisión: titular del caso de estudio de este portfolio sobre fondo oscuro, con miniaturas de los cinco temas visuales del sitio" />
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi pf-tag-hi" data-i="pf_t1">★ Proyecto propio · 2026</span><span class="bc-tag pf-tag" data-i="pf_t2">Motion · Investigación · Rendimiento · Accesibilidad</span></div>
+            <h3 class="bc-h" data-i="pf_h">Este portfolio — Cada animación es una decisión</h3>
+            <p class="bc-d" data-i="pf_d">Un portfolio visual corre el riesgo de que el movimiento sea decoración. Documento cada animación, tema, sonido e interacción de este sitio: qué problema resuelve, qué investigué, qué descarté y cuánto cuesta. Con mini-demos que se pueden probar, Lighthouse móvil de 64 a 96-98 y los errores que encontré por el camino.</p>
+            <div class="bc-m" data-i="pf_m">9 piezas de movimiento · 6 demos · 5 temas · Astro + React · Lighthouse 96-98</div>
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
           </div>
         </a>
       </div>

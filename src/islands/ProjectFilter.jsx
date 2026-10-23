@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLang } from './store.js';
 
-const KEEP = 6; // tarjetas visibles en movil antes del "Ver N mas" (las 6 destacadas con clip o caso propio)
+const KEEP = 7; // tarjetas visibles en movil antes del "Ver N mas" (las 7 destacadas con clip o caso propio)
 const FILTERS = [['all', 'f_all', 'Todos'], ['ux', 'f_ux', 'UX / UI'], ['ia', 'f_ia', 'IA &amp; Auto.'], ['ecom', 'f_ecom', 'E-commerce'], ['saas', 'f_saas', 'SaaS']];
 const LABELS = {
   es: { more: (n) => `Ver ${n} más`, less: 'Ver menos' },
