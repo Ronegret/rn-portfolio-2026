@@ -48,19 +48,24 @@ import ThemeSwitch from '../islands/ThemeSwitch.jsx';
 </nav>
 
 <!-- MENÚ MÓVIL -->
-<div id="mob" role="dialog" aria-modal="true">
+<div id="mob" role="dialog" aria-modal="true" aria-label="Menú">
+  <div class="mm-bg" aria-hidden="true"><i></i><i></i><i></i></div>
   <button id="mob-x" aria-label="Cerrar">✕</button>
-  <a href="#sobre-mi" data-i="nav_about">Sobre mí</a>
-  <a href="#stack" data-i="nav_stack">Stack</a>
-  <a href="#proyectos" data-i="nav_projects">Proyectos</a>
-  <a href="#laboratorio" data-i="nav_lab">Lab</a>
-  <a href="#trayectoria" data-i="nav_career">Trayectoria</a>
-  <a href="#contacto" data-i="nav_contact">Contacto</a>
+  <a href="#sobre-mi" class="mm-l" style="--i:0"><span class="mm-n" aria-hidden="true">01</span><span class="mm-m"><span class="mm-t" data-i="nav_about">Sobre mí</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#stack" class="mm-l" style="--i:1"><span class="mm-n" aria-hidden="true">02</span><span class="mm-m"><span class="mm-t" data-i="nav_stack">Stack</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#proyectos" class="mm-l" style="--i:2"><span class="mm-n" aria-hidden="true">03</span><span class="mm-m"><span class="mm-t" data-i="nav_projects">Proyectos</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#laboratorio" class="mm-l" style="--i:3"><span class="mm-n" aria-hidden="true">04</span><span class="mm-m"><span class="mm-t" data-i="nav_lab">Lab</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#trayectoria" class="mm-l" style="--i:4"><span class="mm-n" aria-hidden="true">05</span><span class="mm-m"><span class="mm-t" data-i="nav_career">Trayectoria</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#contacto" class="mm-l" style="--i:5"><span class="mm-n" aria-hidden="true">06</span><span class="mm-m"><span class="mm-t" data-i="nav_contact">Contacto</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
   <div class="mob-lang">
     <button class="mlb on" data-lang="es">ES</button>
     <button class="mlb" data-lang="ca">CA</button>
     <button class="mlb" data-lang="en">EN</button>
   </div>
   <ThemeSwitch client:idle variant="mob" />
+  <div class="mm-foot">
+    <a href="mailto:rodrigo.negrete.aros@gmail.com" class="mm-cta" data-i="nav_cta">Hablemos →</a>
+    <a href="https://linkedin.com/in/rodrigonegretearos" class="mm-so" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/Ronegret" class="mm-so" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
 </div>
-
