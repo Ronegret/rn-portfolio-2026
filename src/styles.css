@@ -3056,6 +3056,16 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 @media(max-width: 860px) { .kb-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; } }
 @media (prefers-reduced-motion: reduce) { .kb-card .bc-img > img { transition: none; } }
 
+/* Este portfolio — hero compuesto (grafito + teal). Chips sólidos: legibles en todos los temas */
+.pf-card .bc-img { position: relative; overflow: hidden; background: #090b10; min-height: 340px; border: 0 !important; display: block; }
+.pf-card .bc-img > img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; object-fit: cover !important; object-position: center !important; filter: none !important; transition: transform 1s var(--ease); }
+.pf-card .bc:hover .bc-img > img { transform: scale(1.04) !important; filter: none !important; }
+.pf-card .bc-img::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #5eead4; z-index: 2; }
+.pf-tag-hi { background: #5eead4 !important; color: #04211d !important; border-color: #5eead4 !important; }
+.pf-tag, .pf-card .bc-m { background: #090b10 !important; color: #b9f5ec !important; border-color: #0f766e !important; }
+@media(max-width: 860px) { .pf-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; } }
+@media (prefers-reduced-motion: reduce) { .pf-card .bc-img > img { transition: none; } }
+
 /* reduced-motion: detener también las animaciones infinitas decorativas (hallazgo del QA) */
 @media (prefers-reduced-motion: reduce) {
   .mq-i, .av-wrap, .c-aurora, .logo-dot, .tag-green, .status-available, [data-theme="saas"] body::before { animation: none !important; }

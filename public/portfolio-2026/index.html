@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Mi portfolio como caso de estudio: cada animación es una decisión · Rodrigo Negrete</title>
+<meta name="description" content="Caso de estudio del propio portfolio de Rodrigo Negrete: la investigación, los criterios y el coste de cada animación, tema, sonido e interacción, con mini-demos reales, mediciones de Lighthouse y los errores que encontré por el camino.">
+<meta name="theme-color" content="#090b10">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://rodrigonegrete.es/portfolio-2026/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b10'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='26' font-weight='800' text-anchor='middle' fill='%235eead4'%3ERN%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Rodrigo Negrete">
+<meta property="og:title" content="Mi portfolio como caso de estudio: cada animación es una decisión">
+<meta property="og:description" content="Qué investigué, qué descarté y cuánto cuesta cada animación, tema y sonido de mi portfolio. Con demos que puedes probar y mediciones reales.">
+<meta property="og:image" content="https://rodrigonegrete.es/assets/portfolio-2026/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Título Cada animación es una decisión sobre fondo oscuro con los cinco temas visuales del portfolio">
+<meta property="og:url" content="https://rodrigonegrete.es/portfolio-2026/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mi portfolio como caso de estudio">
+<meta name="twitter:description" content="Cada animación es una decisión: investigación, criterio y coste, con demos reales.">
+<meta name="twitter:image" content="https://rodrigonegrete.es/assets/portfolio-2026/og.jpg">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"Mi portfolio como caso de estudio: cada animación es una decisión",
+  "description":"Investigación, criterios, coste y errores detrás del movimiento, los temas y el sonido del portfolio de Rodrigo Negrete, con mini-demos interactivas y mediciones de Lighthouse.",
+  "inLanguage":"es",
+  "image":"https://rodrigonegrete.es/assets/portfolio-2026/og.jpg",
+  "url":"https://rodrigonegrete.es/portfolio-2026/",
+  "datePublished":"2026-10-23",
+  "author":{"@type":"Person","name":"Rodrigo Negrete","url":"https://rodrigonegrete.es/"},
+  "about":{"@type":"WebSite","name":"Portfolio de Rodrigo Negrete","url":"https://rodrigonegrete.es/"}
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"></noscript>
+<link rel="stylesheet" href="/src/motion.css">
+
+<style>
+@font-face{font-family:"Inter Fallback";src:local("Arial");size-adjust:107%;ascent-override:90%}
+:root{
+  color-scheme:dark;
+  --bg:#090b10; --bg2:#0f1219; --bg3:#161a24; --line:#2a3142;
+  --txt:#f1f4fa; --dim:#b9c1d1; --mute:#9aa4b8;
+  --acc:#5eead4; --on-acc:#04211d; --vio:#b9a8ff; --amb:#ffd067; --grn:#4ade80; --red:#ff8a8a;
+  --out:cubic-bezier(.16,1,.3,1);
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{font-family:"Inter","Inter Fallback",system-ui,sans-serif;background:var(--bg);color:var(--txt);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--acc)}
+code{font-family:var(--mono);font-size:.86em;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:.08em .4em;color:var(--txt);overflow-wrap:anywhere}
+a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--txt);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--txt);color:var(--bg);padding:.6rem 1rem;border-radius:10px;z-index:200;font-weight:700}
+.skip:focus{left:8px}
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px max(16px,env(safe-area-inset-right)) 10px max(16px,env(safe-area-inset-left));background:rgba(9,11,16,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none}
+.back{color:var(--txt);border:1px solid var(--line)}
+.back:hover{background:var(--bg3)}
+.live{background:var(--txt);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 26px;border-radius:14px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .18s var(--out),background .2s}
+.btn:active{transform:scale(.97)}
+.btn-acc{background:var(--acc);color:var(--on-acc)}
+.btn-acc:hover{background:#8ff3e3}
+.btn-ghost{background:var(--bg3);color:var(--txt);border:1px solid var(--line)}
+.btn-ghost:hover{background:var(--line)}
+.wrap{max-width:1100px;margin:0 auto}
+.hero{padding:112px 20px 72px;background:radial-gradient(110% 70% at 85% -10%,#173b3a 0%,transparent 60%),radial-gradient(80% 60% at 0% 0%,#271f4d 0%,transparent 55%),var(--bg);border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:44px;align-items:center}
+.eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+h1{font-size:clamp(2.5rem,6.2vw,4.7rem);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin-bottom:20px}
+h1 em,h2 em{font-style:normal;color:var(--acc)}
+.lead{font-size:1.18rem;color:var(--dim);max-width:34em;margin-bottom:28px}
+.lead strong{color:var(--txt)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+.ficha{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;padding-top:22px;border-top:1px solid var(--line)}
+.ficha dt{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.ficha dd{font-weight:600;font-size:.98rem}
+.cap{font-size:.86rem;color:var(--mute);margin-top:10px;line-height:1.5}
+figure img{border-radius:16px;border:1px solid var(--line)}
+section.s{padding:92px 20px;border-bottom:1px solid var(--line)}
+section.s:nth-of-type(even){background:var(--bg2)}
+h2{font-size:clamp(1.9rem,4.2vw,3rem);line-height:1.08;letter-spacing:-.03em;font-weight:800;margin-bottom:22px;max-width:19em}
+h3{font-size:1.3rem;line-height:1.2;letter-spacing:-.01em;margin:0 0 10px}
+.s p{max-width:46em;margin-bottom:16px;color:var(--dim)}
+.s p strong,.s li strong{color:var(--txt)}
+.intro{font-size:1.15rem;color:var(--txt)!important}
+.grid{display:grid;gap:18px;margin:28px 0}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid>*{min-width:0}
+.card{background:var(--bg3);border:1px solid var(--line);border-radius:20px;padding:24px}
+.s:nth-of-type(even) .card{background:var(--bg)}
+.card p:last-child{margin-bottom:0}
+.card p{font-size:.97rem}
+.tg{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;border:1px solid var(--line);white-space:nowrap;vertical-align:1px}
+.tg-v{background:rgba(74,222,128,.1);color:var(--grn);border-color:rgba(74,222,128,.4)}
+.tg-l{background:rgba(185,168,255,.1);color:var(--vio);border-color:rgba(185,168,255,.4)}
+.tg-h{background:rgba(255,208,103,.1);color:var(--amb);border-color:rgba(255,208,103,.4)}
+.legend{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;font-size:.9rem;color:var(--dim);margin:24px 0}
+.legend span{display:inline-flex;gap:8px;align-items:center}
+.note{border:1px dashed var(--line);border-radius:16px;padding:16px 20px;margin:24px 0;color:var(--dim);font-size:.95rem;max-width:52em}
+.note b{color:var(--txt)}
+ul.l{margin:0 0 18px 1.2rem;max-width:46em;color:var(--dim)}
+ul.l li{margin-bottom:8px}
+.toc{columns:2;column-gap:32px;list-style:none;margin:22px 0 0;padding:0;font-size:.96rem}
+.toc li{break-inside:avoid;margin-bottom:6px}
+.toc a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
+.toc a:hover{color:var(--acc)}
+.tbl{width:100%;border-collapse:collapse;margin:22px 0;font-size:.94rem}
+.tbl caption{text-align:left;font-size:.86rem;color:var(--mute);padding-bottom:8px}
+.tbl th{text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);padding:10px 12px;border-bottom:1px solid var(--line)}
+.tbl td{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--dim)}
+.tbl td:first-child{color:var(--txt);font-weight:600}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.scroll-x .tbl{min-width:640px}
+.tl{list-style:none;margin:24px 0;padding:0 0 0 22px;border-left:2px solid var(--line);max-width:50em}
+.tl li{position:relative;margin-bottom:20px;color:var(--dim);font-size:.96rem}
+.tl li::before{content:"";position:absolute;left:-29px;top:.55em;width:11px;height:11px;border-radius:50%;background:var(--acc)}
+.tl b{display:block;color:var(--txt);font-family:var(--mono);font-size:.82rem;letter-spacing:.04em}
+/* pieza del sistema de movimiento */
+.piece{border:1px solid var(--line);border-radius:24px;background:var(--bg3);margin:34px 0;overflow:hidden}
+.s:nth-of-type(even) .piece{background:var(--bg)}
+.piece>header{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:baseline;padding:24px 26px 6px}
+.piece .no{font-family:var(--mono);font-weight:700;color:var(--acc);font-size:.9rem}
+.piece h3{margin:0;font-size:1.5rem;flex:1 1 14em}
+.piece .file{width:100%;font-size:.85rem;color:var(--mute);margin:0}
+.pf{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0;margin-top:14px}
+.pf>div{padding:14px 26px 18px;border-top:1px solid var(--line)}
+.pf>div:nth-child(odd){border-right:1px solid var(--line)}
+.pf dt{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:6px}
+.pf dd{font-size:.95rem;color:var(--dim)}
+.pf dd strong{color:var(--txt)}
+.pf .wide{grid-column:1/-1;border-right:0!important}
+.piece-x{padding:4px 26px 26px}
+.piece-x figure{margin:18px 0 0}
+/* demos */
+.demo{border:1px solid var(--line);border-radius:20px;background:var(--bg2);padding:18px;margin:20px 0 8px}
+.s:nth-of-type(even) .demo{background:var(--bg3)}
+.demo-h{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px}
+.demo-h b{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tgl{min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--txt);font:600 .9rem "Inter","Inter Fallback",system-ui,sans-serif;cursor:pointer}
+.tgl:hover{border-color:var(--acc)}
+.tgl[aria-pressed="true"]{background:var(--acc);color:var(--on-acc);border-color:var(--acc)}
+.rm-note{display:none;font-size:.88rem;color:var(--amb);margin:0 0 12px!important}
+@media (prefers-reduced-motion:reduce){.rm-note{display:block}}
+.dcap{font-size:.88rem;color:var(--mute);margin:12px 0 0!important}
+.lab{font-size:.88rem;color:var(--dim);display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input[type=range]{accent-color:var(--acc);min-height:44px;width:180px}
+input[type=text]{min-height:44px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--txt);padding:0 14px;font:inherit;width:min(100%,360px)}
+/* demo 1 */
+.d-scroll{position:relative;height:290px;overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.ds-bar{position:sticky;top:0;height:5px;background:var(--acc);transform-origin:0 50%;z-index:2}
+.ds-sec{padding:18px;display:grid;gap:14px}
+.ds-sec[data-ov="hidden"]{overflow:hidden}
+.ds-sec[data-ov="clip"]{overflow:clip}
+.ds-card{background:var(--bg3);border:1px solid var(--line);border-radius:14px;padding:18px;min-height:86px;color:var(--dim);font-size:.94rem}
+.ds-card b{color:var(--txt)}
+.demo[data-on="1"] .ds-card{animation-name:ds-in;animation-timing-function:linear;animation-fill-mode:both;animation-timeline:view();animation-range:entry 0% entry 90%}
+.demo[data-on="1"] .ds-bar{animation-name:ds-bar;animation-timing-function:linear;animation-fill-mode:both;animation-timeline:scroll(nearest)}
+@keyframes ds-in{from{opacity:0;translate:0 34px;scale:.94}to{opacity:1;translate:0 0;scale:1}}
+@keyframes ds-bar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.nosup{display:none;font-size:.9rem;color:var(--amb)}
+@supports not (animation-timeline:view()){.nosup{display:block}}
+/* demo 2 */
+.d-theme{display:grid;gap:14px}
+.dt-box{view-transition-name:d-theme-box;border-radius:16px;padding:26px;min-height:170px;border:1px solid var(--bdr,#2a3142);background:var(--bgc,#0b0d12);color:var(--fgc,#f1f4fa);display:grid;gap:10px;align-content:center}
+.dt-box strong{font-size:1.5rem;letter-spacing:-.02em;line-height:1.1}
+.dt-box span{color:var(--fgc2,#b9c1d1);font-size:.95rem}
+.dt-box i{display:block;width:70px;height:6px;border-radius:4px;background:var(--ac,#5eead4)}
+.dt-box[data-th="ed"]{--bgc:#f2eee6;--fgc:#1b1a18;--fgc2:#4a4640;--ac:#8b0000;--bdr:#cfc7b8;font-family:Georgia,"Times New Roman",serif}
+.dt-box[data-th="cy"]{--bgc:#0b0620;--fgc:#f4eeff;--fgc2:#c9b9ff;--ac:#00f0ff;--bdr:#4b2a9c}
+.dt-sw{display:flex;gap:8px;flex-wrap:wrap}
+::view-transition-old(root),::view-transition-new(root){animation:none}
+::view-transition-old(d-theme-box),::view-transition-new(d-theme-box){animation:none;mix-blend-mode:normal}
+::view-transition-new(d-theme-box){z-index:2}
+/* demo 3 */
+.d-menu{display:flex;justify-content:center}
+.dm-phone{position:relative;width:min(100%,270px);height:470px;border-radius:34px;border:7px solid #0c0e13;box-shadow:0 0 0 2px #3a4152;overflow:hidden;background:#12151d;--ox:226px;--oy:34px}
+.dm-page{padding:70px 22px 22px;display:grid;gap:10px}
+.dm-page i{display:block;height:10px;border-radius:5px;background:#222838}
+.dm-page i:first-child{height:26px;width:70%;background:#2d3550}
+.dm-top{position:absolute;inset:0 0 auto 0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 14px 0 18px;z-index:5;font-weight:800;font-size:.95rem}
+.dm-ham{width:44px;height:44px;border-radius:12px;border:1px solid #3a4152;background:#1b2030;color:var(--txt);cursor:pointer;display:grid;place-items:center}
+.dm-ham svg{width:22px;height:22px}
+.dm-ov{position:absolute;inset:0;z-index:4;background:#0f1a1a;padding:84px 22px 20px;display:flex;flex-direction:column;visibility:hidden;clip-path:circle(0px at var(--ox) var(--oy))}
+.dm-ov.on{visibility:visible;clip-path:circle(150% at var(--ox) var(--oy))}
+.dm-ov.tr{transition:clip-path .7s cubic-bezier(.77,0,.18,1),visibility 0s .7s}
+.dm-ov.on.tr{transition:clip-path .85s cubic-bezier(.77,0,.18,1),visibility 0s 0s}
+.dm-ov.fade{clip-path:none;opacity:0;transition:opacity .25s linear,visibility 0s .25s}
+.dm-ov.fade.on{opacity:1;transition:opacity .25s linear,visibility 0s 0s}
+.dm-l{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid #263636;color:var(--txt);font:800 1.9rem/1.1 "Inter","Inter Fallback",sans-serif;letter-spacing:-.03em;padding:.3em 0;cursor:pointer;overflow:hidden}
+.dm-l span{display:block;transform:translateY(112%)}
+.dm-ov.on.tr .dm-l span{transform:none;transition:transform .9s cubic-bezier(.22,1,.36,1) calc(.28s + var(--i)*.07s)}
+.dm-ov.on:not(.tr) .dm-l span{transform:none}
+.dm-l:focus-visible{outline-offset:-3px;color:var(--acc)}
+/* demo 4 */
+.d-mag{display:flex;flex-wrap:wrap;gap:30px;align-items:center;justify-content:center;min-height:190px;border:1px dashed var(--line);border-radius:16px;padding:20px;background:var(--bg)}
+.mg{min-height:56px;padding:0 28px;border-radius:14px;border:0;background:var(--acc);color:var(--on-acc);font:700 1rem "Inter","Inter Fallback",sans-serif;cursor:pointer}
+.mg.s{background:var(--bg3);color:var(--txt);border:1px solid var(--line)}
+.coarse-note{display:none;font-size:.9rem;color:var(--amb);margin-top:10px}
+@media (hover:none),(pointer:coarse){.coarse-note{display:block}}
+/* demo 5 */
+.d-kin{min-height:150px;display:grid;align-content:center;border:1px solid var(--line);border-radius:16px;background:var(--bg);padding:20px 24px}
+.kin{font-size:clamp(1.8rem,5.4vw,3.4rem);font-weight:800;letter-spacing:-.035em;line-height:1.08;overflow-wrap:anywhere}
+.kin .w{display:inline-block;white-space:nowrap}
+.kin .c{display:inline-block;transform-origin:0 100%}
+.demo[data-on="1"] .kin .c{transform:translateY(.55em) rotate(8deg);opacity:0}
+.demo[data-on="1"] .kin.go .c{transform:none;opacity:1;transition:transform .9s var(--out),opacity .5s}
+/* demo 6 */
+.d-mq{overflow:hidden;border-block:1px solid var(--line);padding-block:8px;background:var(--bg)}
+.mq-t{display:flex;width:max-content;font-size:clamp(2.6rem,9vw,5.5rem);font-weight:800;letter-spacing:-.03em;line-height:1.1;white-space:nowrap}
+.mq-t span{padding-right:.5em;color:transparent;-webkit-text-stroke:1.5px #8c97ad}
+.mq-t span:nth-child(3n+1){color:var(--txt);-webkit-text-stroke:0}
+.demo[data-on="1"] .mq-t{animation-name:mq-run;animation-duration:24s;animation-timing-function:linear;animation-iteration-count:infinite}
+.demo[data-on="1"][data-dir="r"] .mq-t{animation-direction:reverse}
+.demo[data-on="1"].off .mq-t{animation-play-state:paused}
+@keyframes mq-run{to{transform:translateX(-50%)}}
+/* gráficos */
+.chart{background:var(--bg3);border:1px solid var(--line);border-radius:20px;padding:20px;margin:24px 0}
+.s:nth-of-type(even) .chart{background:var(--bg)}
+.chart svg{width:100%;height:auto;display:block}
+.chart text{font-family:"Inter","Inter Fallback",system-ui,sans-serif;fill:var(--dim);font-size:13px}
+.chart .t{fill:var(--txt);font-weight:700}
+.chart .g{stroke:var(--line)}
+footer{padding:40px 20px 64px;text-align:center;color:var(--mute);font-size:.92rem}
+footer a{color:var(--acc)}
+.cta{text-align:center}
+.cta h2,.cta p{margin-left:auto;margin-right:auto}
+.cta .actions{justify-content:center}
+.rv{opacity:1}
+@media (prefers-reduced-motion:no-preference){.js .rv{opacity:0;translate:0 20px}.js .rv.on{opacity:1;translate:0 0;transition:opacity .6s var(--out),translate .6s var(--out)}}
+@media (max-width:860px){
+  .hero-grid,.g2,.g3,.pf{grid-template-columns:1fr}
+  .pf>div:nth-child(odd){border-right:0}
+  .toc{columns:1}
+  section.s{padding:68px 16px}
+  .hero{padding:96px 16px 56px}
+  .piece>header{padding:20px 18px 4px}
+  .pf>div{padding:12px 18px 16px}
+  .piece-x{padding:4px 16px 20px}
+  .ficha{grid-template-columns:1fr}
+  .demo{padding:14px}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<header class="bar">
+  <a class="back" href="/#proyectos">&larr; Portfolio</a>
+  <a class="live" href="/">Ver en vivo</a>
+</header>
+
+<main id="main">
+
+<section class="hero" id="inicio">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Caso de estudio &middot; Mi propio portfolio &middot; 2026</p>
+      <h1>Cada animación es <em>una decisión.</em></h1>
+      <p class="lead">Un portfolio visual puede ser un escaparate de efectos o la prueba de que sé decidir. Este caso recorre cada pieza de movimiento, tema, sonido e interacción de <strong>rodrigonegrete.es</strong>: qué problema resuelve, qué investigué, qué descarté y <strong>cuánto cuesta</strong>. Con demos que puedes probar y con lo que salió mal.</p>
+      <div class="actions">
+        <a class="btn btn-acc" href="#sistema">Ir al sistema de movimiento</a>
+        <a class="btn btn-ghost" href="/">Ver el portfolio</a>
+      </div>
+      <dl class="ficha">
+        <div><dt>Rol</dt><dd>Dirección de diseño, criterio y revisión; implementación asistida por agentes de IA</dd></div>
+        <div><dt>Stack</dt><dd>Astro 7, islas React 19, CSS y JS vanilla</dd></div>
+        <div><dt>Periodo del rediseño</dt><dd>22 y 23 de octubre de 2026 (45 commits)</dd></div>
+        <div><dt>Tipo</dt><dd>Proyecto propio, sin cliente ni datos de uso</dd></div>
+      </dl>
+    </div>
+    <figure>
+      <img src="/assets/portfolio-2026/tema-saas.webp" width="720" height="450" alt="Portada del portfolio en el tema Dual Core AI: titular Diseño flujos, interfaces y automatizaciones sobre fondo oscuro con tarjeta de perfil y selector de temas a la derecha">
+      <figcaption class="cap">Portada del portfolio, tema por defecto. Captura real a 1440 px.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="s" id="resumen">
+  <div class="wrap rv">
+    <p class="eyebrow">01 &middot; Resumen y rol</p>
+    <h2>Un portfolio que <em>enseña su proceso,</em> no solo su resultado.</h2>
+    <p class="intro">Busco un rol de AI Product o UX/AI. Mi perfil es visual, y un perfil visual tiene un riesgo: que el movimiento parezca decoración. Por eso traté mi propio sitio como un producto con requisitos, medición y revisión.</p>
+    <div class="grid g3">
+      <article class="card"><h3>Qué es</h3><p>El sitio en <code>rodrigonegrete.es</code>: portada, proyectos, laboratorio, trayectoria, cinco temas visuales, tres idiomas (es, ca, en) y una página de caso por proyecto.</p></article>
+      <article class="card"><h3>Mi parte</h3><p>Las decisiones de diseño, los criterios de movimiento, la selección de referentes, la revisión de cada entrega y las mediciones. La implementación la hicieron agentes de IA especializados (Claude Code) que yo dirigía; <strong>37 de los 45 commits</strong> del rediseño llevan el trailer <code>Co-Authored-By</code>.</p></article>
+      <article class="card"><h3>Lo que no es</h3><p>No hay cliente, ni analítica de uso, ni tests con usuarios. Cualquier frase sobre qué &laquo;funciona mejor&raquo; para quien visita el sitio es una hipótesis y está marcada como tal.</p></article>
+    </div>
+    <div class="legend" role="note" aria-label="Leyenda de etiquetas">
+      <span><span class="tg tg-v">Verificado</span> se puede comprobar en <code>git log</code>, en el código o en una medición indicada</span>
+      <span><span class="tg tg-l">Lectura mía</span> interpretación de diseño</span>
+      <span><span class="tg tg-h">Hipótesis</span> por validar</span>
+    </div>
+    <p>Lo que no lleva etiqueta dentro de una ficha es verificable en el repositorio. Los números de este caso salen de tres sitios: el historial de git, el código fuente y las mediciones de Lighthouse móvil en local que indico en cada gráfico.</p>
+    <ol class="toc">
+      <li><a href="#problema">02 Problema y objetivos</a></li>
+      <li><a href="#investigacion">03 Proceso de investigación</a></li>
+      <li><a href="#principios">04 Principios de movimiento</a></li>
+      <li><a href="#sistema">05 Sistema de movimiento (9 piezas, 6 demos)</a></li>
+      <li><a href="#temas">06 Sistema de 5 temas</a></li>
+      <li><a href="#a11y">07 Accesibilidad y reduced-motion</a></li>
+      <li><a href="#rendimiento">08 Rendimiento</a></li>
+      <li><a href="#arquitectura">09 Arquitectura: de Vite a Astro con islas React</a></li>
+      <li><a href="#agentes">10 Agentes y QA</a></li>
+      <li><a href="#errores">11 Errores y aprendizajes</a></li>
+      <li><a href="#validar">12 Qué mediría y qué falta validar</a></li>
+    </ol>
+  </div>
+</section>
+
+<section class="s" id="problema">
+  <div class="wrap rv">
+    <p class="eyebrow">02 &middot; Problema y objetivos</p>
+    <h2>Impresionar sin <em>penalizar a quien visita.</em></h2>
+    <p>Quien revisa un portfolio suele tener poco tiempo, a veces desde el móvil y a veces con el sonido apagado. Un efecto vistoso que retrasa el primer texto, tapa contenido o ignora las preferencias del sistema juega en contra del mensaje. Y a la vez, un portfolio de diseño sin criterio de interacción no demuestra lo que dice saber hacer.</p>
+    <div class="grid g2">
+      <article class="card"><span class="tg tg-l">Lectura mía</span><h3>El problema de usuario</h3><p>Dos lectores opuestos: quien tiene prisa y necesita ver mi perfil y mis casos rápido, y quien quiere ver criterio de diseño y se detiene en los detalles. El movimiento debe servir al segundo sin estorbar al primero.</p></article>
+      <article class="card"><h3>Objetivos medibles que fijé</h3><ul class="l"><li>Lighthouse móvil: rendimiento &ge; 90; accesibilidad y SEO en 100.</li><li>Todo el movimiento bajo <code>prefers-reduced-motion</code>.</li><li>Nada de secuestro de scroll ni <code>scroll-snap</code> vertical obligatorio.</li><li>El contenido es visible por defecto: sin JS no se oculta nada.</li><li>Cada pieza con su porqué y su coste anotados.</li></ul></article>
+    </div>
+    <div class="note"><b>Honestidad de partida.</b> Estos objetivos son míos y no hay línea base de usuarios. Los comprobables (Lighthouse, reduced-motion, ausencia de scroll-jacking) están medidos o revisados; los de percepción no.</div>
+  </div>
+</section>
+
+<section class="s" id="investigacion">
+  <div class="wrap rv">
+    <p class="eyebrow">03 &middot; Proceso de investigación</p>
+    <h2>Estudiar a los mejores, <em>y copiar cero líneas.</em></h2>
+    <p class="intro">Antes de escribir CSS estudié sitios y librerías de referencia. Me interesaba entender qué técnica sostiene cada efecto y qué cuesta, no reproducirlos.</p>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de referentes estudiados">
+    <table class="tbl"><caption>Referentes estudiados. Licencias según la investigación del proyecto; no las he vuelto a consultar al redactar este caso.</caption>
+      <thead><tr><th scope="col">Referente</th><th scope="col">Licencia</th><th scope="col">Qué aporta <span class="tg tg-l">Lectura mía</span></th><th scope="col">Qué hice</th></tr></thead>
+      <tbody>
+        <tr><td>darkroomengineering/lenis</td><td>MIT</td><td>Scroll suave por JavaScript</td><td>Descartado: choca con mi regla de no tocar el scroll. Sin dependencia.</td></tr>
+        <tr><td>locomotivemtl/locomotive-scroll</td><td>MIT</td><td>Animaciones ligadas al scroll con motor propio</td><td>Estudiado; lo equivalente lo hace <code>animation-timeline</code> nativo.</td></tr>
+        <tr><td>Cuberto/mouse-follower</td><td>MIT</td><td>Cursor propio con estados por elemento</td><td>Idea de estados (botón, tarjeta) reescrita en código propio.</td></tr>
+        <tr><td>activetheory/split-text</td><td>MIT</td><td>Separar el texto en letras para animarlo</td><td>Idea reescrita a mano para el titular de la portada.</td></tr>
+        <tr><td>darkroomengineering/satus</td><td>MIT</td><td>Estructura de proyecto y buenas prácticas</td><td>Solo lectura de referencia.</td></tr>
+        <tr><td>basementstudio/basement-laboratory</td><td>Sin licencia</td><td>Inspiración visual y de ritmo</td><td>Solo inspiración. No se copió código.</td></tr>
+        <tr><td>makemepulse/2024-kaizen-public</td><td>Sin licencia</td><td>Inspiración visual y de ritmo</td><td>Solo inspiración. No se copió código.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p><span class="tg tg-v">Verificado</span> <code>package.json</code> declara solo cinco dependencias: <code>astro</code>, <code>@astrojs/react</code>, <code>@astrojs/sitemap</code>, <code>react</code> y <code>react-dom</code>. Ninguna librería de animación, de scroll ni de 3D.</p>
+    <div class="grid g2">
+      <article class="card"><span class="tg tg-l">Lectura mía</span><h3>La conclusión de la investigación</h3><p>Casi todo lo que quería cabe en CSS moderno: <code>animation-timeline</code>, View Transitions y <code>clip-path</code>. WebGL no hacía falta. Cuando lo probé por instinto, el resultado fue peor (véase el cursor fluido en el sistema de movimiento).</p></article>
+      <article class="card"><h3>Línea de tiempo del proceso</h3><ul class="l"><li><strong>27 a 29 de septiembre:</strong> preloader, cursor propio y modo fluido WebGL; este último se retira.</li><li><strong>22 de octubre:</strong> auditoría de accesibilidad (199 hallazgos), rendimiento, imágenes y migración a Astro.</li><li><strong>23 de octubre:</strong> capa cinematográfica, menú móvil, clips, separadores, islas React y QA.</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="principios">
+  <div class="wrap rv">
+    <p class="eyebrow">04 &middot; Principios de movimiento</p>
+    <h2>Reglas que me puse, <em>y cuánto las cumplí.</em></h2>
+    <p>Fijé siete reglas antes de implementar. Al revisar el código para este caso comparé cada regla con la realidad. No salgo limpio, y creo que esa tabla es lo más útil del caso.</p>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Tabla de principios frente a la realidad">
+    <table class="tbl"><caption>Cada regla frente a lo que hay en el código a fecha de hoy.</caption>
+      <thead><tr><th scope="col">Regla</th><th scope="col">Realidad en el código</th></tr></thead>
+      <tbody>
+        <tr><td>Una animación protagonista por viewport</td><td><span class="tg tg-l">Lectura mía</span> Criterio de composición; no tengo una medición automática de ello.</td></tr>
+        <tr><td>Micro-interacciones de 120 a 200 ms</td><td>Sin auditoría sistemática de todas; no afirmo cumplimiento.</td></tr>
+        <tr><td>Reveals de 400 a 700 ms</td><td>Se cumple en <code>rv-up</code> (.7 s). Excepciones: máscara de titulares 1 s, imágenes de tarjeta .9 s, menú móvil .85 s de apertura.</td></tr>
+        <tr><td>Escalonado de 40 a 70 ms, máximo 8 elementos</td><td>Titulares: 70 ms. Excepciones: pastillas del stack 45 ms hasta 20 elementos, filas 28 ms, letras del titular 22 ms hasta 40, pie del menú hasta 1,14 s de retardo.</td></tr>
+        <tr><td>Sin secuestro de scroll ni snap obligatorio</td><td>Sin scroll-jacking. Hay <code>scroll-snap-type: x mandatory</code> horizontal en las rejillas <code>proof-grid</code> y <code>test-g</code> en móvil (<code>styles.css</code>); testimonios lo sustituye por <code>proximity</code>. Ninguno vertical.</td></tr>
+        <tr><td>Contenido visible por defecto</td><td>Las clases que ocultan (<code>sfx-rev</code>) las añade JavaScript solo con <code>no-preference</code>.</td></tr>
+        <tr><td>Todo bajo <code>prefers-reduced-motion</code></td><td>La QA halló animaciones infinitas sin guarda (corregido en <code>7315075</code>). Al escribir este caso encontré el tilt 3D de tarjetas sin guarda y lo corregí (<code>128a664</code>).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Los números del escalonado y las duraciones los fijé a partir de mi criterio de diseño; no son un estándar. Lo que sí es verificable es dónde se cumplen y dónde no.</p>
+  </div>
+</section>
+
+<section class="s" id="sistema">
+  <div class="wrap">
+    <div class="rv">
+    <p class="eyebrow">05 &middot; Sistema de movimiento</p>
+    <h2>Nueve piezas, <em>cada una con su ficha.</em></h2>
+    <p class="intro">Cada ficha responde cinco preguntas: qué hace, qué problema resuelve, qué investigué, qué descarté y qué cuesta. Seis incluyen una demo real que puedes probar. Todas se detienen con su botón y, si tu sistema pide menos movimiento, empiezan paradas y las reproduces tú.</p>
+    </div>
+
+    <article class="piece rv" id="p-scroll">
+      <header><span class="no">01</span><h3>Animaciones ligadas al scroll</h3><p class="file"><code>src/motion.css</code> &middot; <code>src/scroll-fx.css</code> &middot; <code>src/previews.css</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Barra de progreso (<code>scaleX</code> con <code>scroll(root)</code>), entrada de tarjetas, parallax y zoom lento de imágenes, tinte de sección, línea de separador que se dibuja e inclinación del marco de laptop. Todo con <code>animation-timeline</code>, sin escuchar el evento de scroll.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Orientar (cuánto falta, dónde estoy) y dar profundidad sin ejecutar JavaScript en cada fotograma de scroll.</dd></div>
+        <div><dt>Investigación</dt><dd>Estudié Lenis y Locomotive Scroll, que resuelven esto con JS. La API nativa cubre el caso sin librería. Detrás de <code>@supports (animation-timeline: scroll())</code> y de <code>no-preference</code>.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd>Scroll suave por JS y animaciones con listeners: añaden peso, y el scroll suave por JS mueve el scroll a su ritmo, contra mi regla.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> solo propiedades que se componen (<code>transform</code>, <code>translate</code>, <code>opacity</code>, <code>clip-path</code>). Imágenes con dos animaciones a la vez (parallax y zoom); <span class="tg tg-h">Hipótesis</span> en móviles de gama baja puede notarse, no lo he medido. <strong>Accesibilidad:</strong> sin <code>no-preference</code> o sin soporte del navegador, todo se ve estático y completo. <strong>Dos fallos reales:</strong> véase la demo y la sección de errores.</dd></div>
+      </dl>
+      <div class="piece-x">
+        <div class="demo" id="demo-scroll" data-on="1">
+          <div class="demo-h"><b>Prueba 1 &middot; scroll y el fallo de overflow</b>
+            <div class="ctl">
+              <button type="button" class="tgl" data-act="toggle">Pausar efecto</button>
+              <button type="button" class="tgl" data-ov="clip" aria-pressed="true">overflow: clip</button>
+              <button type="button" class="tgl" data-ov="hidden" aria-pressed="false">overflow: hidden</button>
+            </div>
+          </div>
+          <p class="rm-note">Tu sistema pide menos movimiento: la demo empieza detenida. Si la reproduces, lo decides tú.</p>
+          <p class="nosup">Tu navegador no soporta <code>animation-timeline</code>: verás las tarjetas estáticas, que es justo el comportamiento de respaldo del sitio.</p>
+          <div class="d-scroll" tabindex="0" role="region" aria-label="Zona con scroll: las tarjetas entran según avanzas">
+            <div class="ds-bar" aria-hidden="true"></div>
+            <div class="ds-sec" data-ov="clip">
+              <div class="ds-card"><b>Tarjeta 1.</b> Desplázate dentro de esta caja.</div>
+              <div class="ds-card"><b>Tarjeta 2.</b> Cada una entra ligada a su posición, sin JavaScript.</div>
+              <div class="ds-card"><b>Tarjeta 3.</b> La barra superior avanza con el scroll de la caja.</div>
+              <div class="ds-card"><b>Tarjeta 4.</b> Cambia a <code>overflow: hidden</code> y vuelve a desplazarte.</div>
+              <div class="ds-card"><b>Tarjeta 5.</b> Con <code>hidden</code> la sección pasa a ser la fuente del timeline y las tarjetas no animan.</div>
+              <div class="ds-card"><b>Tarjeta 6.</b> Es el fallo que encontré en <code>.sec</code> y que arreglé con <code>clip</code>.</div>
+            </div>
+          </div>
+          <p class="dcap">Qué observar: con <code>clip</code> las tarjetas entran al aparecer. Con <code>hidden</code>, la sección interior se convierte en el scroller del que depende la animación; como ella no se desplaza, el timeline nunca avanza.</p>
+        </div>
+        <figure><img src="/assets/portfolio-2026/separadores.webp" width="1200" height="245" loading="lazy" decoding="async" alt="Dos separadores de sección: una regla técnica con el número 01 y el nombre Sobre mí, y una marquesina con la palabra STACK en letra contorneada y rellena"><figcaption class="cap">Separadores reales del sitio (pieza 06). La línea de entrada de cada sección usa este mismo mecanismo de scroll.</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-kinetic">
+      <header><span class="no">02</span><h3>Tipografía cinética y entradas de texto</h3><p class="file"><code>src/main.js</code> (split) &middot; <code>src/cinema.css</code> &middot; <code>src/effects.js</code> &middot; <code>src/scroll-fx.css</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>El titular de la portada se parte en letras que entran girando 8&deg; desde la base de la palabra (22 ms de retardo por letra, máximo 40 letras). Además: máscara de titulares por <code>clip-path</code> (1 s), números de sección que cuentan de 00 al valor (900 ms) y un scramble de 700 ms solo en los <em>eyebrows</em>.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Marcar con un solo gesto cuál es la primera cosa que hay que leer.</dd></div>
+        <div><dt>Investigación</dt><dd>Referente: <code>split-text</code> de Active Theory (MIT). Lo reescribí a mano. El código re-divide el texto tras cada cambio de idioma para no romper la traducción.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd>Scramble en los titulares: llevan <code>&lt;em&gt;</code> y <code>&lt;br&gt;</code> y el cambio de idioma reescribe su HTML, así que quedó limitado a texto plano.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> un <code>&lt;span&gt;</code> por letra, solo en el titular de la portada. <strong>Accesibilidad:</strong> <span class="tg tg-h">Hipótesis</span> partir el texto en spans puede hacer que algunos lectores de pantalla deletreen; el código real no añade <code>aria-label</code> y no lo he probado con lector. La demo sí lo hace bien. Bajo <code>reduced</code> el titular aparece directamente.</dd></div>
+      </dl>
+      <div class="piece-x">
+        <div class="demo" id="demo-kin" data-on="1">
+          <div class="demo-h"><b>Prueba 2 &middot; el escalonado entre letras</b>
+            <div class="ctl"><button type="button" class="tgl" data-act="toggle">Pausar efecto</button><button type="button" class="tgl" data-act="replay">Repetir</button></div>
+          </div>
+          <p class="rm-note">Tu sistema pide menos movimiento: la demo empieza detenida. Si la reproduces, lo decides tú.</p>
+          <div class="ctl" style="margin-bottom:14px">
+            <label class="lab" for="kin-txt">Texto <input id="kin-txt" type="text" maxlength="40" value="Cada animación es una decisión" autocomplete="off"></label>
+            <label class="lab" for="kin-st">Retardo por letra <input id="kin-st" type="range" min="0" max="120" step="2" value="22"> <output id="kin-out">22 ms</output></label>
+          </div>
+          <div class="d-kin"><div class="kin" id="kin"></div></div>
+          <p class="dcap">Qué observar: con 0 ms todo entra de golpe; con más de 70 ms la frase tarda en leerse. Mi valor real es 22 ms.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-vt">
+      <header><span class="no">03</span><h3>View Transitions entre temas y entre páginas</h3><p class="file"><code>src/motion.js</code> &middot; <code>src/sections.js</code> &middot; <code>src/islands/store.js</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Al cambiar de tema, un círculo (650 ms) crece desde el botón pulsado y revela el tema nuevo con <code>document.startViewTransition</code> y <code>clip-path</code>. Entre el portfolio y los casos hay un fundido de 300 ms con <code>@view-transition</code>.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Un cambio de tema instantáneo parece un fallo; un círculo que nace del botón explica qué ha pasado y de dónde.</dd></div>
+        <div><dt>Investigación</dt><dd>El tema vive en <code>html[data-theme]</code> y se aplica con un script en línea antes del primer pintado, así no hay destello al cargar.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd><span class="tg tg-l">Lectura mía</span> Animar con <code>transition</code> todas las variables de color: cientos de nodos recalculando a la vez, sin control sobre el orden.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> una captura de la página por cambio. <span class="tg tg-h">Hipótesis</span> mientras dura la transición el documento no responde a clics (la capa de captura los intercepta); son 650 ms. <strong>Accesibilidad:</strong> con <code>reduced</code> o sin soporte del navegador el cambio es instantáneo.</dd></div>
+      </dl>
+      <div class="piece-x">
+        <div class="demo" id="demo-theme" data-on="1">
+          <div class="demo-h"><b>Prueba 3 &middot; cambio de tema con View Transitions</b>
+            <div class="ctl"><button type="button" class="tgl" data-act="toggle">Pausar efecto</button></div>
+          </div>
+          <p class="rm-note">Tu sistema pide menos movimiento: la demo empieza detenida. Si la reproduces, lo decides tú.</p>
+          <div class="d-theme">
+            <div class="dt-sw" role="group" aria-label="Elegir tema de la demo">
+              <button type="button" class="tgl" data-th="dk" aria-pressed="true">Oscuro</button>
+              <button type="button" class="tgl" data-th="ed" aria-pressed="false">Editorial</button>
+              <button type="button" class="tgl" data-th="cy" aria-pressed="false">Cyber</button>
+            </div>
+            <div class="dt-box" id="dt-box" data-th="dk"><i></i><strong>Un solo componente, tres temas</strong><span>El círculo nace en el botón que pulsas.</span></div>
+          </div>
+          <p class="dcap">Qué observar: el origen del círculo cambia con el botón. Con &laquo;Pausar efecto&raquo; el cambio es instantáneo, como en el sitio con <code>reduced</code>.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-menu">
+      <header><span class="no">04</span><h3>Menú móvil</h3><p class="file"><code>src/mobile-menu.css</code> &middot; <code>src/mobile-menu.js</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Se abre como un círculo desde la hamburguesa (<code>clip-path</code>, 850 ms), los enlaces suben desde una máscara de línea (70 ms entre enlaces), el fondo tiene tres manchas que se mueven solo mientras está abierto, el foco queda atrapado y se cierra arrastrando.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> El menú anterior (un panel con fundido de 380 ms, en <code>git</code>) funcionaba, pero no explicaba de dónde venía. El origen en el botón da causa y efecto.</dd></div>
+        <div><dt>Investigación</dt><dd>Cierre por gesto con proyección de velocidad: se cierra si el recorrido más la velocidad por 220 supera 130 px. Vibración de 10 ms solo con activación previa del usuario y sin <code>reduced</code>. El commit <code>2abde80</code> corrigió tres errores: cancelaba el scroll suave, el clic tras arrastrar activaba enlaces y la vibración se disparaba sin gesto.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd>Mantener el fundido anterior. Sigue existiendo como versión de <code>reduced</code>: 250 ms de opacidad y nada más.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> <code>clip-path</code> animado una vez al abrir; las manchas usan <code>will-change</code> y quedan pausadas con el menú cerrado. <strong>Contra mi regla:</strong> con los retardos del pie, la entrada completa llega a unos 1,1 s. <strong>Accesibilidad:</strong> la etiqueta del botón cambia entre &laquo;Abrir menú&raquo; y &laquo;Cerrar menú&raquo; en es, ca y en, y Escape lo cierra. <span class="tg tg-h">Hipótesis</span> sin probar con VoiceOver ni TalkBack.</dd></div>
+      </dl>
+      <div class="piece-x">
+        <div class="demo" id="demo-menu" data-on="1">
+          <div class="demo-h"><b>Prueba 4 &middot; apertura circular</b>
+            <div class="ctl"><button type="button" class="tgl" data-act="toggle">Pausar efecto</button></div>
+          </div>
+          <p class="rm-note">Tu sistema pide menos movimiento: la demo usa la versión con fundido. Si la reproduces, lo decides tú.</p>
+          <div class="d-menu">
+            <div class="dm-phone" id="dm-phone">
+              <div class="dm-top"><span>RN</span>
+                <button type="button" class="dm-ham" id="dm-ham" aria-expanded="false" aria-controls="dm-ov" aria-label="Abrir menú"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button>
+              </div>
+              <div class="dm-page" aria-hidden="true"><i></i><i></i><i></i><i style="width:60%"></i></div>
+              <div class="dm-ov fade" id="dm-ov" role="dialog" aria-label="Menú de la demo">
+                <button type="button" class="dm-l" style="--i:0"><span>Proyectos</span></button>
+                <button type="button" class="dm-l" style="--i:1"><span>Laboratorio</span></button>
+                <button type="button" class="dm-l" style="--i:2"><span>Trayectoria</span></button>
+                <button type="button" class="dm-l" style="--i:3"><span>Contacto</span></button>
+              </div>
+            </div>
+          </div>
+          <p class="dcap">Qué observar: el círculo nace en la hamburguesa y los enlaces suben de uno en uno. Pulsa Escape o cualquier enlace para cerrar.</p>
+        </div>
+        <figure><img src="/assets/portfolio-2026/menu-movil.webp" width="1210" height="844" loading="lazy" decoding="async" alt="Tres capturas del menú móvil real: portada cerrada, círculo del menú abriéndose desde el botón arriba a la derecha y menú abierto"><figcaption class="cap">Menú real a 390 px: cerrado, a los 280 ms y abierto.</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-cursor">
+      <header><span class="no">05</span><h3>Cursor, tilt y botones magnéticos</h3><p class="file"><code>src/main.js</code> &middot; <code>src/motion.js</code> &middot; <code>src/cinema.js</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Un punto y un halo siguen al puntero y cambian con botones y tarjetas (&laquo;Ver &rarr;&raquo;). Un selector permite el modo <em>Mira</em>. Las tarjetas se inclinan hasta 8&deg;. Los botones se acercan al puntero un 25% con tope de 10 px. El hero tiene capas de profundidad que reaccionan al ratón.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Dar respuesta táctil a lo que es pulsable en escritorio. En móvil no existe y no se simula.</dd></div>
+        <div><dt>Investigación</dt><dd>Referente: <code>mouse-follower</code> de Cuberto (MIT), por los estados del cursor. El historial muestra un camino accidentado: se probó un cursor fluido WebGL (<code>35f7b26</code> y <code>08ca8b7</code>) y se retiró (<code>ff45ab5</code>: 1.321 líneas menos, &laquo;no funcionaba en producción&raquo;). Después, <code>331b464</code> bajó el lag del cursor.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd><strong>El cursor fluido WebGL.</strong> Y dentro del cursor actual: el halo con <code>mix-blend-mode: difference</code> en un tema, por ser de las operaciones de composición más pesadas (mismo commit).</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> un solo <code>requestAnimationFrame</code> que se detiene al parar el puntero, y un listener global en vez de uno por elemento. No he medido fotogramas. <strong>Accesibilidad:</strong> solo con puntero fino y pantalla de más de 1024 px. Pero el cursor del sistema se oculta (<code>cursor: none</code>); <span class="tg tg-h">Hipótesis</span> puede restar visibilidad a quien lo tenga ampliado. Con <code>reduced</code> el modo inicial del cursor es siempre Normal y el tilt se desactiva (arreglado hoy).</dd></div>
+      </dl>
+      <div class="piece-x">
+        <div class="demo" id="demo-mag" data-on="1">
+          <div class="demo-h"><b>Prueba 5 &middot; botones magnéticos</b>
+            <div class="ctl"><button type="button" class="tgl" data-act="toggle">Pausar efecto</button></div>
+          </div>
+          <p class="rm-note">Tu sistema pide menos movimiento: la demo empieza detenida. Si la reproduces, lo decides tú.</p>
+          <div class="ctl" style="margin-bottom:14px"><label class="lab" for="mag-r">Atracción <input id="mag-r" type="range" min="0" max="60" step="5" value="25"> <output id="mag-out">25%</output></label></div>
+          <div class="d-mag" id="d-mag"><button type="button" class="mg">Ver proyectos</button><button type="button" class="mg s">Descargar CV</button></div>
+          <p class="coarse-note">Este efecto necesita ratón o trackpad. En pantallas táctiles el sitio real tampoco lo aplica.</p>
+          <p class="dcap">Qué observar: el botón se desplaza hacia el puntero y vuelve con un muelle suave. Mi valor real es 25% con tope de 10 px; con más, el botón se escapa del dedo y parece un fallo.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-sep">
+      <header><span class="no">06</span><h3>Separadores de sección</h3><p class="file"><code>src/sections.js</code> &middot; <code>src/sections.css</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Ocho separadores (comprobado en el navegador) que alternan una regla técnica numerada (&sect;01, 01/08) con una marquesina de 48 s con el nombre de la sección. Se pausan fuera de pantalla y mientras se hace scroll.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Dar ritmo a una página larga y orientar con el número de sección.</dd></div>
+        <div><dt>Investigación</dt><dd>Se insertan por JavaScript con <code>aria-hidden</code>, porque cada sección ya tiene su <code>h2</code>. Los nombres se traducen con el idioma.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd><span class="tg tg-l">Lectura mía</span> Una línea estática: más barata, pero la página quedaba plana entre secciones.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> animación de <code>transform</code> pausada fuera de vista con <code>IntersectionObserver</code>. <strong>Accesibilidad, una deuda abierta:</strong> WCAG 2.2.2 pide poder pausar un movimiento automático de más de 5 s. La marquesina real no tiene botón de pausa (sí respeta <code>reduced</code>). La demo de abajo sí lo tiene.</dd></div>
+      </dl>
+      <div class="piece-x">
+        <div class="demo" id="demo-mq" data-on="1" data-dir="l">
+          <div class="demo-h"><b>Prueba 6 &middot; marquesina con pausa</b>
+            <div class="ctl"><button type="button" class="tgl" data-act="toggle">Pausar efecto</button><button type="button" class="tgl" data-act="dir">Cambiar sentido</button></div>
+          </div>
+          <p class="rm-note">Tu sistema pide menos movimiento: la demo empieza detenida. Si la reproduces, lo decides tú.</p>
+          <div class="d-mq" aria-hidden="true"><div class="mq-t" id="mq-t"></div></div>
+          <p class="dcap">Qué observar: se detiene fuera de pantalla (como en el sitio) y con el botón. La demo va a 24 s por vuelta para que se aprecie; el sitio usa 48 s.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-clips">
+      <header><span class="no">07</span><h3>Clips de proyectos en marco de laptop y teléfono</h3><p class="file"><code>src/components/ProjectPreview.astro</code> &middot; <code>src/preview.js</code> &middot; <code>src/previews.css</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Cada proyecto destacado muestra su producto en uso dentro de un marco hecho con CSS puro. El vídeo no se pide hasta que entra en pantalla (35% visible) y se pausa al salir o con la pestaña oculta.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Ver la interacción del producto antes de entrar al caso, sin imágenes estáticas que no cuentan nada.</dd></div>
+        <div><dt>Investigación</dt><dd>Cinco clips WebM de 165 a 392 KB y cinco pósters WebP de 24 a 32 KB. Suman 1,43 MiB, pero cada uno se descarga solo si se ve.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd><span class="tg tg-l">Lectura mía</span> Embeds en vivo o GIFs: pesan mucho más y no se pueden pausar con criterio.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> con <code>preload="none"</code> el vídeo no cuesta nada al cargar. Con ahorro de datos, red 2g o <code>reduced</code> queda solo el póster. <strong>Accesibilidad:</strong> el <code>&lt;video&gt;</code> es decorativo (<code>aria-hidden</code>, sin controles) y el póster lleva <code>alt</code>. Misma deuda que la marquesina frente a WCAG 2.2.2.</dd></div>
+      </dl>
+      <div class="piece-x">
+        <figure><img src="/assets/portfolio-2026/clip-laptop.webp" width="1200" height="368" loading="lazy" decoding="async" alt="Tarjeta destacada de Capsule Corp con el clip del proyecto dentro de un marco de laptop y el texto del caso a la derecha"><figcaption class="cap">Marco de laptop con el clip en reproducción (captura real).</figcaption></figure>
+        <figure><img src="/assets/portfolio-2026/clip-telefono.webp" width="1200" height="434" loading="lazy" decoding="async" alt="Tarjeta de ZODI con el clip dentro de un marco de teléfono y el texto del caso a la derecha"><figcaption class="cap">Variante de teléfono para los productos móviles.</figcaption></figure>
+      </div>
+    </article>
+
+    <article class="piece rv" id="p-pre">
+      <header><span class="no">08</span><h3>Preloader</h3><p class="file"><code>src/main.js</code> (bloque Preloader)</p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Una entrada con el nombre y una línea de progreso que dura 0,9 s (0,4 s con <code>reduced</code>) y se puede saltar con clic, Escape, espacio o Enter.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Una primera impresión de marca que no se come la paciencia de quien llega.</dd></div>
+        <div><dt>Investigación</dt><dd>Nueve commits con &laquo;preloader&raquo; en el asunto entre el 27 de septiembre y el 22 de octubre. El comentario del código dice que retrasaba el LCP unos 3 s y por eso se acortó de 2 s a 0,9 s.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd>El sistema anterior: brillo multi-sombra, halo verde, cortinas, estallido de puntos y rayo de luz. El commit <code>b5d0f7e</code> lo descarta entero por uno minimalista.</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> 0,9 s de espera visible en cada visita (se muestra siempre). <span class="tg tg-h">Hipótesis</span> para quien vuelve, un preloader siempre visible es fricción; mostrarlo solo la primera vez sería más amable. No lo he cambiado ni lo he medido con usuarios.</dd></div>
+      </dl>
+    </article>
+
+    <article class="piece rv" id="p-sound">
+      <header><span class="no">09</span><h3>Sonido y música</h3><p class="file"><code>src/main.js</code> (Music player) &middot; <code>src/components/Footer.astro</code> &middot; <code>public/audio/</code></p></header>
+      <dl class="pf">
+        <div><dt>Qué hace</dt><dd>Un botón <em>Activar música</em> en la portada arranca una pista en bucle a volumen 0,38 y muestra un reproductor pequeño (pausa, silencio, cerrar, progreso). Cerrarlo la detiene y la rebobina.</dd></div>
+        <div><dt>Problema que resuelve</dt><dd><span class="tg tg-l">Lectura mía</span> Añadir una capa de personalidad para quien la quiera, sin imponer sonido a quien revisa el portfolio en una oficina o en una reunión.</dd></div>
+        <div><dt>Investigación</dt><dd>La pista pesa 3.802.443 bytes (unos 3,6 MiB). El <code>&lt;audio&gt;</code> lleva <code>preload="none"</code>: no se descarga hasta el primer clic, y ese clic es además el gesto que exigen los navegadores para reproducir.</dd></div>
+        <div><dt>Alternativa descartada</dt><dd>Reproducir al cargar. Los navegadores lo bloquean y, aunque pudiera, sería hostil. Por eso es opcional y nunca arranca solo (<code>play()</code> solo se llama desde un clic).</dd></div>
+        <div class="wide"><dt>Coste</dt><dd><strong>Rendimiento:</strong> cero al cargar; 3,6 MiB solo si se activa. <strong>Accesibilidad:</strong> el botón cambia su etiqueta según el estado (<em>Activar música de fondo</em>, <em>Pausar música</em>, <em>Reanudar música</em>), el reproductor es una región con nombre y hay silencio y cierre. <span class="tg tg-h">Hipótesis</span> no lo he probado con lector de pantalla. No hay demo aquí a propósito: reproducir audio dentro de un caso sería justo lo que descarté. Pruébalo en el <a href="/#inicio">portfolio</a>.</dd></div>
+      </dl>
+    </article>
+  </div>
+</section>
+
+<section class="s" id="temas">
+  <div class="wrap rv">
+    <p class="eyebrow">06 &middot; Sistema de 5 temas</p>
+    <h2>Una sola base, <em>cinco personalidades.</em></h2>
+    <p class="intro">El sitio se puede ver en cinco temas con <code>data-theme</code> (<code>saas</code>, <code>editorial</code>, <code>cyber</code>, <code>diario</code>, <code>hud</code>). Cambian tipografía, paleta y carácter; el contenido y la estructura son los mismos.</p>
+    <div class="grid g3">
+      <figure><img src="/assets/portfolio-2026/tema-saas.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema Dual Core AI, oscuro con acentos teal y rojo"><figcaption class="cap"><b>Dual Core AI</b> &middot; Inter, teal y rojo</figcaption></figure>
+      <figure><img src="/assets/portfolio-2026/tema-editorial.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema El Diario Digital, papel sepia, serifa y tinta roja"><figcaption class="cap"><b>El Diario Digital</b> &middot; Lora, sepia y tinta</figcaption></figure>
+      <figure><img src="/assets/portfolio-2026/tema-cyber.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema Abstract Cyber, fondo oscuro con neón violeta y cian"><figcaption class="cap"><b>Abstract Cyber</b> &middot; Outfit, neón y plasma</figcaption></figure>
+      <figure><img src="/assets/portfolio-2026/tema-diario.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema Minimal Journal, blanco con azul"><figcaption class="cap"><b>Minimal Journal</b> &middot; Inter, blanco y azul</figcaption></figure>
+      <figure><img src="/assets/portfolio-2026/tema-hud.webp" width="720" height="450" loading="lazy" decoding="async" alt="Portada en el tema Fine Art, negro mate con dorado"><figcaption class="cap"><b>Fine Art</b> &middot; Playfair, negro mate y dorado</figcaption></figure>
+    </div>
+    <div class="grid g2">
+      <article class="card"><h3>Qué problema resuelve</h3><p><span class="tg tg-l">Lectura mía</span> Un portfolio visual tiene que demostrar rango. Cinco temas sobre la misma base muestran que el sistema aguanta cambios de tono sin rehacer nada.</p></article>
+      <article class="card"><h3>Qué costó</h3><p><span class="tg tg-v">Verificado</span> Cada tema multiplica los casos de contraste. La QA encontró fallos reales de contraste en los chips de las tarjetas por tema (<code>66cd877</code>). Lighthouse solo audita el tema por defecto; los demás los revisó la QA con Playwright en <strong>tres temas</strong> y dos viewports, no en los cinco. Los dos restantes quedan sin revisión automática.</p></article>
+    </div>
+    <p>La persistencia usa un script en línea que aplica el tema guardado antes del primer pintado, y el cambio pasa por la View Transition de la pieza 03. Los nombres internos no coinciden con los públicos (<code>editorial</code> es El Diario Digital, <code>diario</code> es Minimal Journal, <code>hud</code> es Fine Art): arrastre de versiones anteriores que no he renombrado.</p>
+  </div>
+</section>
+
+<section class="s" id="a11y">
+  <div class="wrap rv">
+    <p class="eyebrow">07 &middot; Accesibilidad y reduced-motion</p>
+    <h2>El movimiento <em>es opcional.</em> El contenido no.</h2>
+    <div class="grid g3">
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>Lighthouse</h3><p>Accesibilidad de 90 a 100 en móvil, en el tema por defecto. Auditoría previa de 199 hallazgos de diseño (<code>703d3cc</code>).</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>Reduced-motion</h3><p>Los efectos viven detrás de <code>prefers-reduced-motion: no-preference</code>. Los clips quedan en póster, el menú se abre con fundido de 250 ms y el cambio de tema es instantáneo.</p></article>
+      <article class="card"><span class="tg tg-h">Hipótesis</span><h3>Lo que no he probado</h3><p>Lectores de pantalla reales (VoiceOver, NVDA, TalkBack), el ocultamiento del cursor del sistema con baja visión y la pausa de las marquesinas (WCAG 2.2.2).</p></article>
+    </div>
+    <p>Esta página aplica lo mismo: las demos empiezan paradas si tu sistema lo pide, todas tienen botón de pausa, los controles miden al menos 44 px y el contraste del texto supera 4,5:1 (lo comprobé con un cálculo sobre los colores de esta hoja de estilos).</p>
+  </div>
+</section>
+
+<section class="s" id="rendimiento">
+  <div class="wrap rv">
+    <p class="eyebrow">08 &middot; Rendimiento</p>
+    <h2>De 64 a 96-98, y <em>un diagnóstico equivocado.</em></h2>
+    <p class="intro">Medí con Lighthouse móvil en local sobre la portada. El orden es el de mis mediciones; no conservé los informes, así que no atribuyo cada salto a un commit concreto.</p>
+    <figure class="chart">
+      <svg viewBox="0 0 720 340" role="img" aria-labelledby="c1t c1d">
+        <title id="c1t">Evolución de las puntuaciones de Lighthouse móvil</title>
+        <desc id="c1d">Rendimiento: 64, 82, 91 y 96 a 98 en cuatro mediciones. Accesibilidad: de 90 a 100. SEO: de 92 a 100.</desc>
+        <g class="g" stroke-width="1"><line x1="70" y1="30" x2="690" y2="30"/><line x1="70" y1="100" x2="690" y2="100"/><line x1="70" y1="170" x2="690" y2="170"/><line x1="70" y1="240" x2="690" y2="240"/></g>
+        <text x="60" y="34" text-anchor="end">100</text><text x="60" y="104" text-anchor="end">90</text><text x="60" y="174" text-anchor="end">80</text><text x="60" y="244" text-anchor="end">70</text>
+        <text x="60" y="314" text-anchor="end">60</text>
+        <rect x="560" y="40" width="40" height="22" rx="6" fill="#5eead4" opacity=".18"/>
+        <polyline points="100,282 260,156 420,93 580,51" fill="none" stroke="#5eead4" stroke-width="3"/>
+        <circle cx="100" cy="282" r="6" fill="#5eead4"/><circle cx="260" cy="156" r="6" fill="#5eead4"/><circle cx="420" cy="93" r="6" fill="#5eead4"/><circle cx="580" cy="51" r="6" fill="#5eead4"/>
+        <text class="t" x="100" y="268" text-anchor="middle">64</text><text class="t" x="260" y="142" text-anchor="middle">82</text><text class="t" x="420" y="79" text-anchor="middle">91</text><text class="t" x="580" y="36" text-anchor="middle">96-98</text>
+        <line x1="640" y1="100" x2="640" y2="30" stroke="#b9a8ff" stroke-width="3" stroke-dasharray="5 4"/><circle cx="640" cy="100" r="6" fill="#b9a8ff"/><circle cx="640" cy="30" r="6" fill="#b9a8ff"/>
+        <text x="654" y="104">90</text><text x="654" y="42">100</text>
+        <line x1="672" y1="86" x2="672" y2="30" stroke="#ffd067" stroke-width="3" stroke-dasharray="5 4"/><circle cx="672" cy="86" r="5" fill="#ffd067"/><circle cx="672" cy="30" r="5" fill="#ffd067"/>
+        <text x="100" y="332" text-anchor="middle">Medición 1</text><text x="260" y="332" text-anchor="middle">2</text><text x="420" y="332" text-anchor="middle">3</text><text x="580" y="332" text-anchor="middle">4</text>
+        <text x="620" y="332" text-anchor="middle">Acc. / SEO</text>
+      </svg>
+      <figcaption class="cap"><span style="color:#5eead4">&#9632;</span> Rendimiento &middot; <span style="color:#b9a8ff">&#9632;</span> Accesibilidad, de 90 a 100 &middot; <span style="color:#ffd067">&#9632;</span> SEO, de 92 a 100. De accesibilidad y SEO solo tengo inicio y fin, no puntos intermedios. Lighthouse móvil en local, con throttling simulado.</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 720 230" role="img" aria-labelledby="c2t c2d">
+        <title id="c2t">Historia del LCP de la portada</title>
+        <desc id="c2d">El texto del hero se pintaba en unos 0,2 segundos. El LCP simulado era de 4,8 segundos y tras diferir las imágenes quedó entre 2,3 y 3,4 segundos.</desc>
+        <g class="g" stroke-width="1"><line x1="230" y1="20" x2="230" y2="190"/><line x1="351" y1="20" x2="351" y2="190"/><line x1="473" y1="20" x2="473" y2="190"/><line x1="594" y1="20" x2="594" y2="190"/><line x1="696" y1="20" x2="696" y2="190"/></g>
+        <text x="230" y="212" text-anchor="middle">0 s</text><text x="351" y="212" text-anchor="middle">1,25 s</text><text x="473" y="212" text-anchor="middle">2,5 s</text><text x="594" y="212" text-anchor="middle">3,75 s</text><text x="696" y="212" text-anchor="middle">4,8 s</text>
+        <text x="220" y="50" text-anchor="end">Texto del hero</text><text x="220" y="105" text-anchor="end">LCP simulado antes</text><text x="220" y="160" text-anchor="end">LCP simulado después</text>
+        <rect x="230" y="34" width="19" height="24" rx="4" fill="#4ade80"/><text class="t" x="258" y="52">~0,2 s</text>
+        <rect x="230" y="89" width="466" height="24" rx="4" fill="#ff8a8a"/><text x="236" y="106" style="fill:#2a0a0a;font-weight:700">4,8 s</text>
+        <rect x="230" y="144" width="223" height="24" rx="4" fill="#5eead4"/><rect x="453" y="144" width="107" height="24" rx="4" fill="#5eead4" opacity=".35"/><text x="572" y="161" class="t">2,3 a 3,4 s</text>
+      </svg>
+      <figcaption class="cap">Medición de mi portada. El tramo claro es el rango entre mediciones.</figcaption>
+    </figure>
+    <div class="grid g2">
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>El diagnóstico del LCP</h3><p>Pensé que el titular tardaba en pintarse. Midiendo, el texto salía en unos 200 ms; los 4,8 s eran del simulador de Lighthouse (Lantern), que contaba unos 530 KB de imágenes de tarjetas descargadas antes de <code>load</code>. La solución fue diferirlas al evento <code>load</code> (<code>e5ebd2c</code>), y el LCP simulado bajó a 2,3-3,4 s.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>Otras palancas</h3><ul class="l"><li>Imagen OG de 1.805.249 bytes a JPG de 101.400 y WebP de 36.008 (<code>cbeebe3</code>).</li><li>Preloader de 2 s a 0,9 s.</li><li>Fuentes y Font Awesome sin bloquear el render.</li><li>Imágenes WebP con <code>srcset</code> mediante <code>astro:assets</code>.</li></ul></article>
+    </div>
+    <p>Los números de Lighthouse del párrafo anterior son los que me quedaron anotados de mis mediciones; no son un resultado repetible desde este repositorio. Las cifras de tamaño sí lo son: salen de <code>git</code> y de la compilación.</p>
+  </div>
+</section>
+
+<section class="s" id="arquitectura">
+  <div class="wrap rv">
+    <p class="eyebrow">09 &middot; Arquitectura</p>
+    <h2>De Vite a Astro, <em>con islas React solo donde pesan.</em></h2>
+    <p>El 22 de octubre migré de una página única con Vite a Astro (<code>369e9b5</code>): componentes por sección, subpáginas servidas desde <code>public/</code>, imágenes WebP con <code>srcset</code>, sitemap automático. Al día siguiente, tres piezas con estado compartido pasaron a islas React con <code>client:idle</code> (<code>2a231b2</code>): el tema, el idioma y el filtro de proyectos. El resto sigue en CSS y JS sin framework.</p>
+    <div class="scroll-x" tabindex="0" role="region" aria-label="Comparación de opciones de arquitectura">
+    <table class="tbl"><caption>Comparación honesta de las opciones consideradas.</caption>
+      <thead><tr><th scope="col">Opción</th><th scope="col">Coste en JS</th><th scope="col">Qué gano</th><th scope="col">Qué pierdo</th></tr></thead>
+      <tbody>
+        <tr><td>Todo vanilla</td><td>0 KB extra</td><td>Nada que hidratar</td><td>El estado de tema, idioma y filtro se reparte entre el DOM y varios manejadores. Más difícil de mantener.</td></tr>
+        <tr><td>Astro con islas React (elegida)</td><td>+72 KB gzip medidos</td><td>Una fuente de verdad (<code>html[data-theme]</code> y un store) compartida por el dock, el menú y el selector</td><td>72 KB para tres componentes pequeños</td></tr>
+        <tr><td>SPA React completa</td><td>No medido</td><td>Modelo único</td><td><span class="tg tg-l">Lectura mía</span> Desproporcionada para un sitio de contenido estático.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p><span class="tg tg-v">Verificado</span> Medido hoy tras <code>npm run build</code>, sumando el cliente de React (65,8 KB gzip), <code>react</code> (3,0), <code>jsx-runtime</code> (1,1) y las tres islas (2,4): unos <strong>72 KB gzip</strong>. El script principal del sitio, ya existente, pesa 26,8 KB gzip.</p>
+    <p><span class="tg tg-l">Lectura mía</span> Es una decisión de mantenimiento, no de rendimiento: la ganancia no está en la velocidad sino en no repetir el estado. <span class="tg tg-h">Hipótesis</span> <code>client:idle</code> evita que la hidratación compita con el primer pintado; la puntuación de rendimiento no cayó tras añadirlas, pero no aislé su efecto con un A/B.</p>
+  </div>
+</section>
+
+<section class="s" id="agentes">
+  <div class="wrap rv">
+    <p class="eyebrow">10 &middot; Agentes y QA</p>
+    <h2>Dirigir agentes <em>es diseñar un proceso.</em></h2>
+    <p>Trabajé con agentes especializados: uno investigaba, otros implementaban en ramas aisladas (<em>worktrees</em>) y otros revisaban. Mi trabajo fue decidir qué se pedía, fijar los criterios y revisar lo que volvía.</p>
+    <div class="grid g3">
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>En números</h3><p>45 commits entre el 22 y el 23 de octubre, 10 de ellos fusiones de ramas de agentes. 37 llevan el trailer <code>Co-Authored-By</code> de Claude.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>Fallos reales de la QA</h3><ul class="l"><li>Contraste de los chips por tema.</li><li>El dock en móvil tapaba texto.</li><li>Animaciones infinitas sin guarda de <code>reduced</code>.</li><li>Un título sin traducir.</li></ul></article>
+      <article class="card"><span class="tg tg-l">Lectura mía</span><h3>Lo que aprendí</h3><p>Un agente que implementa no es el que debe revisar. Los fallos más útiles los halló la QA con Playwright, a 1440 y 390 px, no la implementación original.</p></article>
+    </div>
+    <div class="note"><b>Límite de mi QA.</b> Se probó en tres temas y dos viewports, no en los cinco temas ni en dispositivos reales.</div>
+  </div>
+</section>
+
+<section class="s" id="errores">
+  <div class="wrap rv">
+    <p class="eyebrow">11 &middot; Errores y aprendizajes</p>
+    <h2>Lo que salió mal, <em>y qué cambié.</em></h2>
+    <div class="grid g2">
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>1 &middot; <code>overflow:hidden</code> mataba los timelines</h3><p><code>.sec{overflow:hidden}</code> convertía la sección en la fuente del <code>view()</code>; como no se desplaza, ninguna animación interior corría. Cambié a <code>overflow:clip</code> (<code>a9f6eee</code>). La demo 1 lo reproduce.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>2 &middot; El minificador fusionaba <code>animation</code></h3><p>lightningcss unía <code>animation</code> y <code>animation-timeline</code> en un shorthand que algunos Chrome descartan. Escribo longhands (<code>d382e44</code>, <code>e794ac8</code>). Lo anoto en el CSS para no repetirlo.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>3 &middot; Culpé al texto de un LCP que era de imágenes</h3><p>Tardé en medir el LCP real: el texto salía en 200 ms. El problema eran las imágenes antes de <code>load</code> y el simulador.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>4 &middot; Cursor fluido WebGL</h3><p>Dos commits para añadirlo, uno para quitarlo: 1.321 líneas fuera. La técnica era correcta; el resultado en producción no.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>5 &middot; Reglas que yo mismo rompí</h3><p>La tabla de principios muestra escalonados y duraciones fuera de mi rango, y un tilt sin guarda de <code>reduced</code> que descubrí al escribir este caso.</p></article>
+      <article class="card"><span class="tg tg-v">Verificado</span><h3>6 &middot; Nueve commits de preloader</h3><p>Iterar la entrada del sitio costó nueve commits y una decisión final de simplificar. El gesto más pequeño tenía el coste más alto.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="validar">
+  <div class="wrap rv">
+    <p class="eyebrow">12 &middot; Qué mediría y qué falta validar</p>
+    <h2>Lo que <em>no sé todavía.</em></h2>
+    <p>No tengo datos de uso ni he probado el sitio con personas. Todo lo que sigue son hipótesis y cómo las comprobaría.</p>
+    <div class="grid g2">
+      <article class="card"><span class="tg tg-h">Hipótesis</span><h3>El movimiento ayuda a recordar el sitio</h3><p>Lo comprobaría con 5 o 6 sesiones moderadas de personas que revisan portfolios: tiempo hasta encontrar un caso y qué recuerdan después. Sin cifras previas.</p></article>
+      <article class="card"><span class="tg tg-h">Hipótesis</span><h3>El preloader es fricción para quien vuelve</h3><p>Mediría la tasa de saltarlo (clic o tecla) si añadiera un contador de eventos propio. Hoy no existe.</p></article>
+      <article class="card"><span class="tg tg-h">Hipótesis</span><h3>El coste en móviles de gama baja es aceptable</h3><p>Grabaría trazas de rendimiento en un Android modesto durante el scroll y mediría INP y tareas largas, no solo Lighthouse.</p></article>
+      <article class="card"><span class="tg tg-h">Hipótesis</span><h3>El modo accesible funciona con tecnologías de apoyo</h3><p>Probaría con VoiceOver, NVDA y TalkBack el titular dividido, el menú, el reproductor y la pausa de las marquesinas.</p></article>
+    </div>
+    <h3>Mejoras que haría ahora</h3>
+    <ul class="l">
+      <li>Añadir un control de pausa a la marquesina y a los clips para cumplir WCAG 2.2.2.</li>
+      <li>Mostrar el preloader solo la primera vez por sesión.</li>
+      <li>Revisar contraste en los cinco temas con una herramienta automática, no solo en tres.</li>
+      <li>Renombrar los identificadores de tema para que coincidan con sus nombres públicos.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="s cta" id="ver">
+  <div class="wrap rv">
+    <p class="eyebrow">Mira el código</p>
+    <h2>Todo lo que he contado <em>se puede comprobar.</em></h2>
+    <p>El repositorio es público: el historial de git, los commits que cito y el código de cada pieza. Y si te interesa otra forma de entender mi criterio, Capsule Corp convierte mi CV en un juego.</p>
+    <div class="actions">
+      <a class="btn btn-acc" href="https://github.com/Ronegret/rn-portfolio-2026" target="_blank" rel="noopener">Ver el repositorio &#8599;</a>
+      <a class="btn btn-ghost" href="https://db.rodrigonegrete.es/" target="_blank" rel="noopener">Ver Capsule Corp &#8599;</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Caso de estudio escrito y diseñado por <a href="/">Rodrigo Negrete</a>. Vuelve al <a href="/#proyectos">portfolio</a>.</p>
+</footer>
+
+<script>
+(function(){
+  var d=document,RM=matchMedia('(prefers-reduced-motion: reduce)');
+  d.documentElement.classList.add('js');
+  var els=d.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)||RM.matches){els.forEach(function(e){e.classList.add('on')})}
+  else{var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.04});els.forEach(function(e){io.observe(e)})}
+
+  /* estado de cada demo: data-on="1" reproduce; con reduced-motion arrancan paradas y las activa el usuario */
+  var demos={};
+  function label(dm){var b=dm.querySelector('[data-act=toggle]');if(!b)return;var on=dm.dataset.on==='1';b.textContent=on?'Pausar efecto':(RM.matches?'Reproducir (tú decides)':'Reanudar efecto')}
+  d.querySelectorAll('.demo').forEach(function(dm){
+    dm.dataset.on=RM.matches?'0':'1';label(dm);demos[dm.id]=dm;
+    var t=dm.querySelector('[data-act=toggle]');
+    if(t)t.addEventListener('click',function(){dm.dataset.on=dm.dataset.on==='1'?'0':'1';label(dm);dm.dispatchEvent(new CustomEvent('demo-toggle'))});
+  });
+  RM.addEventListener('change',function(){Object.keys(demos).forEach(function(k){var dm=demos[k];dm.dataset.on=RM.matches?'0':'1';label(dm);dm.dispatchEvent(new CustomEvent('demo-toggle'))})});
+  var on=function(dm){return dm.dataset.on==='1'};
+
+  /* 1 · scroll: conmutar overflow */
+  (function(){var dm=d.getElementById('demo-scroll'),sec=dm.querySelector('.ds-sec');
+    dm.querySelectorAll('[data-ov]').forEach(function(b){b.addEventListener('click',function(){
+      sec.dataset.ov=b.dataset.ov;dm.querySelectorAll('[data-ov]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})})});
+  })();
+
+  /* 2 · tipografía cinética */
+  (function(){var dm=d.getElementById('demo-kin'),k=d.getElementById('kin'),tx=d.getElementById('kin-txt'),st=d.getElementById('kin-st'),out=d.getElementById('kin-out');
+    function build(){
+      k.textContent='';k.setAttribute('role','text');k.setAttribute('aria-label',tx.value);
+      var i=0;tx.value.split(/(\s+)/).forEach(function(w){
+        if(!w)return;
+        if(/^\s+$/.test(w)){k.appendChild(d.createTextNode(' '));return}
+        var sw=d.createElement('span');sw.className='w';sw.setAttribute('aria-hidden','true');
+        w.split('').forEach(function(c){var s=d.createElement('span');s.className='c';s.textContent=c;s.style.transitionDelay=(Math.min(i++,40)*st.value)+'ms';sw.appendChild(s)});
+        k.appendChild(sw)});
+      k.classList.remove('go');
+      if(on(dm)){void k.offsetWidth;requestAnimationFrame(function(){requestAnimationFrame(function(){k.classList.add('go')})})}
+    }
+    tx.addEventListener('input',build);
+    st.addEventListener('input',function(){out.textContent=st.value+' ms';build()});
+    dm.querySelector('[data-act=replay]').addEventListener('click',build);
+    dm.addEventListener('demo-toggle',build);build();
+  })();
+
+  /* 3 · View Transitions entre temas */
+  (function(){var dm=d.getElementById('demo-theme'),box=d.getElementById('dt-box');
+    dm.querySelectorAll('[data-th]').forEach(function(b){b.addEventListener('click',function(){
+      var th=b.dataset.th;if(box.dataset.th===th)return;
+      function set(){box.dataset.th=th;dm.querySelectorAll('[data-th]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))})}
+      if(!on(dm)||!d.startViewTransition){set();return}
+      var r=b.getBoundingClientRect(),br=box.getBoundingClientRect(),
+        x=r.left+r.width/2-br.left,y=r.top+r.height/2-br.top,
+        R=Math.hypot(Math.max(x,br.width-x),Math.max(y,br.height-y));
+      var vt=d.startViewTransition(set);
+      vt.ready.then(function(){d.documentElement.animate({clipPath:['circle(0px at '+x+'px '+y+'px)','circle('+R+'px at '+x+'px '+y+'px)']},{duration:650,easing:'cubic-bezier(.65,0,.2,1)',pseudoElement:'::view-transition-new(d-theme-box)'})},function(){})
+    })});
+  })();
+
+  /* 4 · menú móvil */
+  (function(){var dm=d.getElementById('demo-menu'),ph=d.getElementById('dm-phone'),ov=d.getElementById('dm-ov'),ham=d.getElementById('dm-ham'),open=false;
+    function mode(){ov.classList.toggle('fade',!on(dm));ov.classList.toggle('tr',on(dm))}
+    function set(v){
+      if(v===open)return;open=v;mode();
+      if(v){var pr=ph.getBoundingClientRect(),hr=ham.getBoundingClientRect();
+        ph.style.setProperty('--ox',(hr.left+hr.width/2-pr.left-7)+'px');ph.style.setProperty('--oy',(hr.top+hr.height/2-pr.top-7)+'px')}
+      ov.classList.toggle('on',v);ham.setAttribute('aria-expanded',String(v));ham.setAttribute('aria-label',v?'Cerrar menú':'Abrir menú');
+      if(v){var f=ov.querySelector('.dm-l');if(f)f.focus({preventScroll:true})}else ham.focus({preventScroll:true})
+    }
+    mode();
+    ham.addEventListener('click',function(){set(!open)});
+    ov.querySelectorAll('.dm-l').forEach(function(l){l.addEventListener('click',function(){set(false)})});
+    d.addEventListener('keydown',function(e){if(e.key==='Escape'&&open)set(false)});
+    dm.addEventListener('demo-toggle',mode);
+  })();
+
+  /* 5 · botones magnéticos (misma lógica que src/motion.js: muelle 0,2, tope 10 px) */
+  (function(){var dm=d.getElementById('demo-mag'),area=d.getElementById('d-mag'),rg=d.getElementById('mag-r'),out=d.getElementById('mag-out');
+    if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+    var st=new Map(),raf=0,MAX=10;
+    function tick(){raf=0;st.forEach(function(s,el){s.x+=(s.tx-s.x)*.2;s.y+=(s.ty-s.y)*.2;var done=!s.tx&&!s.ty&&Math.abs(s.x)<.1&&Math.abs(s.y)<.1;el.style.translate=done?'':s.x.toFixed(2)+'px '+s.y.toFixed(2)+'px';if(done)st.delete(el)});if(st.size)raf=requestAnimationFrame(tick)}
+    function set(el,tx,ty){var s=st.get(el)||{x:0,y:0};s.tx=tx;s.ty=ty;st.set(el,s);if(!raf)raf=requestAnimationFrame(tick)}
+    var cl=function(v){return Math.max(-MAX,Math.min(MAX,v))};
+    rg.addEventListener('input',function(){out.textContent=rg.value+'%'});
+    area.addEventListener('pointermove',function(e){if(!on(dm)||e.pointerType!=='mouse')return;var el=e.target.closest('.mg');if(!el)return;var r=el.getBoundingClientRect(),k=rg.value/100;set(el,cl((e.clientX-r.left-r.width/2)*k),cl((e.clientY-r.top-r.height/2)*k))});
+    area.addEventListener('pointerout',function(e){var el=e.target.closest('.mg');if(el&&!el.contains(e.relatedTarget))set(el,0,0)});
+    dm.addEventListener('demo-toggle',function(){if(!on(dm))st.forEach(function(s,el){s.tx=0;s.ty=0})});
+  })();
+
+  /* 6 · marquesina: pausa fuera de pantalla */
+  (function(){var dm=d.getElementById('demo-mq'),t=d.getElementById('mq-t'),w=['Sobre mí','Stack','Proyectos','Laboratorio'],h='';
+    for(var j=0;j<2;j++)w.forEach(function(x){h+='<span>'+x+'</span>'});
+    t.innerHTML=h+h;
+    dm.querySelector('[data-act=dir]').addEventListener('click',function(){dm.dataset.dir=dm.dataset.dir==='l'?'r':'l'});
+    if('IntersectionObserver' in window)new IntersectionObserver(function(es){dm.classList.toggle('off',!es[0].isIntersecting)},{rootMargin:'40px'}).observe(dm);
+  })();
+})();
+</script>
+</body>
+</html>
