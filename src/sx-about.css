@@ -187,3 +187,7 @@
   .ab-chip { font-size: 12px; }
   .ab-kv { grid-template-columns: 1fr 1fr; }
 }
+
+/* Las etiquetas solo se leen enteras: en modo lente (recorte circular) quedaban partidas; aparecen con el modo agente completo */
+.ab-tag { opacity: 0; transition: opacity .24s var(--ab-ease); }
+figure.full .ab-tag { opacity: 1; }

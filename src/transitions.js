@@ -38,8 +38,11 @@ if (secs.length > 1) {
     secs.forEach((s, i) => { if (s.getBoundingClientRect().top <= y) k = i; });
     if (k !== cur) show(k, false);
   };
-  let lastY = scrollY, sr = 0;
+  let lastY = scrollY, sr = 0, idle = 0;
+  // Solo visible mientras hay scroll (y 1,4 s después): en reposo tapaba contenido del margen izquierdo
+  const wake = () => { el.classList.add('on'); clearTimeout(idle); idle = setTimeout(() => el.classList.remove('on'), 1400); };
   addEventListener('scroll', () => {
+    wake();
     if (Math.abs(scrollY - lastY) > innerHeight * .8 && !sr) sr = requestAnimationFrame(() => { sr = 0; sync(); });
     lastY = scrollY;
   }, { passive: true });
