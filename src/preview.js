@@ -7,7 +7,7 @@ const still = matchMedia('(prefers-reduced-motion: reduce)').matches || (c && (c
 if (vids.length && !still && 'IntersectionObserver' in window) {
   const seen = new Set();
   const sync = (v) => {
-    if (seen.has(v) && !document.hidden) {
+    if (seen.has(v) && !document.hidden && !v.closest('[data-tj-hold]')) { // data-tj-hold: la baraja solo reproduce la tarjeta activa
       if (!v.src) v.src = v.dataset.src;
       v.play().catch(() => {});
     } else v.pause();

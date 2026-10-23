@@ -946,3 +946,4 @@ if (avWrap) {
 import('./cinema.js'); // capa cinematográfica: al final para que el DOM generado (pills, hero) ya exista
 import('./sections.js'); // separadores entre secciones + firmas por seccion (despues de cinema)
 import('./fab.js'); // boton flotante: se oculta al bajar y junto al contacto
+if(matchMedia('(pointer:coarse), (max-width:900px)').matches) import('./touch.js'); // gestos tactiles: baraja, hoja inferior, tacto vivo

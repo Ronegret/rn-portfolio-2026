@@ -1,0 +1,177 @@
+/* Experiencia táctil: baraja de proyectos, hoja inferior, tacto vivo, flotantes y parallax.
+   Se carga solo en pointer:coarse o ≤900px (ver main.js). Solo transform/translate/scale/opacity.
+   --tj-spring lo sustituye touch.js por un linear() de muelle real si el navegador lo soporta. */
+:root { --tj-spring: cubic-bezier(.34, 1.56, .64, 1); --tj-out: cubic-bezier(.22, 1, .36, 1); }
+
+@media (max-width: 900px), (pointer: coarse) {
+
+/* ───────────── (1) Conmutador Lista / Baraja ───────────── */
+.tj-seg {
+  display: flex; gap: 2px; width: fit-content; margin: 0 0 .9rem auto; padding: 3px;
+  border: 1px solid var(--bord2); border-radius: 100px; background: var(--surf);
+}
+.tj-seg button {
+  position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 6px;
+  min-height: 38px; padding: 0 14px; border: 0; border-radius: 100px; background: transparent;
+  color: var(--t2); font: inherit; font-size: 12px; font-weight: 700; cursor: pointer;
+  transition: color .25s, background-color .25s;
+}
+.tj-seg button[aria-pressed="true"] { background: var(--a1); color: var(--bg); }
+.tj-seg svg { width: 14px; height: 14px; flex: none; }
+
+/* Baraja: el .bento pasa a carrusel de scroll nativo (snap proximity, nunca mandatory) */
+#proyectos.tj-deck-on .bento {
+  --tj-w: min(82vw, 360px);
+  display: flex; align-items: stretch; gap: 14px; overflow-x: auto; overflow-y: hidden;
+  margin-inline: calc(var(--gut, 1.2rem) * -1); padding: 8px calc((100vw - var(--tj-w)) / 2) 14px;
+  scroll-snap-type: x proximity; scroll-padding-inline: calc((100vw - var(--tj-w)) / 2);
+  overscroll-behavior-x: contain; scrollbar-width: none; touch-action: pan-x pan-y;
+}
+#proyectos.tj-deck-on .bento::-webkit-scrollbar { display: none; }
+#proyectos.tj-deck-on .bento > * {
+  flex: 0 0 var(--tj-w); margin: 0 !important; scroll-snap-align: center; display: block;
+  opacity: 1 !important; animation-name: none; animation-timeline: auto; /* el rv y mo-in miden el eje vertical: aquí no aplican */
+}
+#proyectos.tj-deck-on .bento > .fhid { display: none !important; }
+#proyectos.tj-deck-on .bento.m-collapsed > .m-extra:not(.fhid) { display: block !important; }
+#proyectos.tj-deck-on .bento > * > .bc { animation-name: none; animation-timeline: auto; }
+#proyectos.tj-deck-on .m-more { display: none !important; }
+#proyectos.tj-deck-on .bc-d { -webkit-line-clamp: 3; line-clamp: 3; max-height: none; }
+#proyectos.tj-deck-on .bc-d-more { display: none; }
+#proyectos.tj-deck-on .bc-img { aspect-ratio: 4 / 3; }
+#proyectos.tj-deck-on .bc-img.pv-host--phone, #proyectos.tj-deck-on .bc-img.pv-host { aspect-ratio: 4 / 3; overflow: hidden; }
+#proyectos.tj-deck-on .bc-img .pv { animation-name: none; animation-timeline: auto; }
+#proyectos.tj-deck-on .bc-img .pv--phone { width: min(100%, 150px); }
+#proyectos.tj-deck-on .bc-img .pv:not(.pv--phone) { width: min(100%, 260px); }
+#proyectos.tj-deck-on .bc-img img:not(.pv img) { animation-name: none; animation-timeline: auto; }
+
+/* Progreso: línea + puntos + contador */
+.tj-prog { display: none; align-items: center; gap: 12px; margin: .2rem 0 .4rem; }
+#proyectos.tj-deck-on ~ .tj-prog, .tj-prog.on { display: flex; }
+.tj-bar { position: relative; flex: 1; height: 3px; border-radius: 3px; background: var(--bord2); overflow: hidden; }
+.tj-bar i { position: absolute; inset: 0; background: var(--a1); transform-origin: 0 50%; transform: scaleX(.1); border-radius: inherit; }
+.tj-dots { display: flex; }
+.tj-dot { position: relative; width: 24px; height: 44px; padding: 0; border: 0; background: none; cursor: pointer; }
+.tj-dot::before { content: ""; position: absolute; top: 50%; left: 50%; width: 6px; height: 6px; margin: -3px 0 0 -3px; border-radius: 50%; background: var(--t3); transition: transform .4s var(--tj-spring), background-color .25s; }
+.tj-dot[aria-current="true"]::before { background: var(--a1); transform: scale(1.7); }
+.tj-count { min-width: 3.4em; text-align: right; font: 700 11px/1 var(--fb, inherit); letter-spacing: .1em; color: var(--t2); font-variant-numeric: tabular-nums; }
+
+/* Parallax horizontal dentro de la baraja: scroll-driven con la línea de tiempo de cada tarjeta */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    #proyectos.tj-deck-on .bento > * {
+      view-timeline-name: --tj-c; view-timeline-axis: inline;
+      animation-name: tj-card; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: --tj-c; animation-range: cover 0% cover 100%;
+    }
+    #proyectos.tj-deck-on .bc-img .pv, #proyectos.tj-deck-on .bc-img > img, #proyectos.tj-deck-on .bc-img > picture {
+      animation-name: tj-par; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: --tj-c; animation-range: cover 0% cover 100%;
+    }
+    #proyectos.tj-deck-on .bc-h, #proyectos.tj-deck-on .bc-tags {
+      animation-name: tj-txt; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: --tj-c; animation-range: cover 0% cover 100%;
+    }
+    @keyframes tj-card { 0% { scale: .9; opacity: .55; } 50% { scale: 1; opacity: 1; } 100% { scale: .9; opacity: .55; } }
+    @keyframes tj-par { from { translate: 16% 0; } to { translate: -16% 0; } }
+    @keyframes tj-txt { from { translate: 26px 0; } to { translate: -26px 0; } }
+  }
+}
+/* Sin scroll-driven (Safari antiguo): touch.js escribe --tj-p (-1..1) por tarjeta */
+#proyectos.tj-js .bento > * { scale: calc(1 - .1 * max(var(--tj-p, 0), var(--tj-p, 0) * -1)); }
+#proyectos.tj-js .bc-img .pv, #proyectos.tj-js .bc-img > img, #proyectos.tj-js .bc-img > picture { translate: calc(var(--tj-p, 0) * -16%) 0; }
+@media (prefers-reduced-motion: reduce) {
+  #proyectos.tj-deck-on .bento > * { scale: none; }
+  #proyectos.tj-js .bento > *, #proyectos.tj-js .bc-img .pv, #proyectos.tj-js .bc-img > img { scale: none; translate: none; }
+}
+
+/* Botón de vista rápida sobre la tarjeta */
+.bento > * { position: relative; }
+.tj-qv {
+  position: absolute; z-index: 5; top: 10px; right: 10px; width: 44px; height: 44px; padding: 0;
+  display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+  border: 1px solid color-mix(in srgb, var(--t1) 22%, transparent);
+  background: color-mix(in srgb, var(--bg) 72%, transparent); color: var(--t1);
+}
+.tj-qv svg { width: 18px; height: 18px; }
+.bc { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.bc.tj-hold { scale: .97; transition: scale .5s linear; }
+/* El brillo sigue al dedo: capa propia con --tx/--ty (px) + el spotlight de .bc-bd (--mx/--my) */
+.tj-glow { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0; transition: opacity .4s var(--tj-out);
+  background: radial-gradient(240px circle at var(--tx, 50%) var(--ty, 50%), color-mix(in srgb, var(--a1) 34%, transparent), transparent 62%); }
+.bc.tj-lit .tj-glow { opacity: 1; }
+.bfeat .bc.tj-lit .bc-bd::before { opacity: 1; }
+
+/* ───────────── (2) Hoja inferior ───────────── */
+html.tj-lock, html.tj-lock body { overflow: hidden; }
+.tj-sheet {
+  position: fixed; inset: 0; width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; padding: 0;
+  border: 0; background: transparent; color: var(--t1); overflow: hidden; touch-action: none;
+}
+.tj-sheet::backdrop { background: transparent; }
+.tj-scrim { position: absolute; inset: 0; background: rgba(0, 0, 0, .55); opacity: 0; }
+.tj-panel {
+  position: absolute; left: 0; right: 0; bottom: 0; width: min(100%, 640px); margin-inline: auto;
+  height: 92vh; height: 92dvh; display: flex; flex-direction: column;
+  background: var(--surf); border: 1px solid var(--bord2); border-bottom: 0; border-radius: 24px 24px 0 0;
+  box-shadow: 0 -18px 60px rgba(0, 0, 0, .45); transform: translateY(110%);
+}
+.tj-head { position: relative; flex: none; padding: 6px 56px 8px; touch-action: none; cursor: grab; }
+.tj-grab { display: block; width: 100%; height: 30px; padding: 0; border: 0; background: none; cursor: grab; position: relative; }
+.tj-grab::before { content: ""; position: absolute; top: 12px; left: 50%; width: 44px; height: 5px; margin-left: -22px; border-radius: 5px; background: var(--t3); transition: transform .3s var(--tj-spring); }
+.tj-sheet.tj-dragging .tj-grab::before { transform: scaleX(1.3); background: var(--a1); }
+.tj-x {
+  position: absolute; top: 4px; right: 8px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%;
+  display: grid; place-items: center; background: none; color: var(--t1); cursor: pointer;
+}
+.tj-x svg { width: 20px; height: 20px; }
+.tj-body { flex: 1; min-height: 0; overflow: hidden; overscroll-behavior: contain; padding: 4px clamp(1.1rem, 5vw, 1.6rem) calc(1.4rem + env(safe-area-inset-bottom)); touch-action: none; }
+.tj-panel.tj-full .tj-body { overflow-y: auto; touch-action: pan-y; }
+.tj-thumb { margin: 0 0 1rem; height: clamp(110px, 20vh, 190px); border-radius: 16px; overflow: hidden; background: var(--bg3); border: 1px solid var(--bord); }
+.tj-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+.tj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: .7rem; }
+.tj-panel h2 { margin: 0 0 .6rem; font-family: var(--fd); font-size: clamp(1.25rem, 5.4vw, 1.6rem); line-height: 1.2; }
+.tj-sum { margin: 0 0 .9rem; color: var(--t2); font-size: 14.5px; line-height: 1.65; }
+.tj-meta { margin: 0 0 1.1rem; }
+.tj-sheet .tj-meta .bc-m { display: inline-flex; }
+.tj-cta { width: 100%; text-decoration: none; }
+.tj-sheet .tj-cta:focus-visible, .tj-sheet button:focus-visible { outline: 2px solid var(--a1); outline-offset: 2px; }
+
+/* ───────────── (3) Tacto vivo ───────────── */
+.fb, .m-more, .bc-d-more, .tj-seg button, .tj-cta, .tj-qv { position: relative; overflow: hidden; }
+.tj-qv { position: absolute; }
+.tj-rip { position: absolute; left: 0; top: 0; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: currentColor; opacity: 0; pointer-events: none; }
+:is(.btn-p, .btn-s, .nav-cta, #fcta, .fb, .m-more, .bc-d-more, .tj-seg button, .tj-qv, .tj-cta, .dk, .bc-link, .tj-dot):active { scale: .95; }
+.bc:active { scale: .985; }
+@media (hover: none) { .bc:hover .bc-img img { scale: none; } }
+
+/* ───────────── (4) Flotantes: viewport visual + safe-area ───────────── */
+@media (max-width: 920px) {
+  #dock { bottom: calc(14px + env(safe-area-inset-bottom)); left: max(14px, env(safe-area-inset-left)); translate: 0 calc(var(--tj-vb, 0px) * -1); transition: background .4s, border-color .4s, translate .5s var(--tj-out), scale .5s var(--tj-spring), opacity .35s; transform-origin: 0 100%; }
+  #fcta { translate: 0 calc(var(--tj-vb, 0px) * -1); transition: opacity .4s var(--ease), transform .4s var(--ease), background .3s, box-shadow .3s, translate .5s var(--tj-out); }
+  html.tj-down #dock { scale: .8; opacity: .6; translate: 0 calc(var(--tj-vb, 0px) * -1 + 6px); }
+}
+
+/* ───────────── (5) Marquesinas con la velocidad del scroll ───────────── */
+/* Los remates se pausaban al hacer scroll; aquí sigue corriendo (solo transform) y touch.js acelera playbackRate */
+@media (prefers-reduced-motion: no-preference) {
+  body.is-scrolling .sx-mq:not(.sx-off) .sx-trk { animation-play-state: running; }
+  body.is-scrolling .mq .mq-i { animation-play-state: running !important; }
+}
+
+/* ───────────── (7) Contraste y movimiento reducido ───────────── */
+@media (prefers-contrast: more) {
+  .tj-panel { border: 2px solid var(--t1); }
+  .tj-scrim { background: rgba(0, 0, 0, .8); }
+  .tj-seg, .tj-seg button, .tj-qv { border-width: 2px; border-color: var(--t1); }
+  .tj-dot[aria-current="true"]::before { outline: 2px solid var(--t1); outline-offset: 2px; }
+  .tj-bar { background: var(--t3); }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.btn-p, .btn-s, .nav-cta, #fcta, .fb, .m-more, .bc-d-more, .tj-seg button, .tj-qv, .tj-cta, .dk, .bc-link, .tj-dot, .bc):active { scale: none; }
+  .bc.tj-hold { scale: none; transition: none; }
+  html.tj-down #dock { scale: none; opacity: 1; }
+  .tj-dot::before, .tj-grab::before { transition: none; }
+}
+
+}
