@@ -334,7 +334,7 @@ try {
 
   const META = {
     'Certificado%20EBIS%20IA': { badge: '★ Máster · 10/10', title: 'Máster en Agentes de IA e Hiperautomatización de Procesos · EBIS' },
-    'Neoland': { badge: 'Bootcamp UX/UI · 600h', title: 'Bootcamp UX/UI Design — Professional Track · Neoland Madrid' },
+    'Neoland': { badge: 'Bootcamp UX/UI · 300h', title: 'Bootcamp UX/UI Design — Professional Track · Neoland Madrid' },
     'Duoc': { badge: 'Formación técnica', title: 'Desarrollo Web Multimedia y Administración Digital · CIPSA · Duoc UC' },
   };
 
