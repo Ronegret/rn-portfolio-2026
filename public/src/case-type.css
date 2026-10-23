@@ -23,7 +23,7 @@
   --sec-y:clamp(72px,10vw,140px);
   --pad-card:24px; --gutter:20px;
 }
-@media(min-width:768px){:root{--pad-card:32px;--gutter:48px}}
+@media(min-width:641px){:root{--pad-card:32px;--gutter:48px}}
 
 /* desfase de entradas: hermanos .rv/.reveal que aparecen a la vez, máx. 5 pasos de 60 ms */
 .rv:nth-child(2),.reveal:nth-child(2){transition-delay:calc(var(--stagger)*1)}

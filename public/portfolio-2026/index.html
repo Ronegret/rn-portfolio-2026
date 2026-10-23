@@ -264,6 +264,26 @@ footer a{color:var(--acc)}
   .ficha{grid-template-columns:1fr}
   .demo{padding:14px}
 }
+
+/* case-type */
+/* escalas compartidas (public/src/case-type.css); la identidad (Inter, petróleo/violeta) no cambia */
+body{font-size:var(--t-body);line-height:var(--t-body-lh)}
+h1{font-size:var(--t-h1);line-height:var(--t-h1-lh)}
+h2{font-size:var(--t-h2);line-height:var(--t-h2-lh);letter-spacing:var(--t-h2-ls)}
+h3{font-size:var(--t-h3);line-height:var(--t-h3-lh)}
+.lead,.intro{font-size:var(--t-lead);line-height:var(--t-lead-lh)}
+.s p{max-width:var(--t-measure)}
+.eyebrow,.tg,.ficha dt,.pf dt,.tbl th,.demo-h b,.types .card b{font-size:var(--t-mini);letter-spacing:var(--t-mini-ls)}
+.hero{padding-inline:var(--gutter)}
+section.s{padding:var(--sec-y) var(--gutter)}
+.grid{gap:var(--sp-2)}
+.card{padding:var(--pad-card);border-radius:var(--r-md)}
+.piece,.demo,.note,.chart,.dt-box,.d-mag,.d-kin,figure img{border-radius:var(--r-md)}
+.piece>header{padding:var(--sp-3) var(--pad-card) 6px}
+.piece-x{padding:4px var(--pad-card) var(--pad-card)}
+.btn{border-radius:var(--r-pill);transition:transform var(--dur-micro) var(--out),background var(--dur-micro)}
+@media(prefers-reduced-motion:no-preference){.js .rv.on{transition:opacity var(--dur-enter) var(--ease-out),translate var(--dur-enter) var(--ease-out)}}
+@media(max-width:860px){.hero{padding-inline:var(--gutter)}section.s{padding:var(--sec-y) var(--gutter)}.piece>header{padding:var(--sp-2) var(--sp-2) 4px}.piece-x{padding:4px var(--sp-2) var(--sp-3)}}
 </style>
 <link rel="stylesheet" href="/src/case-type.css">
 <link rel="stylesheet" href="/src/case-fold.css">

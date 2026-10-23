@@ -621,3 +621,22 @@ section { padding: clamp(4rem,8vw,7rem) 0; }
   .rv{ opacity:1; transform:none; filter:none; }
   .vinyl-disc{ animation:none !important; }
 }
+
+/* ── escalas compartidas (public/src/case-type.css) ─────────────────────────
+   Identidad intacta: Outfit/Plus Jakarta, naranja y verde Spotify, vinilo (radio de dispositivo 28 px). */
+body { font-size: var(--t-body); line-height: var(--t-body-lh); }
+h1 { font-size: var(--t-h1); line-height: var(--t-h1-lh); }
+h2 { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: var(--t-h2-ls); }
+h3 { font-size: var(--t-h3); line-height: var(--t-h3-lh); }
+.lead, .section-sub { font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: var(--t-measure); }
+.eyebrow, .hero-badge, .card-tag, .stack-badge, .vinyl-track-label { font-size: var(--t-mini); letter-spacing: var(--t-mini-ls); }
+.dp-card p, .step p, .stack-role, .check-list li { font-size: var(--t-body); line-height: var(--t-body-lh); }
+.wrap { width: min(var(--max), calc(100% - 2 * var(--gutter))); }
+section { padding-block: var(--sec-y); }
+.metric-card, .dp-card, .step, .stack-card, .img-frame, .final-cta { border-radius: var(--r-md); }
+.dp-card, .step, .stack-card { padding: var(--pad-card); }
+.img-frame { box-shadow: var(--sh-card); }
+.btn, .back-link, .live-link { transition-duration: var(--dur-micro); transition-timing-function: var(--ease-out); }
+.dp-card, .stack-card { transition-duration: var(--dur-micro); }
+.rv { transition-duration: var(--dur-enter); transition-timing-function: var(--ease-out); }
+@media(max-width:600px) { h1 { font-size: var(--t-h1); } h2 { font-size: var(--t-h2); } }
