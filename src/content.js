@@ -182,7 +182,7 @@ export const T = {
     test_sub:'Opinions reals de col·laboradors i clients. Només publico referències amb permís explícit de cada persona.',
     test_email:'Compartir experiència',test_linkedin:'Recomanar a LinkedIn',
     test_cta_label:'Hem treballat junts?',test_cta_text:'La teva opinió pot ajudar altres a conèixer com col·laboro. Escriu-me per email o deixa una recomanació a LinkedIn.',
-    t1_q:'Mentre tots entregaven el mínim, ell pollia cada detall com si anés a sortir en producció l\'endemà. Té criteri real.',t1_n:'Company · Programa de Disseny UX/UI',
+    t1_q:'Mentre tots entregaven el mínim, ell polia cada detall com si anés a sortir en producció l\'endemà. Té criteri real.',t1_n:'Company · Programa de Disseny UX/UI',
     t2_q:'Em va presentar el projecte amb dades — no amb sensacions. En tres mesos vam aconseguir més leads qualificats que en tot l\'any anterior.',t2_n:'Director · Despatx Professional',
     t3_q:'Escolta de veritat, no imposa. El resultat va ser exactament el que necessitàvem. I va seguir disponible per a iteracions sense drames.',t3_n:'Fundadora · Projecte e-commerce',
     style_ey:'Versatilitat de disseny',style_h:'5 sistemes visuals,<br><em>una arquitectura.</em>',
