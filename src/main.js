@@ -79,6 +79,8 @@ function applyLang(l){
     b.classList.toggle('on',b.dataset.lang===l);
   });
   document.documentElement.lang=l;
+  const TITLES={es:'Rodrigo Negrete — AI Product Designer · UX/UI + Automatización IA',ca:'Rodrigo Negrete — AI Product Designer · UX/UI + Automatització IA',en:'Rodrigo Negrete — AI Product Designer · UX/UI + AI Automation'};
+  if(TITLES[l]) document.title=TITLES[l];
   // Re-split hero title chars after translation (preserves char animation)
   if(typeof window.__splitAll === 'function') window.__splitAll();
 }

@@ -3055,3 +3055,8 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 .kb-tag, .kb-card .bc-m { background: #0b0e14 !important; color: #ffc2b7 !important; border-color: #8f1d10 !important; }
 @media(max-width: 860px) { .kb-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; } }
 @media (prefers-reduced-motion: reduce) { .kb-card .bc-img > img { transition: none; } }
+
+/* reduced-motion: detener también las animaciones infinitas decorativas (hallazgo del QA) */
+@media (prefers-reduced-motion: reduce) {
+  .mq-i, .av-wrap, .c-aurora, .logo-dot, .tag-green, .status-available, [data-theme="saas"] body::before { animation: none !important; }
+}
