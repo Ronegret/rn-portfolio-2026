@@ -11,23 +11,30 @@
 .cf-sw[aria-pressed="true"] span:last-child { background: var(--cf-fg); color: var(--cf-bg); }
 
 /* Plegable */
-.cf-fold { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 0fr; transition: grid-template-rows .45s cubic-bezier(.23, 1, .32, 1); }
+.cf-fold { display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: 0fr; transition: grid-template-rows .28s cubic-bezier(.23, 1, .32, 1); }
 .cf-fold[data-open="1"] { grid-template-rows: 1fr; }
 .cf-fold > .cf-inner { min-height: 0; min-width: 0; overflow: hidden; display: flow-root; }
 .cf-fold.cf-done > .cf-inner { overflow: visible; }
 .cf-fold.cf-inst { transition: none; }
 section.cf-sec.cf-closed { padding-bottom: 48px; }
 
-.cf-btn { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; margin: 20px auto 0; padding: 0 24px; font: inherit; font-size: 14px; font-weight: 700; color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 999px; cursor: pointer; transition: background-color .2s, transform .16s cubic-bezier(.23, 1, .32, 1); }
+.cf-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: fit-content; min-height: 48px; margin: 20px auto 0 0; padding: 0 24px; font: inherit; font-size: 14px; font-weight: 700; color: inherit; background: transparent; border: 1.5px solid currentColor; border-radius: 999px; cursor: pointer; transition: background-color .2s, transform .16s cubic-bezier(.23, 1, .32, 1); }
 .cf-btn svg { transition: transform .3s cubic-bezier(.23, 1, .32, 1); }
 .cf-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
 .cf-btn:active, .cf-sw:active { transform: scale(.97); }
+/* texto centrado en la sección: el botón se centra con él */
+.cf-btn.cf-ctr { margin-inline: auto; }
 @media (hover: hover) { .cf-btn:hover { background: color-mix(in srgb, currentColor 10%, transparent); } }
-.cf-btn.cf-sub { min-height: 44px; margin: 12px auto 18px; padding: 0 18px; font-size: 13px; }
+.cf-btn.cf-sub { min-height: 44px; margin: 12px auto 18px 0; padding: 0 18px; font-size: 13px; }
 .cf-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 :is(.cf-btn, .cf-sw, .cf-fab, .cf-idx a, .cf-idx button, .cf-nav, .cf-zoom, .cf-car):focus-visible { outline: 3px solid var(--cf-fg, currentColor); outline-offset: 3px; box-shadow: 0 0 0 6px var(--cf-bg, transparent); }
 .cf-btn:focus-visible { outline-color: currentColor; box-shadow: none; }
+
+/* Numeral grande y tenue de la sección (a partir de su antetítulo «05 · …») */
+section.cf-sec[data-num] { position: relative; }
+section.cf-sec[data-num]::before { content: attr(data-num) / ""; position: absolute; top: 16px; right: max(20px, calc(50% - 540px)); font-weight: 800; font-size: 64px; line-height: 1; font-family: inherit; font-variant-numeric: tabular-nums; letter-spacing: -.02em; color: currentColor; opacity: .12; pointer-events: none; }
+@media (max-width: 640px) { section.cf-sec[data-num]::before { font-size: 44px; top: 10px; right: 16px; } }
 
 /* Índice flotante */
 .cf-fab { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 90; display: inline-flex; align-items: center; gap: 8px; min-height: 48px; padding: 0 18px; font: inherit; font-size: 14px; font-weight: 700; color: var(--cf-fg); background: var(--cf-bg); border: 1.5px solid var(--cf-fg); border-radius: 999px; box-shadow: 0 6px 24px rgba(0, 0, 0, .28); cursor: pointer; }

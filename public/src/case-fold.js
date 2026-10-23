@@ -54,10 +54,10 @@ function setOpen(f, open, { instant = false } = {}) {
     // Las demos con estado propio (.demo[data-on]) se reinician al abrir: arrancan de cero y no corren plegadas
     f.inner.querySelectorAll('.demo').forEach((dm) => dm.dispatchEvent(new CustomEvent('demo-toggle')));
     const done = () => { if (f.open) f.fold.classList.add('cf-done'); };
-    inst ? done() : (f.t = setTimeout(done, 520));
+    inst ? done() : (f.t = setTimeout(done, 300));
   } else {
     const done = () => { if (!f.open) f.inner.setAttribute('hidden', 'until-found'); };
-    inst ? done() : (f.t = setTimeout(done, 520));
+    inst ? done() : (f.t = setTimeout(done, 300));
     // Al plegar se cierra lo que las demos dejaron abierto (p. ej. el menú móvil de prueba, que escucha Escape)
     if (f.inner.querySelector('.demo')) d.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
   }
@@ -77,6 +77,7 @@ function build(cont, lead, body, title, { sec = null, sub = false, id }) {
   fold.append(inner);
   inner.append(...body);
   const btn = el('button', `cf-btn${sub ? ' cf-sub' : ''}`, { type: 'button', 'aria-controls': inner.id, 'aria-expanded': 'false' });
+  if (getComputedStyle(cont).textAlign === 'center') btn.classList.add('cf-ctr');
   btn.innerHTML = `<span class="cf-l"></span><span class="cf-sr"> ${L.about} ${title}</span>${CHEV}`;
   fold.after(btn);
   const f = { fold, inner, btn, sec, open: false, parent: null, title };
@@ -130,6 +131,8 @@ function initFolds() {
   root.dataset.cf = '1'; // case-mobile.js se aparta: este módulo hace su trabajo
   themeVars();
   plans.forEach(({ s, cont, p, items, title }) => {
+    const num = (s.querySelector('.eyebrow, [class*="eyebrow"]')?.textContent || '').trim().match(/^(\d{2})\s*[·.\-–]/);
+    if (num) s.dataset.num = num[1];
     const subs = items.map((x, j) => build(x.it, null, x.body, x.title, { sub: true, id: `${s.id}-i${j}` }));
     const f = build(cont, null, p.body, title, { sec: s, id: s.id });
     subs.forEach((sf) => { sf.parent = f; });
