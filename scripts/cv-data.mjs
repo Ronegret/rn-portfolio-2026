@@ -22,10 +22,10 @@ export const cv = {
     targetRoles: 'Disponible para roles de AI Product Designer, Product Designer, UX/UI Designer, AI Automation Specialist o Design Technologist.',
     h: { summary: 'Resumen profesional', experience: 'Experiencia profesional', projects: 'Proyectos', skills: 'Habilidades', education: 'Educación', languages: 'Idiomas' },
     summary:
-      'Product Designer UX/UI y AI Product Designer en Barcelona. Diseño y lanzo productos digitales de extremo a extremo (discovery, user research, arquitectura de información, prototipos en Figma, UI responsive y design systems) e integro IA generativa, agentes conversacionales y automatizaciones con OpenAI, Claude, Gemini, Botpress, Make, n8n y Vapi. Máster en Agentes de IA e Hiperautomatización de Procesos (EBIS Business Techschool) y más de 17 años de trayectoria en negocio B2B y operaciones, incluida la gestión de más de 80 cuentas corporativas: diseño con foco en usuario, viabilidad, conversión y eficiencia.',
+      'Product Designer UX/UI y AI Product Designer en Barcelona. Diseño y lanzo productos digitales de extremo a extremo (discovery, user research, arquitectura de información, prototipos en Figma, UI responsive y design systems) e integro IA generativa, agentes conversacionales y automatizaciones con OpenAI, Claude, Gemini, Botpress, Make, n8n y Vapi. Máster en Agentes de IA e Hiperautomatización de Procesos (EBIS Business Techschool) y más de 17 años de trayectoria en negocio B2B y operaciones, incluida la gestión de más de 100 cuentas corporativas: diseño con foco en usuario, viabilidad, conversión y eficiencia.',
     stats: [
       { n: '17+', l: 'años de trayectoria en negocio B2B y operaciones' },
-      { n: '80+', l: 'cuentas corporativas gestionadas en Movistar Empresas' },
+      { n: '100+', l: 'cuentas corporativas gestionadas en Atento Chile (servicio a Movistar Empresas)' },
       { n: '27', l: 'nodos en el workflow n8n del TFM Just Enjoy (trabajo en equipo)' },
       { n: '287', l: 'recursos web open source en 7 idiomas (Rodd.es)' },
     ],
@@ -44,7 +44,7 @@ export const cv = {
       },
       {
         role: 'Gestor de Cobros B2B | Orange Empresas',
-        org: 'Abai · cliente Orange Empresas',
+        org: 'Abai Group (antes Atento España; vía Adecco, ETT) · cliente Orange Empresas',
         place: 'Barcelona',
         dates: 'ago. 2024 – actualidad',
         current: true,
@@ -72,12 +72,22 @@ export const cv = {
         ],
       },
       {
-        role: 'Senior Enterprise Account Manager',
-        org: 'Movistar Empresas',
+        role: 'Analista de Facturación',
+        org: 'Atento Chile (servicio para Movistar Empresas)',
         place: 'Chile',
-        dates: '2008 – 2019',
+        dates: 'ago. 2016 – oct. 2019',
         bullets: [
-          'Gestioné más de 80 cuentas corporativas de alto valor: negociación, retención de clientes, relación con stakeholders y seguimiento de KPIs. Base directa para diseñar producto con mirada de negocio.',
+          'Gestioné el ciclo completo de facturación: revisión y análisis de facturas para detectar errores y garantizar la precisión de la información facturada.',
+          'Implementé controles de calidad que mejoraron la exactitud de reportes y procesos internos.',
+        ],
+      },
+      {
+        role: 'Account Manager / Asesor Comercial',
+        org: 'Atento Chile (servicio para Movistar Empresas)',
+        place: 'Chile',
+        dates: 'oct. 2008 – ago. 2016',
+        bullets: [
+          'Gestioné una cartera de más de 100 cuentas corporativas: atención personalizada, seguimiento de necesidades, negociación de contratos, cierre de acuerdos y fidelización de cuentas estratégicas en telecomunicaciones. Base directa para diseñar producto con mirada de negocio.',
         ],
       },
     ],
@@ -105,7 +115,7 @@ export const cv = {
       { title: 'Especialización en IA Generativa', school: 'UDIA', dates: '2025 – 2026 (en curso)' },
       { title: 'Bootcamp UX/UI Design, 300 horas', school: 'Neoland, Madrid', dates: 'ene. – mar. 2024', cert: '/assets/legacy/Neoland.pdf' },
       { title: 'Diseño Web Multimedia y Marketing Digital', school: 'CIPSA.NET, Barcelona', dates: '2020 – 2022' },
-      { title: 'Técnico en Administración Financiera', school: 'Duoc UC, Santiago de Chile', dates: '2014 – 2016', cert: '/assets/legacy/Duoc.pdf' },
+      { title: 'Administrador de Empresas en Finanzas', school: 'Duoc UC, Santiago de Chile', dates: '2014 – 2017', cert: '/assets/legacy/Duoc.pdf' },
     ],
     languages: [
       { l: 'Español', level: 'nativo' },
@@ -126,10 +136,10 @@ export const cv = {
     targetRoles: 'Open to AI Product Designer, Product Designer, UX/UI Designer, AI Automation Specialist or Design Technologist roles.',
     h: { summary: 'Professional Summary', experience: 'Professional Experience', projects: 'Projects', skills: 'Skills', education: 'Education', languages: 'Languages' },
     summary:
-      'UX/UI Product Designer and AI Product Designer based in Barcelona. I design and launch digital products end to end (discovery, user research, information architecture, Figma prototypes, responsive UI and design systems) and integrate generative AI, conversational agents and automations with OpenAI, Claude, Gemini, Botpress, Make, n8n and Vapi. Master in AI Agents and Process Hyperautomation (EBIS Business Techschool) and 17+ years of professional experience in B2B business and operations, including managing 80+ corporate accounts: I design with a focus on users, feasibility, conversion and efficiency.',
+      'UX/UI Product Designer and AI Product Designer based in Barcelona. I design and launch digital products end to end (discovery, user research, information architecture, Figma prototypes, responsive UI and design systems) and integrate generative AI, conversational agents and automations with OpenAI, Claude, Gemini, Botpress, Make, n8n and Vapi. Master in AI Agents and Process Hyperautomation (EBIS Business Techschool) and 17+ years of professional experience in B2B business and operations, including managing 100+ corporate accounts: I design with a focus on users, feasibility, conversion and efficiency.',
     stats: [
       { n: '17+', l: 'years of B2B business and operations experience' },
-      { n: '80+', l: 'corporate accounts managed at Movistar Empresas' },
+      { n: '100+', l: 'corporate accounts managed at Atento Chile (service for Movistar Empresas)' },
       { n: '27', l: 'nodes in the n8n workflow of the Just Enjoy master thesis (team project)' },
       { n: '287', l: 'open source web resources in 7 languages (Rodd.es)' },
     ],
@@ -148,7 +158,7 @@ export const cv = {
       },
       {
         role: 'B2B Collections Manager | Orange Empresas',
-        org: 'Abai · Orange Empresas client',
+        org: 'Abai Group (formerly Atento España; via Adecco, temp agency) · Orange Empresas client',
         place: 'Barcelona',
         dates: 'Aug 2024 – Present',
         current: true,
@@ -176,12 +186,22 @@ export const cv = {
         ],
       },
       {
-        role: 'Senior Enterprise Account Manager',
-        org: 'Movistar Empresas',
+        role: 'Billing Analyst',
+        org: 'Atento Chile (service for Movistar Empresas)',
         place: 'Chile',
-        dates: '2008 – 2019',
+        dates: 'Aug 2016 – Oct 2019',
         bullets: [
-          'Managed 80+ high-value corporate accounts: negotiation, client retention, stakeholder relationships and KPI tracking. A direct foundation for designing products with a business mindset.',
+          'Managed the full billing cycle: invoice review and analysis to detect errors and ensure the accuracy of billed information.',
+          'Implemented quality controls that improved the accuracy of reports and internal processes.',
+        ],
+      },
+      {
+        role: 'Account Manager / Sales Advisor',
+        org: 'Atento Chile (service for Movistar Empresas)',
+        place: 'Chile',
+        dates: 'Oct 2008 – Aug 2016',
+        bullets: [
+          'Managed a portfolio of 100+ corporate accounts: personalized service, needs follow-up, contract negotiation, deal closing and strategic account loyalty in telecommunications. A direct foundation for designing products with a business mindset.',
         ],
       },
     ],
@@ -209,7 +229,7 @@ export const cv = {
       { title: 'Specialization in Generative AI', school: 'UDIA', dates: '2025 – 2026 (in progress)' },
       { title: 'UX/UI Design Bootcamp, 300 hours', school: 'Neoland, Madrid', dates: 'Jan – Mar 2024', cert: '/assets/legacy/Neoland.pdf' },
       { title: 'Multimedia Web Design and Digital Marketing', school: 'CIPSA.NET, Barcelona', dates: '2020 – 2022' },
-      { title: 'Higher Technician in Financial Administration', school: 'Duoc UC, Santiago, Chile', dates: '2014 – 2016', cert: '/assets/legacy/Duoc.pdf' },
+      { title: 'Business Administration in Finance', school: 'Duoc UC, Santiago, Chile', dates: '2014 – 2017', cert: '/assets/legacy/Duoc.pdf' },
     ],
     languages: [
       { l: 'Spanish', level: 'native' },
