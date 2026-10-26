@@ -31,12 +31,13 @@ export const cv = {
     ],
     experience: [
       {
-        role: 'Product Designer UX/UI | IA aplicada y automatización',
+        role: 'Diseñador web y UX/UI freelance | IA aplicada y automatización',
         org: 'Rodrigo Negrete · Profesional independiente',
         place: 'Barcelona / remoto',
-        dates: '2024 – actualidad',
+        dates: '2021 – actualidad',
         current: true,
         bullets: [
+          'Desde 2021, diseño y desarrollo de sitios web para clientes con WordPress (Elementor y Divi) y Shopify. Desde 2024, foco en producto con IA y automatización.',
           'Diseño y lanzo productos digitales desde research, benchmark y definición de flujos hasta prototipos en Figma, interfaces responsive, automatizaciones y publicación web.',
           'Integro OpenAI, Claude, Gemini, Botpress, Make, n8n y Vapi para personalización, atención inicial, automatización operativa y experimentación de producto.',
           'Trabajo con HTML, CSS, JavaScript, React, WordPress y Shopify para validar viabilidad con desarrollo, lanzar MVP y aprender de productos reales.',
@@ -148,12 +149,13 @@ export const cv = {
     ],
     experience: [
       {
-        role: 'Product Designer UX/UI | Applied AI and Automation',
+        role: 'Freelance Web and UX/UI Designer | Applied AI and Automation',
         org: 'Rodrigo Negrete · Independent professional',
         place: 'Barcelona / remote',
-        dates: '2024 – Present',
+        dates: '2021 – Present',
         current: true,
         bullets: [
+          'Since 2021, design and development of client websites with WordPress (Elementor and Divi) and Shopify. Since 2024, focus on AI-driven product and automation.',
           'Design and launch digital products from research, benchmarking and flow definition to Figma prototypes, responsive interfaces, automations and web publishing.',
           'Integrate OpenAI, Claude, Gemini, Botpress, Make, n8n and Vapi for personalization, first-line support, operational automation and product experimentation.',
           'Work with HTML, CSS, JavaScript, React, WordPress and Shopify to validate feasibility with engineering, launch MVPs and learn from real products.',
