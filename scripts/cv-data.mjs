@@ -115,7 +115,7 @@ export const cv = {
       { title: 'Especialización en IA Generativa', school: 'UDIA', dates: '2025 – 2026 (en curso)' },
       { title: 'Bootcamp UX/UI Design, 300 horas', school: 'Neoland, Madrid', dates: 'ene. – mar. 2024', cert: '/assets/legacy/Neoland.pdf' },
       { title: 'Diseño Web Multimedia y Marketing Digital', school: 'CIPSA.NET, Barcelona', dates: '2020 – 2022' },
-      { title: 'Administrador de Empresas en Finanzas', school: 'Duoc UC, Santiago de Chile', dates: '2014 – 2017', cert: '/assets/legacy/Duoc.pdf' },
+      { title: 'Técnico en Administración Financiera', school: 'Duoc UC, Santiago de Chile', dates: '2014 – 2016', cert: '/assets/legacy/Duoc.pdf' },
     ],
     languages: [
       { l: 'Español', level: 'nativo' },
@@ -229,7 +229,7 @@ export const cv = {
       { title: 'Specialization in Generative AI', school: 'UDIA', dates: '2025 – 2026 (in progress)' },
       { title: 'UX/UI Design Bootcamp, 300 hours', school: 'Neoland, Madrid', dates: 'Jan – Mar 2024', cert: '/assets/legacy/Neoland.pdf' },
       { title: 'Multimedia Web Design and Digital Marketing', school: 'CIPSA.NET, Barcelona', dates: '2020 – 2022' },
-      { title: 'Business Administration in Finance', school: 'Duoc UC, Santiago, Chile', dates: '2014 – 2017', cert: '/assets/legacy/Duoc.pdf' },
+      { title: 'Higher Technician in Financial Administration', school: 'Duoc UC, Santiago, Chile', dates: '2014 – 2016', cert: '/assets/legacy/Duoc.pdf' },
     ],
     languages: [
       { l: 'Spanish', level: 'native' },
