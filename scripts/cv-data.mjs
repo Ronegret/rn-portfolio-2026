@@ -54,12 +54,15 @@ export const cv = {
         ],
       },
       {
-        role: 'Coordinador de Operaciones y Experiencia de Cliente',
+        role: 'Encargado de local y coordinador de equipo',
         org: 'Garden España',
         place: 'Barcelona',
-        dates: 'sept. 2022 – ago. 2024',
+        dates: 'jul. 2022 – ago. 2024',
         bullets: [
-          'Coordiné equipo, incidencias y procesos; identifiqué fricciones y digitalicé protocolos para mejorar trazabilidad, tiempo de respuesta y experiencia de servicio.',
+          'Responsable de la operativa diaria del local y de la atención al cliente.',
+          'Liderazgo del equipo y personas a cargo: organización de turnos y reparto de tareas.',
+          'Coordinación de la logística de producto, gestión de caja y organización de eventos, con estándares de orden, limpieza y calidad del servicio.',
+          'Identificación de fricciones operativas y mejora de procesos para reducir errores.',
         ],
       },
       {
@@ -168,12 +171,15 @@ export const cv = {
         ],
       },
       {
-        role: 'Operations and Customer Experience Coordinator',
+        role: 'Venue Manager and Team Coordinator',
         org: 'Garden España',
         place: 'Barcelona',
-        dates: 'Sep 2022 – Aug 2024',
+        dates: 'Jul 2022 – Aug 2024',
         bullets: [
-          'Coordinated a team, incidents and processes; identified friction points and digitized protocols to improve traceability, response time and service experience.',
+          'Responsible for the daily operation of the venue and customer service.',
+          'Led the team and direct reports: shift scheduling and task allocation.',
+          'Coordinated product logistics, cash handling and event organization, upholding standards of order, cleanliness and service quality.',
+          'Identified operational friction and improved processes to reduce errors.',
         ],
       },
       {
