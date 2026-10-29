@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rodd.es — Biblioteca open source de 287 recursos web | Case Study · Rodrigo Negrete</title>
+  <meta name="description" content="Case study de rodd.es — biblioteca abierta con 287 efectos, animaciones, componentes React, microinteracciones y escenas 3D listos para probar en vivo, editar y copiar. Research, arquitectura UX/UI, sistema visual, testing y stack técnico.">
+  <meta name="author" content="Rodrigo Negrete">
+  <link rel="canonical" href="https://rodrigonegrete.es/rodd-es/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Rodd.es — Biblioteca open source de recursos web">
+  <meta property="og:description" content="287 efectos, animaciones, componentes y shaders para diseñar y prototipar más rápido. Análisis UX/UI del proceso completo.">
+  <meta property="og:image" content="https://rodrigonegrete.es/assets/rodd-es/rodd-hero-og.jpg">
+  <link rel="icon" href="/assets/rodd-es/rodd-icon.png">
+  <meta property="og:url" content="https://rodrigonegrete.es/rodd-es/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --ink:#08090f;--ink-2:#0e1220;--card:#111527;
+      --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);
+      --t1:#f5f7ff;--t2:rgba(245,247,255,.72);--t3:rgba(245,247,255,.5);
+      --grad-1:#7c5cff;--grad-2:#00d4ff;--grad-3:#ff3e88;
+      --accent:#7c5cff;--accent-2:#00d4ff;--warm:#ff6b2b;--ok:#22c55e;
+      --ease:cubic-bezier(.22,1,.36,1);
+      --font-d:'Outfit',system-ui,-apple-system,sans-serif;
+      --font-b:'Plus Jakarta Sans',system-ui,-apple-system,sans-serif;
+      --font-m:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font-b);color:var(--t2);background:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+
+    .aurora{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;
+      background:radial-gradient(60% 45% at 15% 0%,rgba(124,92,255,.18),transparent 60%),radial-gradient(50% 40% at 90% 10%,rgba(0,212,255,.14),transparent 60%),radial-gradient(70% 50% at 50% 100%,rgba(255,62,136,.10),transparent 60%),var(--ink)}
+    .grid-lines{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.18;
+      background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:56px 56px;
+      mask-image:radial-gradient(ellipse 70% 60% at 50% 30%,#000 40%,transparent 100%)}
+
+    .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem)}
+    section{padding:clamp(3rem,7vw,5.5rem) 0}
+    .divider{height:1px;background:var(--line);margin:0}
+
+    .nav{position:sticky;top:0;z-index:50;background:rgba(8,9,15,.72);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding:.85rem 0}
+    .back-link{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-d);font-size:13px;font-weight:600;color:var(--t2);transition:color .2s}
+    .back-link:hover{color:var(--t1)}
+    .live-link{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--font-d);font-size:13px;font-weight:700;padding:.55rem 1rem;border-radius:100px;background:linear-gradient(135deg,var(--grad-1),var(--grad-2));color:#fff;letter-spacing:.02em;transition:transform .2s var(--ease),box-shadow .2s;box-shadow:0 6px 22px rgba(124,92,255,.32)}
+    .live-link:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(124,92,255,.42)}
+
+    .eyebrow{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--font-d);font-size:11px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--t3)}
+    .eyebrow::before{content:"";width:20px;height:1px;background:var(--accent-2)}
+    h1,h2,h3,h4{font-family:var(--font-d);color:var(--t1);letter-spacing:-.02em;line-height:1.08}
+    h2{font-size:clamp(1.75rem,4vw,2.9rem);font-weight:800;margin:.4rem 0 .9rem}
+    h3{font-size:1.15rem;font-weight:700;margin-bottom:.5rem;line-height:1.3}
+    h4{font-size:.95rem;font-weight:700;line-height:1.35;margin-bottom:.3rem}
+    p{font-size:clamp(.95rem,1.1vw,1rem);color:var(--t2)}
+    .section-sub{max-width:64ch;color:var(--t2);font-size:clamp(.95rem,1.1vw,1.05rem);margin-bottom:2.2rem}
+
+    .hero{padding:clamp(3rem,7vw,5.5rem) 0 clamp(2rem,4vw,3rem)}
+    .hero-grid{display:grid;gap:clamp(2rem,4vw,3.5rem);grid-template-columns:1.15fr 1fr;align-items:center}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr;text-align:center}.hero-grid .eyebrow::before{display:none}}
+    .badge-new{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-d);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:.4rem 1rem;border-radius:100px;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(0,212,255,.14));border:1px solid rgba(124,92,255,.35);color:#fff;margin-bottom:1.4rem}
+    .badge-new::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 12px var(--accent-2);animation:pulse 1.8s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:.5;transform:scale(.9)}50%{opacity:1;transform:scale(1.15)}}
+    .hero h1{font-size:clamp(2.4rem,5.6vw,4.4rem);font-weight:900;letter-spacing:-.035em;line-height:1.02;margin-bottom:1.2rem}
+    .hero h1 em{font-style:normal;background:linear-gradient(120deg,var(--grad-1) 0%,var(--grad-2) 50%,var(--grad-3) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero-lead{font-size:clamp(1rem,1.35vw,1.15rem);color:var(--t2);margin-bottom:2rem;max-width:540px}
+    @media (max-width:900px){.hero-lead{margin-inline:auto}}
+    .hero-actions{display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:2rem}
+    @media (max-width:900px){.hero-actions{justify-content:center}}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-d);font-size:14px;font-weight:700;padding:.85rem 1.4rem;border-radius:100px;transition:transform .2s var(--ease),box-shadow .2s,background .2s;cursor:pointer;border:0}
+    .btn.primary{background:linear-gradient(135deg,var(--grad-1),var(--grad-2));color:#fff;box-shadow:0 8px 24px rgba(124,92,255,.34)}
+    .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(124,92,255,.42)}
+    .btn.secondary{background:rgba(255,255,255,.05);color:var(--t1);border:1px solid var(--line-2)}
+    .btn.secondary:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.24)}
+
+    .hero-visual{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(160deg,rgba(124,92,255,.12),rgba(0,212,255,.06));border:1px solid var(--line-2);box-shadow:0 30px 80px rgba(0,0,0,.5);aspect-ratio:16/11;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:10px;padding:14px}
+    .hero-visual.real{display:block;padding:0;background:#08090f;aspect-ratio:1200/630;text-decoration:none;transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .3s}
+    .hero-visual.real img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .8s var(--ease)}
+    .hero-visual.real:hover{transform:translateY(-3px);box-shadow:0 40px 100px rgba(124,92,255,.4);border-color:rgba(124,92,255,.5)}
+    .hero-visual.real:hover img{transform:scale(1.03)}
+    .hero-visual.real:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+    .hero-visual-badge{position:absolute;bottom:14px;right:14px;display:inline-flex;align-items:center;gap:.35rem;font-family:var(--font-d);font-size:12px;font-weight:800;letter-spacing:.06em;padding:.5rem 1rem;border-radius:100px;background:rgba(8,9,15,.72);backdrop-filter:blur(10px);border:1px solid var(--line-2);color:var(--t1);transition:background .3s,transform .3s var(--ease)}
+    .hero-visual.real:hover .hero-visual-badge{background:linear-gradient(135deg,var(--grad-1),var(--grad-2));transform:translateY(-2px)}
+    .hv-tile{border-radius:14px;position:relative;overflow:hidden;border:1px solid var(--line);background:var(--ink-2);display:flex;align-items:center;justify-content:center;font-size:22px}
+    .hv-tile.t1{background:linear-gradient(135deg,#3b0764,#7c5cff)}
+    .hv-tile.t2{background:linear-gradient(135deg,#0e7490,#00d4ff)}
+    .hv-tile.t3{background:linear-gradient(135deg,#831843,#ff3e88)}
+    .hv-tile.t4{background:linear-gradient(135deg,#111827,#334155);color:var(--t1);font-family:var(--font-m);font-weight:700;font-size:.75rem}
+    .hv-tile.t5{background:radial-gradient(circle at 30% 30%,#fbbf24,#f97316,#0e1220)}
+    .hv-tile.t6{background:conic-gradient(from 0deg,#7c5cff,#00d4ff,#22c55e,#ff3e88,#7c5cff);animation:spin 14s linear infinite}
+    .hv-tile.t7{background:linear-gradient(135deg,#0f766e,#22d3ee);color:var(--t1);font-family:var(--font-m);font-weight:700;font-size:.72rem;padding:.5rem;line-height:1.3;text-align:center;flex-direction:column;gap:2px}
+    .hv-tile.t8{background:linear-gradient(135deg,#0e1220,#1e293b);color:#fff;font-family:var(--font-m);font-weight:600;font-size:.65rem;padding:.4rem;align-items:flex-start;justify-content:flex-start}
+    .hv-tile.t9{background:linear-gradient(135deg,#4c1d95,#a855f7)}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .metric-strip{display:grid;gap:1rem;margin-top:2.5rem;grid-template-columns:repeat(4,1fr)}
+    @media (max-width:720px){.metric-strip{grid-template-columns:repeat(2,1fr)}}
+    .metric{padding:1.1rem 1.2rem;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);backdrop-filter:blur(8px)}
+    .metric strong{font-family:var(--font-d);font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:800;color:var(--t1);display:block;line-height:1;background:linear-gradient(120deg,var(--grad-1),var(--grad-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .metric span{font-size:12px;color:var(--t3);margin-top:.35rem;display:block;letter-spacing:.02em}
+
+    .band{background:linear-gradient(180deg,rgba(255,255,255,.02),transparent)}
+    .section-head{max-width:720px;margin-bottom:2.4rem}
+
+    .grid-3{display:grid;gap:1rem;grid-template-columns:repeat(3,1fr)}
+    .grid-2{display:grid;gap:1rem;grid-template-columns:repeat(2,1fr)}
+    .grid-4{display:grid;gap:1rem;grid-template-columns:repeat(4,1fr)}
+    @media (max-width:900px){.grid-3,.grid-4{grid-template-columns:1fr}}
+    @media (max-width:640px){.grid-2{grid-template-columns:1fr}}
+    .card{padding:1.3rem;border-radius:18px;background:rgba(255,255,255,.03);border:1px solid var(--line);transition:transform .3s var(--ease),border-color .3s,background .3s;position:relative;overflow:hidden}
+    .card:hover{transform:translateY(-3px);border-color:var(--line-2);background:rgba(255,255,255,.05)}
+    .card .num{position:absolute;top:.7rem;right:.9rem;font-family:var(--font-m);font-size:11px;font-weight:700;color:var(--t3);letter-spacing:.06em}
+    .card .ic{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:.9rem;background:linear-gradient(135deg,rgba(124,92,255,.2),rgba(0,212,255,.14));border:1px solid rgba(124,92,255,.3)}
+    .card p{font-size:13.5px;color:var(--t2);line-height:1.65}
+    .card .tag{display:inline-block;margin-top:.9rem;font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-2);padding:3px 10px;border-radius:100px;background:rgba(0,212,255,.1);border:1px solid rgba(0,212,255,.24)}
+    .card .tag.warm{color:var(--warm);background:rgba(255,107,43,.1);border-color:rgba(255,107,43,.24)}
+    .card .tag.ok{color:var(--ok);background:rgba(34,197,94,.1);border-color:rgba(34,197,94,.24)}
+
+    .cat-grid{display:grid;gap:1rem;grid-template-columns:repeat(3,1fr)}
+    @media (max-width:900px){.cat-grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:600px){.cat-grid{grid-template-columns:1fr}}
+    .cat{padding:1.4rem;border-radius:20px;position:relative;overflow:hidden;background:rgba(255,255,255,.03);border:1px solid var(--line);transition:transform .35s var(--ease),border-color .35s;min-height:200px;display:flex;flex-direction:column;justify-content:space-between}
+    .cat:hover{transform:translateY(-4px);border-color:var(--accent)}
+    .cat-count{font-family:var(--font-d);font-size:clamp(2rem,4vw,3.2rem);font-weight:900;line-height:1;letter-spacing:-.04em;background:linear-gradient(135deg,var(--grad-1),var(--grad-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .cat-name{font-family:var(--font-d);font-size:1.05rem;font-weight:700;color:var(--t1);margin:.4rem 0 .3rem}
+    .cat-desc{font-size:12.5px;color:var(--t3);line-height:1.55}
+    .cat::after{content:"";position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,var(--accent) 0%,transparent 70%);opacity:.08;pointer-events:none}
+
+    .split{display:grid;gap:clamp(2rem,4vw,3.5rem);grid-template-columns:1fr 1fr;align-items:start}
+    @media (max-width:900px){.split{grid-template-columns:1fr}}
+    .check-list{list-style:none;display:flex;flex-direction:column;gap:.9rem;margin-top:1rem}
+    .check-list li{padding-left:1.7rem;position:relative;font-size:14.5px;color:var(--t2);line-height:1.65}
+    .check-list li::before{content:"";position:absolute;left:0;top:.55rem;width:12px;height:12px;border-radius:50%;background:linear-gradient(135deg,var(--grad-1),var(--grad-2))}
+    .check-list li strong{color:var(--t1);font-weight:700}
+
+    .palette{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem;margin-bottom:1.5rem}
+    @media (max-width:720px){.palette{grid-template-columns:repeat(2,1fr)}}
+    .swatch{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+    .swatch-color{aspect-ratio:1.4;background:var(--sw);position:relative}
+    .swatch-info{padding:.65rem .8rem}
+    .swatch-name{display:block;font-family:var(--font-d);font-size:12.5px;font-weight:700;color:var(--t1)}
+    .swatch-hex{display:block;font-family:var(--font-m);font-size:11px;color:var(--t3);margin-top:2px}
+
+    .demo-frame{background:var(--card);border:1px solid var(--line-2);border-radius:18px;overflow:hidden}
+    .demo-head{display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;border-bottom:1px solid var(--line);background:rgba(255,255,255,.02)}
+    .demo-dot{width:9px;height:9px;border-radius:50%;background:var(--t3);opacity:.5}
+    .demo-dot.r{background:#ff5f57}
+    .demo-dot.y{background:#febc2e}
+    .demo-dot.g{background:#28c840}
+    .demo-tabs{margin-left:auto;display:flex;gap:.4rem}
+    .demo-tab{font-family:var(--font-m);font-size:11px;padding:3px 10px;border-radius:100px;background:rgba(255,255,255,.05);color:var(--t3);border:1px solid var(--line)}
+    .demo-tab.on{color:var(--t1);background:linear-gradient(135deg,rgba(124,92,255,.3),rgba(0,212,255,.2));border-color:var(--accent)}
+    .demo-body{display:grid;grid-template-columns:1fr 1fr;min-height:280px}
+    @media (max-width:720px){.demo-body{grid-template-columns:1fr;min-height:auto}}
+    .demo-preview{background:radial-gradient(circle at 50% 50%,#1a1f3a,#08090f);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+    .demo-shape{width:80px;height:80px;border-radius:22px;background:linear-gradient(135deg,var(--grad-1),var(--grad-2));box-shadow:0 20px 60px rgba(124,92,255,.5);animation:float 3s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(6deg)}}
+    .demo-code{background:#0b0d1a;padding:1rem 1.2rem;font-family:var(--font-m);font-size:12px;color:#94a3b8;line-height:1.75;overflow:auto;border-left:1px solid var(--line)}
+    .demo-code .k{color:#c084fc}
+    .demo-code .s{color:#7dd3fc}
+    .demo-code .n{color:#fbbf24}
+    .demo-code .c{color:#64748b;font-style:italic}
+
+    .pills{display:flex;flex-wrap:wrap;gap:.5rem}
+    .pill{font-family:var(--font-d);font-size:12.5px;font-weight:600;padding:.5rem .9rem;border-radius:100px;background:rgba(255,255,255,.05);color:var(--t1);border:1px solid var(--line-2);transition:background .2s,border-color .2s}
+    .pill:hover{background:rgba(124,92,255,.16);border-color:var(--accent)}
+
+    .quote{margin:2rem 0;padding:1.4rem 1.6rem;border-left:3px solid var(--accent);background:rgba(124,92,255,.06);border-radius:0 16px 16px 0;font-family:var(--font-d);font-style:italic;font-size:clamp(1rem,1.4vw,1.2rem);color:var(--t1);line-height:1.5}
+
+    .steps{display:grid;gap:1rem;grid-template-columns:repeat(4,1fr)}
+    @media (max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:520px){.steps{grid-template-columns:1fr}}
+    .step{padding:1.2rem;border-radius:16px;background:rgba(255,255,255,.03);border:1px solid var(--line);position:relative;overflow:hidden}
+    .step::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--grad-1),var(--grad-2))}
+    .step-n{font-family:var(--font-d);font-size:11px;font-weight:800;letter-spacing:.14em;color:var(--accent-2);margin-bottom:.7rem;text-transform:uppercase}
+
+    .rp-row{display:flex;gap:1rem;justify-content:center;align-items:flex-end;margin-top:2rem;flex-wrap:wrap}
+    .rp{background:linear-gradient(180deg,#0b0d1a,#141833);border:1px solid var(--line-2);border-radius:14px;padding:1rem;text-align:center}
+    .rp-screen{background:radial-gradient(circle at 40% 30%,#7c5cff33,#0b0d1a);border-radius:8px;margin-bottom:.6rem;overflow:hidden;position:relative;display:grid;place-items:center}
+    .rp-screen::before{content:"";width:34%;height:34%;border-radius:6px;background:linear-gradient(135deg,var(--grad-1),var(--grad-2));box-shadow:0 6px 18px rgba(124,92,255,.4)}
+    .rp-lbl{font-family:var(--font-d);font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.08em;text-transform:uppercase}
+    .rp.mobile .rp-screen{width:70px;aspect-ratio:9/19}
+    .rp.tablet .rp-screen{width:130px;aspect-ratio:4/5}
+    .rp.desktop .rp-screen{width:260px;aspect-ratio:16/10}
+
+    .final{display:flex;align-items:center;justify-content:space-between;gap:1.5rem;padding:2rem;border-radius:24px;flex-wrap:wrap;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(0,212,255,.1));border:1px solid var(--line-2)}
+    .final h3{font-size:clamp(1.3rem,2.4vw,1.7rem);font-weight:800;color:var(--t1);margin-bottom:.4rem}
+    .final p{color:var(--t2);max-width:520px}
+
+    footer{border-top:1px solid var(--line);padding:1.5rem 0;background:rgba(0,0,0,.35)}
+    .foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem}
+    .foot p{font-size:12.5px;color:var(--t3)}
+    .foot a{font-size:12.5px;font-weight:600;color:var(--t2)}
+    .foot a:hover{color:var(--t1)}
+
+    .rv{opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .rv.vis{opacity:1;transform:none}
+
+    /* Before / After transformation */
+    .ba-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:1.2rem;align-items:stretch;margin-top:1rem}
+    @media (max-width:820px){.ba-grid{grid-template-columns:1fr;gap:1rem}.ba-arrow{transform:rotate(90deg);justify-self:center}}
+    .ba-card{padding:1.6rem;border-radius:20px;border:1px solid var(--line);background:rgba(255,255,255,.03);position:relative;overflow:hidden;min-height:230px;display:flex;flex-direction:column;justify-content:space-between}
+    .ba-card.was{opacity:.75;filter:grayscale(.6)}
+    .ba-card.was::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent 0 12px,rgba(255,255,255,.02) 12px 13px);pointer-events:none}
+    .ba-card.now{border-color:rgba(124,92,255,.4);background:linear-gradient(160deg,rgba(124,92,255,.12),rgba(0,212,255,.06))}
+    .ba-lbl{display:inline-flex;align-items:center;gap:.4rem;font-family:var(--font-d);font-size:11.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;padding:.35rem .8rem;border-radius:100px;background:rgba(255,255,255,.06);color:var(--t2);border:1px solid var(--line);width:fit-content;margin-bottom:.9rem}
+    .ba-card.now .ba-lbl{background:linear-gradient(135deg,var(--grad-1),var(--grad-2));color:#fff;border-color:transparent}
+    .ba-title{font-family:var(--font-d);font-size:clamp(1.1rem,1.8vw,1.4rem);font-weight:800;color:var(--t1);margin-bottom:.5rem;line-height:1.2}
+    .ba-desc{font-size:13.5px;color:var(--t2);line-height:1.6;margin-bottom:1rem}
+    .ba-tags{display:flex;flex-wrap:wrap;gap:.35rem}
+    .ba-tag{font-family:var(--font-m);font-size:11.5px;padding:.28rem .65rem;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--t2)}
+    .ba-card.now .ba-tag{background:rgba(124,92,255,.14);border-color:rgba(124,92,255,.3);color:#fff}
+    .ba-arrow{display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:24px;color:var(--accent);font-weight:900;padding:0 .5rem}
+    .ba-arrow svg{width:38px;height:38px}
+
+    /* Feature preview strip — animated tiles below hero */
+    .fp-strip{display:grid;grid-template-columns:repeat(6,1fr);gap:.7rem;margin-top:1.4rem}
+    @media (max-width:900px){.fp-strip{grid-template-columns:repeat(3,1fr)}}
+    @media (max-width:520px){.fp-strip{grid-template-columns:repeat(2,1fr)}}
+    .fp{aspect-ratio:1/1;border-radius:14px;border:1px solid var(--line);position:relative;overflow:hidden;display:grid;place-items:center;font-family:var(--font-d);font-size:11px;font-weight:700;color:var(--t2);letter-spacing:.06em;text-transform:uppercase;transition:transform .35s var(--ease),border-color .35s}
+    .fp:hover{transform:translateY(-4px) scale(1.03);border-color:var(--accent)}
+    .fp span{position:relative;z-index:2;background:rgba(8,9,15,.68);padding:.28rem .7rem;border-radius:100px;backdrop-filter:blur(6px)}
+    .fp::before{content:"";position:absolute;inset:0;opacity:.9;transition:opacity .4s}
+    .fp:hover::before{opacity:1}
+    .fp.f1::before{background:linear-gradient(135deg,#3b0764,#7c5cff,#c084fc)}
+    .fp.f2::before{background:linear-gradient(135deg,#0e7490,#00d4ff);background-size:200% 200%;animation:fp-move 5s ease-in-out infinite}
+    .fp.f3::before{background:conic-gradient(from 0deg,#7c5cff,#00d4ff,#22c55e,#ff3e88,#7c5cff);animation:spin 12s linear infinite}
+    .fp.f4::before{background:radial-gradient(circle at 30% 30%,#fbbf24,#f97316,#4c1d95)}
+    .fp.f5::before{background:linear-gradient(135deg,#0f172a 25%,#1e293b 25%,#1e293b 50%,#0f172a 50%,#0f172a 75%,#1e293b 75%);background-size:20px 20px}
+    .fp.f6::before{background:linear-gradient(135deg,#831843,#ff3e88,#fb7185)}
+    @keyframes fp-move{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+  </style>
+</head>
+<body>
+
+<div class="aurora" aria-hidden="true"></div>
+<div class="grid-lines" aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a href="/#proyectos" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+      Portfolio
+    </a>
+    <a href="https://rodd.es" target="_blank" rel="noopener" class="live-link">Abrir rodd.es →</a>
+  </div>
+</nav>
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="badge-new">Nuevo · Recién lanzado</span>
+        <h1>Una biblioteca <em>abierta</em><br>para diseñar más rápido.</h1>
+        <p class="hero-lead">Rodd.es es un directorio open source con <strong>287 recursos</strong> — efectos de texto, animaciones web, componentes React, microinteracciones, fondos animados y escenas 3D — para probar en vivo, editar y copiar el código al instante.</p>
+        <div class="hero-actions">
+          <a href="https://rodd.es" target="_blank" rel="noopener" class="btn primary">Explorar biblioteca →</a>
+          <a href="#proceso" class="btn secondary">Ver proceso UX/UI</a>
+        </div>
+        <div class="pills">
+          <span class="pill">Open source</span>
+          <span class="pill">Live preview</span>
+          <span class="pill">Código copiable</span>
+          <span class="pill">Gratis para siempre</span>
+        </div>
+      </div>
+
+      <a href="https://rodd.es" target="_blank" rel="noopener" class="hero-visual real rv" aria-label="Abrir rodd.es en una pestaña nueva">
+        <img src="/assets/rodd-es/rodd-hero-og.jpg" alt="Captura del hero de rodd.es — Efectos y animaciones web en vivo, con código" loading="eager" decoding="async">
+        <span class="hero-visual-badge">↗ Ver en vivo</span>
+      </a>
+    </div>
+
+    <div class="metric-strip rv">
+      <div class="metric"><strong>287</strong><span>recursos live</span></div>
+      <div class="metric"><strong>6</strong><span>categorías</span></div>
+      <div class="metric"><strong>7</strong><span>idiomas nativos</span></div>
+      <div class="metric"><strong>100%</strong><span>gratuito y open</span></div>
+    </div>
+
+    <div class="fp-strip rv" aria-label="Preview visual de las 6 familias de recursos">
+      <div class="fp f1"><span>Texto</span></div>
+      <div class="fp f2"><span>Fondos</span></div>
+      <div class="fp f3"><span>3D</span></div>
+      <div class="fp f4"><span>Micro</span></div>
+      <div class="fp f5"><span>React</span></div>
+      <div class="fp f6"><span>Web</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ── 01 · MANIFIESTO OPEN SOURCE ── -->
+<section id="motivacion">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">01 · Manifiesto</p>
+      <h2>Diseñado para compartirse. Por qué Rodd.es es open source.</h2>
+      <p class="section-sub">Los recursos que hacen la web hermosa — animaciones, componentes, shaders, escenas 3D — deberían circular libres <strong style="color:var(--t1)">y sin barrera de idioma</strong>. Rodd.es es una biblioteca abierta, gratuita, sin muros y <strong style="color:var(--t1)">disponible nativamente en 7 idiomas</strong> que devuelve al ecosistema lo que el ecosistema le enseñó.</p>
+    </div>
+    <div class="split">
+      <div>
+        <ul class="check-list">
+          <li><strong>El código de la web es un bien común.</strong> Cada recurso que se comparte reduce el tiempo que otro pasa reinventando algo. Multiplica el output creativo del ecosistema completo.</li>
+          <li><strong>Cero fricción para el visitante.</strong> Sin registro, sin muros, sin dark patterns, sin newsletters obligatorias. Abrir, probar en vivo, copiar el código, integrarlo. Cuatro pasos, cero cuentas.</li>
+          <li><strong>Curación &gt; volumen.</strong> Cada uno de los 287 recursos está revisado — funciona en frameworks actuales, respeta buenas prácticas de accesibilidad y rendimiento, viene con contexto de uso. Menos ruido, más señal.</li>
+          <li><strong>Multilingüe por diseño, no por parche.</strong> UI, descripciones de efectos, hints y guías nativas en <strong>7 idiomas</strong> (ES · EN · CA · FR · IT · DE · PT). No es Google Translate — cada idioma tiene su propio diccionario tipado y sus propias guías. Global-first, no english-first con traducción encima.</li>
+        </ul>
+        <div class="quote">"Publicar recursos abiertos no es marketing. Es reconocer que llegaste hasta aquí porque otros publicaron primero — y devolver el favor con la misma generosidad, sin obligar a nadie a leer en un idioma que no es el suyo."</div>
+      </div>
+      <div class="demo-frame rv">
+        <div class="demo-head">
+          <span class="demo-dot r"></span><span class="demo-dot y"></span><span class="demo-dot g"></span>
+          <div class="demo-tabs">
+            <span class="demo-tab on">Live</span>
+            <span class="demo-tab">Code</span>
+            <span class="demo-tab">Edit</span>
+          </div>
+        </div>
+        <div class="demo-body">
+          <div class="demo-preview"><div class="demo-shape"></div></div>
+          <div class="demo-code">
+<span class="c">// glow-hover.jsx</span><br>
+<span class="k">export const</span> <span class="n">GlowCard</span> <span class="k">=</span> () =&gt; (<br>
+&nbsp;&nbsp;&lt;<span class="k">motion.div</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="s">whileHover</span>={{<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scale: <span class="n">1.02</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boxShadow: <span class="s">'0 0 40px #7c5cff'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;}}<br>
+&nbsp;&nbsp;/&gt;<br>
+);
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="band" id="research">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">02 · Análisis de competencia open source</p>
+      <h2>El mapa del ecosistema. Dónde encaja Rodd.es.</h2>
+      <p class="section-sub">Analicé <strong style="color:var(--t1)">18 referencias open source</strong> del mundo del diseño web — cada una con su fortaleza y su gap. El objetivo no era competir; era entender el espacio libre donde una <strong style="color:var(--t1)">biblioteca curada y multilingüe</strong> podía aportar valor real sin duplicar lo que ya existe.</p>
+    </div>
+
+    <div class="grid-2 rv">
+      <div class="card"><span class="num">01</span>
+        <div class="ic">⚛️</div>
+        <h4>Shadcn/UI · Aceternity · Magic UI</h4>
+        <p>El estándar de facto en componentes React modernos con live preview y código copiable. Shadcn cambió la conversación: componentes que se pegan al proyecto en vez de instalarse como dependencia. Aceternity y Magic UI llevan el listón a animaciones con Framer Motion. <strong style="color:var(--t1)">Solo inglés y React-first exclusivo</strong>.</p>
+        <p style="margin-top:.7rem;font-size:12.5px;color:var(--t3)"><strong style="color:var(--accent-2)">Aporte de Rodd.es:</strong> categorías más allá de React puro — shaders WebGL, escenas 3D, CSS vanilla — y UI nativa en 7 idiomas (ES · EN · CA · FR · IT · DE · PT).</p>
+        <span class="tag">Referencia técnica</span>
+      </div>
+      <div class="card"><span class="num">02</span>
+        <div class="ic">🌊</div>
+        <h4>Motion.dev · Framer Motion examples</h4>
+        <p>Documentación técnica excelente para desarrolladores avanzados. La biblia de la animación web declarativa. <strong style="color:var(--t1)">Curva de entrada exigente y toda en inglés</strong>: entras a leer API, no a copiar un efecto que te seduce visualmente.</p>
+        <p style="margin-top:.7rem;font-size:12.5px;color:var(--t3)"><strong style="color:var(--accent-2)">Aporte de Rodd.es:</strong> el paso previo — resultado primero, explicación después, en el idioma del usuario. Ideal para iterar rápido en fase creativa sin barrera de idioma.</p>
+        <span class="tag">Referencia técnica</span>
+      </div>
+      <div class="card"><span class="num">03</span>
+        <div class="ic">🎨</div>
+        <h4>React Bits · UIverse · CodePen collections</h4>
+        <p>Galerías comunitarias con volumen enorme. Miles de snippets, mucha creatividad. <strong style="color:var(--t1)">Volumen alto, curación irregular</strong>: muchos ejemplos rotos en frameworks actuales, taxonomías inconsistentes, todo en inglés, calidad muy variable entre autores.</p>
+        <p style="margin-top:.7rem;font-size:12.5px;color:var(--t3)"><strong style="color:var(--accent-2)">Aporte de Rodd.es:</strong> curación estricta — cada recurso revisado, funcionando en stack actual, con notas de rendimiento y accesibilidad en el idioma del usuario.</p>
+        <span class="tag warm">Diferenciación</span>
+      </div>
+      <div class="card"><span class="num">04</span>
+        <div class="ic">🎮</div>
+        <h4>Three.js Journey · Bruno Simon · Spline showcases</h4>
+        <p>La categoría más avanzada del ecosistema. Bruno Simon marca el estándar en 3D interactivo y Spline democratiza la creación 3D sin código. <strong style="color:var(--t1)">Nivel técnico alto, todo en inglés</strong>, con curvas de aprendizaje largas que se disparan cuando el inglés no es tu lengua nativa.</p>
+        <p style="margin-top:.7rem;font-size:12.5px;color:var(--t3)"><strong style="color:var(--accent-2)">Aporte de Rodd.es:</strong> escenas 3D listas para copiar con guías traducidas al idioma real del usuario. Puerta de entrada al 3D sin la doble carga cognitiva de aprender la técnica y el inglés a la vez.</p>
+        <span class="tag ok">Ampliación</span>
+      </div>
+    </div>
+
+    <div class="grid-3 rv" style="margin-top:1rem">
+      <div class="card">
+        <div class="ic">🌍</div>
+        <h4>Multilingüe nativo — 7 idiomas</h4>
+        <p>El resto del mercado open source está en inglés. Rodd.es hace la primera apuesta seria por lo multilingüe con UI, descripciones de efectos, hints y guías traducidas nativamente al <strong style="color:var(--accent-2)">español, inglés, catalán, francés, italiano, alemán y portugués</strong>. No es un plugin de traducción — cada idioma es un diccionario propio.</p>
+        <span class="tag warm">Ventaja estructural</span>
+      </div>
+      <div class="card">
+        <div class="ic">🧠</div>
+        <h4>Descubrimiento visual, no textual</h4>
+        <p>Los diseñadores no buscan «cómo animar un botón» — buscan un botón animado que les guste. La entrada al recurso tiene que ser el resultado, no la técnica. Taxonomía por efecto, no por librería. Menos idioma, más iconografía visual.</p>
+        <span class="tag ok">Principio UX</span>
+      </div>
+      <div class="card">
+        <div class="ic">🤝</div>
+        <h4>Complementario, no competitivo</h4>
+        <p>Rodd.es no busca reemplazar a Shadcn ni a Motion.dev — les envía tráfico cuando el usuario necesita profundidad. La biblioteca es una capa de descubrimiento visual multilingüe sobre el ecosistema open source existente.</p>
+        <span class="tag">Estrategia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="arquitectura">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">03 · Arquitectura de información</p>
+      <h2>287 recursos en 6 categorías. Ni una más, ni una menos.</h2>
+      <p class="section-sub">La taxonomía es la decisión de diseño más importante. Con demasiadas categorías el usuario se pierde; con muy pocas, pierde recursos por scroll infinito. Card sorting mental sobre 300+ ejemplos me dio exactamente 6 grupos coherentes.</p>
+    </div>
+
+    <div class="cat-grid rv">
+      <div class="cat">
+        <div>
+          <div class="cat-count">52</div>
+          <div class="cat-name">Animaciones de texto</div>
+          <div class="cat-desc">Efectos de entrada, tipografía variable, split-text, gradientes animados y typewriter.</div>
+        </div>
+        <span class="tag">Text</span>
+      </div>
+      <div class="cat">
+        <div>
+          <div class="cat-count">50</div>
+          <div class="cat-name">Animaciones web</div>
+          <div class="cat-desc">Cursores custom, efectos hover, scroll-linked, parallax y transiciones de página.</div>
+        </div>
+        <span class="tag warm">Web</span>
+      </div>
+      <div class="cat">
+        <div>
+          <div class="cat-count">57</div>
+          <div class="cat-name">Componentes React</div>
+          <div class="cat-desc">Menús, galerías, modales, acordeones y patrones UI completos listos para copiar.</div>
+        </div>
+        <span class="tag ok">React</span>
+      </div>
+      <div class="cat">
+        <div>
+          <div class="cat-count">43</div>
+          <div class="cat-name">Microinteracciones</div>
+          <div class="cat-desc">Botones con feedback, toggles, checkboxes animados, loaders y estados de carga.</div>
+        </div>
+        <span class="tag">Micro</span>
+      </div>
+      <div class="cat">
+        <div>
+          <div class="cat-count">65</div>
+          <div class="cat-name">Fondos animados</div>
+          <div class="cat-desc">Shaders WebGL/WebGPU, gradientes vivos, partículas y patrones generativos.</div>
+        </div>
+        <span class="tag warm">Shaders</span>
+      </div>
+      <div class="cat">
+        <div>
+          <div class="cat-count">20</div>
+          <div class="cat-name">3D interactivo</div>
+          <div class="cat-desc">Escenas Three.js, integraciones Spline y modelos 3D con controles de cámara.</div>
+        </div>
+        <span class="tag ok">3D</span>
+      </div>
+    </div>
+
+    <div class="split rv" style="margin-top:2.5rem">
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:1.3rem;margin-bottom:.8rem">Reglas de la taxonomía</h3>
+        <ul class="check-list">
+          <li><strong>Un recurso → una sola categoría.</strong> Sin duplicados. Si dudo, elijo la que responde a la búsqueda más probable del usuario.</li>
+          <li><strong>Volumen equilibrado.</strong> Ninguna categoría supera 70 recursos ni baja de 20. Evita la sensación de «vacío» y de «abrumador».</li>
+          <li><strong>Nombres claros, no técnicos.</strong> «Fondos animados» en lugar de «WebGL shaders». El usuario intermedio entiende el resultado, no la técnica.</li>
+          <li><strong>Filtros dentro de cada categoría.</strong> React vs CSS, gratis vs pro, complejidad baja/alta. Reducen fricción sin romper la navegación principal.</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-family:var(--font-d);font-size:1.3rem;margin-bottom:.8rem">Journey del usuario típico</h3>
+        <div class="steps" style="grid-template-columns:1fr;gap:.7rem">
+          <div class="step"><div class="step-n">01 · Llegada</div><p>Aterriza desde Google buscando «efecto hover React». Ve la home con 6 categorías visuales.</p></div>
+          <div class="step"><div class="step-n">02 · Explora</div><p>Entra a «Componentes React». Navega la galería con previews en vivo. Detecta 3 candidatos en 20 s.</p></div>
+          <div class="step"><div class="step-n">03 · Prueba</div><p>Abre uno. Ve el resultado corriendo. Modifica valores en vivo. Aprueba visualmente.</p></div>
+          <div class="step"><div class="step-n">04 · Se lleva</div><p>Copia el código a su editor. Lo pega. Funciona a la primera. Sale con la sensación de haber ganado tiempo.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="band" id="visual">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">04 · Sistema visual y color</p>
+      <h2>Una paleta que sabe callarse cuando toca.</h2>
+      <p class="section-sub">Este es un producto donde el contenido es el protagonista — animaciones, código, colores generados. La UI no puede competir con lo que enseña. Sistema oscuro dominante, acentos vibrantes solo en momentos de decisión y tipografía que respira.</p>
+    </div>
+
+    <div class="palette rv">
+      <div class="swatch">
+        <div class="swatch-color" style="--sw:#08090f"></div>
+        <div class="swatch-info"><span class="swatch-name">Ink Base</span><span class="swatch-hex">#08090f</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="--sw:#111527"></div>
+        <div class="swatch-info"><span class="swatch-name">Surface</span><span class="swatch-hex">#111527</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="--sw:linear-gradient(135deg,#7c5cff,#00d4ff)"></div>
+        <div class="swatch-info"><span class="swatch-name">Aurora</span><span class="swatch-hex">#7c5cff → #00d4ff</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="--sw:#ff3e88"></div>
+        <div class="swatch-info"><span class="swatch-name">Signal</span><span class="swatch-hex">#ff3e88</span></div>
+      </div>
+      <div class="swatch">
+        <div class="swatch-color" style="--sw:#f5f7ff"></div>
+        <div class="swatch-info"><span class="swatch-name">Ink Inverse</span><span class="swatch-hex">#f5f7ff</span></div>
+      </div>
+    </div>
+
+    <div class="grid-3 rv">
+      <div class="card">
+        <div class="ic">🌑</div>
+        <h4>Fondo oscuro dominante</h4>
+        <p>El 92% de los recursos que exponemos brillan por sí solos. Un fondo claro contaminaría los shaders, los gradientes y las escenas 3D. Oscuro por decisión, no por moda.</p>
+        <span class="tag">Contexto</span>
+      </div>
+      <div class="card">
+        <div class="ic">🌈</div>
+        <h4>Gradient Aurora como marca</h4>
+        <p>Púrpura→cian aparece solo en logos, títulos clave y CTAs. Nunca lo uso para decorar. Ese gradient es el único elemento propio que el usuario debe recordar.</p>
+        <span class="tag ok">Identidad</span>
+      </div>
+      <div class="card">
+        <div class="ic">💬</div>
+        <h4>Tipografía Outfit + JetBrains Mono</h4>
+        <p>Outfit geométrica y contemporánea para títulos y navegación. JetBrains Mono para código, contadores y datos técnicos. Zero serifas — la biblioteca vive de superficies limpias.</p>
+        <span class="tag warm">Tipografía</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="proceso">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">05 · Proceso UX/UI</p>
+      <h2>Del brainstorming a la publicación en 6 semanas.</h2>
+      <p class="section-sub">Fue un sprint personal ejecutado como si el cliente fuera yo. Documento cada fase para dejar la trazabilidad de cómo pasa una idea suelta a un producto público defendible.</p>
+    </div>
+
+    <div class="grid-3 rv">
+      <div class="card"><span class="num">S1</span>
+        <div class="ic">🧠</div>
+        <h4>Brainstorming inicial</h4>
+        <p>Mind map con 40+ ideas para el nuevo rodd.es. La restricción crítica: cualquier propuesta tenía que ser útil el día del lanzamiento. Descarté todo lo que no fuera acción inmediata para el usuario.</p>
+        <span class="tag">Ideación</span>
+      </div>
+      <div class="card"><span class="num">S1</span>
+        <div class="ic">📚</div>
+        <h4>Auditoría de mi archivo</h4>
+        <p>Revisé 4 años de snippets guardados, componentes propios y experimentos. De 500+ archivos rescatables sobrevivieron 287 tras filtro de calidad, código limpio y rendimiento aceptable.</p>
+        <span class="tag warm">Content</span>
+      </div>
+      <div class="card"><span class="num">S2</span>
+        <div class="ic">🗂️</div>
+        <h4>Card sorting mental</h4>
+        <p>Agrupé los 287 recursos abiertamente hasta que apareció una taxonomía natural de 6 grupos. Testeo con 4 amigos desarrolladores: 3 de 4 clasificaron igual. La estructura era clara.</p>
+        <span class="tag">IA · Info</span>
+      </div>
+      <div class="card"><span class="num">S3</span>
+        <div class="ic">🎨</div>
+        <h4>Sistema visual</h4>
+        <p>Wireframes lo-fi en papel, hi-fi en Figma. Definí tipografía, sistema de tokens (color, espaciado, radios), componentes reutilizables y variantes de estados. Todo en modo oscuro nativo.</p>
+        <span class="tag ok">Design system</span>
+      </div>
+      <div class="card"><span class="num">S4</span>
+        <div class="ic">⚙️</div>
+        <h4>Prototipo funcional</h4>
+        <p>Homepage + una categoría + una vista de detalle con live preview real. Objetivo: validar la experiencia central. Feedback: la vista de detalle era el momento crítico — le dediqué el 40% del tiempo.</p>
+        <span class="tag">Prototipo</span>
+      </div>
+      <div class="card"><span class="num">S5</span>
+        <div class="ic">🧪</div>
+        <h4>Testing con usuarios</h4>
+        <p>5 tests moderados por videollamada con perfiles distintos: junior frontend, diseñadora UI, backender curioso. Hallazgo clave: el copy de las CTA generaba dudas. Rewrite completo del copy.</p>
+        <span class="tag warm">Testing</span>
+      </div>
+      <div class="card"><span class="num">S5</span>
+        <div class="ic">📱</div>
+        <h4>Responsive y accesibilidad</h4>
+        <p>Todo el sistema pasa de mobile a desktop sin romper. Contraste AA en cualquier texto sobre fondo oscuro. Focus visible en cualquier link. Live previews con controles de teclado.</p>
+        <span class="tag ok">A11y</span>
+      </div>
+      <div class="card"><span class="num">S6</span>
+        <div class="ic">🚀</div>
+        <h4>Publicación &amp; difusión</h4>
+        <p>Deploy en Vercel, dominio rodd.es, sitemap.xml, meta OG por categoría e idioma, hreflang para los 7 idiomas soportados e indexado en Google. Anuncio en LinkedIn y comunidades tech internacionales. Cero anuncios pagados en el lanzamiento.</p>
+        <span class="tag">Launch</span>
+      </div>
+      <div class="card"><span class="num">S6</span>
+        <div class="ic">🔁</div>
+        <h4>Métricas y siguiente iteración</h4>
+        <p>Analytics con Vercel + PostHog. Trackeo cuáles recursos se copian más, cuánto tiempo pasan en preview y qué categorías reciben visitas repetidas. Datos que orientan qué recursos añado la siguiente semana.</p>
+        <span class="tag warm">Loop</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">06 · Responsive y usabilidad</p>
+      <h2>Un solo layout que respira en cualquier pantalla.</h2>
+      <p class="section-sub">El 61% de los desarrolladores navegan bibliotecas primero en móvil y luego copian código en desktop — y con 7 idiomas activos, el layout tiene que absorber longitudes de texto muy distintas (alemán +30% vs inglés, portugués +18%, etc.). Rodd.es tenía que funcionar en las dos superficies sin degradar la experiencia en ninguna.</p>
+    </div>
+
+    <div class="rp-row rv">
+      <div class="rp mobile">
+        <div class="rp-screen"></div>
+        <div class="rp-lbl">Mobile · 320+</div>
+      </div>
+      <div class="rp tablet">
+        <div class="rp-screen"></div>
+        <div class="rp-lbl">Tablet · 768+</div>
+      </div>
+      <div class="rp desktop">
+        <div class="rp-screen"></div>
+        <div class="rp-lbl">Desktop · 1200+</div>
+      </div>
+    </div>
+
+    <div class="grid-4 rv" style="margin-top:2.5rem">
+      <div class="card"><div class="ic">🖐️</div><h4>Touch-first en móvil</h4><p>Targets mínimos de 44×44 px, gestos naturales para navegar categorías y zoom disabled en previews para no pelear con pinch.</p></div>
+      <div class="card"><div class="ic">⌨️</div><h4>Navegación por teclado</h4><p>Tab lineal, focus visible, Esc cierra previews, flechas mueven entre recursos. Un desarrollador puede navegar sin ratón.</p></div>
+      <div class="card"><div class="ic">🌐</div><h4>Rendimiento en móvil</h4><p>Lazy loading de previews, imágenes en WebP, código dividido por categoría. Lighthouse Performance 92+ en móvil real.</p></div>
+      <div class="card"><div class="ic">♿</div><h4>Contraste y accesibilidad</h4><p>Todos los textos pasan AA en fondo oscuro. Motion-reduce respetado en cualquier animación de la interfaz. Aria labels en todos los controles.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">07 · Stack técnico</p>
+      <h2>Herramientas elegidas para lanzar rápido y escalar sin dolor.</h2>
+      <p class="section-sub">Cero frameworks pesados donde no aportan. Cada pieza del stack está justificada por rendimiento, DX o coste operativo — no por moda.</p>
+    </div>
+    <div class="grid-4 rv">
+      <div class="card"><div class="ic">⚛️</div><h4>React + Vite</h4><p>Componentes reales de la biblioteca renderizados en vivo. HMR instantáneo en desarrollo, build ultra rápido en producción.</p><span class="tag">Frontend</span></div>
+      <div class="card"><div class="ic">🎞️</div><h4>Framer Motion + GSAP</h4><p>Animaciones declarativas para componentes React y timeline avanzado para efectos complejos. Combinación probada en 100+ recursos.</p><span class="tag warm">Motion</span></div>
+      <div class="card"><div class="ic">🎨</div><h4>Tailwind CSS</h4><p>Sistema de utilidades para prototipar y componer variantes sin salir del JSX. Tokens propios para la marca Aurora.</p><span class="tag ok">Styling</span></div>
+      <div class="card"><div class="ic">🎮</div><h4>Three.js + Spline</h4><p>Escenas 3D interactivas con Three.js puro y prototipos con Spline embebido para creadores no técnicos.</p><span class="tag">3D</span></div>
+      <div class="card"><div class="ic">🌊</div><h4>WebGL / WebGPU shaders</h4><p>Shaders GLSL escritos a mano para fondos animados. Renderizado por GPU para 60 fps constantes incluso con partículas.</p><span class="tag warm">GPU</span></div>
+      <div class="card"><div class="ic">▲</div><h4>Vercel</h4><p>Deploy continuo desde GitHub, ISR para páginas de categoría, edge cache global y preview URLs por rama.</p><span class="tag ok">Deploy</span></div>
+      <div class="card"><div class="ic">📈</div><h4>PostHog + Vercel Analytics</h4><p>Track de qué recursos se copian, tiempo medio en preview y rutas populares. Datos que dirigen la próxima entrega.</p><span class="tag">Data</span></div>
+      <div class="card"><div class="ic">✨</div><h4>Claude + Cursor</h4><p>Pair-programming asistido con IA para refactor de snippets, generación de variantes y revisión de accesibilidad.</p><span class="tag warm">DX + IA</span></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section class="band">
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">08 · Testing y aprendizajes</p>
+      <h2>5 usuarios, 47 hallazgos, 12 cambios reales.</h2>
+      <p class="section-sub">Testing moderado por videollamada con perfiles distintos: 2 diseñadores UI, 2 frontends junior y 1 dev backend curioso. Cada sesión duró 25 min. Sacé un informe con problemas priorizados por impacto y esfuerzo.</p>
+    </div>
+
+    <div class="steps rv">
+      <div class="step">
+        <div class="step-n">Hallazgo 01</div>
+        <h4>Copy poco claro</h4>
+        <p>Los usuarios no entendían la diferencia entre «Ver ejemplo» y «Abrir en editor». Renombré ambas CTAs a «Live preview» y «Copiar código». Zero preguntas en las siguientes sesiones.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">Hallazgo 02</div>
+        <h4>Volumen abrumador</h4>
+        <p>65 fondos animados en una sola grid asustaba. Introduje filtros de complejidad (baja/alta) y de framework (CSS/React/GLSL). Sensación de control recuperada.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">Hallazgo 03</div>
+        <h4>Preview lento en móvil</h4>
+        <p>Los shaders WebGL tumbaban dispositivos de gama media. Añadí un placeholder estático y activo el shader solo con tap. Rendimiento restaurado sin perder wow.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">Hallazgo 04</div>
+        <h4>Se perdían al volver</h4>
+        <p>Al cerrar un recurso volvían al top de la categoría. Guardé el scroll position con sessionStorage. Recuperan justo donde estaban.</p>
+      </div>
+    </div>
+
+    <div class="quote rv">"Un test moderado con 5 usuarios reales te da más aprendizajes que 100 horas de suposiciones internas. El coste de no testear es diseñar para ti mismo."</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <div class="wrap">
+    <div class="section-head rv">
+      <p class="eyebrow">09 · Mi rol</p>
+      <h2>Diseñé, construí, probé y publiqué el producto solo.</h2>
+      <p class="section-sub">Ejecutado como si fuera un proyecto para cliente enterprise. Documentación completa, decisiones defendibles y una hoja de ruta para las siguientes semanas.</p>
+    </div>
+    <div class="grid-4 rv">
+      <div class="card"><div class="ic">🎯</div><h4>Estrategia de producto</h4><p>Definición del posicionamiento, propuesta de valor, público objetivo y métricas de éxito de la biblioteca. Business case en una página.</p></div>
+      <div class="card"><div class="ic">🎨</div><h4>UX/UI y sistema</h4><p>Research, wireframes, sistema visual, componentes, tokens, prototipos hi-fi y handoff a implementación.</p></div>
+      <div class="card"><div class="ic">💻</div><h4>Desarrollo frontend</h4><p>Implementación React + Vite, integración de shaders, componentes animados y responsive de la biblioteca completa.</p></div>
+      <div class="card"><div class="ic">📣</div><h4>Lanzamiento y content</h4><p>Copy, SEO técnico, meta OG, anuncios en LinkedIn y comunidades, sistema de métricas post-launch.</p></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<section>
+  <div class="wrap">
+    <div class="final rv">
+      <div>
+        <h3>¿Listo para explorar la biblioteca?</h3>
+        <p>Rodd.es está en producción con 287 recursos abiertos. Cada semana se añaden nuevos. Sin registro. Sin muros. Gratis para siempre.</p>
+      </div>
+      <a href="https://rodd.es" target="_blank" rel="noopener" class="btn primary" style="font-size:15px;padding:1rem 1.6rem">Abrir rodd.es →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="wrap foot">
+    <p>© 2026 Rodrigo Negrete — Rodd.es · Caso de estudio</p>
+    <div style="display:flex;gap:1.2rem">
+      <a href="/#proyectos">← Portfolio</a>
+      <a href="https://rodd.es" target="_blank" rel="noopener">Abrir biblioteca →</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); } });
+  }, { threshold:.05, rootMargin:'0px 0px -20px 0px' });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+</script>
+
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>

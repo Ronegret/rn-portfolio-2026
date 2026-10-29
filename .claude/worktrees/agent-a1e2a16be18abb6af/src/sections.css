@@ -1,0 +1,199 @@
+/* Sections: separadores + firmas por seccion. Solo transform/translate/scale/opacity/clip-path en lo animado,
+   todo tras no-preference, animation en longhands, contenido visible por defecto.
+   Ritmo: micro 160 ms, reveals 600 ms, stagger <= 70 ms. */
+
+/* ───── (A0) Sustituye el separador scaleX y el tinte radial de scroll-fx.css ───── */
+.sec::after { content: none; }                  /* la regla del separador la dibuja ahora .sx-div */
+.sx-div + .sec { border-top: 0; }
+/* overflow:hidden convertia cada .sec en el "scroller" de sus animation-timeline: view() (timeline inactiva, todo lo scroll-driven de
+   cinema/scroll-fx/motion dentro de las secciones no corria). clip recorta igual sin crear contenedor de scroll. */
+.sec { overflow: clip; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    /* Color de fondo por seccion visible: capa con alfa (deja ver el fondo vivo) cuya opacidad sigue el paso por pantalla.
+       Tonos del tema: bg2 y un velo del acento; se solapan en las juntas y funden entre si. */
+    .sec { --sx-tint: color-mix(in srgb, var(--bg2) 62%, transparent); }
+    :is(#stack, #laboratorio, #testimonios, #contacto) { --sx-tint: color-mix(in srgb, var(--a1) 7%, transparent); }
+    .sec::before {
+      background: var(--sx-tint);
+      animation-name: sx-tint; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(); animation-range: cover 0% cover 100%;
+    }
+    @keyframes sx-tint { 0% { opacity: 0; } 30%, 70% { opacity: 1; } 100% { opacity: 0; } }
+  }
+}
+
+/* La cortinilla de cinema.css animaba opacity (.2 -> 1) con fill backwards: con la timeline ya activa, las secciones por debajo del
+   pliegue quedan a opacity .2 y axe/Lighthouse miden contraste 1.3:1. Misma cortinilla, solo clip-path. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sec.sec:not(#proyectos) > .wrap { animation-name: sx-curtain; }
+    @keyframes sx-curtain { from { clip-path: inset(0 46% 0 46%); } to { clip-path: inset(-120px -5% -120px -5%); } }
+  }
+}
+
+/* ───── (A1) Regla tecnica numerada: §03 ———— Proyectos ———— 03/08 ───── */
+.sx-div { position: relative; pointer-events: none; user-select: none; }
+.sx-in {
+  display: flex; align-items: center; gap: clamp(.7rem, 2vw, 1.4rem);
+  max-width: calc(1200px + 2 * var(--gut)); margin-inline: auto; padding: clamp(1.1rem, 2.4vw, 1.8rem) var(--gut);
+  font-family: var(--fm); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--t2); line-height: 1;
+}
+.sx-in > span::before { content: attr(data-t); }  /* pseudo-elemento: decorativo, fuera de la comprobacion de contraste */
+.sx-no { color: var(--t1); }
+.sx-ln { position: relative; flex: 1; height: 1px; background: linear-gradient(90deg, var(--a1), var(--bord2)); transform-origin: 0 50%; }
+.sx-ln::after { content: ''; position: absolute; right: 0; top: -3px; width: 1px; height: 7px; background: var(--bord2); }
+.sx-ln2 { flex: 0 0 clamp(1.5rem, 8vw, 6rem); background: var(--bord2); }
+.sx-ln2::after { content: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sx-rule .sx-ln:not(.sx-ln2) {
+      animation-name: sx-draw; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(); animation-range: entry 5% entry 100%;
+    }
+    .sx-rule :is(.sx-no, .sx-nm, .sx-ct) {
+      animation-name: sx-in; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(); animation-range: entry 30% entry 100%;
+    }
+    @keyframes sx-draw { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @keyframes sx-in { from { opacity: 0; } to { opacity: 1; } }
+  }
+}
+
+/* ───── (A2) Marquesina de texto gigante con el nombre de la siguiente seccion ───── */
+.sx-mq { overflow: hidden; border-block: 1px solid var(--bord); padding-block: clamp(.4rem, 1.4vw, 1rem); }
+.sx-trk { display: flex; align-items: center; width: max-content; font-size: clamp(3.4rem, 12.5vw, 10rem); }
+.sx-trk .sx-nm {
+  flex: none; padding-inline: clamp(1rem, 3vw, 2.5rem);
+  font-family: var(--fd); font-weight: 800; font-size: 1em; line-height: 1.04; letter-spacing: -.02em; text-transform: uppercase; white-space: nowrap;
+  color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--t1) 70%, transparent);
+}
+.sx-trk .sx-nm::before { content: attr(data-t); }
+.sx-trk .sx-nm:nth-child(4n+3) { color: var(--t1); -webkit-text-stroke: 0; }
+.sx-dot { flex: none; width: clamp(.7rem, 1.6vw, 1.4rem); aspect-ratio: 1; background: var(--a1); border-radius: var(--rs); rotate: 45deg; }
+[data-theme="cyber"] .sx-dot, [data-theme="diario"] .sx-dot { border-radius: 50%; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .sx-trk { animation-name: sx-run; animation-duration: 48s; animation-timing-function: linear; animation-iteration-count: infinite; }
+  .sx-mq[data-dir="r"] .sx-trk { animation-direction: reverse; }
+  @keyframes sx-run { to { translate: -50% 0; } }
+  body.is-scrolling .sx-trk, .sx-off .sx-trk { animation-play-state: paused; }
+}
+
+/* ───── (B1) Sobre mi: las palabras se iluminan de gris a pleno color con el scroll ─────
+   Texto real (spans en linea, sin duplicar). Estado inicial: t1 al 70 % de opacidad (>= 4.5:1 en los 5 temas). */
+#sobre-mi p.sx-split { color: var(--t1) !important; }
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .sx-w {
+      animation-name: sx-lit; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(); animation-range: cover calc(20% + var(--k, 0) * 1.2%) cover calc(40% + var(--k, 0) * 1.2%);
+    }
+    @keyframes sx-lit { from { opacity: .7; } to { opacity: 1; } }
+    /* protagonista unica: aqui la cortinilla de cinema.css sobra */
+    #sobre-mi.sec.sec > .wrap { animation-name: none; }
+  }
+}
+
+/* ───── (B2) Laboratorio: spotlight/lupa (solo puntero fino) ───── */
+#laboratorio .lab-grid { position: relative; }
+.sx-spot { position: absolute; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; opacity: 0; transition: opacity .16s; }
+.sx-spot.on { opacity: 1; }
+.sx-spot i { position: absolute; left: 0; top: 0; width: 440px; height: 440px; margin: -220px 0 0 -220px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--a1) 13%, transparent), transparent 62%); }
+.sx-spot i::after {
+  content: ''; position: absolute; left: 50%; top: 50%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--a1) 75%, transparent);
+  transition: scale .2s cubic-bezier(.16, 1, .3, 1), background-color .2s;
+}
+.sx-spot.link i::after { scale: 1.6; background: color-mix(in srgb, var(--a1) 9%, transparent); }
+
+/* ───── (B3) Testimonios: carrusel scroll-snap x proximity, cita gigante ───── */
+#testimonios .test-g {
+  position: relative; display: flex !important; gap: clamp(1rem, 2vw, 1.5rem); overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity; scrollbar-width: none; padding-block: .6rem; margin-inline: 0; padding-inline: 0; scroll-padding-inline: 0;
+}
+#testimonios .test-g::-webkit-scrollbar { display: none; }
+#testimonios .test-g:focus-visible { outline: 2px solid var(--a1); outline-offset: 4px; }
+#testimonios .test-g > .test-c { flex: 0 0 min(88%, 900px); scroll-snap-align: start; padding: clamp(1.6rem, 4vw, 3.2rem); gap: clamp(1.2rem, 3vw, 2rem); min-width: 0; }
+#testimonios .tq {
+  font-family: var(--fd); font-style: normal; font-weight: 500; color: var(--t1); letter-spacing: -.01em;
+  font-size: clamp(1.2rem, 1rem + 1.9vw, 2.2rem); line-height: 1.28;
+}
+#testimonios .tq::before { content: '\201C'; font-size: clamp(4.5rem, 10vw, 8rem); line-height: .55; margin: .15em 0 .1em; height: .5em; }
+#testimonios .tq::after { content: '\201D'; color: var(--a1); font-family: var(--fd); }
+#testimonios .tav {
+  --sx-sq: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 0C85 0 100 15 100 50S85 100 50 100 0 85 0 50 15 0 50 0Z'/%3E%3C/svg%3E");
+  width: 64px; height: 64px; font-size: 20px;
+  -webkit-mask: var(--sx-sq) center / 100% 100% no-repeat; mask: var(--sx-sq) center / 100% 100% no-repeat;
+}
+#testimonios .tav::before { inset: 0; }
+#testimonios .tav span, #testimonios .tav-photo {
+  width: calc(100% - 4px); height: calc(100% - 4px); border-radius: 0;
+  -webkit-mask: var(--sx-sq) center / 100% 100% no-repeat; mask: var(--sx-sq) center / 100% 100% no-repeat;
+}
+.sx-car { display: flex; align-items: center; justify-content: flex-end; gap: .9rem; margin-top: 1rem; font-family: var(--fm); font-size: 12px; letter-spacing: .12em; color: var(--t2); }
+.sx-car button {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: var(--rb, 50%);
+  border: 1px solid var(--bord2); background: var(--surf); color: var(--t1); cursor: pointer;
+  transition: background-color .16s, color .16s, border-color .16s, opacity .16s;
+}
+.sx-car button:hover { background: var(--a1); color: var(--bg); border-color: var(--a1); }
+.sx-car button:focus-visible { outline: 2px solid var(--a1); outline-offset: 3px; }
+.sx-car button[aria-disabled="true"] { opacity: .35; cursor: default; background: var(--surf); color: var(--t1); border-color: var(--bord2); }
+@media (max-width: 640px) {
+  #testimonios .test-g > .test-c { flex-basis: 88%; }
+  .sx-car { justify-content: space-between; }
+}
+
+/* ───── (B4) Estilos: barrido circular del tema (el clip-path lo anima sections.js via WAAPI) ───── */
+html.sx-vt::view-transition-old(root), html.sx-vt::view-transition-new(root) {
+  animation-name: none; animation-duration: 0s; mix-blend-mode: normal;
+}
+html.sx-vt::view-transition-old(root) { z-index: 1; }
+html.sx-vt::view-transition-new(root) { z-index: 2; }
+
+/* ───── (B5) Footer: nombre gigante recortado por el borde inferior, reloj, volver arriba ───── */
+footer.fx-footer { padding-bottom: 0; }
+/* El nombre se ve ENTERO (antes se recortaba por abajo y se desvanecía arriba: «se ve muy cortado»);
+   solo un velo suave en el borde superior y un respiro bajo las letras. */
+.fx-wordmark {
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+  padding-bottom: clamp(.6rem, 1.8vw, 1.4rem);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14%); mask-image: linear-gradient(180deg, transparent 0, #000 14%);
+}
+.fx-wordmark span {
+  margin-bottom: 0;
+  line-height: 1.06;
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--t1) 44%, transparent), color-mix(in srgb, var(--t1) 20%, transparent));
+}
+.sx-clock { display: flex; align-items: center; gap: .5rem; margin-top: .7rem; font-family: var(--fm); font-size: 12px; letter-spacing: .08em; color: color-mix(in srgb, var(--t2) 70%, var(--t1)); font-variant-numeric: tabular-nums; }
+.sx-clock i { width: 7px; height: 7px; border-radius: 50%; background: var(--a2, var(--a1)); flex: none; }
+.sx-clock time { color: var(--t1); font-weight: 700; }
+.fx-top { width: 44px; height: 44px; overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .sx-clock i { animation-name: sx-blink; animation-duration: 2s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; }
+  @keyframes sx-blink { 50% { opacity: .25; } }
+  body.is-scrolling .sx-clock i { animation-play-state: paused; }
+  .fx-top:hover svg, .fx-top:focus-visible svg {
+    animation-name: sx-upthru; animation-duration: .5s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); animation-iteration-count: 1;
+  }
+  @keyframes sx-upthru { 0% { translate: 0 0; } 49% { translate: 0 -28px; } 50% { translate: 0 28px; } 100% { translate: 0 0; } }
+}
+
+/* ───── (B6) Contacto: email que se copia al clic ───── */
+#contacto a.cc-v[href^="mailto:"] { display: block; }
+.sx-copy { display: flex; width: fit-content; align-items: center; gap: .35rem; margin: .5rem auto 0; padding: 3px 9px; border: 1px solid var(--bord2); border-radius: var(--rb, 100px); font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--t2); white-space: nowrap; transition: background-color .16s, color .16s, border-color .16s; }
+.sx-copy b { font-weight: 700; }
+a.cc-v:hover .sx-copy, a.cc-v:focus-visible .sx-copy { border-color: var(--a1); color: var(--t1); }
+a.cc-v.sx-ok .sx-copy { background: var(--a1); border-color: var(--a1); color: var(--bg); }
+.sx-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (prefers-reduced-motion: no-preference) {
+  a.cc-v.sx-ok .sx-copy { animation-name: sx-pop; animation-duration: .3s; animation-timing-function: cubic-bezier(.34, 1.56, .64, 1); }
+  @keyframes sx-pop { from { scale: .85; } }
+}
+/* Mismos degradados completos en los temas claros (antes se desvanecían a transparente por abajo) */
+[data-theme="editorial"] .fx-wordmark span, [data-theme="diario"] .fx-wordmark span {
+  background-image: linear-gradient(180deg, color-mix(in srgb, var(--t1) 24%, transparent), color-mix(in srgb, var(--t1) 12%, transparent));
+}

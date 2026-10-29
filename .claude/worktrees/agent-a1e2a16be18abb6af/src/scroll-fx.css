@@ -1,0 +1,73 @@
+/* Scroll FX (animation en longhands: el minificador fusiona animation+timeline en shorthand y Chrome 115-~139 lo descarta): solo transform/translate/rotate/scale/opacity/clip-path, todo tras no-preference. */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* (2) Titulares: reveal por máscara (clip-path) junto al rv-up existente. Fill "backwards": al acabar vuelve a none (sin recortar el glow del <em>) */
+  html.rv-on :is(.sh, .hero-h).vis {
+    animation: rv-up .7s cubic-bezier(.23, 1, .32, 1) calc(var(--d, 0) * 70ms) backwards,
+               sfx-wipe 1s cubic-bezier(.16, 1, .3, 1) calc(var(--d, 0) * 70ms) backwards;
+  }
+  @keyframes sfx-wipe {
+    from { clip-path: inset(0 0 100% 0); }
+    to   { clip-path: inset(-50% -5% -50% -5%); }
+  }
+
+  /* (5) Línea inferior de las tarjetas de proof: se llena al entrar */
+  html.rv-on .proof-item::after {
+    transform: scaleX(0); transform-origin: 0 50%;
+    transition: transform 1.1s cubic-bezier(.16, 1, .3, 1) .35s;
+  }
+  html.rv-on .proof-item.vis::after { transform: scaleX(1); }
+
+  /* (8) Imágenes de tarjeta: se revelan desde el borde inferior, una vez (las clases las pone scroll-fx.js) */
+  .sfx-rev { clip-path: inset(0 0 100% 0); }
+  .sfx-rev.sfx-in {
+    clip-path: inset(0);
+    transition: clip-path .9s cubic-bezier(.16, 1, .3, 1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    /* (1) Foto/tarjeta de perfil: sube y gira levemente con el scroll (en el wrapper: no pisa el tilt inline de .av-wrap ni el rv-s de .pcard) */
+    .pcard-wrap {
+      animation-name: sfx-card; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: scroll(root); animation-range: 0 85vh;
+    }
+    @keyframes sfx-card { to { translate: 0 -48px; rotate: -2.2deg; } }
+
+    /* (3) Ken Burns: transform:scale (el hover usa la propiedad `scale`, el parallax `translate`; se componen) */
+    .sec :is(.bc-img, .lab-img) img {
+      animation-name: mo-par, sfx-kb; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(), view();
+    }
+    .sec .lab-card-img img {
+      animation-name: sfx-kb; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view();
+    }
+    @keyframes sfx-kb { from { transform: scale(1); } to { transform: scale(1.08); } }
+
+    /* (4) Tinte sutil de sección: capa con opacity ligada al paso por pantalla */
+    .sec { isolation: isolate; }
+    .sec::before {
+      content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0;
+      background: radial-gradient(ellipse 70% 55% at 50% 40%, color-mix(in srgb, var(--a1) 9%, transparent), transparent 70%);
+      animation-name: sfx-tint; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view();
+    }
+    @keyframes sfx-tint { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
+
+    /* (6) Separador entre secciones: línea de acento que se dibuja desde la izquierda */
+    .sec::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; pointer-events: none;
+      background: linear-gradient(90deg, var(--a1), var(--a2, var(--a1)), transparent);
+      transform: scaleX(0); transform-origin: 0 50%;
+      animation-name: sfx-line; animation-timing-function: linear; animation-fill-mode: both; animation-timeline: view();
+      animation-range: entry 0% entry 70%;
+    }
+    @keyframes sfx-line { to { transform: scaleX(1); } }
+  }
+}
+
+/* Puntero fino: el zoom de hover pasa a `scale` (el transform queda para el Ken Burns) */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .sec :is(.lab-card-img, .lab-img) img { transition: scale .5s cubic-bezier(.16, 1, .3, 1); }
+  .lab-card:hover .lab-card-img img, .lab-feat:hover .lab-img img { scale: 1.05; }
+}

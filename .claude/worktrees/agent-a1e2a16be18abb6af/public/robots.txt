@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /deep-detection-access/
+Disallow: /deep-detection-discovery/
+
+Sitemap: https://rodrigonegrete.es/sitemap-index.xml

@@ -1,0 +1,1561 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Events Planner — Un sistema operativo para bodas · Caso de estudio · Rodrigo Negrete</title>
+<meta name="description" content="Caso de estudio de Events Planner (Wedding + Events): panel operativo, portal privado de la pareja, plano de mesas, generador de contratos y presupuesto por plazos. Research UX, sistema de diseño, IA aplicada y desarrollo end-to-end.">
+<meta name="theme-color" content="#56603f">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://rodrigonegrete.es/aem/">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Events Planner — Un sistema operativo para bodas · Rodrigo Negrete">
+<meta property="og:description" content="Cómo diseñé y construí una app web para wedding planners que abre sin cobertura, sincroniza sola y trabaja para tres personas a la vez. Portal de novios, mesas, contratos y pagos.">
+<meta property="og:image" content="https://rodrigonegrete.es/assets/events-planner/screens/desktop-login.webp">
+<meta property="og:url" content="https://rodrigonegrete.es/aem/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --tinta:#56603f;
+  --tinta-honda:#2f3a24;
+  --tinta-clara:#858a72;
+  --mostaza:#d6b36b;
+  --mostaza-suave:#ead9b8;
+  --crema:#f4efe4;
+  --papel:#fbf8f1;
+  --texto:#20230d;
+  --suave:#747164;
+  --linea:#d8d2bd;
+  --alerta:#a84f42;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"DM Sans","Helvetica Neue",Arial,sans-serif;
+  color:var(--texto);
+  background:var(--papel);
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+strong{color:var(--tinta-honda);font-weight:700}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+/* ── Franja superior verde+mostaza igual que el informe ─────── */
+.franja-top{
+  position:fixed;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--tinta) 0 62%,var(--mostaza) 62% 100%);
+  z-index:100;
+}
+
+/* ── Barra volver ─────────────────────────────────────────── */
+.barra{
+  position:fixed;top:16px;left:16px;right:16px;z-index:99;
+  display:flex;justify-content:space-between;align-items:center;
+  pointer-events:none;
+}
+.barra > *{pointer-events:auto}
+.volver{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.55rem 1rem;border-radius:999px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--linea);color:var(--tinta-honda);
+  font-size:.85rem;font-weight:500;letter-spacing:.02em;
+  transition:transform .3s var(--ease),background .3s;
+}
+.volver:hover{transform:translateX(-3px);background:#fff}
+.demo-cta{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.55rem 1rem;border-radius:999px;
+  background:var(--tinta);color:#fff;
+  font-size:.85rem;font-weight:500;letter-spacing:.02em;
+  transition:transform .3s var(--ease),background .3s;
+  border:1px solid var(--tinta);
+}
+.demo-cta:hover{background:var(--tinta-honda);transform:translateY(-1px)}
+.demo-cta::after{content:"↗";transition:transform .3s var(--ease)}
+.demo-cta:hover::after{transform:translate(2px,-2px)}
+
+/* ═══════════════════════════════════════
+   HERO — centrado vertical, título arriba + poster enmarcado abajo
+═══════════════════════════════════════ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;
+  padding:140px 24px 100px;
+  background:var(--papel);
+  color:var(--tinta-honda);
+  text-align:center;
+  overflow:hidden;
+}
+/* elementos decorativos de fondo muy sutiles */
+.hero::before,
+.hero::after{
+  content:"";position:absolute;
+  width:420px;height:420px;border-radius:50%;
+  background:radial-gradient(circle, rgba(226,231,53,.08), transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+.hero::before{top:-120px;left:-120px}
+.hero::after{
+  bottom:-140px;right:-140px;
+  background:radial-gradient(circle, rgba(78,99,89,.08), transparent 60%);
+}
+.hero-top{
+  position:relative;z-index:2;
+  max-width:760px;width:100%;
+  margin-bottom:56px;
+}
+.hero-eyebrow{
+  color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.34em;text-transform:uppercase;
+  margin-bottom:24px;
+  display:inline-flex;align-items:center;gap:12px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after{
+  content:"";width:32px;height:1px;background:var(--mostaza);
+}
+.hero h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;
+  font-size:clamp(2.6rem,5.2vw,4.4rem);
+  line-height:1.02;letter-spacing:.005em;
+  color:var(--tinta-honda);
+  margin:0 auto 16px;
+  max-width:720px;
+}
+.hero h1 em{
+  display:block;font-style:italic;
+  color:var(--tinta);
+  font-size:.56em;margin-top:14px;font-weight:400;
+}
+.hero-linea{
+  width:72px;height:3px;background:var(--mostaza);
+  margin:28px auto;
+}
+.hero-sub{
+  max-width:560px;margin:0 auto;
+  font-size:1.08rem;line-height:1.65;
+  color:var(--tinta-honda);
+}
+/* Poster enmarcado tipo postal/polaroid */
+.hero-media{
+  position:relative;z-index:2;
+  width:min(620px, 92%);
+  padding:14px;
+  background:#fff;
+  border:1px solid rgba(78,99,89,.14);
+  box-shadow:
+    0 2px 6px rgba(51,70,61,.06),
+    0 24px 60px rgba(51,70,61,.18),
+    0 0 0 1px rgba(78,99,89,.04);
+  transform:rotate(-.6deg);
+  transition:transform .5s var(--ease), box-shadow .5s;
+}
+.hero-media:hover{
+  transform:rotate(0deg) translateY(-4px);
+  box-shadow:
+    0 2px 6px rgba(51,70,61,.08),
+    0 36px 80px rgba(51,70,61,.26),
+    0 0 0 1px rgba(78,99,89,.08);
+}
+.hero-media::before{
+  content:"";position:absolute;
+  top:0;left:0;right:0;height:4px;
+  background:linear-gradient(90deg, var(--tinta) 0 62%, var(--mostaza) 62% 100%);
+  z-index:3;
+}
+.hero-media img{
+  display:block;width:100%;height:auto;
+  object-fit:cover;
+  aspect-ratio:1485/855;
+}
+/* Datos del proyecto fuera del marco, centrados abajo */
+.hero-datos{
+  position:relative;z-index:2;
+  margin-top:48px;padding-top:28px;
+  border-top:1px solid rgba(78,99,89,.2);
+  display:grid;grid-template-columns:repeat(4,auto);gap:36px;
+  max-width:720px;width:100%;
+  text-align:center;
+}
+.hero-datos div span{
+  display:block;color:var(--tinta);font-size:.64rem;font-weight:700;
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:6px;
+}
+.hero-datos div b{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-size:1.02rem;line-height:1.35;color:var(--tinta-honda);
+}
+.hero-datos a{color:var(--tinta);border-bottom:1px solid rgba(78,99,89,.32)}
+.hero-scroll{
+  position:absolute;bottom:28px;left:50%;transform:translateX(-50%);
+  z-index:3;color:var(--suave);
+  font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.hero-scroll::after{
+  content:"";display:block;width:1px;height:36px;
+  background:linear-gradient(180deg,var(--tinta),transparent);
+  animation:scrollDown 2s ease-in-out infinite;
+}
+@keyframes scrollDown{
+  0%,100%{opacity:.3;transform:scaleY(.6)}
+  50%{opacity:1;transform:scaleY(1)}
+}
+@media(max-width:720px){
+  .hero{padding:100px 20px 100px}
+  .hero-top{margin-bottom:40px}
+  .hero-datos{grid-template-columns:1fr 1fr;gap:20px 24px;text-align:left;max-width:420px}
+  .hero-media{transform:none}
+}
+
+/* ═══════════════════════════════════════
+   Secciones estándar
+═══════════════════════════════════════ */
+.seccion{
+  max-width:1100px;margin:0 auto;
+  padding:110px 24px;
+  border-bottom:1px solid var(--linea);
+}
+.seccion.narrow{max-width:920px}
+.sec-num{
+  display:block;color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.24em;text-transform:uppercase;margin-bottom:8px;
+}
+.sec-eyebrow{
+  display:inline-flex;align-items:center;gap:12px;
+  color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.sec-eyebrow::before{
+  content:"";width:28px;height:1px;background:var(--mostaza);
+}
+.sec-h{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;
+  font-size:clamp(2rem,4.4vw,3.2rem);
+  line-height:1.1;color:var(--texto);
+  margin-bottom:40px;max-width:820px;
+}
+.sec-h em{color:var(--tinta);font-style:italic}
+.entradilla{
+  font-size:1.2rem;line-height:1.7;color:var(--tinta-honda);
+  padding-left:20px;border-left:3px solid var(--mostaza);
+  margin-bottom:44px;max-width:720px;
+}
+.seccion h3{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:600;font-size:1.6rem;color:var(--tinta-honda);
+  margin:44px 0 16px;
+}
+.seccion h4{
+  font-size:.8rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--tinta);
+  margin:28px 0 10px;
+}
+.seccion p{margin-bottom:16px;font-size:1rem;line-height:1.75;max-width:720px}
+.seccion ul,.seccion ol{margin:0 0 20px 24px;max-width:720px}
+.seccion li{margin-bottom:10px;line-height:1.7}
+
+/* Cifras destacadas */
+.cifras{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+  margin:44px 0;
+}
+.cifra{
+  padding:26px 20px;background:#fff;
+  border:1px solid var(--linea);text-align:center;
+  transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;
+  cursor:default;
+}
+.cifra:hover{
+  transform:translateY(-4px);
+  border-color:var(--tinta);
+  box-shadow:0 20px 50px rgba(78,99,89,.1);
+}
+.cifra b{
+  display:block;font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-size:2.4rem;color:var(--tinta);
+}
+.cifra span{
+  display:block;margin-top:10px;color:var(--suave);
+  font-size:.8rem;line-height:1.5;
+}
+
+/* Tabla */
+.tabla{width:100%;border-collapse:collapse;margin:24px 0;font-size:.94rem}
+.tabla th{
+  padding:14px 12px;background:var(--tinta);color:#fff;
+  text-align:left;font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.tabla td{
+  padding:14px 12px;border-bottom:1px solid var(--linea);
+  vertical-align:top;line-height:1.55;
+}
+.tabla tbody tr:nth-child(even) td{background:var(--papel)}
+
+/* Casos */
+.caso{
+  margin:32px 0;padding:28px 32px;
+  border:1px solid var(--linea);background:#fff;
+  transition:border-color .3s,box-shadow .3s,transform .3s;
+}
+.caso:hover{
+  border-color:var(--tinta);
+  box-shadow:0 12px 40px rgba(78,99,89,.08);
+  transform:translateY(-2px);
+}
+.caso-cab{display:flex;align-items:baseline;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.caso-cab i{
+  padding:4px 12px;border-radius:999px;background:var(--tinta);
+  color:#fff;font-style:normal;font-size:.68rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+}
+.caso-cab h3{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:1.4rem;color:var(--texto)}
+.caso dl{margin:0;display:grid;grid-template-columns:120px 1fr;gap:8px 20px}
+.caso dt{
+  color:var(--tinta);font-size:.72rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;padding-top:4px;
+}
+.caso dd{margin:0;font-size:.98rem;line-height:1.65}
+.dato{color:var(--tinta);font-weight:700}
+
+/* Evidencia técnica */
+.evidencia{
+  margin:20px 0;padding:16px 20px;background:var(--papel);
+  border-left:3px solid var(--tinta);
+  font-family:"SF Mono","Courier New",monospace;
+  font-size:.82rem;line-height:1.7;color:var(--tinta-honda);
+  white-space:pre-wrap;overflow-x:auto;
+}
+.aviso{
+  margin:32px 0;padding:22px 26px;background:#fdfbe8;
+  border:1px solid #e4e0a8;border-radius:2px;
+}
+.aviso b{
+  display:block;margin-bottom:8px;color:#6b6410;font-size:.78rem;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.aviso p{margin:0;font-size:.95rem;max-width:none}
+
+/* ═══════════════════════════════════════
+   RECORRIDO POR LA APP — mockups
+═══════════════════════════════════════ */
+.app-tour{
+  background:linear-gradient(180deg,var(--papel) 0%,var(--crema) 100%);
+  padding:110px 0;
+  border-bottom:1px solid var(--linea);
+}
+.app-tour .tour-h{
+  max-width:1100px;margin:0 auto;padding:0 24px 60px;
+}
+.tabs{
+  max-width:1100px;margin:0 auto;padding:0 24px;
+  display:flex;flex-wrap:wrap;gap:6px;
+  border-bottom:1px solid var(--linea);
+  margin-bottom:0;
+}
+.tab-btn{
+  padding:14px 22px;
+  color:var(--suave);
+  font-size:.88rem;font-weight:500;letter-spacing:.02em;
+  border-bottom:2px solid transparent;
+  transition:all .3s var(--ease);
+  position:relative;top:1px;
+  white-space:nowrap;
+}
+.tab-btn:hover{color:var(--tinta-honda)}
+.tab-btn.on{color:var(--tinta);border-bottom-color:var(--tinta);font-weight:600}
+.tab-btn .tab-num{
+  display:inline-block;
+  color:var(--mostaza);font-family:"Cormorant Garamond",serif;
+  margin-right:6px;font-size:1rem;
+}
+.tab-btn.on .tab-num{color:var(--tinta)}
+.tab-panels{
+  max-width:1100px;margin:0 auto;padding:40px 24px 0;
+}
+.tab-panel{display:none;animation:fadeIn .5s var(--ease)}
+.tab-panel.on{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.tab-info h3{
+  font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;
+  font-size:2rem;color:var(--texto);margin:0 0 16px;
+}
+.tab-info h3 em{color:var(--tinta);font-style:italic}
+.tab-info .tab-lead{
+  font-size:1.05rem;color:var(--tinta-honda);margin-bottom:20px;
+  padding-left:16px;border-left:2px solid var(--mostaza);
+}
+.tab-info p{font-size:.95rem;margin-bottom:14px;color:var(--texto)}
+.tab-info ul{margin:14px 0 0 22px}
+.tab-info li{font-size:.94rem;margin-bottom:8px}
+.tab-info li strong{color:var(--tinta-honda)}
+
+/* Screenshot real wrap */
+.mock-wrap{
+  position:relative;
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(51,70,61,.22),0 0 0 1px rgba(78,99,89,.1);
+  transition:transform .5s var(--ease),box-shadow .5s;
+  background:#faf9f4;
+  aspect-ratio:1800/1125;
+}
+.mock-wrap:hover{
+  transform:translateY(-6px) rotate(-.4deg);
+  box-shadow:0 40px 100px rgba(51,70,61,.3),0 0 0 1px rgba(78,99,89,.18);
+}
+.mock-wrap::before{
+  content:"";position:absolute;
+  top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--tinta) 0 62%,var(--mostaza) 62% 100%);
+  z-index:2;
+}
+.mock-wrap::after{
+  content:"";position:absolute;inset:0;
+  box-shadow:inset 0 0 60px rgba(78,99,89,.04);
+  pointer-events:none;z-index:1;
+}
+.mock-img{
+  width:100%;height:100%;
+  object-fit:cover;object-position:top center;
+  display:block;
+}
+
+/* Landing editorial */
+.landing-wrap{
+  max-width:1100px;margin:80px auto 0;padding:0 24px;
+  display:grid;grid-template-columns:1fr 1.5fr;gap:40px;
+  align-items:center;
+}
+.landing-info h3{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-size:2rem;color:var(--texto);
+  margin:12px 0 16px;
+}
+.landing-info h3 em{color:var(--tinta);font-style:italic}
+.landing-info p{font-size:1rem;color:var(--suave);line-height:1.7}
+.landing-img{
+  width:100%;height:auto;
+  border-radius:12px;
+  box-shadow:0 24px 60px rgba(51,70,61,.2),0 0 0 1px rgba(78,99,89,.1);
+  transition:transform .5s var(--ease),box-shadow .5s;
+}
+.landing-img:hover{
+  transform:scale(1.015);
+  box-shadow:0 32px 80px rgba(51,70,61,.28),0 0 0 1px rgba(78,99,89,.18);
+}
+@media(max-width:900px){
+  .landing-wrap{grid-template-columns:1fr;gap:28px}
+}
+
+/* Mockup base (legacy — unused but keep for safety) */
+.mock{
+  background:#fff;border-radius:12px;overflow:hidden;
+  box-shadow:0 30px 80px rgba(51,70,61,.18),0 0 0 1px rgba(78,99,89,.08);
+  font-family:"DM Sans",sans-serif;
+  transition:transform .5s var(--ease);
+}
+.mock:hover{transform:translateY(-4px) rotate(-.3deg)}
+.mock-bar{
+  height:36px;background:#f2f0e8;
+  display:flex;align-items:center;gap:6px;padding:0 14px;
+  border-bottom:1px solid var(--linea);
+}
+.mock-dot{width:10px;height:10px;border-radius:50%;background:#d9d5c5}
+.mock-dot.r{background:#f5b7b1}.mock-dot.y{background:#f9e79f}.mock-dot.g{background:#a9dfbf}
+.mock-url{
+  flex:1;text-align:center;color:var(--suave);
+  font-size:.68rem;letter-spacing:.05em;
+}
+
+/* Mockup Panel */
+.mp-header{
+  background:var(--tinta);color:#fff;
+  padding:16px 20px;display:flex;align-items:center;justify-content:space-between;
+}
+.mp-title{
+  font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:1.05rem;
+}
+.mp-title small{
+  display:block;font-family:"DM Sans",sans-serif;font-style:normal;
+  font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--mostaza);margin-bottom:2px;
+}
+.mp-avatar{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--mostaza),#a8ac2b);
+  color:var(--tinta-honda);font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;
+}
+.mp-syncbar{
+  background:#fdfbe8;color:#6b6410;
+  padding:6px 20px;font-size:.65rem;
+  border-bottom:1px solid #e4e0a8;
+  display:flex;align-items:center;gap:8px;
+}
+.mp-syncbar::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:#c9a63d;
+  animation:pulse 1.6s infinite;
+}
+@keyframes pulse{50%{opacity:.4}}
+.mp-body{padding:20px}
+.mp-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.mp-stat{
+  padding:12px;background:var(--papel);border:1px solid var(--linea);
+  text-align:center;border-radius:4px;
+}
+.mp-stat b{
+  display:block;font-family:"Cormorant Garamond",serif;
+  font-size:1.5rem;color:var(--tinta);
+}
+.mp-stat span{
+  display:block;font-size:.6rem;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--suave);margin-top:2px;
+}
+.mp-list{display:flex;flex-direction:column;gap:6px}
+.mp-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:var(--papel);border-radius:4px;
+  font-size:.75rem;transition:background .3s;
+}
+.mp-item:hover{background:var(--crema)}
+.mp-item .mp-couple{
+  font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:.9rem;color:var(--tinta-honda);flex:1;
+}
+.mp-item .mp-date{color:var(--suave);font-size:.68rem}
+.mp-item .mp-state{
+  padding:3px 8px;background:var(--tinta);color:#fff;
+  border-radius:999px;font-size:.58rem;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+}
+.mp-state.done{background:var(--mostaza);color:var(--tinta-honda)}
+.mp-state.week{background:var(--alerta);color:#fff}
+
+/* Mockup Portal Novios */
+.mock-portal .mp-header{background:linear-gradient(135deg,var(--tinta-honda),var(--tinta))}
+.portal-cover{
+  height:120px;background-size:cover;background-position:center;
+  position:relative;
+}
+.portal-cover::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent,rgba(51,70,61,.7));
+}
+.portal-cover .portal-couple{
+  position:absolute;bottom:14px;left:20px;right:20px;
+  z-index:2;color:#fff;
+  font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:1.4rem;line-height:1.1;
+  text-shadow:0 2px 12px rgba(0,0,0,.4);
+}
+.portal-cover .portal-date{
+  color:var(--mostaza);font-family:"DM Sans",sans-serif;
+  font-style:normal;font-size:.65rem;letter-spacing:.24em;
+  text-transform:uppercase;margin-top:4px;display:block;
+}
+.portal-nav{
+  display:flex;overflow-x:auto;gap:2px;
+  background:var(--papel);border-bottom:1px solid var(--linea);
+  padding:0 16px;
+}
+.portal-nav span{
+  padding:12px 14px;font-size:.7rem;
+  color:var(--suave);white-space:nowrap;
+  border-bottom:2px solid transparent;
+}
+.portal-nav span.on{color:var(--tinta);border-bottom-color:var(--tinta);font-weight:600}
+.portal-body{padding:20px}
+.portal-block{
+  padding:14px;background:var(--papel);border-radius:4px;
+  margin-bottom:10px;
+}
+.portal-block b{
+  display:block;font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:.95rem;color:var(--tinta-honda);margin-bottom:4px;
+}
+.portal-block small{
+  color:var(--suave);font-size:.7rem;line-height:1.5;
+}
+
+/* Mockup Mesas */
+.mock-mesas .venue{
+  padding:20px;background:var(--papel);position:relative;
+  min-height:280px;
+}
+.venue-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+}
+.mesa{
+  aspect-ratio:1;
+  border:2px solid var(--tinta);border-radius:50%;
+  background:#fff;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  font-size:.68rem;color:var(--tinta-honda);font-weight:600;
+  position:relative;cursor:pointer;
+  transition:transform .3s var(--ease),background .3s;
+}
+.mesa:hover{transform:scale(1.08);background:var(--mostaza-suave)}
+.mesa small{font-size:.55rem;color:var(--suave);margin-top:2px;font-weight:400}
+.mesa.principal{background:var(--tinta);color:#fff;border-color:var(--tinta-honda)}
+.mesa.principal small{color:var(--mostaza)}
+.mesa.pending{border-style:dashed;color:var(--suave)}
+.mesa.full{background:var(--mostaza-suave)}
+
+/* Mockup Contrato */
+.mock-contrato{background:#f8f7ef}
+.contrato-page{
+  padding:26px 30px;background:#fff;margin:16px;
+  border:1px solid var(--linea);
+  box-shadow:0 4px 20px rgba(0,0,0,.04);
+  font-family:"DM Sans",sans-serif;
+}
+.contrato-page h4{
+  font-family:"Cormorant Garamond",serif;font-weight:600;
+  font-size:.95rem;color:var(--tinta);
+  padding-bottom:8px;border-bottom:1px solid var(--tinta);
+  letter-spacing:.02em;
+}
+.contrato-page .contrato-titulo{
+  font-family:"Cormorant Garamond",serif;font-style:italic;
+  font-size:1.35rem;color:var(--tinta-honda);
+  margin:14px 0 8px;
+}
+.contrato-page p{font-size:.7rem;line-height:1.6;margin:8px 0;color:var(--texto)}
+.contrato-page .contrato-meta{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  padding:12px;background:var(--papel);
+  border-left:2px solid var(--mostaza);margin:12px 0;
+  font-size:.65rem;
+}
+.contrato-page .contrato-meta b{color:var(--tinta);display:block;margin-bottom:2px;font-size:.55rem;letter-spacing:.08em;text-transform:uppercase}
+
+/* Mockup Pagos */
+.mock-pagos .pagos-body{padding:20px}
+.pagos-hero{
+  padding:18px 20px;
+  background:linear-gradient(135deg,var(--tinta) 0%,var(--tinta-honda) 100%);
+  color:#fff;border-radius:6px;margin-bottom:14px;
+  position:relative;overflow:hidden;
+}
+.pagos-hero::after{
+  content:"";position:absolute;right:-30px;top:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:rgba(226,231,53,.14);
+}
+.pagos-hero .pagos-sum{
+  font-family:"Cormorant Garamond",serif;font-weight:400;
+  font-size:1.8rem;line-height:1;
+}
+.pagos-hero .pagos-lbl{
+  font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--mostaza);margin-bottom:6px;display:block;
+}
+.pagos-hero .pagos-progress{
+  height:6px;background:rgba(255,255,255,.16);border-radius:999px;
+  margin-top:14px;overflow:hidden;
+}
+.pagos-hero .pagos-progress span{
+  display:block;height:100%;background:var(--mostaza);
+  width:65%;border-radius:999px;
+  transition:width 1s var(--ease);
+}
+.plazo{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;background:var(--papel);
+  border-radius:4px;margin-bottom:6px;font-size:.75rem;
+}
+.plazo b{color:var(--tinta-honda);font-weight:600}
+.plazo small{color:var(--suave);font-size:.65rem;display:block;margin-top:2px}
+.plazo-tag{
+  padding:3px 10px;border-radius:999px;font-size:.6rem;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+}
+.plazo-tag.paid{background:var(--mostaza);color:var(--tinta-honda)}
+.plazo-tag.due{background:var(--alerta);color:#fff}
+.plazo-tag.next{background:var(--tinta);color:#fff}
+
+/* ═══════════════════════════════════════
+   Galería fotos reales
+═══════════════════════════════════════ */
+.galeria{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:14px;margin:40px 0;
+}
+.galeria a{
+  display:block;overflow:hidden;
+  aspect-ratio:1/1;position:relative;
+  border-radius:2px;
+}
+.galeria a::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 40%,rgba(51,70,61,.5));
+  opacity:0;transition:opacity .4s var(--ease);
+}
+.galeria img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .8s var(--ease);
+}
+.galeria a:hover img{transform:scale(1.08)}
+.galeria a:hover::after{opacity:1}
+
+/* ═══════════════════════════════════════
+   Cita
+═══════════════════════════════════════ */
+.cita{
+  background:var(--tinta);color:#fff;padding:100px 40px;
+  text-align:center;position:relative;overflow:hidden;
+}
+.cita::before{
+  content:"";position:absolute;
+  top:-40px;left:50%;transform:translateX(-50%);
+  font-family:"Cormorant Garamond",serif;font-size:14rem;
+  color:rgba(226,231,53,.08);line-height:1;
+  content:"❝";
+}
+.cita blockquote{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:400;font-style:italic;
+  font-size:clamp(1.6rem,3vw,2.2rem);
+  line-height:1.45;max-width:820px;margin:0 auto 32px;
+  position:relative;z-index:1;
+}
+.cita cite{
+  display:inline-block;font-size:.75rem;font-style:normal;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--mostaza);
+  position:relative;z-index:1;
+}
+
+/* ═══════════════════════════════════════
+   Demo CTA
+═══════════════════════════════════════ */
+.demo-sec{
+  background:var(--crema);
+  padding:100px 24px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.demo-sec::before{
+  content:"";position:absolute;
+  top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--tinta) 0 62%,var(--mostaza) 62% 100%);
+}
+.demo-sec .sec-h{margin:0 auto 24px;text-align:center}
+.demo-sec > p{margin:0 auto 32px;max-width:600px;color:var(--suave)}
+.demo-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:18px 36px;background:var(--tinta);color:#fff;
+  border:1px solid var(--tinta);
+  font-weight:600;font-size:1rem;letter-spacing:.02em;
+  transition:transform .3s var(--ease),background .3s,box-shadow .3s;
+  position:relative;overflow:hidden;
+}
+.demo-btn:hover{
+  background:var(--tinta-honda);transform:translateY(-3px);
+  box-shadow:0 20px 40px rgba(78,99,89,.3);
+}
+.demo-btn::after{content:"↗";transition:transform .3s var(--ease)}
+.demo-btn:hover::after{transform:translate(3px,-3px)}
+.demo-creds{
+  display:inline-flex;align-items:center;gap:20px;margin-top:24px;
+  padding:12px 22px;background:#fff;border:1px dashed var(--linea);
+  font-family:"SF Mono","Courier New",monospace;font-size:.78rem;
+  color:var(--tinta-honda);
+}
+.demo-creds b{color:var(--tinta)}
+
+/* ═══════════════════════════════════════
+   Footer
+═══════════════════════════════════════ */
+footer{
+  background:var(--tinta-honda);color:rgba(255,255,255,.75);
+  padding:60px 24px;text-align:center;
+}
+footer .aem-firma{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:1.5rem;color:#fff;margin-bottom:12px;
+  font-style:italic;
+}
+footer a{color:var(--mostaza);border-bottom:1px solid rgba(226,231,53,.4)}
+footer a:hover{border-bottom-color:var(--mostaza)}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.on{opacity:1;transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:900px){
+  .tab-panel.on{grid-template-columns:1fr;gap:32px}
+  .hero-datos{grid-template-columns:1fr 1fr;gap:24px}
+  .cifras{grid-template-columns:1fr 1fr}
+}
+@media(max-width:720px){
+  .hero{padding:100px 20px 60px}
+  .hero-cont{padding:16px}
+  .seccion{padding:70px 20px}
+  .caso{padding:20px}
+  .caso dl{grid-template-columns:1fr}
+  .caso dt{padding-top:0;margin-top:12px}
+  .galeria{grid-template-columns:1fr 1fr;gap:8px}
+  .cita{padding:70px 24px}
+  .app-tour{padding:70px 0}
+  .tab-btn{padding:12px 16px;font-size:.8rem}
+  .venue-grid{grid-template-columns:repeat(3,1fr);gap:10px}
+}
+</style>
+</head>
+<body>
+
+<div class="franja-top"></div>
+
+<div class="barra">
+  <a href="/" class="volver">← Portfolio</a>
+  <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-cta">Ver demo en vivo</a>
+</div>
+
+<main id="main">
+<!-- HERO CENTRADO -->
+<header class="hero">
+  <div class="hero-top">
+    <span class="hero-eyebrow">Caso de estudio · Producto y UX</span>
+    <h1>
+      Events Planner
+      <em>Un sistema operativo para bodas</em>
+    </h1>
+    <div class="hero-linea"></div>
+    <p class="hero-sub">
+      Cómo diseñé y construí una herramienta que tres personas usan de pie,
+      en una finca sin cobertura, el único día que no se puede repetir.
+    </p>
+  </div>
+
+  <div class="hero-media">
+    <img src="/assets/events-planner/screens/desktop-login.webp" alt="Pantalla de acceso de Events Planner: boda en la playa a la izquierda, monograma EP y logotipo Events Planner · Wedding + Events a la derecha">
+  </div>
+
+  <div class="hero-datos">
+    <div><span>Producto</span><b>Events Planner<br>Wedding + Events</b></div>
+    <div><span>Rol</span><b>Product designer<br>y desarrollo</b></div>
+    <div><span>Periodo</span><b>2026<br>En producción</b></div>
+    <div><span>Demo</span><b><a href="https://aem.rodd.es/" target="_blank" rel="noopener">aem.rodd.es ↗</a></b></div>
+  </div>
+
+  <div class="hero-scroll">Baja para ver el caso</div>
+</header>
+
+<!-- 01 · RESUMEN -->
+<section class="seccion narrow rv">
+  <span class="sec-num">01 · Resumen</span>
+  <h2 class="sec-h">Qué es y qué <em>resolvía</em></h2>
+
+  <p class="entradilla">
+    Events Planner está pensado para estudios de boda pequeños: tres
+    personas, entre ocho y doce bodas al año, con toda la operación
+    repartida entre WhatsApp, hojas de cálculo y el calendario del móvil
+    de una de ellas. El objetivo no era «hacer una app»: era dejar de
+    perder cosas.
+  </p>
+
+  <h3>El problema real</h3>
+  <p>
+    Una boda no es un proyecto grande, son doscientos detalles pequeños que
+    solo importan una tarde. Quién es celíaco. Quién no se puede sentar al
+    lado de quién. A qué hora llega el autocar. Si las chuches del candy bar
+    están pedidas o solo habladas. Ninguno de esos datos es complejo; lo
+    difícil es que estén todos, en el mismo sitio, y que los vean las tres
+    personas a la vez.
+  </p>
+  <p>
+    Lo que fallaba no era la falta de herramientas, era que había demasiadas.
+    El timing en un PDF, los invitados en un Excel, las alergias en un audio
+    de WhatsApp, el contrato en un correo de hace ocho meses. Cada cambio
+    obligaba a avisar a las otras dos, y el aviso se perdía.
+  </p>
+
+  <h3>El resultado, en cifras</h3>
+  <div class="cifras">
+    <div class="cifra"><b>5→1</b><span>de cinco herramientas dispersas a una sola app web</span></div>
+    <div class="cifra"><b>3</b><span>personas trabajando a la vez, viendo lo mismo</span></div>
+    <div class="cifra"><b>0</b><span>instalación: se abre desde el navegador</span></div>
+    <div class="cifra"><b>44px</b><span>mínimo en todo lo que se toca con el dedo</span></div>
+  </div>
+
+  <p>
+    Una aplicación web que funciona en móvil, tablet y ordenador, se instala
+    en la pantalla de inicio como si fuera nativa, <strong>sigue abriendo sin
+    cobertura</strong> y sincroniza sola en cuanto vuelve la señal. Con
+    portal privado para cada pareja, generación de contratos, presupuesto por
+    plazos, plano de mesas y dossieres imprimibles con la identidad del
+    estudio.
+  </p>
+</section>
+
+<!-- ═══ RECORRIDO POR LA APP ═══ -->
+<section class="app-tour rv" id="recorrido">
+  <div class="tour-h">
+    <span class="sec-eyebrow">Recorrido por la app</span>
+    <h2 class="sec-h">Cinco áreas, un mismo <em>sistema</em></h2>
+    <p style="max-width:720px;color:var(--suave)">
+      No son cinco herramientas conectadas; es una sola que cambia según lo
+      que hace falta ver en cada momento. Estos son los cinco lugares donde
+      pasa el día a día de una boda.
+    </p>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab-btn on" data-tab="panel" role="tab"><span class="tab-num">01</span>Panel</button>
+    <button class="tab-btn" data-tab="bodas" role="tab"><span class="tab-num">02</span>Bodas</button>
+    <button class="tab-btn" data-tab="mesas" role="tab"><span class="tab-num">03</span>Plano de mesas</button>
+    <button class="tab-btn" data-tab="pagos" role="tab"><span class="tab-num">04</span>Presupuesto y pagos</button>
+    <button class="tab-btn" data-tab="contrato" role="tab"><span class="tab-num">05</span>Contrato</button>
+    <button class="tab-btn" data-tab="portal" role="tab"><span class="tab-num">06</span>Portal novios</button>
+    <button class="tab-btn" data-tab="boda" role="tab"><span class="tab-num">07</span>Espacio de boda</button>
+  </div>
+
+  <div class="tab-panels">
+    <!-- PANEL -->
+    <div class="tab-panel on" data-panel="panel">
+      <div class="tab-info">
+        <h3>Panel del <em>equipo</em></h3>
+        <p class="tab-lead">
+          Lo que se ve al abrir la app: estado real de todas las bodas
+          activas, tareas de hoy, resumen general y distribución del
+          presupuesto.
+        </p>
+        <p>
+          Aquí conviven las tres personas del estudio: administradora,
+          coordinadora y asistente. Cada boda muestra su porcentaje de
+          preparación con una barra editorial — <strong>Ainhoa &amp; Diego al
+          83&nbsp;%, Lucía &amp; Martín al 67&nbsp;%, Clara &amp; Tomás
+          celebrada al 92&nbsp;%</strong>. La franja superior solo aparece
+          si hay cambios sin subir.
+        </p>
+        <ul>
+          <li><strong>Próximas bodas</strong> con etiqueta de estado (semana, en preparación, finalizada) y foto real.</li>
+          <li><strong>Tareas de hoy</strong> por boda, ordenadas por urgencia.</li>
+          <li><strong>Distribución del presupuesto</strong> con gráfico donut: catering, espacio, floral, foto, vídeo, música.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-dashboard.webp" alt="Panel de Events Planner mostrando próximas bodas, tareas de hoy, resumen general con gráfico de evolución y distribución del presupuesto por categoría" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <!-- BODAS -->
+    <div class="tab-panel" data-panel="bodas">
+      <div class="tab-info">
+        <h3>Listado de <em>bodas</em></h3>
+        <p class="tab-lead">
+          Toda la operación en una pantalla. Cada boda es una tarjeta con
+          cover propia, fecha, estado, invitados, tareas pendientes y
+          progreso.
+        </p>
+        <p>
+          Buscador por pareja, lugar o responsable y filtro por estado. El
+          equipo abre una boda en un clic y entra directamente a su
+          workspace completo. Se pueden duplicar bodas enteras como plantilla
+          para arrancar más rápido.
+        </p>
+        <ul>
+          <li><strong>Cards editoriales</strong> con el nombre de la pareja en Cormorant.</li>
+          <li><strong>Contador de días</strong> hasta el enlace (o «Celebrada»).</li>
+          <li><strong>Barra de preparación</strong> + atajos a tareas y «Wedding Day».</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-bodas.webp" alt="Pantalla de bodas de Events Planner con tres cards: Ainhoa y Diego, Lucía y Martín, Clara y Tomás, con fechas, estados y progreso" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <!-- MESAS -->
+    <div class="tab-panel" data-panel="mesas">
+      <div class="tab-info">
+        <h3>Plano del salón <em>interactivo</em></h3>
+        <p class="tab-lead">
+          Mesas redondas que se mueven, se renombran y se asignan invitado
+          por invitado. Con contador en vivo de confirmados, pendientes y
+          plazas libres.
+        </p>
+        <p>
+          Cada mesa muestra su ocupación (10/10 completa, 8/10 pocas plazas,
+          vacía). Hay botones de <strong>asignación automática</strong>,
+          exportar lista para el catering e imprimir seating editorial. En la
+          barra lateral derecha se abren los detalles de cada mesa al
+          seleccionarla.
+        </p>
+        <ul>
+          <li><strong>Codificación por color</strong> — verde completa, amarillo pocas plazas, blanco libre.</li>
+          <li><strong>Alergias vinculadas</strong> al listado de invitados para el menú del catering.</li>
+          <li><strong>Vista wedding planner</strong> vs. vista novios para que cada rol vea lo que necesita.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-mesas.webp" alt="Plano de mesas interactivo con mesa Presidencial, Olivo, Romero y stats de 52 invitados, 43 confirmados, 5 mesas creadas, 1 plaza libre" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <!-- PAGOS -->
+    <div class="tab-panel" data-panel="pagos">
+      <div class="tab-info">
+        <h3>Presupuesto por <em>bloques A / B</em></h3>
+        <p class="tab-lead">
+          El dinero de la boda visto desde dos ángulos: <strong>A —
+          facturado</strong> (con factura e IVA) y <strong>B — no
+          facturado</strong> (efectivo y acuerdos directos). Sin tablas
+          contables, con el margen y los pagos realizados a la vista.
+        </p>
+        <p>
+          Cada partida reúne presupuesto, reserva, segundo pago, restante,
+          vencimientos y justificantes. El sistema avisa cuando se acerca un
+          plazo o cuando una partida sobrepasa el objetivo. La pareja ve una
+          versión limpia en su portal.
+        </p>
+        <ul>
+          <li><strong>Objetivo global</strong> + contratado hasta ahora + margen que queda.</li>
+          <li><strong>Comprobantes</strong> subidos por partida (factura, Bizum, transferencia).</li>
+          <li><strong>Evolución visual</strong> del gasto por partida en el tiempo.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-presupuesto.webp" alt="Presupuesto de la boda Ainhoa y Diego: 29.500€ objetivo, 27.650€ contratado, bloque A facturado 26.951€ (97%), bloque B no facturado 699€ (3%)" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <!-- CONTRATO -->
+    <div class="tab-panel" data-panel="contrato">
+      <div class="tab-info">
+        <h3>Generador de <em>contratos</em></h3>
+        <p class="tab-lead">
+          Un contrato editorial que la pareja recibe en PDF, con la misma
+          tipografía de la marca. Se rellena con los datos de la boda que ya
+          están en el sistema: pareja, fecha, finca, importe, forma de pago.
+        </p>
+        <p>
+          El flujo tiene cuatro pasos explícitos —datos, generado, firmado,
+          recibido— y la aplicación avisa de qué falta antes de poder
+          generar el documento, en vez de dejar un botón activo que falla en
+          silencio. El equipo controla las variables sin tocar plantillas ni
+          Word.
+        </p>
+        <ul>
+          <li><strong>Estado siempre visible</strong> con los cuatro pasos del contrato.</li>
+          <li><strong>Validación explícita</strong> de los datos obligatorios antes de generar.</li>
+          <li><strong>Firma dibujada</strong> o marcado como firmado en papel, desde el portal.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-contrato.webp" alt="Pantalla de contrato de la boda Ainhoa y Diego con los cuatro pasos del flujo (datos, generado, firmado, recibido) y aviso de datos obligatorios pendientes" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <!-- PORTAL -->
+    <div class="tab-panel" data-panel="portal">
+      <div class="tab-info">
+        <h3>Portal privado de la <em>pareja</em></h3>
+        <p class="tab-lead">
+          Cada boda tiene su propio portal con URL única y clave. La pareja
+          entra desde el sofá y ve su boda — ni una interna, ni una de otra
+          pareja.
+        </p>
+        <p>
+          Portada personalizada con foto de la boda y cuenta atrás, y ocho
+          apartados: Resumen, Invitados, Mesas, Rincones, Presupuesto,
+          Proveedores, Plan y Detalles. Transparencia total con los números
+          — <em>«Estas son las mismas cifras que llevamos nosotras. No hay
+          dos cuentas.»</em>
+        </p>
+        <ul>
+          <li><strong>Acceso separado</strong> con clave propia por boda.</li>
+          <li><strong>Sin ver lo interno</strong> — las notas del equipo y márgenes no se cruzan aquí.</li>
+          <li><strong>Modo «ver como novios»</strong> para que el equipo compruebe exactamente lo que ve la pareja.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-portal.webp" alt="Portal privado de la pareja Ainhoa y Diego: portada con foto de la boda, 19 días hasta el enlace, ocho apartados y resumen del gran día" class="mock-img" loading="lazy">
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="boda">
+      <div class="tab-info">
+        <h3>Espacio de trabajo de <em>cada boda</em></h3>
+        <p class="tab-lead">
+          Cada boda abre su propio espacio con seis bloques: Resumen,
+          Planificación, Personas, Producción, Gestión y Herramientas.
+        </p>
+        <p>
+          La cabecera da la preparación calculada (10 de 12 bloques), los
+          días que faltan, los invitados confirmados, los proveedores
+          cerrados y el presupuesto pagado. Debajo, el siguiente hito del
+          timeline.
+        </p>
+        <ul>
+          <li><strong>Planificación</strong>: timeline, tareas y Wedding Day.</li>
+          <li><strong>Personas</strong>: invitados, mesas con plano, menús y alergias.</li>
+          <li><strong>Producción</strong>: proveedores propuestos a la pareja y catálogo de rincones con seguimiento de compra.</li>
+          <li><strong>Gestión y Herramientas</strong>: presupuesto, contrato, documentos y dossier imprimible.</li>
+        </ul>
+      </div>
+      <div class="mock-wrap">
+        <img src="/assets/events-planner/screens/desktop-boda.webp" alt="Espacio de trabajo de la boda de Ainhoa y Diego (datos de ejemplo): resumen con 83 % de preparación, 52 invitados, 9 proveedores y 27.650 euros de presupuesto" class="mock-img" width="1440" height="900" loading="lazy">
+      </div>
+    </div>
+  </div>
+
+  <!-- Login editorial -->
+  <div class="landing-wrap">
+    <div class="landing-info">
+      <span class="sec-eyebrow">Puerta de entrada</span>
+      <h3>Login <em>editorial</em></h3>
+      <p>
+        La primera pantalla cuenta la propuesta antes de pedir credenciales.
+        Foto real de boda a la izquierda, acceso tipográfico con el
+        monograma EP a la derecha, con instrucciones de acceso de prueba a
+        la vista — porque esto es un portfolio, no una producción real.
+      </p>
+    </div>
+    <img src="/assets/events-planner/screens/desktop-login.webp" alt="Login de Events Planner con imagen de boda en la playa, lema Cada boda paso a paso, y acceso de prueba admin / admin" class="landing-img" loading="lazy">
+  </div>
+</section>
+
+<!-- 02 · CONTEXTO -->
+<section class="seccion narrow rv">
+  <span class="sec-num">02 · Contexto</span>
+  <h2 class="sec-h">Quién lo usa, y <em>dónde</em></h2>
+
+  <p class="entradilla">
+    Casi todas las decisiones de este producto salen de una observación:
+    la herramienta no se usa sentada en una mesa. Se usa de pie, con una
+    mano, al sol, con prisa y con alguien hablándote.
+  </p>
+
+  <h3>Tres perfiles, tres necesidades distintas</h3>
+  <table class="tabla">
+    <thead>
+      <tr><th style="width:26%">Quién</th><th>Qué necesita</th><th style="width:26%">Dónde lo usa</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Administradora</td><td>Ver el estado de todas las bodas de un vistazo, el dinero y los contratos</td><td>Ordenador, oficina</td></tr>
+      <tr><td>Coordinadora</td><td>Cerrar proveedores, montar el plano de mesas, repasar el timing</td><td>Portátil y tablet</td></tr>
+      <tr><td>Asistente</td><td>Marcar cosas hechas durante el día de la boda</td><td>Móvil, de pie, en la finca</td></tr>
+      <tr><td>La pareja</td><td>Ver su boda sin ver nada interno ni de otras bodas</td><td>Móvil, en el sofá</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Las tres restricciones que marcaron el diseño</h3>
+  <h4>1 · No hay cobertura donde más falta hace</h4>
+  <p>Las fincas del Empordà y el Maresme tienen dos rayas de señal. El día de la boda no se puede recargar la página «a ver si ahora va». La aplicación tenía que abrir y funcionar sin red, guardar lo que se apunte y subirlo cuando vuelva la conexión. Eso condiciona la arquitectura entera.</p>
+
+  <h4>2 · El día de la boda no se repite</h4>
+  <p>Un error en una herramienta de oficina se corrige mañana. Aquí no hay mañana. Ante la duda, la aplicación tiene que <strong>fallar de forma ruidosa y explicarse</strong>, nunca quedarse callada haciendo como que todo va bien.</p>
+
+  <h4>3 · Hay datos de salud</h4>
+  <p>Las alergias de los invitados son datos de salud bajo el RGPD. No es una columna más de una tabla: obliga a pensar quién los ve, cuánto tiempo se guardan y qué pasa si el archivo acaba donde no debe.</p>
+
+  <div class="aviso">
+    <b>Sobre el alcance de mi papel</b>
+    <p>Este proyecto lo diseñé y lo construí yo: investigación, arquitectura de información, interfaz, sistema de diseño y desarrollo. Las decisiones de negocio —qué se cobra, cómo se factura, qué ve la pareja— son del estudio. En más de un punto discrepé y me equivocaba yo; queda anotado donde ocurrió.</p>
+  </div>
+</section>
+
+<!-- 03 · MÉTODO -->
+<section class="seccion narrow rv">
+  <span class="sec-num">03 · Método</span>
+  <h2 class="sec-h">Medir en vez de <em>opinar</em></h2>
+
+  <p class="entradilla">
+    La mayoría de los problemas de este proyecto no se veían mirando la
+    pantalla. Se veían midiéndola. Cambiar «creo que ese botón es pequeño»
+    por «ese botón mide 34×34 y la zona que responde al dedo también» hizo
+    que las revisiones dejaran de ser cuestión de gusto.
+  </p>
+
+  <h3>Auditoría automatizada en navegador real</h3>
+  <p>Monté un banco de pruebas que abre la aplicación en móvil, tablet y escritorio, entra, recorre las secciones y comprueba cosas concretas:</p>
+  <ul>
+    <li><strong>Textos que se pisan.</strong> Rectángulo real de cada texto, no el de la caja. Si algo tapa ese punto, se detecta.</li>
+    <li><strong>Zonas táctiles.</strong> No se mide el botón: se prueba punto por punto hasta dónde sigue respondiendo.</li>
+    <li><strong>Contenido atrapado.</strong> Nada pulsable debajo de la barra fija.</li>
+    <li><strong>Arranque.</strong> Que la aplicación pinte algo, en los tres tamaños, sin errores.</li>
+  </ul>
+
+  <h3>IA como herramienta de exploración, no de decisión</h3>
+  <p>Claude y GPT me ayudaron a acelerar la parte mecánica: convertir conversaciones con el equipo en flujos de usuario, generar variantes de microcopy en tono editorial, plantear casos límite que no se me hubieran ocurrido a la primera. La decisión de qué se queda y qué se descarta sigue siendo humana, medida contra el uso real. La IA acorta el camino; no reemplaza el criterio.</p>
+
+  <h3>Por qué importa la diferencia</h3>
+  <p>Un ejemplo. Para que el botón de menú fuese fácil de acertar con el dedo se le añadió un margen invisible de 6&nbsp;px. Visualmente perfecto. Medido, otra cosa:</p>
+  <div class="evidencia">botón ⋮        44×44
+zona real     34×34   ← el margen no llegaba
+punto (151,683) → responde el botón que está en (721,984)</div>
+  <p>El margen estaba mal anclado y, en vez de rodear el botón, formaba una capa transparente del tamaño de media pantalla que interceptaba los toques de todo lo que había debajo. <strong>Ninguna revisión visual lo habría encontrado</strong>: no se ve nada raro, simplemente hay sitios donde tocar no hace nada.</p>
+</section>
+
+<!-- 04 · HALLAZGOS 1 -->
+<section class="seccion rv">
+  <span class="sec-num">04 · Hallazgos y decisiones</span>
+  <h2 class="sec-h">Cuando el fallo <em>no se ve</em></h2>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Datos</i><h3>«La aplicación está vacía»</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>El equipo abría la herramienta y no había ninguna boda. Ni un error, ni una pantalla rota: vacía.</dd>
+      <dt>Causa</dt>
+      <dd>Los datos iniciales pesaban <span class="dato">6,44&nbsp;MB</span> y el navegador solo guarda unos 5. Al no caber, se perdía el guardado entero. Un problema de <em>tamaño</em> se manifestaba como «esto no funciona».</dd>
+      <dt>Decisión</dt>
+      <dd>Las fotos salieron del estado y pasaron a ser archivos con su ruta. Los datos bajaron de 3,76&nbsp;MB a <span class="dato">0,13&nbsp;MB</span>. Si algún día no cabe, ahora suelta lastre por orden —primero las fotos, nunca los datos— y avisa.</dd>
+      <dt>Lección</dt>
+      <dd>Un límite técnico se había convertido en un mensaje de producto equivocado. El usuario no puede deducir «no cabe» de una pantalla en blanco.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Confianza</i><h3>Un indicador que mentía</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>El panel anunciaba «3 bodas activas» cuando las tres ya se habían celebrado.</dd>
+      <dt>Causa</dt>
+      <dd>El contador miraba el texto del estado, que se queda en «En preparación» para siempre, e ignoraba la fecha.</dd>
+      <dt>Decisión</dt>
+      <dd>Usar el criterio que ya existía y era correcto. El contador pasó a decir la verdad, con desglose de cuántas se han celebrado.</dd>
+      <dt>Lección</dt>
+      <dd>Un indicador que miente una vez deja de mirarse, y con él todo el panel. La precisión no es un detalle: es la razón por la que alguien vuelve a mirarla.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Silencio</i><h3>Trabajar sin red y no saberlo</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>La base de datos dejó de responder. La aplicación siguió funcionando, guardando en el propio móvil, sin decir nada.</dd>
+      <dt>Causa</dt>
+      <dd>El aviso vivía dentro de Ajustes, donde nadie entra mientras trabaja. La única señal de guardado era un «✓» que se pintaba igual con conexión que sin ella.</dd>
+      <dt>Decisión</dt>
+      <dd>Franja fija bajo la barra superior, en todas las pantallas, que <strong>solo aparece cuando hay algo que contar</strong>: si no se ha conectado nunca o cuántos cambios quedan sin subir.</dd>
+      <dt>Lección</dt>
+      <dd>Tres personas podían pasarse el día apuntando cosas que las otras dos no verían nunca. El coste de no avisar no era técnico.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 05 · HALLAZGOS 2 -->
+<section class="seccion rv">
+  <span class="sec-num">05 · Hallazgos y decisiones</span>
+  <h2 class="sec-h">Diseñar para el dedo y para el <em>día</em></h2>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Táctil</i><h3>El botón que se veía pero no se podía tocar</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>La ✕ de borrar una foto medía 34×34 en móvil. Tenía un margen invisible para llegar a 44, pero no funcionaba.</dd>
+      <dt>Causa</dt>
+      <dd>Vive dentro del marco redondeado de la miniatura, que recorta todo lo que se sale. Ese recorte se comía el margen.</dd>
+      <dt>Decisión</dt>
+      <dd>Agrandar el botón de verdad a 44×44 y mantener el círculo oscuro pequeño con un borde transparente. Mismo aspecto, dedo que acierta.</dd>
+      <dt>Estado</dt>
+      <dd>Medido: <span class="dato">ningún control</span> por debajo de 44×44 en móvil.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Proceso</i><h3>Una nota no es un sí o un no</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>Cada rincón —candy bar, photocall, seating— tenía un campo de notas. Cada persona borraba lo que había escrito la anterior.</dd>
+      <dt>Observación</dt>
+      <dd>El seguimiento de un rincón no es un estado, es una secuencia en el tiempo: hay que comprar las chuches → están pedidas → han llegado.</dd>
+      <dt>Decisión</dt>
+      <dd>Un hilo de apuntes con quién, cuándo y qué. Cambiar el estado deja su propio apunte sin escribir nada, que es el 90&nbsp;% de lo que hay que contar.</dd>
+      <dt>Regla</dt>
+      <dd>Esto no lo ve la pareja. Es información de trabajo del equipo.</dd>
+    </dl>
+  </div>
+
+  <div class="caso">
+    <div class="caso-cab"><i>Cliente</i><h3>Cuando quien manda tiene razón</h3></div>
+    <dl>
+      <dt>Qué pasaba</dt>
+      <dd>El presupuesto se divide en A (facturado) y B (no facturado). Propuse ocultárselo a la pareja: ruido contable.</dd>
+      <dt>Respuesta</dt>
+      <dd>El estudio lo mantuvo. Esa división es cómo se trabaja en el sector, y esconderla genera más desconfianza que enseñarla.</dd>
+      <dt>Decisión</dt>
+      <dd>Se rediseñó la presentación para que se entienda sin explicación: dos bloques claros con lo pagado y lo pendiente, en vez de una tabla contable.</dd>
+      <dt>Lección</dt>
+      <dd>El diseñador conoce la interfaz; el cliente conoce su oficio. Cuando chocan, la carga de la prueba la tiene el diseñador.</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 06 · SISTEMA VISUAL -->
+<section class="seccion narrow rv">
+  <span class="sec-num">06 · Sistema visual</span>
+  <h2 class="sec-h">La marca, puesta a <em>trabajar</em></h2>
+
+  <p class="entradilla">
+    La identidad de Events Planner es editorial y serena: dos tipografías,
+    verde oliva y un acento dorado. Trasladarla a una herramienta operativa
+    obliga a resolver algo que un catálogo no tiene: densidad de información.
+  </p>
+
+  <div class="galeria">
+    <a href="/assets/events-planner/bosque-ceremonia.webp" target="_blank"><img src="/assets/events-planner/bosque-ceremonia.webp" alt="Ceremonia en el bosque"></a>
+    <a href="/assets/events-planner/arco-rosas.webp" target="_blank"><img src="/assets/events-planner/arco-rosas.webp" alt="Arco de ceremonia con rosas"></a>
+    <a href="/assets/events-planner/mesa-dulce.webp" target="_blank"><img src="/assets/events-planner/mesa-dulce.webp" alt="Mesa dulce decorada"></a>
+    <a href="/assets/events-planner/acantilado-ceremonia.webp" target="_blank"><img src="/assets/events-planner/acantilado-ceremonia.webp" alt="Ceremonia en el acantilado"></a>
+    <a href="/assets/events-planner/terraza-banquete.webp" target="_blank"><img src="/assets/events-planner/terraza-banquete.webp" alt="Banquete en la terraza"></a>
+    <a href="/assets/events-planner/jardin-iluminado.webp" target="_blank"><img src="/assets/events-planner/jardin-iluminado.webp" alt="Jardín iluminado de noche"></a>
+  </div>
+
+  <h3>Tipografía</h3>
+  <p>Dos familias, las de la marca. <strong>Italiana</strong> para titulares, que solo existe en un peso, y <strong>DM&nbsp;Sans</strong> para todo lo demás. Las cifras van siempre en DM&nbsp;Sans: Italiana no tiene peso suficiente para un número, y en esta herramienta los números son lo que se lee de lejos.</p>
+
+  <h3>Espaciado</h3>
+  <p>Antes cada bloque llevaba su relleno a ojo —18, 14, 12, 16, 22— y algunos ninguno. Se redujo a cinco valores y todo sale de ahí.</p>
+
+  <h3>Accesibilidad como requisito, no como repaso</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:44%">Decisión</th><th>Por qué</th></tr></thead>
+    <tbody>
+      <tr><td>44×44 mínimo en pantallas táctiles</td><td>Por debajo, con el dedo se falla el objetivo. Medido, no estimado.</td></tr>
+      <tr><td>Enlace «Saltar al contenido»</td><td>Con lector de pantalla, no hay que recorrer once entradas de menú.</td></tr>
+      <tr><td>Foco atrapado en diálogos</td><td>Y devuelto al botón que lo abrió al cerrar.</td></tr>
+      <tr><td>Nunca solo color</td><td>Los estados llevan texto o forma además del tono.</td></tr>
+      <tr><td>Se respeta «menos movimiento»</td><td>Quien lo pide no recibe el vídeo de bienvenida a pantalla completa.</td></tr>
+      <tr><td>Deshacer en lo destructivo</td><td>Borrar da unos segundos para recuperar en su posición original.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 07 · PRIVACIDAD -->
+<section class="seccion narrow rv">
+  <span class="sec-num">07 · Privacidad</span>
+  <h2 class="sec-h">Privacidad por diseño, desde el <em>primer día</em></h2>
+
+  <p class="entradilla">
+    Events Planner se publica como demostración desde el origen: misma
+    aplicación, mismas funciones, con datos inventados que no pasaron por
+    ninguna boda real. No es una versión limpiada después de construirla —
+    es la única versión que existe en abierto.
+  </p>
+
+  <h3>Convenciones, no excepciones</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:44%">Qué</th><th>Convención</th></tr></thead>
+    <tbody>
+      <tr><td>Correos</td><td><code>@example.com</code> — el dominio que la RFC&nbsp;2606 reserva justo para esto</td></tr>
+      <tr><td>Teléfonos</td><td><code>+34 600 000 0xx</code>, un bloque sin abonados</td></tr>
+      <tr><td>DNI</td><td><code>00000000T</code>, el ejemplo canónico</td></tr>
+      <tr><td>IBAN</td><td>todo ceros, no pasa el dígito de control</td></tr>
+      <tr><td>Parejas, invitados y proveedores</td><td>generados con semilla fija: reproducibles, nunca personas reales</td></tr>
+      <tr><td>Fotografías</td><td>solo material sin nombres impresos ni caras identificables</td></tr>
+    </tbody>
+  </table>
+
+  <h3>La comprobación, automatizada</h3>
+  <p>Antes de publicar, un script revisa el paquete entero —texto, imágenes incrustadas, teléfonos en cualquier formato— buscando que ninguna convención se haya roto. <strong>Si aparece un solo hallazgo, no se publica.</strong></p>
+
+  <div class="evidencia">✓ DNI real · ✓ IBAN real · ✓ dominio real · ✓ teléfonos reales
+✓ nombres fuera de convención · ✓ credenciales de nube
+✓ fotografías identificables
+
+═══ LIMPIO: nada fuera de convención en el paquete ═══</div>
+
+  <h3>El límite que ninguna herramienta cubre</h3>
+  <p>Un script encuentra texto y metadatos; no mira dentro de una fotografía. Las imágenes del proyecto se revisaron una a una antes de entrar al repositorio público, precisamente porque ese es el hueco que el propio script no puede cerrar.</p>
+
+  <div class="aviso">
+    <b>Decisión de producto</b>
+    <p>La demostración vive en su propio dominio con la identidad real de Events Planner —tiene sentido que se vea bien— pero lleva una franja fija en todas las pantallas advirtiendo de que los datos son de ejemplo. Sin botón de cerrar: si se pudiera cerrar, se cerraría en el primer minuto y ya no lo vería nadie más.</p>
+  </div>
+</section>
+
+<!-- 08 · RESULTADOS -->
+<section class="seccion narrow rv">
+  <span class="sec-num">08 · Resultados</span>
+  <h2 class="sec-h">Qué funciona, y qué <em>no</em></h2>
+
+  <h3>Comprobado</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:34%">Qué se comprobó</th><th>Resultado</th></tr></thead>
+    <tbody>
+      <tr><td>Trabajo simultáneo</td><td>Tres personas en la misma boda, en tres navegadores. Una crea una tarea y las otras dos la ven <strong>sin recargar</strong>.</td></tr>
+      <tr><td>Nadie pisa a nadie</td><td>Si dos guardan a la vez, la segunda no sobrescribe: se trae la versión de la otra y avisa.</td></tr>
+      <tr><td>Sin conexión</td><td>La aplicación abre igual y lo apuntado se sube solo al volver la señal.</td></tr>
+      <tr><td>Tres tamaños</td><td>Móvil, tablet y escritorio: arranca, se recorren todas las secciones, sin errores.</td></tr>
+      <tr><td>Zonas táctiles</td><td>Ningún control por debajo de 44×44 en móvil.</td></tr>
+      <tr><td>Peso</td><td>Los datos bajaron de 3,76&nbsp;MB a 0,13&nbsp;MB. El vídeo de móvil, de 2.316&nbsp;KB a 1.578&nbsp;KB sin perder calidad.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Hoja de ruta</h3>
+  <p>Evoluciones documentadas y priorizadas que aún no están hechas. Son las piezas que convertirían una app en una plataforma viva:</p>
+  <ol>
+    <li><strong>Cola de cambios sin conexión</strong> con reintento inteligente y resolución de conflictos avanzada, para equipos distribuidos en fincas remotas.</li>
+    <li><strong>Navegación mobile-first del portal</strong> con tabs scroll-snap y centrado automático de la sección activa.</li>
+    <li><strong>Plano de mesas táctil</strong> con pantalla completa, autoajuste al salón y zoom con dos dedos para gestión en el día.</li>
+    <li><strong>Panel orientado a excepciones</strong> —pagos vencidos, invitados sin mesa, alergias por validar— para que lo primero que se vea sea lo que requiere acción.</li>
+    <li><strong>Modos de boda diferenciados</strong> (reales, referencia y demostración) con separación visual clara dentro de la herramienta.</li>
+    <li><strong>Mejoras WCAG AAA</strong> en contraste y jerarquía, reforzando los estados con texto y forma además del color.</li>
+  </ol>
+</section>
+
+
+<!-- 09 · FICHA TÉCNICA -->
+<section class="seccion narrow rv" id="ficha">
+  <span class="sec-num">09 · Ficha técnica</span>
+  <h2 class="sec-h">Qué incluye, cómo está hecho y <em>qué falta</em></h2>
+
+  <p class="entradilla">
+    Todo lo que sigue sale del repositorio del producto. Lo que todavía no
+    está hecho se dice igual de claro que lo que sí.
+  </p>
+
+  <h3>Funcionalidades</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:34%">Área</th><th>Qué hace</th></tr></thead>
+    <tbody>
+      <tr><td>Panel de inicio</td><td>Lo que necesita atención hoy: preparación calculada, días restantes y alertas accionables.</td></tr>
+      <tr><td>Bodas y agenda</td><td>Listado de bodas, calendario mensual o en lista y espacio de trabajo por boda: timeline, tareas y Wedding Day.</td></tr>
+      <tr><td>Invitados y mesas</td><td>Invitados, plano de mesas, menús y alergias.</td></tr>
+      <tr><td>Proveedores</td><td>Proveedores reutilizables, valorables y propuestos a cada pareja. Buscador de proveedores en la web, apoyado en una función de servidor que guarda la clave de Google fuera del navegador y cachea 14 días.</td></tr>
+      <tr><td>Rincones</td><td>Catálogo con foto y descripción, y seguimiento de compra.</td></tr>
+      <tr><td>Presupuesto</td><td>Partidas y plazos, parte facturada y no facturada, pagos y comprobantes.</td></tr>
+      <tr><td>Contrato</td><td>Contrato imprimible a partir de los servicios contratados, con firma dibujada o marcado como firmado en papel.</td></tr>
+      <tr><td>Portal de parejas</td><td>Cada pareja ve solo su boda, nunca notas internas ni datos del equipo, y puede tener tareas asignadas.</td></tr>
+      <tr><td>Exportación</td><td>Centro de exportación con selección de contenido y destinatario (equipo, parejas o proveedores) y dossier imprimible con portada y paleta de la boda.</td></tr>
+      <tr><td>Dispositivos</td><td>Barra lateral en escritorio, barra de tablet y barra inferior en móvil. Se instala como app y abre sin conexión.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Stack</h3>
+  <table class="tabla">
+    <thead><tr><th style="width:34%">Pieza</th><th>Cómo está resuelta</th></tr></thead>
+    <tbody>
+      <tr><td>Interfaz</td><td>HTML, CSS y JavaScript con módulos ES nativos, sin framework. Un paso de compilación une los módulos en un solo paquete y estampa cada versión para que ningún móvil se quede con una copia antigua.</td></tr>
+      <tr><td>Sin conexión</td><td>Manifiesto de app y service worker con red primero. Supabase y cualquier API van siempre por red, nunca desde caché.</td></tr>
+      <tr><td>Datos</td><td>Supabase (PostgreSQL) con ocho migraciones versionadas, seguridad por filas en todas las tablas expuestas, almacenamiento privado para documentos y estado compartido con control de concurrencia y tiempo real.</td></tr>
+      <tr><td>Auditoría</td><td>Puente relacional para bodas y tareas con registro de servidor del actor y de los datos antes y después.</td></tr>
+      <tr><td>Pruebas</td><td>15 pruebas pgTAP de base de datos: sincronización, estados, responsables, auditoría, borrado lógico y aislamiento por membresía.</td></tr>
+      <tr><td>Seguridad</td><td>Escapado HTML sistemático en las filas de datos, contra XSS almacenado.</td></tr>
+      <tr><td>Demo</td><td>Tres bodas inventadas con semilla fija cuyas fechas se desplazan al cargar. Sin credenciales de nube: guarda en el navegador de quien visita y caduca a la semana.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Lo que aún no está</h3>
+  <ul>
+    <li>Migración de los módulos restantes a tablas relacionales dedicadas: hoy el estado compartido sigue como origen compatible.</li>
+    <li>Cola de cambios sin conexión con reintento y resolución de conflictos.</li>
+    <li>Pasarela de pago real (hoy hay aviso y comprobante) y firma electrónica cualificada (hoy es un dibujo).</li>
+    <li>Dossier en PDF generado en servidor: hoy usa la impresión del navegador.</li>
+    <li>Tests de frontend, integración completa y E2E; CI/CD, copias de seguridad y restauración.</li>
+    <li>Versión en tres idiomas (es, ca, en).</li>
+  </ul>
+</section>
+
+<!-- CITA -->
+<section class="cita rv">
+  <blockquote>
+    Lo que hace difícil una herramienta como ésta no es lo que tiene que
+    hacer. Es lo que no se puede permitir hacer mal el único día que importa.
+  </blockquote>
+  <cite>Rodrigo Negrete · Product designer</cite>
+</section>
+
+<!-- DEMO -->
+<section class="demo-sec rv">
+  <span class="sec-eyebrow">Demo en vivo</span>
+  <h2 class="sec-h" style="text-align:center;margin:0 auto 24px">Pruébalo con datos <em>inventados</em></h2>
+  <p>
+    Versión publicable con la misma interfaz, sin credenciales ni datos reales.
+    Funciona íntegramente en el navegador de quien la visita.
+  </p>
+  <a href="https://aem.rodd.es/" target="_blank" rel="noopener" class="demo-btn">Abrir la demo</a>
+  <div class="demo-creds">
+    <span><b>Usuario:</b> admin</span>
+    <span><b>Contraseña:</b> admin</span>
+    <span><b>Portal novios:</b> demo2026</span>
+  </div>
+</section>
+
+</main>
+<footer>
+  <div class="aem-firma">Events Planner</div>
+  <p style="font-size:.85rem">
+    Diseño de producto, sistema visual y desarrollo por <a href="/">Rodrigo Negrete</a>.
+    <br>
+    Vuelve al <a href="/">portfolio completo</a>.
+  </p>
+</footer>
+
+<script>
+// Reveal on scroll
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+// Tabs (recorrido por la app)
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('on', b === btn));
+    document.querySelectorAll('.tab-panel').forEach(p => {
+      p.classList.toggle('on', p.dataset.panel === tab);
+    });
+  });
+});
+
+// Auto-rotate tabs (pausa on hover)
+let tabIdx = 0;
+const tabButtons = document.querySelectorAll('.tab-btn');
+let autoTimer = null;
+function autoNext(){
+  tabIdx = (tabIdx + 1) % tabButtons.length;
+  tabButtons[tabIdx].click();
+}
+function startAuto(){ autoTimer = setInterval(autoNext, 6000); }
+function stopAuto(){ if(autoTimer){ clearInterval(autoTimer); autoTimer = null; } }
+const tourEl = document.querySelector('.app-tour');
+if(tourEl){
+  const tourIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => e.isIntersecting ? startAuto() : stopAuto());
+  }, { threshold: .2 });
+  tourIO.observe(tourEl);
+  tourEl.addEventListener('mouseenter', stopAuto);
+  tourEl.addEventListener('mouseleave', () => { if(!autoTimer) startAuto(); });
+  tourEl.addEventListener('click', () => {
+    stopAuto();
+    // reanudar tras 20s
+    setTimeout(() => { if(!autoTimer) startAuto(); }, 20000);
+  });
+}
+</script>
+
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>

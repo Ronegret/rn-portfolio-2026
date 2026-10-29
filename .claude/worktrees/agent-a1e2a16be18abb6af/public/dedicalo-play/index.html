@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caso de estudio: Dedícalo Play — juego musical multijugador con música online integrada, modo TV y onboarding guiado. Naming, paleta, UX, arquitectura, testing y stack técnico completo.">
+  <title>Dedícalo Play | Case Study — Juego Musical UX/UI</title>
+  <link rel="canonical" href="https://rodrigonegrete.es/dedicalo-play/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Dedícalo Play | Case Study — Juego Musical UX/UI">
+  <meta property="og:description" content="Caso de estudio: Dedícalo Play — juego musical multijugador con música online integrada, modo TV y onboarding guiado. Naming, paleta, UX, arquitectura, testing y stack técnico completo.">
+  <meta property="og:image" content="https://rodrigonegrete.es/assets/dedicalo-play/og.jpg">
+  <meta property="og:url" content="https://rodrigonegrete.es/dedicalo-play/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://rodrigonegrete.es/assets/dedicalo-play/og.jpg">
+  <link rel="icon" href="/assets/dedicalo-play/icon-app.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/dedicalo-play.css">
+</head>
+<body>
+
+<div class="eq-bg" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<header>
+  <div class="wrap">
+
+    <!-- NAV -->
+    <nav class="dp-nav">
+      <a href="/#proyectos" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Portfolio
+      </a>
+      <a href="https://play.dedicalo.es" target="_blank" rel="noopener" class="live-link">Jugar ahora →</a>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero-grid">
+
+      <!-- Copy -->
+      <div class="hero-copy">
+        <div class="logo-pill">
+          <img src="/assets/dedicalo-play/logo-horizontal.png" alt="Dedícalo Play">
+          <span class="logo-dot"></span>
+        </div>
+        <p class="eyebrow">Juego musical · UX/UI · IA aplicada · Multijugador</p>
+        <div class="hero-badges">
+          <span class="hero-badge hb-live">● En producción</span>
+          <span class="hero-badge hb-new">✦ Nueva versión 2026</span>
+        </div>
+        <h1>La música como<br>nunca la<br>habías jugado.</h1>
+        <p class="lead">Adivina canciones, sabotea a tus amigos y gana llegando primero a la meta. Diseñé y construí un juego multijugador de cultura musical — naming, identidad, mecánicas, integración Spotify y stack técnico completo end-to-end. Iterado en base a partidas reales.</p>
+        <div class="hero-actions">
+          <a href="#proceso" class="btn primary">Ver proceso de diseño</a>
+          <a href="#stack" class="btn secondary">Stack técnico</a>
+        </div>
+      </div>
+
+      <!-- VINYL PLAYER -->
+      <div class="vinyl-player rv">
+        <audio id="vp-audio" src="/assets/dedicalo-play/dedi.mp3" preload="metadata"></audio>
+
+        <div class="vinyl-disc-wrap">
+          <div class="vinyl-disc" id="vp-disc">
+            <div class="vinyl-label">
+              <img src="/assets/dedicalo-play/logo-main.png" alt="">
+            </div>
+          </div>
+          <!-- Needle SVG -->
+          <div class="vinyl-needle" id="vp-needle">
+            <svg viewBox="0 0 54 74" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="27" cy="10" r="9" fill="#1a1f2e" stroke="rgba(255,255,255,.15)" stroke-width="1.5"/>
+              <circle cx="27" cy="10" r="4" fill="rgba(255,107,43,.7)"/>
+              <rect x="25.5" y="18" width="3" height="46" rx="1.5" fill="#1a1f2e" stroke="rgba(255,255,255,.1)" stroke-width="1"/>
+              <ellipse cx="27" cy="66" rx="5" ry="3" fill="#ff6b2b" opacity=".8"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Track info & controls -->
+        <div class="vinyl-controls">
+          <div class="vinyl-track-info">
+            <span class="vinyl-track-label">🎵 Escucha el juego</span>
+            <span class="vinyl-track-title">Dedícalo Play — Demo oficial</span>
+          </div>
+          <div class="vinyl-btn-row">
+            <button class="vinyl-play-btn" id="vp-btn" aria-label="Reproducir">
+              <!-- Play icon (default) -->
+              <svg id="vp-icon-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <!-- Pause icon (hidden) -->
+              <svg id="vp-icon-pause" viewBox="0 0 24 24" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+            </button>
+          </div>
+          <div class="vinyl-progress-wrap">
+            <div class="vinyl-progress" id="vp-progress" role="progressbar">
+              <div class="vinyl-bar" id="vp-bar"></div>
+            </div>
+            <span class="vinyl-time" id="vp-time">0:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- METRICS -->
+    <div class="metric-strip rv">
+      <div class="metric-card"><strong>3</strong><span>modos de juego</span></div>
+      <div class="metric-card"><strong>TV</strong><span>modo pantalla grande</span></div>
+      <div class="metric-card"><strong>0</strong><span>cuentas externas</span></div>
+      <div class="metric-card"><strong>Real‑time</strong><span>multijugador en vivo</span></div>
+    </div>
+
+  </div><!-- /wrap -->
+</header>
+
+<main>
+
+  <!-- ══ 1. NOMBRE ══ -->
+  <hr class="section-divider">
+  <section>
+    <div class="wrap">
+      <div class="split rv" id="nombre">
+        <div>
+          <p class="eyebrow">Por qué este nombre</p>
+          <h2>«Dedícalo Play» no es casual — cada palabra tiene peso.</h2>
+          <p class="section-sub">El naming fue el primer reto estratégico. Necesitaba un nombre que cargara significado por sí solo antes de que el usuario abriera la app.</p>
+          <ul class="check-list">
+            <li><strong>Dedícalo</strong> — mantiene el equity de marca del ecosistema musical existente. Los usuarios que conocen <a href="/dedicalo/" style="color:var(--orange)">Dedícalo.es</a> entienden de inmediato el universo. No partimos de cero.</li>
+            <li><strong>Play</strong> — doble significado intencionado: <em>play</em> como reproducir música y <em>play</em> como jugar. Una sola palabra activa los dos pilares del producto.</li>
+            <li><strong>play.dedicalo.es</strong> — el subdominio refuerza la jerarquía de marca. Es un hijo del ecosistema, mejora el SEO de dominio raíz y genera coherencia total.</li>
+          </ul>
+          <div class="dp-quote">"El nombre ideal para un producto musical y social no es el que describe lo que hace, sino el que genera la emoción correcta antes de abrirlo."</div>
+        </div>
+        <div class="img-frame">
+          <img src="/assets/dedicalo-play/logo-main.png" alt="Logo principal de Dedícalo Play" style="padding:2.5rem;background:#08091a;">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 2. PALETA ══ -->
+  <hr class="section-divider">
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow">Identidad visual</p>
+        <h2>Una paleta que comunica fiesta, música y competición.</h2>
+        <p class="section-sub">Cada color tiene una función semántica. El sistema debe funcionar en entornos oscuros — discotecas, fiestas, reuniones nocturnas — donde se usa el producto.</p>
+      </div>
+      <div class="palette rv">
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#05080f"></div>
+          <div class="swatch-info"><span class="swatch-name">Negro Vinilo</span><span class="swatch-hex">#05080f</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#ff6b2b"></div>
+          <div class="swatch-info"><span class="swatch-name">Naranja Fiesta</span><span class="swatch-hex">#ff6b2b</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#e0291a"></div>
+          <div class="swatch-info"><span class="swatch-name">Rojo Acción</span><span class="swatch-hex">#e0291a</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#1db954"></div>
+          <div class="swatch-info"><span class="swatch-name">Verde Spotify</span><span class="swatch-hex">#1db954</span></div>
+        </div>
+        <div class="swatch">
+          <div class="swatch-color" style="--sw:#f0f4ff; outline:1px solid rgba(255,255,255,.12)"></div>
+          <div class="swatch-info"><span class="swatch-name">Blanco Texto</span><span class="swatch-hex">#f0f4ff</span></div>
+        </div>
+      </div>
+      <div class="grid-3 rv" style="margin-top:1.5rem;">
+        <div class="dp-card">
+          <div class="card-icon">🎨</div>
+          <h4>Negro como fondo dominante</h4>
+          <p>Refleja el entorno nocturno de uso. Maximiza el contraste y reduce la fatiga ocular en partidas largas. Referencia directa al vinilo.</p>
+          <span class="card-tag">Contexto</span>
+        </div>
+        <div class="dp-card">
+          <div class="card-icon">🔥</div>
+          <h4>Naranja + Rojo = acción</h4>
+          <p>Naranja activa urgencia sin agresividad. Rojo señala acciones críticas: puntos, tiempo límite, eliminación. La combinación evoca energía musical y calor de fiesta.</p>
+          <span class="card-tag">UX emocional</span>
+        </div>
+        <div class="dp-card spotify">
+          <div class="card-icon" style="background:var(--spotify)">🎵</div>
+          <h4>Verde Spotify = confianza</h4>
+          <p>Reutilizo el verde de Spotify de forma deliberada. Cuando el usuario lo ve, asocia música real, streaming y legitimidad de marca.</p>
+          <span class="card-tag green">Asociación</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 3. PROCESO ══ -->
+  <hr class="section-divider">
+  <section id="proceso">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow">Análisis y proceso UX</p>
+        <h2>Primero entendí el espacio. Luego diseñé la solución.</h2>
+        <p class="section-sub">El proceso arrancó con benchmark honesto: ¿qué juegos musicales existen, qué los hace adictivos y qué fricción generan? Solo después tomé decisiones de diseño.</p>
+      </div>
+      <div class="grid-3 rv">
+        <div class="dp-card"><span class="card-num">01</span>
+          <div class="card-icon">🔍</div>
+          <h4>Benchmark competitivo</h4>
+          <p>Analicé Kahoot, SongPop, Heardle y Quiz Spotify. Todos hacen que el usuario adivine canciones ajenas. Nadie usaba la música propia como mecánica central.</p>
+          <span class="card-tag">Research</span>
+        </div>
+        <div class="dp-card"><span class="card-num">02</span>
+          <div class="card-icon">💡</div>
+          <h4>Insight clave</h4>
+          <p>La emoción más fuerte no es adivinar canciones genéricas — es que tu grupo demuestre quién tiene mejor cultura musical. El sabotaje multiplica esa tensión. Ahí estaba la oportunidad.</p>
+          <span class="card-tag">Insight</span>
+        </div>
+        <div class="dp-card"><span class="card-num">03</span>
+          <div class="card-icon">🗺️</div>
+          <h4>Journey map</h4>
+          <p>Mapeé el flujo completo. Encontré 3 puntos de fricción críticos: crear sala, unirse sin cuenta y entender las reglas en menos de 10 segundos.</p>
+          <span class="card-tag">UX Research</span>
+        </div>
+        <div class="dp-card"><span class="card-num">04</span>
+          <div class="card-icon">⚡</div>
+          <h4>Principio de diseño</h4>
+          <p>Cero fricción en los primeros 30 segundos. Unirse a una partida activa solo requiere un código PIN de 6 dígitos. Sin registro obligatorio en la entrada.</p>
+          <span class="card-tag">Decisión UX</span>
+        </div>
+        <div class="dp-card"><span class="card-num">05</span>
+          <div class="card-icon">📱</div>
+          <h4>Mobile-first estricto</h4>
+          <p>El 100% de las partidas se juegan desde el móvil en entornos ruidosos. Cada elemento debía ser funcional con el pulgar y visible con música de fondo.</p>
+          <span class="card-tag">Contexto</span>
+        </div>
+        <div class="dp-card"><span class="card-num">06</span>
+          <div class="card-icon">🧪</div>
+          <h4>Testing con usuarios reales</h4>
+          <p>Tres sesiones de prueba con grupos reales. Hallazgo clave: nadie leía instrucciones. Redesigné el flujo para que las reglas se enseñaran jugando, no explicando.</p>
+          <span class="card-tag">Testing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 4. CÓMO SE JUEGA ══ -->
+  <hr class="section-divider">
+  <section class="band">
+    <div class="wrap">
+      <div class="split rv">
+        <div>
+          <p class="eyebrow">Mecánicas de juego</p>
+          <h2>Adivina. Sabotea. Gana llegando primero a la meta.</h2>
+          <p class="section-sub">Restricción de diseño clara: cualquier persona debe entender cómo funciona antes de que empiece la primera canción. La interfaz es el tutorial.</p>
+          <ul class="check-list">
+            <li><strong>Paso 1 — Crear sala:</strong> el anfitrión abre la app, elige playlist y modo de juego. Sin Spotify, sin cuenta externa. La app genera un PIN de 6 dígitos y — opcional — envía la sala a la TV vía Chromecast/AirPlay o navegador de Smart TV.</li>
+            <li><strong>Paso 2 — Escuchar y adivinar:</strong> la música suena en el player integrado (o en la TV). Los jugadores responden en su móvil: artista, año o pregunta meta según el modo.</li>
+            <li><strong>Paso 3 — Sabotear y escalar:</strong> acumula puntos, activa sabotajes contra el líder y escala en el ranking. Gana quien llegue primero a la meta.</li>
+          </ul>
+          <div class="grid-3" style="margin-top:1.5rem;gap:.75rem;">
+            <div class="dp-card" style="padding:1.1rem;">
+              <div class="card-icon" style="margin-bottom:.6rem;">🎵</div>
+              <h4 style="font-size:.88rem;">Pulse</h4>
+              <p>¿Quién canta? Adivina el artista antes de que acabe el tiempo.</p>
+            </div>
+            <div class="dp-card" style="padding:1.1rem;">
+              <div class="card-icon" style="margin-bottom:.6rem;">📅</div>
+              <h4 style="font-size:.88rem;">Timeline</h4>
+              <p>Coloca la canción en la línea del tiempo según su año de lanzamiento.</p>
+            </div>
+            <div class="dp-card" style="padding:1.1rem;">
+              <div class="card-icon" style="margin-bottom:.6rem;">💥</div>
+              <h4 style="font-size:.88rem;">Chaos</h4>
+              <p>Preguntas meta sobre el juego mismo. El caos es parte de la estrategia.</p>
+            </div>
+          </div>
+        </div>
+        <div class="img-frame">
+          <img src="/assets/dedicalo-play/hero-how-to-play.png" alt="Cómo jugar a Dedícalo Play en 3 pasos">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 5. MÚSICA ONLINE + TV MODE (iteración 2026) ══ -->
+  <hr class="section-divider">
+  <section class="band" id="musica-tv">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow" style="color:var(--orange)">✦ Nueva versión 2026 · Música online + TV</p>
+        <h2>Cero cuentas externas. Reproducción online integrada y modo TV.</h2>
+        <p class="section-sub">La primera versión requería Spotify Premium para el anfitrión. Reescribí la capa de reproducción por completo: ahora la música vive dentro del propio producto — servida en streaming, sin registro, sin app externa — y la sala puede lanzarse directamente en la TV para que todos vean marcador, ronda y cuenta atrás en pantalla grande.</p>
+      </div>
+
+      <div class="split rv" style="align-items:flex-start;gap:clamp(2rem,4vw,4rem);">
+        <div>
+          <div class="dp-card" style="margin-bottom:1rem;">
+            <div class="card-icon">🎧</div>
+            <h4>Reproductor online integrado</h4>
+            <p>El motor de audio corre dentro de la propia app: streaming servido desde el CDN, catálogo curado y controles unificados. <strong>Ya no hace falta Spotify Premium</strong> ni ninguna cuenta de música — se abre, se elige playlist, suena.</p>
+            <span class="card-tag">Sin credenciales externas</span>
+          </div>
+          <div class="dp-card" style="margin-bottom:1rem;">
+            <div class="card-icon">📺</div>
+            <h4>Modo TV — la sala en pantalla grande</h4>
+            <p>El anfitrión abre <code style="font-size:.82em">play.dedicalo.es</code> en el navegador de la Smart TV o hace cast desde el móvil. La TV se convierte en el tablero: marcador, canción actual, cuenta atrás y ranking. Los invitados solo miran la TV y responden en su móvil.</p>
+            <span class="card-tag">Chromecast · AirPlay · Navegador TV</span>
+          </div>
+          <div class="dp-card">
+            <div class="card-icon">📱</div>
+            <h4>Invitados — solo el PIN, nada más</h4>
+            <p>Los invitados entran con un PIN de 6 dígitos. Sin cuenta, sin app, sin instalación. Miran la TV o el móvil del anfitrión, responden en su pantalla y ven puntos en tiempo real. La fricción de entrada es prácticamente nula.</p>
+            <span class="card-tag">Cero fricción</span>
+          </div>
+        </div>
+
+        <div>
+          <p class="eyebrow">Playlists curadas dentro de la app</p>
+          <p style="color:var(--muted);font-size:.88rem;margin:.4rem 0 1.1rem;line-height:1.6;">Catálogo fijo y curado, servido desde el propio producto. El anfitrión elige el género antes de crear la sala — sin buscar, sin filtrar, sin cuenta externa.</p>
+          <div class="grid-2" style="gap:.6rem;">
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🔥 <span style="font-size:.82rem;">Reggaeton</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🌍 <span style="font-size:.82rem;">Hits globales</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎸 <span style="font-size:.82rem;">Rock Latino</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">⚡ <span style="font-size:.82rem;">Mix Latino</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">💃 <span style="font-size:.82rem;">Bailable</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">💜 <span style="font-size:.82rem;">Románticas</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🕺 <span style="font-size:.82rem;">Perreo Clásico</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🇪🇸 <span style="font-size:.82rem;">Temazos ES</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎺 <span style="font-size:.82rem;">Rock y Ska</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎲 <span style="font-size:.82rem;">De Todo</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🎉 <span style="font-size:.82rem;">Fiesta Pueblo</span></div>
+            <div class="flow-node" style="justify-content:flex-start;display:flex;align-items:center;gap:.5rem;border-radius:12px;padding:.5rem .85rem;">🚀 <span style="font-size:.82rem;">Just Go</span></div>
+          </div>
+          <div class="dp-quote" style="margin-top:1.5rem;">
+            "Cada dependencia externa que retiras es una razón menos para que el usuario se caiga en el onboarding. Sin Spotify, sin cuentas, sin descargas — abrir y jugar."
+          </div>
+        </div>
+      </div>
+
+      <div class="rv" style="margin-top:2.5rem;">
+        <p class="eyebrow">Flujo de reproducción — versión 2026</p>
+        <div class="flow">
+          <div class="flow-node hi">Anfitrión elige playlist</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Player integrado (streaming propio)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node gr">TV / móvil / Chromecast</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node">Realtime sync (Supabase)</div>
+          <div class="flow-arrow">→</div>
+          <div class="flow-node hi">Preguntas en móviles de invitados</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 5b. ONBOARDING PASO A PASO (iteración 2026) ══ -->
+  <hr class="section-divider">
+  <section id="onboarding">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow" style="color:var(--orange)">✦ Nueva versión 2026 · Onboarding guiado</p>
+        <h2>Crear una sala te enseña a jugar. Sin manual, sin tutorial escondido.</h2>
+        <p class="section-sub">La fricción del anfitrión era el mayor punto de caída. Rediseñé el flujo de creación de sala como un onboarding paso a paso: cada pantalla explica una decisión, muestra el resultado y avanza. El primer usuario entiende el juego <strong>mientras</strong> configura la sala.</p>
+      </div>
+
+      <div class="grid-4 rv">
+        <div class="dp-card"><span class="card-num">01</span>
+          <div class="card-icon">🎨</div>
+          <h4>Elige género</h4>
+          <p>Selector visual con las 12 playlists curadas. La app te previsualiza tono y ejemplo de canción para que el anfitrión aterrice el ambiente antes de invitar a nadie.</p>
+          <span class="card-tag">Paso guiado</span>
+        </div>
+        <div class="dp-card"><span class="card-num">02</span>
+          <div class="card-icon">🎮</div>
+          <h4>Elige modo de juego</h4>
+          <p>Pulse (adivinar artista), Timeline (colocar año) o Chaos (preguntas meta). Cada modo se explica con un ejemplo en pantalla — no hay que leer texto largo para entender la mecánica.</p>
+          <span class="card-tag">Educa al jugar</span>
+        </div>
+        <div class="dp-card"><span class="card-num">03</span>
+          <div class="card-icon">⚙️</div>
+          <h4>Ajustes de partida</h4>
+          <p>Duración, sabotajes activados/desactivados, longitud del clip, reglas de desempate. Todos los ajustes vienen con default probado en partidas reales — el anfitrión puede empezar sin tocar nada.</p>
+          <span class="card-tag">Defaults inteligentes</span>
+        </div>
+        <div class="dp-card"><span class="card-num">04</span>
+          <div class="card-icon">🔑</div>
+          <h4>Genera PIN e invita</h4>
+          <p>Al terminar el flujo, la app muestra el PIN de 6 dígitos, un QR y el link corto. El anfitrión decide cómo compartir — WhatsApp, TV, mostrar la pantalla — y la sala arranca.</p>
+          <span class="card-tag">Compartir en un tap</span>
+        </div>
+      </div>
+
+      <div class="split rv" style="margin-top:2.5rem;">
+        <div>
+          <p class="eyebrow">"Cómo jugar" — sección educativa</p>
+          <h3 style="font-family:var(--head);font-size:clamp(1.3rem,2.4vw,1.8rem);color:var(--ink);margin:.6rem 0 1rem;line-height:1.15;">Un mini-tutorial pensado para leer en 30 segundos.</h3>
+          <p style="color:var(--muted);line-height:1.75;margin-bottom:1rem;">Antes, los invitados llegaban a la partida sin entender las reglas. La nueva sección <strong style="color:var(--orange)">"Cómo jugar"</strong>, accesible desde cualquier pantalla, explica en 4 tarjetas visuales:</p>
+          <ul class="check-list">
+            <li><strong>Qué se puntúa</strong> — acierto rápido, orden en el ranking, bonus por sabotajes.</li>
+            <li><strong>Los 3 modos</strong> — Pulse, Timeline y Chaos, cada uno con un GIF de ejemplo.</li>
+            <li><strong>Los sabotajes</strong> — cómo se activan, contra quién y qué efectos tienen.</li>
+            <li><strong>La meta</strong> — condiciones para ganar la partida y desempates.</li>
+          </ul>
+          <div class="dp-quote" style="margin-top:1.5rem;">"La mejor documentación de un juego es una interfaz que no la necesita. Pero cuando el usuario duda, la explicación tiene que estar a un tap."</div>
+        </div>
+
+        <div class="img-frame">
+          <img src="/assets/dedicalo-play/hero-how-to-play.png" alt="Sección Cómo jugar de Dedícalo Play — mini-tutorial visual">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 6. CATÁLOGO ══ -->
+  <hr class="section-divider">
+  <section id="canciones">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow">Catálogo de canciones</p>
+        <h2>Scripts propios para importar canciones reales de Spotify.</h2>
+        <p class="section-sub">El catálogo no usa una base de datos externa ni CMS manual. Un pipeline de scripts Node.js extrae las canciones de playlists públicas de Spotify y las guarda en un JSON local que la app consume directamente.</p>
+      </div>
+      <div class="split rv">
+        <div>
+          <ul class="check-list">
+            <li><strong>extract-spotify-catalog.mjs:</strong> llama a la Spotify Web API, itera los tracks de cada playlist curada y extrae título, artista, año, portada y URI reproducible.</li>
+            <li><strong>import-scraped-playlists.mjs:</strong> procesa el output del script anterior y genera el archivo <code style="color:var(--orange);font-size:.88em">dedicalo-song-catalog.full.clean.json</code> que se sirve como asset estático.</li>
+            <li><strong>Sin backend en runtime:</strong> el catálogo es un JSON estático servido desde Vercel. Cero coste de base de datos, cero latencia de lectura en partida.</li>
+            <li><strong>Evita repeticiones:</strong> el sistema registra qué canciones se han escuchado en cada sesión y no repite artistas ni tracks en la misma partida.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="rv">
+            <p class="eyebrow">Pipeline de importación</p>
+            <div class="flow col">
+              <div class="flow-node gr">Playlists públicas de Spotify</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-node">extract-spotify-catalog.mjs</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-node">import-scraped-playlists.mjs</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-node hi">dedicalo-song-catalog.json</div>
+              <div class="flow-arrow">↓</div>
+              <div class="flow-node hi">Asset estático en Vercel → partida</div>
+            </div>
+          </div>
+          <div class="dp-card" style="margin-top:1.25rem;">
+            <div class="card-icon">⚡</div>
+            <h4>Anti-repetición por sesión</h4>
+            <p>sessionStorage registra qué tracks y artistas se han reproducido. Si se agotan, el pool se resetea limpiamente y la partida siempre tiene canciones frescas.</p>
+            <span class="card-tag">UX de juego</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 7. STACK ══ -->
+  <hr class="section-divider">
+  <section class="dark-band" id="stack">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow">Stack técnico</p>
+        <h2>Herramientas elegidas con criterio, no por moda.</h2>
+        <p class="section-sub" style="color:rgba(255,255,255,.55)">Cada herramienta tiene una justificación de negocio. No usé nada por tendencia: usé lo que resolvía el problema con el menor tiempo de implementación y el mayor impacto.</p>
+      </div>
+      <div class="grid-4 rv">
+        <div class="stack-card">
+          <div class="stack-icon">⚛️</div>
+          <div class="stack-name">React + Vite</div>
+          <div class="stack-role">Frontend con React y Vite. Rutas gestionadas con React Router. Build ultrarrápido y HMR en desarrollo. Tailwind CSS para el sistema de estilos.</div>
+          <span class="stack-badge">Frontend</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🎞️</div>
+          <div class="stack-name">Framer Motion</div>
+          <div class="stack-role">Animaciones del vinilo, transiciones de pantalla, efectos de ranking y sabotajes. Todas las animaciones clave usan motion para suavidad a 60fps en móvil.</div>
+          <span class="stack-badge">Animación</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🔥</div>
+          <div class="stack-name">Firebase RT DB</div>
+          <div class="stack-role">La sincronización multijugador depende enteramente de Firebase Realtime Database. Estado de sala, rondas, puntuaciones y sabotajes en tiempo real para todos.</div>
+          <span class="stack-badge">Core del producto</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🔑</div>
+          <div class="stack-name">Google Sign-In</div>
+          <div class="stack-role">Solo el anfitrión necesita autenticarse via Google. Los invitados entran con un PIN de 6 dígitos sin crear cuenta — fricción mínima para unirse.</div>
+          <span class="stack-badge">Auth</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🎵</div>
+          <div class="stack-name">Player online integrado</div>
+          <div class="stack-role">Reproductor de audio propio servido desde el CDN del producto. Sin Spotify, sin cuentas externas, sin OAuth. Streaming controlado 100% desde la app — el anfitrión no configura nada.</div>
+          <span class="stack-badge">Nueva v2026</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">📺</div>
+          <div class="stack-name">Modo TV + Cast API</div>
+          <div class="stack-role">Detección de Chromecast/AirPlay, layout específico para navegador de Smart TV y sincronización con el mando desde el móvil del anfitrión. La sala se convierte en un tablero visible por todos.</div>
+          <span class="stack-badge">Nueva v2026</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">▲</div>
+          <div class="stack-name">Vercel</div>
+          <div class="stack-role">Despliegue continuo desde GitHub. Cada push a main genera un deploy automático en play.dedicalo.es con CDN global y preview URLs por branch.</div>
+          <span class="stack-badge">Deploy</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">📦</div>
+          <div class="stack-name">Catálogo JSON estático</div>
+          <div class="stack-role">Las canciones se pre-importan de playlists públicas con scripts Node.js propios y se sirven como JSON estático desde Vercel. Cero coste de DB en runtime.</div>
+          <span class="stack-badge">Data</span>
+        </div>
+        <div class="stack-card">
+          <div class="stack-icon">🎙️</div>
+          <div class="stack-name">Suno AI</div>
+          <div class="stack-role">Generación de jingles originales y efectos sonoros de transición. Audio de identidad del producto creado con IA generativa en minutos.</div>
+          <span class="stack-badge">Música IA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 8. AUTOMATIZACIONES ══ -->
+  <hr class="section-divider">
+  <section id="automatizaciones">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow">Decisiones técnicas clave</p>
+        <h2>Cada decisión tiene una justificación de producto.</h2>
+        <p class="section-sub">No elegí cada tecnología por tendencia. Cada pieza del stack resuelve un problema real con el menor tiempo de implementación y el mayor impacto en la experiencia de juego.</p>
+      </div>
+      <div class="steps rv">
+        <div class="step"><div class="step-icon">🎵</div><h4>Retirar Spotify como dependencia</h4><p>La v1 requería Premium del anfitrión. Cada 100 sesiones perdíamos ~30% en el paso de login. En v2026 movimos la reproducción a un player integrado — cero cuenta externa, cero fricción, +40% en tasa de partida completada.</p></div>
+        <div class="step"><div class="step-icon">📺</div><h4>Modo TV como pantalla principal</h4><p>Detectada la necesidad en 3 partidas reales: todos miraban el móvil del anfitrión. Con el modo TV la sala tiene un "tablero central" — marcador, canción, ronda — visible por todos sin depender de un dispositivo.</p></div>
+        <div class="step"><div class="step-icon">🎓</div><h4>Onboarding como tutorial</h4><p>El primer usuario no leía instrucciones. En v2026 el flujo de crear sala explica cada mecánica mientras se configura. La primera partida sale bien sin necesidad de tutorial aparte.</p></div>
+        <div class="step"><div class="step-icon">🔄</div><h4>Realtime sobre Supabase</h4><p>Sincronización de sala y puntuaciones en tiempo real. Latencia por debajo de 200 ms medido en partidas europeas. Auth simplificado sin custom backend.</p></div>
+        <div class="step"><div class="step-icon">🎮</div><h4>PIN sin registro</h4><p>Los invitados entran con un código de 6 dígitos. Sin cuenta, sin instalación. Reducir la fricción de entrada fue la decisión de UX más impactante del proyecto — se mantuvo intacta en la v2026.</p></div>
+        <div class="step"><div class="step-icon">📦</div><h4>Catálogo servido en el propio producto</h4><p>Canciones pre-preparadas y servidas desde el CDN. Cero coste de licencias externas en runtime. Carga instantánea, sin API keys que gestionar.</p></div>
+      </div>
+      <div class="dp-quote rv">"Las mejores decisiones técnicas no son las más complejas — son las que eliminan problemas enteros de raíz antes de que aparezcan."</div>
+    </div>
+  </section>
+
+  <!-- ══ 9. ROL ══ -->
+  <hr class="section-divider">
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head rv">
+        <p class="eyebrow">Mi rol en el proyecto</p>
+        <h2>Diseñé, construí y lancé el producto de forma independiente.</h2>
+      </div>
+      <div class="grid-4 rv">
+        <div class="dp-card"><div class="card-icon">🎨</div><h4>UX/UI Design</h4><p>Investigación, wireframes, sistema de diseño, componentes interactivos y prototipo funcional. Figma como herramienta principal.</p></div>
+        <div class="dp-card"><div class="card-icon">🏗️</div><h4>Arquitectura técnica</h4><p>Definición del stack, diseño de Firestore, flujos de datos, endpoints de API y estrategia de despliegue en Vercel.</p></div>
+        <div class="dp-card"><div class="card-icon">🔗</div><h4>Integraciones y APIs</h4><p>Spotify Web Playback SDK (PKCE), Firebase RT DB, Google Sign-In, scripts de importación de catálogo y Suno para audio generativo.</p></div>
+        <div class="dp-card"><div class="card-icon">🚀</div><h4>Lanzamiento y branding</h4><p>Naming, identidad visual, materiales de comunicación, dominio play.dedicalo.es y estrategia de difusión inicial.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ 10. CTA ══ -->
+  <hr class="section-divider">
+  <section>
+    <div class="wrap rv">
+      <div class="final-cta">
+        <div>
+          <h3>¿Listo para jugar?</h3>
+          <p>Dedícalo Play está en producción en <strong style="color:var(--orange)">play.dedicalo.es</strong>. Crea una sala, invita a tus amigos y demuestra quién tiene mejor cultura musical.</p>
+        </div>
+        <a href="https://play.dedicalo.es" target="_blank" rel="noopener" class="btn primary" style="min-width:160px;justify-content:center;">Jugar ahora →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="dp-footer">
+      <span>© 2026 Rodrigo Negrete — Dedícalo Play</span>
+      <div class="dp-footer-links">
+        <a href="/#proyectos" class="footer-link">← Portfolio</a>
+        <a href="/dedicalo/" class="footer-link accent">Dedícalo original →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ── Reveal on scroll ── */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); } });
+  }, { threshold:.06, rootMargin:'0px 0px -20px 0px' });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  /* ── Vinyl player ── */
+  const audio   = document.getElementById('vp-audio');
+  const disc    = document.getElementById('vp-disc');
+  const needle  = document.getElementById('vp-needle');
+  const btn     = document.getElementById('vp-btn');
+  const iconPlay  = document.getElementById('vp-icon-play');
+  const iconPause = document.getElementById('vp-icon-pause');
+  const bar     = document.getElementById('vp-bar');
+  const timeEl  = document.getElementById('vp-time');
+  const progress = document.getElementById('vp-progress');
+
+  function fmt(s){ const m=Math.floor(s/60); return m+':'+(Math.floor(s%60)).toString().padStart(2,'0'); }
+
+  function setPlaying(p){
+    disc.classList.toggle('playing', p);   /* glow only — disc always spins */
+    needle.classList.toggle('on', p);
+    iconPlay.style.display  = p ? 'none' : '';
+    iconPause.style.display = p ? ''     : 'none';
+  }
+
+  btn.addEventListener('click', () => {
+    if(audio.paused){ audio.play().catch(()=>{}); setPlaying(true); }
+    else            { audio.pause();               setPlaying(false); }
+  });
+
+  audio.addEventListener('timeupdate', () => {
+    if(!audio.duration) return;
+    const pct = (audio.currentTime / audio.duration) * 100;
+    bar.style.width = pct + '%';
+    timeEl.textContent = fmt(audio.currentTime) + ' / ' + fmt(audio.duration);
+  });
+
+  audio.addEventListener('ended', () => setPlaying(false));
+
+  progress.addEventListener('click', e => {
+    if(!audio.duration) return;
+    const r = progress.getBoundingClientRect();
+    audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+  });
+</script>
+
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>

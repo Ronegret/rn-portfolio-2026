@@ -1,0 +1,20 @@
+{
+  "name": "portfolio-rodrigo-negrete",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "astro dev --host 127.0.0.1",
+    "dev": "astro dev --host 127.0.0.1",
+    "build": "astro build && node scripts/create-sites-worker.mjs",
+    "preview": "astro preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@astrojs/react": "^7.1.1",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.2",
+    "ogl": "^1.0.10",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  }
+}

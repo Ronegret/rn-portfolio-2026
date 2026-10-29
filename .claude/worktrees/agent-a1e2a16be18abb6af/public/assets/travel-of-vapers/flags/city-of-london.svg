@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 300" role="img" aria-label="Flag of the City of London">
+  <rect width="500" height="300" fill="#fff"/>
+  <rect x="0" y="120" width="500" height="60" fill="#c8102e"/>
+  <rect x="220" y="0" width="60" height="300" fill="#c8102e"/>
+  <g fill="#c8102e" transform="translate(76 26)">
+    <rect x="18" y="14" width="18" height="112" rx="3"/>
+    <path d="M27 0 48 27H6z"/>
+    <rect x="4" y="122" width="46" height="12" rx="3"/>
+    <path d="M14 134h26l-8 36H22z"/>
+  </g>
+</svg>

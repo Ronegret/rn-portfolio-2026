@@ -1,0 +1,71 @@
+---
+import LangSwitch from '../islands/LangSwitch.jsx';
+import ThemeSwitch from '../islands/ThemeSwitch.jsx';
+---
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo trigger-flash">
+    Rodrigo Negrete
+    <span class="rec-badge"><span class="logo-dot"></span></span>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <span class="nav-pill" id="nav-pill" aria-hidden="true"></span>
+    <li><a href="#sobre-mi" data-i="nav_about"><span class="nav-lbl">Sobre mí</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#stack" data-i="nav_stack"><span class="nav-lbl">Stack</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#proyectos" data-i="nav_projects"><span class="nav-lbl">Proyectos</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#laboratorio" data-i="nav_lab"><span class="nav-lbl">Lab</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#trayectoria" data-i="nav_career"><span class="nav-lbl">Trayectoria</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+    <li><a href="#contacto" data-i="nav_contact"><span class="nav-lbl">Contacto</span><span class="nav-adot" aria-hidden="true"></span></a></li>
+  </ul>
+  <div class="nav-r">
+    <div class="cur-switch" id="cur-switch">
+      <button type="button" class="cur-trigger" id="cur-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Cambiar tipo de cursor">
+        <svg class="cur-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51z"/>
+        </svg>
+        <svg class="lang-chev" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4l4 4 4-4"/></svg>
+      </button>
+      <div class="cur-panel" id="cur-panel" role="listbox" aria-label="Estilos de cursor">
+        <p class="lang-panel-h">Cursor <span class="lang-dot"></span></p>
+        <button type="button" class="cur-opt on" data-cur="normal" role="option" aria-selected="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51z"/></svg>
+          <span class="cur-opt-name">Normal</span>
+          <span class="cur-opt-check"></span>
+        </button>
+        <button type="button" class="cur-opt" data-cur="mira" role="option" aria-selected="false">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          <span class="cur-opt-name">Mira</span>
+          <span class="cur-opt-check"></span>
+        </button>
+      </div>
+    </div>
+    <LangSwitch client:idle />
+    <a href="mailto:rodrigo.negrete.aros@gmail.com" class="nav-cta trigger-flash" data-i="nav_cta">Hablemos →</a>
+  </div>
+  <button id="ham" aria-label="Abrir menú" aria-expanded="false">
+    <span class="hl"></span><span class="hl"></span><span class="hl"></span>
+  </button>
+</nav>
+
+<!-- MENÚ MÓVIL -->
+<div id="mob" role="dialog" aria-modal="true" aria-label="Menú">
+  <div class="mm-bg" aria-hidden="true"><i></i><i></i><i></i></div>
+  <button id="mob-x" aria-label="Cerrar">✕</button>
+  <a href="#sobre-mi" class="mm-l" style="--i:0"><span class="mm-n" aria-hidden="true">01</span><span class="mm-m"><span class="mm-t" data-i="nav_about">Sobre mí</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#stack" class="mm-l" style="--i:1"><span class="mm-n" aria-hidden="true">02</span><span class="mm-m"><span class="mm-t" data-i="nav_stack">Stack</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#proyectos" class="mm-l" style="--i:2"><span class="mm-n" aria-hidden="true">03</span><span class="mm-m"><span class="mm-t" data-i="nav_projects">Proyectos</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#laboratorio" class="mm-l" style="--i:3"><span class="mm-n" aria-hidden="true">04</span><span class="mm-m"><span class="mm-t" data-i="nav_lab">Lab</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#trayectoria" class="mm-l" style="--i:4"><span class="mm-n" aria-hidden="true">05</span><span class="mm-m"><span class="mm-t" data-i="nav_career">Trayectoria</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <a href="#contacto" class="mm-l" style="--i:5"><span class="mm-n" aria-hidden="true">06</span><span class="mm-m"><span class="mm-t" data-i="nav_contact">Contacto</span></span><span class="mm-ar" aria-hidden="true">→</span></a>
+  <div class="mob-lang">
+    <button class="mlb on" data-lang="es">ES</button>
+    <button class="mlb" data-lang="ca">CA</button>
+    <button class="mlb" data-lang="en">EN</button>
+  </div>
+  <ThemeSwitch client:idle variant="mob" />
+  <div class="mm-foot">
+    <a href="mailto:rodrigo.negrete.aros@gmail.com" class="mm-cta" data-i="nav_cta">Hablemos →</a>
+    <a href="https://linkedin.com/in/rodrigonegretearos" class="mm-so" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/Ronegret" class="mm-so" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </div>
+</div>

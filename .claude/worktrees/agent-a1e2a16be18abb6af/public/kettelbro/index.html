@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KETTELBRO — Un entrenador de pesa rusa en el bolsillo · Caso de estudio · Rodrigo Negrete</title>
+<meta name="description" content="Caso de estudio UX/UI de KETTELBRO, una PWA que da cada día una sesión nueva de pesa rusa de 10 a 25 minutos con respaldo en estudios: research, decisiones de diseño, sistema visual nocturno, accesibilidad y stack (Next.js, TypeScript, Firebase).">
+<meta name="theme-color" content="#0b0e14">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://rodrigonegrete.es/kettelbro/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b0e14'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='28' font-weight='800' text-anchor='middle' fill='%23f2432d'%3EKB%3C/text%3E%3C/svg%3E">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="Rodrigo Negrete">
+<meta property="og:title" content="KETTELBRO — Un entrenador de pesa rusa en el bolsillo · Rodrigo Negrete">
+<meta property="og:description" content="Cómo diseñé una PWA de pesa rusa que se lee desde dos metros, con las manos con magnesia y sin cobertura: decisiones UX/UI, sistema visual y aprendizajes.">
+<meta property="og:image" content="https://rodrigonegrete.es/assets/kettelbro/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pantalla de inicio de KETTELBRO y tarjeta del día de entrenamiento sobre fondo grafito">
+<meta property="og:url" content="https://rodrigonegrete.es/kettelbro/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KETTELBRO — Caso de estudio UX/UI">
+<meta name="twitter:description" content="Una sesión nueva de pesa rusa cada día, de 10 a 25 minutos: decisiones de diseño y sistema visual.">
+<meta name="twitter:image" content="https://rodrigonegrete.es/assets/kettelbro/og.jpg">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Article",
+  "headline":"KETTELBRO — Un entrenador de pesa rusa en el bolsillo: caso de estudio UX/UI",
+  "description":"Caso de estudio UX/UI de una PWA de entrenamiento con pesa rusa: investigación, decisiones de diseño, sistema visual, accesibilidad y stack técnico.",
+  "inLanguage":"es",
+  "image":"https://rodrigonegrete.es/assets/kettelbro/og.jpg",
+  "url":"https://rodrigonegrete.es/kettelbro/",
+  "datePublished":"2026-10-23",
+  "author":{"@type":"Person","name":"Rodrigo Negrete","url":"https://rodrigonegrete.es/"},
+  "about":{"@type":"SoftwareApplication","name":"KETTELBRO","applicationCategory":"HealthApplication","operatingSystem":"Web (PWA)","url":"https://kettellbro.vercel.app"}
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800&family=Barlow:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,800&family=Barlow:wght@400;500;600;700&display=swap"></noscript>
+
+<style>
+@font-face{font-family:"Barlow Condensed Fallback";src:local("Arial");size-adjust:67%}
+@font-face{font-family:"Barlow Fallback";src:local("Arial");size-adjust:94%}
+:root{
+  --night:#0b0e14; --night-2:#121722; --night-3:#1b2230; --seam:#2c3649;
+  --paper:#f4f6fa; --paper-dim:#b3bccd; --paper-mute:#9aa7bd;
+  --ink:#f2432d; --ink-lift:#ff7a62; --ink-deep:#8f1d10; --on-ink:#0b0e14;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{font-family:"Barlow","Barlow Fallback",system-ui,sans-serif;background:var(--night);color:var(--paper);line-height:1.65;font-size:17px;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--ink-lift)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--paper);outline-offset:3px;border-radius:6px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--paper);color:var(--night);padding:.6rem 1rem;border-radius:10px;z-index:200;font-weight:700}
+.skip:focus{left:8px}
+.disp{font-family:"Barlow Condensed","Barlow Condensed Fallback",system-ui,sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;line-height:1;letter-spacing:.01em}
+
+/* barra superior */
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-right)) 12px max(16px,env(safe-area-inset-left));background:rgba(11,14,20,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--seam)}
+.bar a{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;font-weight:600;font-size:.92rem;text-decoration:none}
+.back{color:var(--paper);border:1px solid var(--seam)}
+.back:hover{background:var(--night-3)}
+.live{background:var(--paper);color:var(--night)}
+
+/* botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;padding:0 26px;border-radius:14px;font-weight:700;font-size:1.02rem;text-decoration:none;transition:transform .18s var(--ease-out),background .2s}
+.btn:active{transform:scale(.97)}
+.btn-ink{background:var(--ink);color:var(--on-ink);box-shadow:inset 0 1px 0 rgba(255,255,255,.28)}
+.btn-ink:hover{background:var(--ink-lift)}
+.btn-ghost{background:var(--night-3);color:var(--paper);border:1px solid var(--seam)}
+.btn-ghost:hover{background:var(--seam)}
+
+/* hero */
+.hero{position:relative;padding:112px 20px 72px;background:radial-gradient(120% 70% at 12% -10%,#5c140b 0%,transparent 60%),var(--night);border-bottom:1px solid var(--seam)}
+.wrap{max-width:1100px;margin:0 auto}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.eyebrow{display:inline-block;font-weight:700;font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-lift);margin-bottom:14px}
+.hero h1{font-size:clamp(2.6rem,6.4vw,4.9rem);margin-bottom:20px}
+.hero h1 em{display:block;font-style:italic;color:var(--ink-lift)}
+.lead{font-size:1.2rem;color:var(--paper-dim);max-width:34em;margin-bottom:28px}
+.lead strong{color:var(--paper)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
+.ficha{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 28px;padding-top:24px;border-top:1px solid var(--seam)}
+.ficha dt{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute)}
+.ficha dd{font-weight:600;font-size:1rem}
+.hero-shot{position:relative;max-width:340px;margin:0 auto 6%}
+.hero-shot img{border-radius:24px;border:1px solid var(--seam);box-shadow:0 26px 46px -22px rgba(0,0,0,.85)}
+.hero-shot .shot-b{position:absolute;right:-6%;bottom:-8%;width:46%;border-radius:20px}
+.cap{font-size:.86rem;color:var(--paper-mute);margin-top:10px;line-height:1.5}
+
+/* secciones */
+section.s{padding:96px 20px;border-bottom:1px solid var(--seam)}
+section.s:nth-of-type(even){background:var(--night-2)}
+.s h2{font-size:clamp(2rem,4.6vw,3.3rem);margin-bottom:22px;max-width:18em}
+.s h2 em{font-style:italic;color:var(--ink-lift)}
+.s h3{font-family:"Barlow Condensed","Barlow Condensed Fallback",sans-serif;font-weight:800;font-style:italic;text-transform:uppercase;font-size:1.5rem;line-height:1.1;margin:0 0 10px}
+.s p{max-width:44em;margin-bottom:16px;color:var(--paper-dim)}
+.s p strong,.s li strong{color:var(--paper)}
+.intro{font-size:1.18rem;color:var(--paper)!important}
+.grid{display:grid;gap:18px;margin:32px 0}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:var(--night-3);border:1px solid var(--seam);border-radius:22px;padding:26px}
+.s:nth-of-type(even) .card{background:var(--night)}
+.card p:last-child{margin-bottom:0}
+.card p{font-size:.98rem}
+.tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:14px;border:1px solid var(--seam);color:var(--paper)}
+.tag-hip{background:rgba(255,180,31,.12);color:#ffd067;border-color:rgba(255,208,103,.4)}
+.tag-doc{background:rgba(63,220,174,.1);color:#3fdcae;border-color:rgba(63,220,174,.4)}
+.note{border:1px dashed var(--seam);border-radius:18px;padding:18px 22px;margin:28px 0;color:var(--paper-dim);font-size:.96rem;max-width:52em}
+.note b{color:var(--paper)}
+.num{font-family:"Barlow Condensed","Barlow Condensed Fallback",sans-serif;font-weight:800;font-style:italic;font-size:3.2rem;line-height:1;color:var(--ink-lift)}
+.src{display:block;margin-top:12px;font-size:.8rem;color:var(--paper-mute);line-height:1.45}
+
+/* decisiones */
+.dec{display:grid;gap:0;border:1px solid var(--seam);border-radius:22px;overflow:hidden;margin:18px 0;background:var(--night-3)}
+.s:nth-of-type(even) .dec{background:var(--night)}
+.dec header{padding:22px 26px 6px}
+.dec header span{font-weight:700;font-size:.78rem;letter-spacing:.16em;color:var(--ink-lift)}
+.dec-b{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
+.dec-b div{padding:14px 26px 24px}
+.dec-b div+div{border-left:1px solid var(--seam)}
+.dec-b h4{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--paper-mute);margin-bottom:6px}
+.dec-b p{margin:0;font-size:.96rem}
+
+/* flujo */
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:28px 0;list-style:none;padding:0}
+.flow li{background:var(--night-3);border:1px solid var(--seam);border-radius:14px;padding:10px 16px;font-weight:600;font-size:.95rem}
+.flow li.hi{background:var(--ink);color:var(--on-ink);border-color:var(--ink)}
+.flow li.ar{background:none;border:0;padding:0;color:var(--paper-mute)}
+.tree{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.88rem;line-height:1.8;background:var(--night);border:1px solid var(--seam);border-radius:18px;padding:20px 24px;color:var(--paper-dim);overflow-x:auto;margin:24px 0;white-space:pre}
+.tree b{color:var(--paper);font-weight:600}
+.shots{display:grid;gap:22px;margin:34px 0;align-items:start}
+.shots figure img{border-radius:20px;border:1px solid var(--seam)}
+.s2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.shots>*,.grid>*{min-width:0}
+.phone{max-width:340px}
+
+/* sistema visual */
+.sw{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:26px 0}
+.sw div{border-radius:16px;padding:14px 12px;font-size:.78rem;font-weight:700;min-height:96px;display:flex;flex-direction:column;justify-content:flex-end;line-height:1.35}
+.sw small{display:block;font-weight:500;opacity:.9}
+.sw .dk{color:#0b0e14}.sw .lt{color:#fff}
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:26px 0}
+.types .card b{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mute);margin-bottom:10px}
+.t-disp{font-size:2.2rem}.t-num{font-family:"Barlow","Barlow Fallback",sans-serif;font-weight:800;font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.tbl{width:100%;border-collapse:collapse;margin:24px 0;font-size:.95rem}
+.tbl th{text-align:left;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--paper-mute);padding:10px 12px;border-bottom:1px solid var(--seam)}
+.tbl td{padding:12px;border-bottom:1px solid var(--seam);vertical-align:top;color:var(--paper-dim)}
+.tbl td:first-child{color:var(--paper);font-weight:600}
+.scroll-x{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.chip{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}
+
+ul.l{margin:0 0 18px 1.2rem;max-width:44em;color:var(--paper-dim)}
+ul.l li{margin-bottom:8px}
+
+footer{padding:40px 20px 64px;text-align:center;color:var(--paper-mute);font-size:.92rem}
+.cta{text-align:center}
+.cta h2{margin-left:auto;margin-right:auto}
+.cta p{margin-left:auto;margin-right:auto}
+.cta .actions{justify-content:center}
+
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out)}
+.rv.on{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}.btn{transition:none}}
+
+@media(max-width:860px){
+  .hero{padding:96px 16px 56px}
+  .hero-grid{grid-template-columns:1fr;gap:36px}
+  .hero-shot{max-width:420px}
+  .hero-shot .shot-b{right:-2%}
+  section.s{padding:64px 16px}
+  .g2,.g3,.s2,.types{grid-template-columns:minmax(0,1fr)}
+  .dec-b{grid-template-columns:1fr}
+  .dec-b div+div{border-left:0;border-top:1px solid var(--seam)}
+  .sw{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bar .back span.long{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<nav class="bar" aria-label="Caso de estudio">
+  <a class="back" href="/#proyectos">&larr;&nbsp;<span class="long">Volver al&nbsp;</span>portfolio</a>
+  <a class="live" href="https://kettellbro.vercel.app" target="_blank" rel="noopener">Abrir la web <span class="sr" aria-hidden="true">&#8599;</span><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"> (se abre en una pestaña nueva)</span></a>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Caso de estudio · Producto propio · 2026</p>
+      <h1 class="disp">Tu entrenador de pesa rusa, <em>una sesión nueva cada día.</em></h1>
+      <p class="lead">De <strong>10 a 25 minutos</strong>, armada con las pesas que tienes en casa y con el estudio que respalda cada bloque. Tú levantas; <strong>la app lleva el tiempo, las repeticiones y los descansos</strong>. Sin contraseñas, sin tienda de apps y sin prometerte lo que la ciencia no sostiene.</p>
+      <div class="actions">
+        <a class="btn btn-ink" href="https://kettellbro.vercel.app" target="_blank" rel="noopener">Probar KETTELBRO &#8599;</a>
+        <a class="btn btn-ghost" href="#decisiones">Ver las decisiones de diseño</a>
+      </div>
+      <dl class="ficha">
+        <div><dt>Mi rol</dt><dd>Producto, UX/UI, sistema visual y desarrollo</dd></div>
+        <div><dt>Plataforma</dt><dd>PWA mobile-first, solo en español</dd></div>
+        <div><dt>Stack</dt><dd>Next.js · TypeScript · Firebase</dd></div>
+        <div><dt>Estado</dt><dd>Publicada · sin métricas de uso públicas</dd></div>
+      </dl>
+    </div>
+    <div class="hero-shot">
+      <img src="/assets/kettelbro/hoy-movil.webp" width="390" height="844" alt="Pantalla Hoy de KETTELBRO en móvil: tarjeta azul del día 2 con el enfoque Fuerza, el ejercicio El peso muerto, la prescripción 3 por 8 por 8 kilos de 20 minutos y la barra inferior con Hoy, Progreso, Metas y Perfil" fetchpriority="high" decoding="async">
+      <img class="shot-b" src="/assets/kettelbro/landing-movil.webp" width="390" height="844" alt="Portada pública de KETTELBRO en móvil: titular, botón Continuar con Google y abanico de tarjetas de entrenamiento" decoding="async">
+    </div>
+  </div>
+</header>
+
+<main id="contenido">
+
+<section class="s" id="contexto">
+  <div class="wrap rv">
+    <p class="eyebrow">01 · Contexto y problema</p>
+    <h2 class="disp">Entrenar con pesa rusa no es el problema. <em>Seguir, sí.</em></h2>
+    <p class="intro">KETTELBRO nace de una pregunta de producto: ¿cómo pasa alguien de un reto de 30 días a un hábito de entrenamiento sostenido, sin pensar qué toca hoy?</p>
+    <p>Según el documento de producto del repo, las personas a las que va dirigida vienen precisamente de un reto de 30 días, entrenan en casa o en un gimnasio pequeño con una a tres pesas rusas, y usan el teléfono <strong>mientras entrenan</strong>: con las manos con magnesia o sudadas, el móvil apoyado a metros de distancia y entre 10 y 45 minutos como mucho. Las apps genéricas de fitness suelen darles una lista de rutinas &laquo;inventadas&raquo;, sin explicar por qué están ahí.</p>
+    <div class="grid g3">
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>El contexto de uso manda</h3><p>Pantalla a distancia, una mano libre como mucho, conexión inestable y poco tiempo. Todo el diseño parte de ahí, no de una galería de pantallas bonitas.</p></article>
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Falta de criterio, no de rutinas</h3><p>El posicionamiento declarado: un motor de programación determinista basado en protocolos documentados (Hardstyle, Girevoy Sport, periodización ondulante, RPE) en el que cada bloque puede citar su respaldo.</p></article>
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Honestidad como restricción</h3><p>Nada de &laquo;tonificar&raquo; ni quema garantizada de calorías: las afirmaciones de salud se limitan a lo que la literatura respalda. Es una restricción de diseño, también para el copy.</p></article>
+    </div>
+    <p class="note"><b>Qué no sé (y no invento).</b> El repositorio declara explícitamente que no hay testimonios, usuarios ni métricas reales. Por eso este caso habla de decisiones y de hipótesis, no de resultados de negocio.</p>
+  </div>
+</section>
+
+<section class="s" id="usuarios">
+  <div class="wrap rv">
+    <p class="eyebrow">02 · Usuarios y necesidades</p>
+    <h2 class="disp">Tres proto-personas, <em>cada una con su fuente.</em></h2>
+    <p class="intro">No hice entrevistas para esta versión. Estas proto-personas son una síntesis de lo que dicen <code>PRODUCT.md</code>, la FAQ y el motor de rutinas del repo; sirven para decidir y están marcadas como hipótesis hasta validarlas con usuarios reales.</p>
+    <div class="grid g3">
+      <article class="card"><span class="tag tag-hip">Hipótesis</span><h3>La retadora que no quiere parar</h3><p>Terminó un reto de 30 días y no quiere volver a decidir cada mañana qué hacer. Necesita <strong>que alguien decida por ella</strong> y que la racha no se rompa por perder un día.</p><span class="src">Fuente: Users en PRODUCT.md; &laquo;el día avanza al completar&raquo; en MOTOR-DE-RUTINAS.md.</span></article>
+      <article class="card"><span class="tag tag-hip">Hipótesis</span><h3>El del garaje con la pesa sudada</h3><p>Entrena con una o dos pesas, con mala luz y el móvil lejos. Necesita <strong>números enormes, un toque, sonido y vibración</strong> y poder retomar si cierra la app a mitad de sesión.</p><span class="src">Fuente: Operating Context en PRODUCT.md; borrador de sesión activa en la arquitectura de datos.</span></article>
+      <article class="card"><span class="tag tag-hip">Hipótesis</span><h3>La principiante prudente</h3><p>Nunca ha tocado una pesa rusa y duda de su espalda. Necesita <strong>progresión sin swings al inicio, técnica a la vista y un cribado de salud</strong>, no promesas.</p><span class="src">Fuente: FAQ de la landing (primeros 14 días sin swings; modo de cuidado lumbar).</span></article>
+    </div>
+    <h3>Necesidades que se convirtieron en requisitos</h3>
+    <ul class="l">
+      <li><strong>Leer de lejos:</strong> texto y contadores grandes, controles amplios, feedback sonoro y háptico opcional.</li>
+      <li><strong>Confiar:</strong> ver por qué toca cada bloque y qué estudio lo respalda, con su nivel de evidencia y sus límites.</li>
+      <li><strong>No perder nada:</strong> el historial vuelve igual al entrar con Google, incluso offline o a mitad de sesión.</li>
+      <li><strong>Tener poco tiempo:</strong> sesiones de 10, 15, 20 o 25 minutos, con calentamiento incluido.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="s" id="principios">
+  <div class="wrap rv">
+    <p class="eyebrow">03 · Principios de diseño</p>
+    <h2 class="disp">Cinco reglas que <em>desempatan.</em></h2>
+    <p>El repo las enuncia como principios de producto. Las uso como criterio para explicar cada decisión de este caso.</p>
+    <div class="grid g3">
+      <article class="card"><p class="num">1</p><h3>La ciencia es el motor, no el adorno</h3><p>Cada bloque puede explicar por qué está ahí.</p></article>
+      <article class="card"><p class="num">2</p><h3>El historial es sagrado</h3><p>Entrar con Google devuelve el estado exacto, offline o a mitad de sesión.</p></article>
+      <article class="card"><p class="num">3</p><h3>Durante la serie manda la mano ocupada</h3><p>Legible a distancia, un toque, feedback sonoro y háptico.</p></article>
+      <article class="card"><p class="num">4</p><h3>Distinto cada día, nunca aleatorio</h3><p>Variedad con intención fisiológica.</p></article>
+      <article class="card"><p class="num">5</p><h3>Progreso visible y honesto</h3><p>Logros reales derivados de datos reales.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="flujo">
+  <div class="wrap rv">
+    <p class="eyebrow">04 · Flujo y arquitectura de información</p>
+    <h2 class="disp">Entrar, decidir poco, <em>entrenar mucho.</em></h2>
+    <p class="intro">El flujo principal tiene cuatro pasos, y el segundo (&laquo;cuéntanos de ti&raquo;) se hace una sola vez. A partir de ahí, cada día es: abrir, ver la tarjeta, empezar.</p>
+    <ol class="flow" aria-label="Flujo principal">
+      <li>Entrar con Google</li><li class="ar" aria-hidden="true">&rarr;</li>
+      <li>Perfil: nivel, meta, tiempo, pesas, salud</li><li class="ar" aria-hidden="true">&rarr;</li>
+      <li class="hi">Hoy: tarjeta del día</li><li class="ar" aria-hidden="true">&rarr;</li>
+      <li>Sesión guiada</li><li class="ar" aria-hidden="true">&rarr;</li>
+      <li>Cómo fue (RPE y sensación)</li><li class="ar" aria-hidden="true">&rarr;</li>
+      <li>Ajusta el día siguiente</li>
+    </ol>
+    <div class="shots s2">
+      <figure class="phone">
+        <img src="/assets/kettelbro/como-funciona-movil.webp" width="380" height="1180" loading="lazy" decoding="async" alt="Sección Cómo funciona de la landing de KETTELBRO en móvil: cuatro tarjetas numeradas con los pasos Entra con Google, Cuéntanos de ti, Recibe tu sesión del día y Entrena con tu acompañante">
+        <figcaption class="cap">La landing explica el flujo en cuatro pasos. Captura de la web real, móvil 390 px.</figcaption>
+      </figure>
+      <div>
+        <h3>Arquitectura de información</h3>
+        <p>La estructura sale de las rutas del repo (<code>src/app</code>). Hay una capa pública, pensada para que se pueda indexar y entender sin cuenta, y un área privada con cuatro destinos fijos en la barra inferior.</p>
+<pre class="tree" tabindex="0" aria-label="Mapa de rutas"><b>Público</b>
+├─ /            landing: propuesta, cómo funciona, ciencia, FAQ, instalar
+├─ /ciencia     74 referencias con diseño de estudio y nivel A-D
+└─ /guias       técnica, pesos y rutinas
+<b>Privado (tras Google)</b>
+├─ /bienvenida  alta del perfil
+├─ <b>Tab bar</b>:  Hoy · Progreso · Metas · Perfil     (+ /pesas)
+└─ /sesion      acompañante en vivo, a pantalla completa</pre>
+        <p>Decisión de IA: <strong>cuatro destinos, no seis.</strong> El día de hoy es la pantalla de aterrizaje; todo lo demás es consulta o ajuste. La sesión en curso queda fuera de la barra para que ninguna pestaña compita con el reloj.</p>
+        <p class="note"><b>Cómo se decide el contenido de &laquo;Hoy&raquo;.</b> El motor es puro: <i>Día N &rarr; fase del mesociclo &rarr; enfoque del día &rarr; bloques &rarr; pasos</i>. La semilla es UID + número de día, así que recargar o cambiar de teléfono da exactamente la misma tarjeta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="decisiones">
+  <div class="wrap rv">
+    <p class="eyebrow">05 · Decisiones UX/UI</p>
+    <h2 class="disp">Cada decisión, con su porqué <em>y lo que descarté.</em></h2>
+    <p>Las alternativas descartadas son las que el repo documenta o las que se deducen directamente de una restricción escrita. Cuando es una lectura mía, lo indico.</p>
+
+    <article class="dec"><header><span>DECISIÓN 01</span><h3>Una tarjeta por día, no un catálogo de rutinas</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Hoy muestra una carta con el número de día, el enfoque, el ejercicio principal y la prescripción. El mes es un plan que se va marcando.</p></div><div><h4>Por qué</h4><p>Quita la decisión diaria (principio 4) y convierte el progreso en algo visible, sin lista infinita.</p></div><div><h4>Descartado</h4><p>Una biblioteca de rutinas para elegir. Es lo que hacen las apps genéricas y reintroduce la fatiga de decidir.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 02</span><h3>Rutina determinista, no aleatoria</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Semilla = UID + número de día. El mismo día da la misma sesión en cualquier dispositivo; cada usuario rota los ejercicios en su propio orden.</p></div><div><h4>Por qué</h4><p>Confianza y testabilidad: el motor es puro y se prueba con vitest. Variedad con intención, no azar.</p></div><div><h4>Descartado</h4><p>Generar al azar cada vez. Rompe la recuperación entre dispositivos y no se puede explicar &laquo;por qué hoy&raquo;.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 03</span><h3>Sin botón &laquo;ya terminé&raquo;: la app lleva el tiempo</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Cuenta atrás por serie, repeticiones marcadas por cadencia y cronómetro de descansos. Al final, una pregunta: qué tan duro fue.</p></div><div><h4>Por qué</h4><p>Con las manos ocupadas no se pulsan botones (principio 3). El RPE final alimenta el ajuste del día siguiente.</p></div><div><h4>Descartado</h4><p>Pedir confirmación serie a serie. Obliga a soltar la pesa y a tocar una pantalla pequeña en pleno esfuerzo.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 04</span><h3>Sesiones de 10, 15, 20 o 25 minutos, y nada más largo</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Cuatro duraciones, máximo 25. Los ajustes antiguos de 35 o 45 minutos pasan automáticamente a 25.</p></div><div><h4>Por qué</h4><p>Es una apuesta por la adherencia. Respaldo indirecto citado por el propio producto: un meta-análisis de fuerza en general asocia una serie por ejercicio, una a tres veces por semana, con ganancias de fuerza.</p></div><div><h4>Descartado</h4><p>Sesiones de 35 a 45 minutos, que PRODUCT.md aún contemplaba. Se recortaron al afinar el motor.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 05</span><h3>El día avanza al completar, no por calendario</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>&laquo;Día N&raquo; es el N-ésimo día del programa del usuario. Perder un día no salta bloques ni castiga.</p></div><div><h4>Por qué</h4><p>Protege la motivación de quien falla un día y mantiene el orden fisiológico de los patrones de movimiento.</p></div><div><h4>Descartado</h4><p>Un calendario rígido de lunes a domingo, que convertiría cada ausencia en un hueco en el plan.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 06</span><h3>Solo acceso con Google</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Un toque, sin contraseñas; popup en escritorio y redirección en móvil o PWA cuando el popup falla.</p></div><div><h4>Por qué</h4><p>Cero contraseñas que custodiar y fricción mínima. El historial viaja con la cuenta.</p></div><div><h4>Descartado</h4><p>Email y contraseña, y acceso anónimo en producción. El repo los excluye de forma explícita.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 07</span><h3>Ciencia visible, con sus límites</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Cada bloque puede mostrar su estudio, su diseño y un nivel de evidencia de A a D. Hay una página pública con una lista de lo que NO se promete.</p></div><div><h4>Por qué</h4><p>La evidencia específica de pesa rusa es pequeña; decirlo genera más confianza que exagerar (principio 1).</p></div><div><h4>Descartado</h4><p>Cifras de calorías exactas, &laquo;tonificar&raquo; o &laquo;mejor que correr&raquo;. El propio sitio explica por qué no.</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 08</span><h3>Descartar una sesión exige mantener pulsado</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>El botón de abandono llena una barra durante 1,6 s; si sueltas antes, vuelve en 200 ms. Con teclado basta Enter o Espacio.</p></div><div><h4>Por qué</h4><p>Evita perder una sesión por un toque accidental con las manos sudadas. Lento mientras decides, rápido cuando el sistema responde.</p></div><div><h4>Descartado</h4><p>Un diálogo &laquo;¿seguro?&raquo; con dos botones juntos, fácil de acertar sin querer (lectura mía a partir del comentario del código).</p></div></div></article>
+
+    <article class="dec"><header><span>DECISIÓN 09</span><h3>Rediseño completo del sistema visual: de &laquo;Lotería de Hierro&raquo; a &laquo;Rendimiento nocturno&raquo;</h3></header>
+      <div class="dec-b"><div><h4>Qué</h4><p>Se sustituyó un sistema con papel, grano, rayos y temática de lotería por grafito casi negro, blanco frío y una tinta eléctrica por enfoque.</p></div><div><h4>Por qué</h4><p>DESIGN.md conserva la mecánica (una tinta por enfoque, una tarjeta por día, un mes que se marca) y &laquo;pierde la nostalgia&raquo;. Mi lectura: un fondo oscuro y números grandes encajan mejor con garajes con poca luz.</p></div><div><h4>Descartado</h4><p>El sistema anterior: papel crema, grano, frijoles, palabras de lotería. Hoy son reglas explícitas de &laquo;no hagas&raquo;.</p></div></div></article>
+  </div>
+</section>
+
+<section class="s" id="sistema">
+  <div class="wrap rv">
+    <p class="eyebrow">06 · Sistema visual</p>
+    <h2 class="disp">Rendimiento nocturno: <em>una tinta por día.</em></h2>
+    <p class="intro">Grafito casi negro, blanco frío para el texto y <strong>una sola tinta eléctrica</strong> (la del enfoque del día) que pinta la tarjeta, el reproductor y los acentos.</p>
+
+    <h3>Color</h3>
+    <div class="sw" role="list" aria-label="Tintas por enfoque">
+      <div role="listitem" style="background:#f2432d" class="dk">Potencia<small>#f2432d</small></div>
+      <div role="listitem" style="background:#2a4de8" class="lt">Fuerza<small>#2a4de8</small></div>
+      <div role="listitem" style="background:#00a878" class="dk">Resistencia<small>#00a878</small></div>
+      <div role="listitem" style="background:#ffb41f" class="dk">Híbrido<small>#ffb41f</small></div>
+      <div role="listitem" style="background:#ff5fa2" class="dk">Técnica<small>#ff5fa2</small></div>
+      <div role="listitem" style="background:#4fc9e8" class="dk">Recuperación<small>#4fc9e8</small></div>
+    </div>
+    <div class="sw" role="list" aria-label="Neutros">
+      <div role="listitem" style="background:#0b0e14;border:1px solid #2c3649" class="lt">night<small>#0b0e14</small></div>
+      <div role="listitem" style="background:#121722;border:1px solid #2c3649" class="lt">night-2<small>#121722</small></div>
+      <div role="listitem" style="background:#1b2230;border:1px solid #2c3649" class="lt">night-3<small>#1b2230</small></div>
+      <div role="listitem" style="background:#2c3649" class="lt">seam<small>#2c3649</small></div>
+      <div role="listitem" style="background:#f4f6fa" class="dk">paper<small>#f4f6fa</small></div>
+      <div role="listitem" style="background:#8392aa" class="dk">paper-mute<small>#8392aa</small></div>
+    </div>
+    <p><strong>Regla de la tinta:</strong> es el único color saturado de una pantalla; no se mezclan dos tintas en la misma superficie (el mes, con una barra por día, es la excepción informativa). Cada tinta trae su par <code>--on-ink</code> para que el texto encima sea legible: negro sobre potencia, blanco sobre fuerza.</p>
+    <table class="tbl scroll-x" aria-label="Enfoques, tinta y tipo de trabajo"><thead><tr><th scope="col">Enfoque</th><th scope="col">Tinta</th><th scope="col">Qué trabaja</th></tr></thead><tbody>
+      <tr><td>Potencia</td><td><span class="chip" style="background:#f2432d"></span>Bermellón</td><td>Balístico de cadera</td></tr>
+      <tr><td>Fuerza</td><td><span class="chip" style="background:#2a4de8"></span>Cobalto</td><td>Empujes, tirones, sentadillas, bisagras lentas</td></tr>
+      <tr><td>Resistencia</td><td><span class="chip" style="background:#00a878"></span>Jade</td><td>Series largas e intervalos</td></tr>
+      <tr><td>Híbrido</td><td><span class="chip" style="background:#ffb41f"></span>Caléndula</td><td>Complejos</td></tr>
+      <tr><td>Técnica</td><td><span class="chip" style="background:#ff5fa2"></span>Rosa</td><td>Get-up y control</td></tr>
+      <tr><td>Recuperación</td><td><span class="chip" style="background:#4fc9e8"></span>Aqua</td><td>Flujos suaves; mantiene la racha</td></tr>
+    </tbody></table>
+
+    <h3>Tipografía</h3>
+    <div class="types">
+      <div class="card"><b>Display · Barlow Condensed 800</b><p class="t-disp disp" style="color:var(--paper);margin:0">Peso muerto</p><span class="src">Titulares, nombres, botones. Condensada, cursiva, mayúsculas.</span></div>
+      <div class="card"><b>Numeral · Anybody variable</b><p class="t-num" style="color:var(--paper);margin:0">8 × 8 kg</p><span class="src">Cuentas atrás, reps y kilos. El eje <code>--heat</code> engrosa y estrecha los números con el esfuerzo.</span></div>
+      <div class="card"><b>Cuerpo · Barlow 400</b><p style="color:var(--paper);margin:0">Cadera atrás y espalda larga: la pesa se levanta sin queja ni carga.</p><span class="src">16 px mínimo en lectura; nunca en cursiva.</span></div>
+    </div>
+
+    <h3>Componentes con la web real</h3>
+    <div class="shots s2">
+      <figure><img src="/assets/kettelbro/landing-escritorio.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Portada de KETTELBRO en escritorio: titular en tipografía condensada cursiva sobre degradado rojo a grafito, botón blanco Continuar con Google y abanico de tarjetas de entrenamiento"><figcaption class="cap"><b>Portada.</b> Titular display, botón blanco de alto contraste y el abanico de cartas como promesa del producto.</figcaption></figure>
+      <figure><img src="/assets/kettelbro/hoy-escritorio.webp" width="1280" height="720" loading="lazy" decoding="async" alt="Pantalla Hoy en escritorio: la tarjeta azul del día 2 con enfoque Fuerza y el ejercicio El peso muerto, junto a la siguiente carta del carrusel y la barra inferior de navegación"><figcaption class="cap"><b>Tarjeta del día.</b> Campo de tinta, número del día inclinado, píldora del enfoque, ilustración y banner con el nombre. Captura del propio repo.</figcaption></figure>
+    </div>
+    <ul class="l">
+      <li><strong>Tarjeta del día:</strong> campo de tinta con profundidad, número inclinado 8°, etiqueta del enfoque en píldora oscura y banner con el nombre, que se encoge hasta caber en una línea.</li>
+      <li><strong>Tu mes:</strong> rejilla de 4 × 7 casillas; hecha = tinta con visto; hoy = tinta con aro; futura = grafito con una barra de la tinta de ese día; semana completa = pastilla &laquo;Semana completa&raquo;.</li>
+      <li><strong>Reproductor:</strong> campo completo de la tinta; el escenario con el personaje es lo primero que se ve (al menos el 40 % del alto), con fases 1·2·3 y vistas de lado, de frente y en tres cuartos.</li>
+      <li><strong>Hojas y navegación:</strong> <code>&lt;dialog&gt;</code> que entra y sale por el mismo borde; barra inferior de cuatro destinos con píldora de tinta tras el icono activo.</li>
+      <li><strong>El Bro:</strong> la pesa con cara aparece en cargas, vacíos y celebraciones, para que los estados &laquo;sin contenido&raquo; también tengan voz de marca.</li>
+    </ul>
+    <p class="note"><b>Nota sobre las capturas.</b> La app privada requiere cuenta de Google y yo no creé ninguna para este caso. Las pantallas internas (Hoy) son las capturas que el repo publica en su README; las públicas (landing, ciencia, FAQ) las hice yo sobre la web real, en móvil 390 px y en escritorio.</p>
+  </div>
+</section>
+
+<section class="s" id="micro">
+  <div class="wrap rv">
+    <p class="eyebrow">07 · Microinteracciones y estados</p>
+    <h2 class="disp">El movimiento sirve a <em>la serie, no al adorno.</em></h2>
+    <div class="grid g2">
+      <article class="card"><h3>Cuenta atrás con pulso</h3><p>En los últimos tres segundos el número late (<code>tick-pulse</code>); al cambiar, hace un pequeño pop. El tamaño es fluido: entre 72 y 120 px según la altura de la pantalla, para leerlo desde lejos.</p></article>
+      <article class="card"><h3>Números que se engrosan</h3><p>El eje <code>--heat</code> de la tipografía variable cambia peso y ancho: más esfuerzo, números más densos. La cuenta de trabajo usa el valor máximo; el descanso, uno bajo.</p></article>
+      <article class="card"><h3>Mantén pulsado para salir</h3><p>El relleno lineal de 1,6 s deja tiempo para arrepentirse. Si sueltas antes, vuelve en 200 ms: la respuesta del sistema es rápida y la decisión del usuario es lenta.</p></article>
+      <article class="card"><h3>Sonido, voz y vibración opcionales</h3><p>Pitidos (WebAudio), voz (SpeechSynthesis) y vibración, cada uno apagable. Los navegadores exigen un gesto previo, así que el audio se inicializa en el primer toque de <i>Empezar</i>.</p></article>
+      <article class="card"><h3>Estados que no dejan en blanco</h3><p>Pantallas dedicadas para carga (<code>Splash</code>), carga lenta (<code>SlowHint</code>), error (<code>LoadError</code>) y navegadores integrados de apps (<code>InAppBrowserNote</code>), donde el acceso con Google puede fallar.</p></article>
+      <article class="card"><h3>Retomar a mitad de sesión</h3><p>La sesión activa se guarda como borrador. Si cierras la app, vuelves donde la dejaste; el cierre final se escribe en un único <code>writeBatch</code>, que funciona offline.</p></article>
+    </div>
+    <p>Todo el movimiento respeta <code>prefers-reduced-motion</code> (referenciado en las hojas de estilo, la figura 3D y la celebración). La regla de diseño es explícita: nada de destellos rápidos.</p>
+  </div>
+</section>
+
+<section class="s" id="ciencia">
+  <div class="wrap rv">
+    <p class="eyebrow">08 · Confianza y copy</p>
+    <h2 class="disp">Convertir la evidencia <em>en interfaz.</em></h2>
+    <p class="intro">La ciencia no es un párrafo escondido: se muestra como etiqueta de nivel, cita corta y diseño del estudio. Y se acompaña de una lista de lo que no se promete.</p>
+    <figure class="shots">
+      <img src="/assets/kettelbro/ciencia-evidencia.webp" width="1200" height="892" loading="lazy" decoding="async" alt="Sección La ciencia sin humo de KETTELBRO: cuatro tarjetas con una afirmación, la etiqueta Nivel A, B, C o D, la cita del estudio y su diseño; debajo, un recuadro con lo que no se promete: quemar grasa, superar a correr, curar la espalda y cifras exactas de calorías">
+      <figcaption class="cap">Cada afirmación lleva su nivel (A a D), la referencia y el diseño del estudio, con límites explícitos. Captura de la web real, escritorio.</figcaption>
+    </figure>
+    <div class="grid g2">
+      <article class="card"><h3>Tono de coach cercano</h3><p>El repo fija una voz &laquo;bro&raquo;, directa y motivadora, con la ciencia como respaldo y no como sermón. La landing mantiene términos claros: &laquo;pesa rusa&raquo; como principal y &laquo;kettlebell&raquo; como sinónimo.</p></article>
+      <article class="card"><h3>Copy que se puede comprobar</h3><p>El texto público limita las promesas a lo que cita (por ejemplo, que correr exigió más oxígeno que 10 minutos de swings a igual esfuerzo percibido) y avisa de los casos donde no hay grupo de control.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="a11y">
+  <div class="wrap rv">
+    <p class="eyebrow">09 · Accesibilidad y rendimiento</p>
+    <h2 class="disp">Solo lo que he podido <em>comprobar.</em></h2>
+    <div class="grid g2">
+      <article class="card"><span class="tag tag-doc">Verificado</span><h3>Lighthouse en la web real</h3><p>Una ejecución mía (Lighthouse 13.5.0, móvil, 23 de octubre de 2026, desde mi equipo) sobre la portada: <strong>accesibilidad 100, buenas prácticas 100, SEO 100 y rendimiento 63</strong>, con LCP de 7,5 s simulados, CLS 0 y TBT 0 ms.</p><span class="src">Una sola medición con throttling simulado; no sustituye a datos de campo.</span></article>
+      <article class="card"><span class="tag tag-doc">Verificado en el código</span><h3>Diseño pensado para contexto adverso</h3><p>Botones del reproductor de 44 px (<code>h-11 w-11</code>), números fluidos de hasta 120 px, <code>aria-live</code> asertivo solo en la cuenta atrás y apagado en el resto, <code>aria-label</code> y <code>aria-pressed</code> en los controles de salir y silenciar.</p></article>
+      <article class="card"><span class="tag tag-doc">Del repo</span><h3>Contraste declarado</h3><p>DESIGN.md indica que el gris de apoyo sobre <code>night-2</code> alcanza 5,6:1, y define no depender solo del color ni del sonido para transmitir información.</p></article>
+      <article class="card"><span class="tag tag-hip">Pendiente</span><h3>Lo que no he medido</h3><p>No probé la app privada con lector de pantalla ni con un dispositivo real en un gimnasio. El rendimiento de la sesión (3D, audio, voz) está sin medir por mí.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="stack">
+  <div class="wrap rv">
+    <p class="eyebrow">10 · Stack y decisiones técnicas</p>
+    <h2 class="disp">Poca magia: <em>un motor puro y una caché local.</em></h2>
+    <table class="tbl scroll-x" aria-label="Decisiones técnicas"><thead><tr><th scope="col">Tema</th><th scope="col">Decisión</th><th scope="col">Motivo</th></tr></thead><tbody>
+      <tr><td>Framework</td><td>Next.js 16 (App Router), React 19, TypeScript, Tailwind 4</td><td>Landing renderizable en servidor para SEO; app como PWA.</td></tr>
+      <tr><td>Backend</td><td>Firebase Auth + Cloud Firestore (SDK modular)</td><td>Sin servidor propio; caché offline persistente y cola de escrituras integradas.</td></tr>
+      <tr><td>Datos</td><td>Subárbol <code>users/{uid}/…</code></td><td>Reglas de seguridad triviales (<code>request.auth.uid == uid</code>).</td></tr>
+      <tr><td>Offline</td><td><code>persistentLocalCache</code> + service worker de caché mínima</td><td>El gimnasio tiene mala cobertura; la app debe abrir y registrar sin red.</td></tr>
+      <tr><td>Cierre de sesión</td><td><code>writeBatch</code> atómico</td><td>Una transacción exige conexión; un batch no.</td></tr>
+      <tr><td>Motor</td><td>Funciones puras con tests en vitest</td><td>Determinista, probable y válido en cliente, servidor o sin red.</td></tr>
+      <tr><td>Personajes</td><td>Figuras 3D (three.js) con pipeline de Blender y validador de GLB</td><td>Mostrar la técnica de lado, de frente y en tres cuartos.</td></tr>
+      <tr><td>Modo demo</td><td><code>LocalRepository</code> detrás de una variable de entorno</td><td>Previsualizar la UI sin Firebase; nunca en producción.</td></tr>
+    </tbody></table>
+    <p>El acceso a datos va detrás de una interfaz <code>Repository</code> con dos implementaciones (Firestore y localStorage), lo que permite diseñar y probar la UI sin backend.</p>
+  </div>
+</section>
+
+<section class="s" id="aprendizajes">
+  <div class="wrap rv">
+    <p class="eyebrow">11 · Aprendizajes y próximos pasos</p>
+    <h2 class="disp">Lo que aprendí <em>y lo que haría ahora.</em></h2>
+    <div class="grid g2">
+      <article class="card"><h3>Qué funcionó</h3><ul class="l"><li>Escribir PRODUCT.md y DESIGN.md primero: cada decisión posterior tiene un criterio contra el que medirse.</li><li>Tratar la honestidad científica como un requisito de UX, no como un aviso legal.</li><li>Un motor puro: se puede razonar y probar sin abrir la app.</li></ul></article>
+      <article class="card"><h3>Qué corregiría</h3><ul class="l"><li><strong>Una promesa a conciliar:</strong> la landing dice sesiones &laquo;exactas&raquo;, pero el repo anota que el código estima la duración dentro de un margen. Hay que medir y ajustar el texto o el motor.</li><li><strong>Rendimiento de la portada:</strong> el LCP de mi medición es alto. No he aislado la causa; lo primero sería auditar la imagen y las tipografías del hero.</li></ul></article>
+    </div>
+    <h3>Próximos pasos (hipótesis a validar)</h3>
+    <ul class="l">
+      <li><strong>Validar con usuarios reales:</strong> 5 o 6 sesiones de entrenamiento observadas para comprobar la legibilidad a distancia y el uso con una mano. Hoy no hay datos.</li>
+      <li><strong>Mantener la pantalla encendida:</strong> en la búsqueda que hice en el código no encontré uso de la API Screen Wake Lock; en una sesión con el móvil apoyado a metros, es candidata clara.</li>
+      <li><strong>Medir adherencia:</strong> definir qué significa &laquo;volver cada día&raquo; (el éxito declarado) antes de añadir analítica.</li>
+      <li><strong>Resolver los pendientes legales:</strong> la propia landing marca privacidad, términos y canal de contacto como decisiones abiertas.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="s cta" id="probar">
+  <div class="wrap rv">
+    <p class="eyebrow">Pruébala</p>
+    <h2 class="disp">Tu primera sesión <em>te espera.</em></h2>
+    <p>La landing, la ciencia y las guías son públicas. Para entrar a la app hace falta una cuenta de Google.</p>
+    <div class="actions">
+      <a class="btn btn-ink" href="https://kettellbro.vercel.app" target="_blank" rel="noopener">Abrir kettellbro.vercel.app &#8599;</a>
+      <a class="btn btn-ghost" href="https://github.com/Ronegret/kettelbro" target="_blank" rel="noopener">Ver el repositorio &#8599;</a>
+    </div>
+    <figure class="shots" style="max-width:760px;margin:36px auto 0">
+      <img src="/assets/kettelbro/ciencia-pagina.webp" width="1200" height="750" loading="lazy" decoding="async" alt="Página La ciencia detrás de la pesa rusa, sin humo: titular, explicación de los niveles de evidencia A a D y recuadro de lo que no se promete">
+      <figcaption class="cap">Página pública /ciencia, escritorio.</figcaption>
+    </figure>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Caso de estudio escrito y diseñado por <a href="/">Rodrigo Negrete</a>. Vuelve al <a href="/#proyectos">portfolio</a>.</p>
+</footer>
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.rv');
+  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('on')});return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}})},{threshold:.04});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>
