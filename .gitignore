@@ -17,3 +17,8 @@ zodi-chat/
 .claude/settings.local.json
 
 .astro/
+
+.claude/
+.agents/
+graphify-out/
+*.nudges
