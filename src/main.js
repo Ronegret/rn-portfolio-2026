@@ -5,6 +5,7 @@ import './motion.js';
 import './effects.js';
 import './scroll-fx.js';
 import './intro.js';
+import './film3d.js'; // cine 3D: cartelas, tomas, enlaces 3D y corte (antes del split del hero para que sus letras se desplieguen en 3D)
 
 let LANG = 'es';
 

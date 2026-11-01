@@ -1,0 +1,191 @@
+/* Film 3D (film3d.js). Todo bajo html.f3, que solo existe con prefers-reduced-motion: no-preference.
+   Propiedades animadas: transform / opacity / filter / clip-path. */
+
+/* ───── (1) Cartelas: titulo gigante con letras que se despliegan en 3D ───── */
+.f3 .f3-card {
+  position: relative; z-index: 1; display: block; margin: 0 0 clamp(1rem, 3vw, 2.2rem);
+  perspective: 900px; perspective-origin: 50% 0%; pointer-events: none; user-select: none;
+}
+.f3 .f3-sk {
+  display: block; font-family: var(--fm); font-size: .7rem; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--a1); margin-bottom: .55rem;
+  opacity: 0; translate: -12px 0; transition: opacity .6s, translate .9s cubic-bezier(.16, 1, .3, 1);
+}
+.f3 .f3-sk::before { content: '● REC  '; color: #ff2d2d; }
+.f3 .f3-w {
+  display: block; width: max-content; max-width: 100%; white-space: nowrap;
+  font-family: var(--fd); font-weight: 800; line-height: .86; letter-spacing: -.035em;
+  transform-style: preserve-3d; font-size: 100px;
+}
+.f3 .f3-l {
+  display: inline-block; color: var(--t1);
+  /* extrusion: capas de sombra en el color de acento, oscurecidas */
+  text-shadow:
+    0 1px 0 color-mix(in srgb, var(--a1) 70%, #000),
+    0 2px 0 color-mix(in srgb, var(--a1) 62%, #000),
+    0 3px 0 color-mix(in srgb, var(--a1) 54%, #000),
+    0 4px 0 color-mix(in srgb, var(--a1) 46%, #000),
+    0 5px 0 color-mix(in srgb, var(--a1) 38%, #000),
+    0 6px 1px rgba(0, 0, 0, .25),
+    0 14px 22px rgba(0, 0, 0, .35);
+  transform-origin: 50% 100% -.2em;
+  transform: translate3d(0, .25em, -.6em) rotateX(-96deg);
+  opacity: 0;
+  transition: transform 1.25s cubic-bezier(.16, 1, .3, 1), opacity .45s ease-out;
+  transition-delay: calc(var(--i) * 55ms + .12s);
+  backface-visibility: hidden;
+}
+.f3 .f3-in .f3-l { transform: none; opacity: 1; }
+.f3 .f3-in .f3-sk { opacity: 1; translate: 0 0; }
+/* destello anamorfico que cruza la cartela al desplegarse */
+.f3 .f3-card::after {
+  content: ''; position: absolute; left: -10%; right: -10%; top: 62%; height: 2px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--a1) 80%, #fff) 45%, #fff 50%, color-mix(in srgb, var(--a2, var(--a1)) 80%, #fff) 55%, transparent);
+  box-shadow: 0 0 18px 4px color-mix(in srgb, var(--a1) 45%, transparent);
+  opacity: 0; transform: scaleX(0);
+}
+.f3 .f3-in .f3-card::after { animation: f3-flare 1.6s cubic-bezier(.16, 1, .3, 1) .5s both; }
+@keyframes f3-flare { 0% { opacity: 0; transform: scaleX(0); } 30% { opacity: .9; } 100% { opacity: 0; transform: scaleX(1); } }
+[data-theme="editorial"] .f3 .f3-l, [data-theme="diario"] .f3 .f3-l { text-shadow: 0 1px 0 color-mix(in srgb, var(--a1) 60%, #fff), 0 2px 0 color-mix(in srgb, var(--a1) 50%, #fff), 0 3px 0 color-mix(in srgb, var(--a1) 40%, #fff), 0 10px 16px rgba(0, 0, 0, .12); }
+
+/* Camara que deriva con el scroll sobre la cartela (solo con view timelines) */
+@supports (animation-timeline: view()) {
+  .f3 .f3-w {
+    animation-name: f3-drift; animation-timing-function: linear; animation-fill-mode: both;
+    animation-timeline: view(); animation-range: cover 0% cover 100%;
+  }
+  .f3 .sec:nth-of-type(even) .f3-w { animation-name: f3-drift-r; }
+  @keyframes f3-drift { from { transform: rotateY(-14deg) rotateX(6deg) translateZ(-40px); } 50% { transform: none; } to { transform: rotateY(10deg) rotateX(-4deg) translateZ(-60px); } }
+  @keyframes f3-drift-r { from { transform: rotateY(14deg) rotateX(6deg) translateZ(-40px); } 50% { transform: none; } to { transform: rotateY(-10deg) rotateX(-4deg) translateZ(-60px); } }
+}
+
+/* ───── (2) Tomas: movimiento de camara distinto por seccion (Proyectos queda fuera: tiene apilado sticky) ───── */
+.f3 .sec[data-shot] { perspective: 1600px; }
+.f3 .sec[data-shot]:not([data-shot="steadi"]) > .wrap {
+  transition: transform 1.5s cubic-bezier(.16, 1, .3, 1), filter 1.1s ease-out;
+  transform-origin: 50% 0%;
+}
+.f3 .sec[data-shot="dolly"]:not(.f3-in) > .wrap { transform: translate3d(0, 40px, 180px); filter: blur(5px); }
+.f3 .sec[data-shot="crane"]:not(.f3-in) > .wrap { transform: translate3d(0, 120px, 0) rotateX(24deg); transform-origin: 50% 100%; }
+.f3 .sec[data-shot="pan"]:not(.f3-in) > .wrap { transform: translate3d(-8vw, 0, -80px) rotateY(16deg); }
+.f3 .sec[data-shot="tilt"]:not(.f3-in) > .wrap { transform: translate3d(0, -40px, -60px) rotateX(-18deg); }
+.f3 .sec[data-shot="orbit"]:not(.f3-in) > .wrap { transform: translate3d(7vw, 30px, -140px) rotateY(-20deg) rotateZ(1.5deg); transform-origin: 0% 50%; }
+.f3 .sec[data-shot="zoom"]:not(.f3-in) > .wrap { transform: scale(.82); filter: blur(6px); transform-origin: 50% 30%; }
+.f3 .sec[data-shot="push"]:not(.f3-in) > .wrap { transform: translate3d(0, 60px, -320px) rotateX(10deg); }
+.f3 .sec[data-shot="steadi"] .f3-card { transition: translate 1.4s cubic-bezier(.16, 1, .3, 1); }
+.f3 .sec[data-shot="steadi"]:not(.f3-in) .f3-card { translate: -6vw 0; }
+@media (max-width: 899px), (pointer: coarse) {
+  .f3 .sec[data-shot]:not(.f3-in) > .wrap { filter: none; } /* el desenfoque de capas grandes es caro en movil */
+}
+
+/* ───── (3) Vinculos 3D ───── */
+/* Menu: cubo */
+.f3 .nav-links a { perspective: 320px; }
+.f3 .f3-cube {
+  display: inline-block; position: relative; transform-style: preserve-3d;
+  transform-origin: 50% 50% -.6em; transition: transform .55s cubic-bezier(.16, 1, .3, 1);
+}
+.f3 .f3-cube::after {
+  content: attr(data-t); position: absolute; left: 0; top: 100%; white-space: nowrap;
+  transform-origin: 50% 0; transform: rotateX(-90deg); color: var(--a1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .f3 .nav-links a:hover .f3-cube, .f3 .nav-links a:focus-visible .f3-cube { transform: rotateX(90deg); }
+
+  /* Botones: inclinacion 3D hacia el puntero + brillo que sigue al cursor */
+  .f3 .btn-p, .f3 .btn-s, .f3 .nav-cta { transform-style: preserve-3d; }
+  .f3 .btn-p:hover, .f3 .btn-s:hover, .f3 .nav-cta:hover {
+    transform: perspective(700px) translateY(-3px) rotateX(var(--f3x, 0deg)) rotateY(var(--f3y, 0deg)) translateZ(6px);
+    background-image: radial-gradient(circle at var(--f3g, 50%) 30%, rgba(255, 255, 255, .22), transparent 60%);
+  }
+}
+.f3 .f3-cube:focus-visible { outline: none; }
+
+/* ───── (4) Corte de cine ───── */
+#f3-cut { position: fixed; inset: 0; z-index: 99995; pointer-events: none; visibility: hidden; perspective: 1000px; }
+#f3-cut.f3-go { visibility: visible; pointer-events: auto; }
+#f3-cut .f3-bar { position: absolute; left: 0; right: 0; height: 50.5%; background: #050505; transform: scaleY(0); }
+#f3-cut .f3-t { top: 0; transform-origin: 50% 0; }
+#f3-cut .f3-b { bottom: 0; transform-origin: 50% 100%; }
+#f3-cut.f3-go .f3-bar { animation: f3-shut .42s cubic-bezier(.7, 0, .2, 1) both; }
+#f3-cut.f3-out .f3-bar { animation: f3-open .7s cubic-bezier(.7, 0, .2, 1) .08s both; }
+@keyframes f3-shut { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+@keyframes f3-open { from { transform: scaleY(1); } 30% { transform: scaleY(.84); } to { transform: scaleY(0); } }
+
+#f3-cut .f3-leak {
+  position: absolute; inset: -20%; opacity: 0; mix-blend-mode: screen;
+  background: radial-gradient(ellipse 40% 30% at 20% 40%, rgba(255, 140, 40, .55), transparent 70%),
+              radial-gradient(ellipse 35% 45% at 85% 70%, color-mix(in srgb, var(--a1) 60%, transparent), transparent 70%);
+}
+#f3-cut.f3-out .f3-leak { animation: f3-leak .8s ease-out both; }
+@keyframes f3-leak { 0% { opacity: 0; transform: translateX(-6%); } 25% { opacity: 1; } 100% { opacity: 0; transform: translateX(8%); } }
+
+#f3-cut .f3-slate {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem;
+  transform-style: preserve-3d; color: #f5f5f5; text-align: center; padding: 0 4vw;
+}
+#f3-cut .f3-sk, #f3-cut .f3-tc { font-family: var(--fm); font-size: .72rem; letter-spacing: .26em; text-transform: uppercase; color: rgba(255, 255, 255, .7); opacity: 0; }
+#f3-cut .f3-sk::before { content: '● '; color: #ff2d2d; }
+#f3-cut .f3-tc { color: rgba(255, 255, 255, .45); margin-top: .9rem; }
+#f3-cut.f3-go .f3-sk, #f3-cut.f3-go .f3-tc { animation: f3-fade .3s ease-out .3s both; }
+@keyframes f3-fade { from { opacity: 0; translate: 0 8px; } to { opacity: 1; translate: 0 0; } }
+
+#f3-cut .f3-big {
+  display: block; white-space: nowrap; transform-style: preserve-3d;
+  font-family: var(--fd); font-weight: 800; letter-spacing: -.04em; line-height: .9;
+  font-size: clamp(2.6rem, 11vw, 10rem); max-width: 96vw;
+}
+#f3-cut .f3-bl {
+  display: inline-block; color: #fff; transform-origin: 50% 100% -.3em;
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--a1) 75%, #000), 0 2px 0 color-mix(in srgb, var(--a1) 65%, #000), 0 3px 0 color-mix(in srgb, var(--a1) 55%, #000),
+               0 4px 0 color-mix(in srgb, var(--a1) 45%, #000), 0 5px 0 color-mix(in srgb, var(--a1) 35%, #000), 0 0 40px color-mix(in srgb, var(--a1) 50%, transparent);
+  opacity: 0; transform: translate3d(0, .3em, -.5em) rotateX(-100deg);
+}
+#f3-cut.f3-go .f3-bl { animation: f3-unfold .75s cubic-bezier(.16, 1, .3, 1) calc(var(--i) * 32ms + .22s) both; }
+#f3-cut.f3-out .f3-big { animation: f3-fly .6s cubic-bezier(.6, 0, .3, 1) both; }
+#f3-cut.f3-out .f3-sk, #f3-cut.f3-out .f3-tc, #f3-cut.f3-out .f3-clap { animation: f3-gone .25s ease-in both; }
+@keyframes f3-unfold { to { opacity: 1; transform: none; } }
+@keyframes f3-fly { from { transform: none; opacity: 1; filter: blur(0); } to { transform: translateZ(620px); opacity: 0; filter: blur(8px); } }
+@keyframes f3-gone { to { opacity: 0; } }
+
+/* Claqueta: el brazo baja y "clac" */
+#f3-cut .f3-clap {
+  position: relative; width: 64px; height: 40px; border-radius: 3px; opacity: 0;
+  background: repeating-linear-gradient(135deg, #fff 0 9px, #111 9px 18px) top / 100% 30% no-repeat, #1a1a1a;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .25);
+}
+#f3-cut .f3-clap i {
+  position: absolute; left: 0; right: 0; top: -11px; height: 10px; border-radius: 2px;
+  background: repeating-linear-gradient(-135deg, #fff 0 9px, #111 9px 18px);
+  transform-origin: 0 100%; transform: rotate(-28deg);
+}
+#f3-cut.f3-go .f3-clap { animation: f3-fade .25s ease-out .18s both; }
+#f3-cut.f3-go .f3-clap i { animation: f3-clack .28s cubic-bezier(.7, 0, .9, .3) .42s both; }
+@keyframes f3-clack { to { transform: rotate(0deg); } }
+
+/* ───── (5) Grano de pelicula + vineta ───── */
+#f3-fx { position: fixed; inset: 0; z-index: 99990; pointer-events: none; overflow: hidden; }
+#f3-fx::before {
+  content: ''; position: absolute; inset: -60%; opacity: .055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: f3-grain .9s steps(6) infinite;
+}
+#f3-fx::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 85% 80% at 50% 50%, transparent 62%, rgba(0, 0, 0, .28) 100%); }
+#f3-fx.f3-still::before { animation: none; }
+@keyframes f3-grain {
+  0% { transform: translate(0, 0); } 17% { transform: translate(-7%, 4%); } 33% { transform: translate(5%, -6%); }
+  50% { transform: translate(-3%, 8%); } 67% { transform: translate(8%, 2%); } 83% { transform: translate(-6%, -4%); } 100% { transform: translate(0, 0); }
+}
+/* Temas claros: el editorial ya trae su papel granulado; en los claros la vineta es mas suave */
+[data-theme="editorial"] #f3-fx::before { display: none; }
+[data-theme="editorial"] #f3-fx::after, [data-theme="diario"] #f3-fx::after { background: radial-gradient(ellipse 85% 80% at 50% 50%, transparent 66%, rgba(0, 0, 0, .1) 100%); }
+[data-theme="diario"] #f3-fx::before { opacity: .035; filter: invert(1); }
+
+/* ───── Hero: las letras del titulo se despliegan en 3D (sustituye el giro plano de cinema.css) ───── */
+.f3 #hero-title .sc-word { perspective: 520px; }
+.f3 #hero-title .split-chars .sc-char {
+  rotate: none; transform-origin: 50% 100% -.25em;
+  transform: translate3d(0, .35em, -.4em) rotateX(-92deg);
+  transition-property: transform, opacity; transition-duration: 1.1s, .5s;
+}
+.f3 #hero-title .split-chars.vis .sc-char { transform: none; }
