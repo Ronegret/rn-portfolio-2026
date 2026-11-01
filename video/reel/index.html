@@ -1,60 +1,341 @@
 <!doctype html>
-<html lang="en" data-resolution="landscape">
+<html lang="es" data-resolution="landscape">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+    <script src="assets/vendor/gsap.min.js"></script>
     <style>
-      /* Placeholders: replace all three with the film's own palette and display face. */
+      @font-face { font-family: 'Outfit'; font-weight: 300 900; src: url(assets/fonts/outfit-latin.woff2) format('woff2'); }
+      @font-face { font-family: 'Anton'; font-weight: 400; src: url(assets/fonts/anton-400-latin.woff2) format('woff2'); }
+      @font-face { font-family: 'Space Mono'; font-weight: 400; src: url(assets/fonts/space-mono-400-latin.woff2) format('woff2'); }
+      @font-face { font-family: 'Space Mono'; font-weight: 700; src: url(assets/fonts/space-mono-700-latin.woff2) format('woff2'); }
       :root {
-        --ground: #6b6b6b;
-        --ink: #ffffff;
-        --font-display: sans-serif;
+        --ground: #07060c;
+        --ink: #f7f5ff;
+        --a1: #b026ff;
+        --a2: #00f0ff;
+        --font-display: 'Outfit', sans-serif;
+        --font-mono: 'Space Mono', monospace;
+        --bar: 138px;
       }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--ground); }
+      #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: var(--ground); font-family: var(--font-display); color: var(--ink); }
+      .clip { position: absolute; inset: 0; }
+
+      /* ───── Escenarios 3D ───── */
+      .stage { position: absolute; inset: 0; perspective: 1400px; perspective-origin: 50% 50%; overflow: hidden; }
+      .rig { position: absolute; inset: 0; transform-style: preserve-3d; }
+      .plane {
+        position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; margin: -540px 0 0 -960px;
+        border-radius: 18px; overflow: hidden; background: #000;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 60px 140px rgba(0,0,0,.75), 0 0 90px rgba(176,38,255,.22);
+        backface-visibility: hidden;
       }
-      html,
-      body {
-        margin: 0;
-        width: 1920px;
-        height: 1080px;
-        overflow: hidden;
-        background: var(--ground);
-      }
-      #root {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: var(--font-display);
-      }
-      #title {
-        color: var(--ink);
-        font-size: 72px;
-        font-weight: 600;
-        letter-spacing: -0.03em;
-      }
+      .plane img { display: block; width: 100%; height: 100%; object-fit: cover; }
+      .plane::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(115deg, rgba(255,255,255,.14), transparent 28%, transparent 70%, rgba(176,38,255,.12)); }
+      .floor { position: absolute; left: 50%; top: 50%; width: 5200px; height: 5200px; margin: -2600px 0 0 -2600px;
+        background-image: linear-gradient(rgba(176,38,255,.22) 2px, transparent 2px), linear-gradient(90deg, rgba(176,38,255,.22) 2px, transparent 2px);
+        background-size: 160px 160px; transform: translateY(640px) rotateX(90deg);
+        -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 55%); mask-image: radial-gradient(circle, #000 0%, transparent 55%); }
+      .glow { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; }
+
+      /* ───── Letras 3D ───── */
+      .word { position: absolute; left: 0; right: 0; display: flex; justify-content: center; white-space: nowrap;
+        font-family: var(--font-display); font-weight: 900; letter-spacing: -.04em; line-height: .86; perspective: 1200px; }
+      .word .l { display: inline-block; color: var(--ink); transform-origin: 50% 100% -40px; backface-visibility: hidden;
+        text-shadow:
+          0 2px 0 #8a1fd0, 0 4px 0 #7a1bb8, 0 6px 0 #6a17a0, 0 8px 0 #5a1388, 0 10px 0 #4a0f70, 0 12px 0 #3a0b58,
+          0 14px 2px rgba(0,0,0,.4), 0 30px 50px rgba(0,0,0,.6), 0 0 70px rgba(176,38,255,.45); }
+      .word.cy .l { text-shadow:
+          0 2px 0 #00b8c4, 0 4px 0 #00a2ad, 0 6px 0 #008c96, 0 8px 0 #00767e, 0 10px 0 #006067, 0 12px 0 #004a50,
+          0 14px 2px rgba(0,0,0,.4), 0 30px 50px rgba(0,0,0,.6), 0 0 70px rgba(0,240,255,.4); }
+      .word .sp { display: inline-block; width: .3em; }
+      .kicker { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: 26px;
+        letter-spacing: .32em; text-transform: uppercase; color: rgba(255,255,255,.78); }
+      .kicker b { color: #ff2d2d; font-weight: 700; }
+      .flare { position: absolute; left: -10%; width: 120%; height: 4px; border-radius: 4px;
+        background: linear-gradient(90deg, transparent, rgba(176,38,255,.9) 38%, #fff 50%, rgba(0,240,255,.9) 62%, transparent);
+        box-shadow: 0 0 40px 10px rgba(176,38,255,.45), 0 0 120px 30px rgba(0,240,255,.18); }
+      .flare-dot { position: absolute; width: 260px; height: 260px; margin: -130px 0 0 -130px; border-radius: 50%;
+        background: radial-gradient(circle, rgba(255,255,255,.95), rgba(0,240,255,.35) 25%, transparent 65%); }
+
+      /* ───── Capa de cine ───── */
+      .leak { position: absolute; inset: -20%; mix-blend-mode: screen; opacity: 0; }
+      .leak.warm { background: radial-gradient(ellipse 38% 34% at 22% 40%, rgba(255,130,40,.75), transparent 70%), radial-gradient(ellipse 30% 40% at 80% 70%, rgba(176,38,255,.6), transparent 70%); }
+      .leak.cold { background: radial-gradient(ellipse 36% 40% at 78% 30%, rgba(0,240,255,.6), transparent 70%), radial-gradient(ellipse 34% 30% at 18% 78%, rgba(255,60,120,.5), transparent 70%); }
+      #flash { position: absolute; inset: 0; background: #fff; opacity: 0; }
+      #grain { position: absolute; inset: -200px; opacity: .085; mix-blend-mode: screen;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+      #vignette { position: absolute; inset: 0; background: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, rgba(0,0,0,.62) 100%); }
+      .bar { position: absolute; left: 0; right: 0; height: 540px; background: #000; z-index: 2; }
+      #bar-t { top: 0; transform-origin: 50% 0; }
+      #bar-b { bottom: 0; transform-origin: 50% 100%; }
+      .hud { position: absolute; z-index: 3; font-family: var(--font-mono); font-size: 22px; letter-spacing: .22em; color: rgba(255,255,255,.72); text-transform: uppercase; }
+      #hud-rec { left: 72px; top: 56px; }
+      #hud-rec i { display: inline-block; width: 14px; height: 14px; border-radius: 50%; background: #ff2d2d; margin-right: 14px; box-shadow: 0 0 14px #ff2d2d; }
+      #hud-tc { right: 72px; top: 56px; }
+      #hud-shot { left: 72px; bottom: 54px; }
+      #hud-url { right: 72px; bottom: 54px; color: rgba(255,255,255,.5); }
     </style>
   </head>
   <body>
-    <div
-      id="root"
-      data-composition-id="main"
-      data-start="0"
-      data-duration="10"
-      data-width="1920"
-      data-height="1080"
-    >
-      <h1 id="title" class="clip" data-start="0" data-duration="10" data-track-index="0">Title</h1>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="36" data-width="1920" data-height="1080">
+
+      <!-- S0 · Apertura: RODRIGO NEGRETE -->
+      <div id="s0" class="clip" data-start="0" data-duration="3.6" data-track-index="0">
+        <div class="glow" style="left:260px;top:180px;width:700px;height:500px;background:#5b12a0"></div>
+        <div class="glow" style="right:220px;bottom:160px;width:620px;height:440px;background:#00626b"></div>
+        <p class="kicker" id="s0-k" style="top:248px"><b>●</b> ESC. 00 · TOMA 1 — APERTURA</p>
+        <div class="word" data-split="RODRIGO" id="s0-w1" style="top:322px;font-size:236px"></div>
+        <div class="word cy" data-split="NEGRETE" id="s0-w2" style="top:560px;font-size:236px"></div>
+        <div class="flare" id="s0-fl" style="top:552px"></div>
+      </div>
+
+      <!-- S1 · Hero: dolly in -->
+      <div id="s1" class="clip stage" data-start="3.3" data-duration="5.0" data-track-index="0">
+        <div class="rig" id="s1-rig">
+          <div class="floor"></div>
+          <div class="plane" id="s1-p"><img src="assets/shots/hero.jpg" alt="" /></div>
+        </div>
+      </div>
+
+      <!-- T1 · DISEÑO -->
+      <div id="t1" class="clip" data-start="8.0" data-duration="2.2" data-track-index="0">
+        <div class="glow" style="left:560px;top:260px;width:800px;height:560px;background:#4d0e8a"></div>
+        <p class="kicker" style="top:300px"><b>●</b> ESC. 02 · TOMA 1 — GRÚA</p>
+        <div class="word" data-split="DISEÑO" id="t1-w" style="top:380px;font-size:300px"></div>
+      </div>
+
+      <!-- S2 · Sobre mí (grúa) → Stack (barrido) -->
+      <div id="s2" class="clip stage" data-start="9.9" data-duration="4.4" data-track-index="0">
+        <div class="rig" id="s2-rig">
+          <div class="floor"></div>
+          <div class="plane" id="s2-a"><img src="assets/shots/sobre-mi.jpg" alt="" /></div>
+          <div class="plane" id="s2-b"><img src="assets/shots/stack.jpg" alt="" /></div>
+        </div>
+      </div>
+
+      <!-- T2 · IA + AGENTES -->
+      <div id="t2" class="clip" data-start="14.0" data-duration="2.2" data-track-index="0">
+        <div class="glow" style="left:300px;top:200px;width:700px;height:500px;background:#004c55"></div>
+        <div class="word cy" data-split="IA" id="t2-w1" style="top:200px;font-size:330px"></div>
+        <div class="word" data-split="AGENTES" id="t2-w2" style="top:520px;font-size:250px"></div>
+      </div>
+
+      <!-- S3 · Proyectos + Lab: órbita alrededor de una galería 3D -->
+      <div id="s3" class="clip stage" data-start="15.9" data-duration="5.8" data-track-index="0">
+        <div class="rig" id="s3-rig">
+          <div class="floor"></div>
+          <div class="plane" id="s3-a"><img src="assets/shots/proyectos.jpg" alt="" /></div>
+          <div class="plane" id="s3-b"><img src="assets/shots/proy-1.jpg" alt="" /></div>
+          <div class="plane" id="s3-c"><img src="assets/shots/laboratorio.jpg" alt="" /></div>
+        </div>
+      </div>
+
+      <!-- T3 · AUTOMATIZACIÓN -->
+      <div id="t3" class="clip" data-start="21.4" data-duration="2.2" data-track-index="0">
+        <div class="glow" style="left:620px;top:300px;width:700px;height:480px;background:#4d0e8a"></div>
+        <p class="kicker" style="top:330px"><b>●</b> ESC. 05 · TOMA 1 — PICADO</p>
+        <div class="word" data-split="AUTOMATIZACIÓN" id="t3-w" style="top:440px;font-size:178px"></div>
+      </div>
+
+      <!-- S4 · Trayectoria (picado) + móvil flotando -->
+      <div id="s4" class="clip stage" data-start="23.3" data-duration="4.4" data-track-index="0">
+        <div class="rig" id="s4-rig">
+          <div class="floor"></div>
+          <div class="plane" id="s4-a"><img src="assets/shots/trayectoria.jpg" alt="" /></div>
+          <div class="plane" id="s4-m" style="width:430px;height:932px;margin:-466px 0 0 -215px;border-radius:52px;box-shadow:0 0 0 10px #15121d,0 0 0 12px rgba(255,255,255,.18),0 80px 160px rgba(0,0,0,.8),0 0 120px rgba(0,240,255,.25)"><img src="assets/shots/mobile.jpg" alt="" /></div>
+        </div>
+      </div>
+
+      <!-- S5 · Contacto: push-in -->
+      <div id="s5" class="clip stage" data-start="27.4" data-duration="3.9" data-track-index="0">
+        <div class="rig" id="s5-rig">
+          <div class="floor"></div>
+          <div class="plane" id="s5-p"><img src="assets/shots/contacto.jpg" alt="" /></div>
+        </div>
+      </div>
+
+      <!-- END · RODRIGONEGRETE.ES -->
+      <div id="end" class="clip" data-start="31.0" data-duration="5.0" data-track-index="0">
+        <div class="glow" style="left:240px;top:240px;width:760px;height:520px;background:#5b12a0"></div>
+        <div class="glow" style="right:240px;top:360px;width:700px;height:480px;background:#00626b"></div>
+        <p class="kicker" id="end-k" style="top:290px"><b>●</b> ESC. 07 · TOMA FINAL</p>
+        <div class="word" data-split="RODRIGONEGRETE" id="end-w" style="top:380px;font-size:172px"></div>
+        <div class="word cy" data-split=".ES" id="end-w2" style="top:560px;font-size:150px"></div>
+        <p class="kicker" id="end-s" style="top:760px;font-size:28px;letter-spacing:.28em;color:rgba(255,255,255,.85)">AI Product Designer · UX/UI · Automatización IA · Barcelona</p>
+        <div class="flare" id="end-fl" style="top:548px"></div>
+        <div class="flare-dot" id="end-dot" style="left:960px;top:550px"></div>
+      </div>
+
+      <audio id="score" src="assets/audio/score.wav" data-start="0" data-duration="36" data-track-index="2" data-volume="0.9"></audio>
+
+      <!-- Capa de cine (toda la pieza) -->
+      <div id="fx" class="clip" data-start="0" data-duration="36" data-track-index="1" style="pointer-events:none">
+        <div class="leak warm" id="leak1"></div>
+        <div class="leak cold" id="leak2"></div>
+        <div id="flash"></div>
+        <div id="grain"></div>
+        <div id="vignette"></div>
+        <div class="bar" id="bar-t"></div>
+        <div class="bar" id="bar-b"></div>
+        <div class="hud" id="hud-rec"><i></i>REC</div>
+        <div class="hud" id="hud-tc">00:00:00:00</div>
+        <div class="hud" id="hud-shot">ESC. 00 — APERTURA</div>
+        <div class="hud" id="hud-url">rodrigonegrete.es</div>
+      </div>
     </div>
+
     <script>
+      // Letras: cada palabra se parte en spans (determinista)
+      document.querySelectorAll('[data-split]').forEach(w => {
+        w.innerHTML = [...w.dataset.split].map(c => c === ' ' ? '<span class="sp"></span>' : `<span class="l">${c}</span>`).join('');
+      });
+      const L = sel => document.querySelectorAll(sel + ' .l');
+      const BAR = 138 / 540; // escala de las bandas para 2.39:1
+
       const tl = gsap.timeline({ paused: true });
-      // Example: tl.fromTo("#title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0);
-      window.__timelines["main"] = tl;
+      gsap.set('.plane', { force3D: true });
+
+      // Despliegue 3D de letras + salida volando hacia camara
+      function unfold(sel, at, stagger = 0.05, dur = 0.9) {
+        tl.fromTo(L(sel), { rotationX: -100, z: -160, y: 60, opacity: 0 },
+          { rotationX: 0, z: 0, y: 0, opacity: 1, duration: dur, ease: 'expo.out', stagger }, at);
+      }
+      function flyOut(sel, at) {
+        tl.to(sel, { z: 900, scale: 1.6, opacity: 0, filter: 'blur(14px)', duration: 0.55, ease: 'power3.in', transformPerspective: 1200 }, at);
+      }
+      function flash(at, o = 0.85) {
+        tl.set('#flash', { opacity: o }, at).to('#flash', { opacity: 0, duration: 0.32, ease: 'power2.out' }, at + 0.001);
+      }
+      function leak(id, at, dur = 1.2) {
+        tl.set(id, { opacity: 0, x: -120 }, at).to(id, { opacity: 1, x: 40, duration: dur * 0.35, ease: 'sine.out' }, at + 0.001)
+          .to(id, { opacity: 0, x: 160, duration: dur * 0.65, ease: 'sine.in' }, at + dur * 0.35);
+      }
+      function hud(text, at) { tl.set('#hud-shot', { textContent: text }, at); }
+
+      tl.set('#flash, #leak1, #leak2', { opacity: 0 }, 0);
+      // ── Bandas de cine: abren al empezar, cierran al final
+      tl.set('#bar-t, #bar-b', { scaleY: 1 }, 0)
+        .to('#bar-t, #bar-b', { scaleY: BAR, duration: 1.0, ease: 'expo.inOut' }, 0.15)
+        .to('#bar-t, #bar-b', { scaleY: 1, duration: 0.9, ease: 'expo.inOut' }, 35.0);
+      tl.fromTo('.hud', { opacity: 0 }, { opacity: 1, duration: 0.6 }, 0.9).to('.hud', { opacity: 0, duration: 0.4 }, 34.8);
+      tl.to('#hud-rec i', { opacity: 0.15, duration: 0.5, repeat: 35, yoyo: true, ease: 'steps(1)' }, 0);
+
+      // ── S0 Apertura
+      tl.fromTo('#s0-k', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0.7);
+      unfold('#s0-w1', 0.85, 0.06);
+      unfold('#s0-w2', 1.15, 0.06);
+      tl.fromTo('#s0-fl', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.5, ease: 'power2.out' }, 1.75)
+        .to('#s0-fl', { opacity: 0, duration: 0.7 }, 2.25);
+      tl.fromTo('#s0-w1, #s0-w2', { rotationY: -8 }, { rotationY: 8, duration: 2.6, ease: 'none', transformPerspective: 1400 }, 0.8);
+      flyOut('#s0-w1, #s0-w2, #s0-k', 3.0);
+      flash(3.3, 0.7);
+      leak('#leak1', 3.2, 1.4);
+
+      // ── S1 Hero: dolly-in desde lejos, girando
+      hud('ESC. 01 — DOLLY IN · HERO', 3.3);
+      tl.fromTo('#s1-p', { z: -2600, rotationY: 38, rotationX: 14, x: 380, y: 60 },
+        { z: -260, rotationY: 0, rotationX: 0, x: 0, y: 0, duration: 3.2, ease: 'expo.out' }, 3.3)
+        .to('#s1-p', { z: 100, duration: 1.45, ease: 'none' }, 6.5);
+      tl.fromTo('#s1-rig .floor', { opacity: 0 }, { opacity: 1, duration: 1 }, 3.4);
+      tl.to('#s1-p', { z: 900, opacity: 0, filter: 'blur(10px)', duration: 0.4, ease: 'power3.in' }, 7.95);
+      flash(8.2, 0.5);
+
+      // ── T1 DISEÑO
+      hud('ESC. 02 — CARTELA', 8.0);
+      unfold('#t1-w', 8.1, 0.07, 1.0);
+      tl.fromTo('#t1-w', { rotationY: 10 }, { rotationY: -6, duration: 1.5, ease: 'none', transformPerspective: 1400 }, 8.1);
+      flyOut('#t1-w, #t1 .kicker', 9.65);
+      leak('#leak2', 9.7, 1.2);
+
+      // ── S2 Sobre mí: grúa (baja inclinada) → barrido a Stack
+      hud('ESC. 02 — GRÚA · SOBRE MÍ', 9.9);
+      tl.fromTo('#s2-a', { rotationX: 58, y: 520, z: -900 }, { rotationX: 6, y: 0, z: -220, duration: 2.0, ease: 'expo.out' }, 9.9)
+        .to('#s2-a', { rotationX: 0, z: -80, duration: 0.6, ease: 'none' }, 11.9);
+      tl.set('#s2-b', { x: 2400, rotationY: -30, z: -300, filter: 'blur(18px)' }, 9.9);
+      // barrido (whip pan) con desenfoque de movimiento
+      tl.to('#s2-a', { x: -2400, rotationY: 30, filter: 'blur(18px)', duration: 0.45, ease: 'power3.in' }, 12.5)
+        .to('#s2-b', { x: 0, rotationY: 0, z: -200, filter: 'blur(0px)', duration: 0.7, ease: 'expo.out' }, 12.8)
+        .to('#s2-b', { z: -60, rotationY: -3, duration: 0.45, ease: 'none' }, 13.5);
+      hud('ESC. 03 — BARRIDO · STACK', 12.8);
+      flash(12.78, 0.35);
+      tl.to('#s2-b', { z: 900, opacity: 0, filter: 'blur(10px)', duration: 0.35, ease: 'power3.in' }, 13.95);
+
+      // ── T2 IA + AGENTES
+      hud('ESC. 04 — CARTELA', 14.0);
+      unfold('#t2-w1', 14.1, 0.08, 1.0);
+      unfold('#t2-w2', 14.35, 0.05, 0.9);
+      tl.fromTo('#t2-w1, #t2-w2', { rotationY: -10 }, { rotationY: 6, duration: 1.6, ease: 'none', transformPerspective: 1400 }, 14.1);
+      flyOut('#t2-w1, #t2-w2', 15.7);
+      flash(15.95, 0.6);
+      leak('#leak1', 15.8, 1.3);
+
+      // ── S3 Órbita: galería 3D de proyectos y laboratorio
+      hud('ESC. 04 — ÓRBITA · PROYECTOS', 15.9);
+      tl.set('#s3-a', { x: -1650, z: -500, rotationY: 32, scale: 0.78 }, 15.9)
+        .set('#s3-b', { x: 0, z: -900, rotationY: 0, scale: 0.78 }, 15.9)
+        .set('#s3-c', { x: 1650, z: -500, rotationY: -32, scale: 0.78 }, 15.9);
+      tl.fromTo('#s3-rig', { rotationY: 48, z: -1400, x: 900 }, { rotationY: 20, z: -300, x: 1200, duration: 1.8, ease: 'expo.out' }, 15.9)
+        .to('#s3-rig', { rotationY: -20, x: -1200, duration: 3.0, ease: 'sine.inOut' }, 17.7);
+      tl.fromTo('#s3-rig .floor', { opacity: 0 }, { opacity: 1, duration: 0.8 }, 16.0);
+      hud('ESC. 04 — ÓRBITA · LABORATORIO', 19.4);
+      tl.to('#s3-rig', { z: 700, opacity: 0, filter: 'blur(12px)', duration: 0.45, ease: 'power3.in' }, 21.0);
+
+      // ── T3 AUTOMATIZACIÓN
+      hud('ESC. 05 — CARTELA', 21.4);
+      unfold('#t3-w', 21.45, 0.04, 0.9);
+      tl.fromTo('#t3-w', { rotationX: 18 }, { rotationX: -6, duration: 1.55, ease: 'none', transformPerspective: 1400 }, 21.45);
+      flyOut('#t3-w, #t3 .kicker', 23.05);
+      leak('#leak2', 23.1, 1.2);
+
+      // ── S4 Trayectoria: picado + móvil flotando delante
+      hud('ESC. 05 — PICADO · TRAYECTORIA', 23.3);
+      tl.fromTo('#s4-a', { rotationX: -55, y: -600, z: -900 }, { rotationX: -8, y: 0, z: -360, duration: 2.0, ease: 'expo.out' }, 23.3)
+        .to('#s4-a', { rotationX: 0, z: -260, x: -260, duration: 2.2, ease: 'none' }, 25.3);
+      tl.fromTo('#s4-m', { x: 1400, z: 200, rotationY: -60, rotationZ: 8 }, { x: 560, z: 120, rotationY: -18, rotationZ: -3, duration: 1.6, ease: 'expo.out' }, 24.1)
+        .to('#s4-m', { rotationY: -6, y: -30, duration: 2.0, ease: 'sine.inOut' }, 25.7);
+      tl.to('#s4-rig', { z: 800, opacity: 0, filter: 'blur(12px)', duration: 0.4, ease: 'power3.in' }, 27.3);
+      flash(27.45, 0.55);
+
+      // ── S5 Contacto: push-in lento hacia el CTA
+      hud('ESC. 06 — PUSH IN · CONTACTO', 27.4);
+      tl.fromTo('#s5-p', { z: -1800, rotationX: 20, y: 200 }, { z: -300, rotationX: 0, y: 0, duration: 1.8, ease: 'expo.out' }, 27.4)
+        .to('#s5-p', { z: 260, y: -60, duration: 1.9, ease: 'power1.in' }, 29.2);
+      leak('#leak1', 30.6, 1.0);
+      flash(31.05, 0.9);
+
+      // ── END RODRIGONEGRETE.ES
+      hud('ESC. 07 — TOMA FINAL', 31.0);
+      tl.fromTo('#end-k', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 31.2);
+      unfold('#end-w', 31.25, 0.045, 1.0);
+      unfold('#end-w2', 31.95, 0.08, 0.9);
+      tl.fromTo('#end-fl', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 0.6, ease: 'power2.out' }, 32.4)
+        .to('#end-fl', { opacity: 0.25, duration: 1.4 }, 33.0);
+      tl.fromTo('#end-dot', { scale: 0, opacity: 0, x: -700 }, { scale: 1, opacity: 1, x: 0, duration: 0.6, ease: 'power2.out' }, 32.4)
+        .to('#end-dot', { x: 700, opacity: 0, scale: 0.4, duration: 1.0, ease: 'power2.in' }, 33.0);
+      tl.fromTo('#end-s', { opacity: 0, y: 24, scale: 1.08 }, { opacity: 1, y: 0, scale: 1, duration: 1.1, ease: 'expo.out' }, 32.6);
+      tl.fromTo('#end-w, #end-w2', { rotationY: -7 }, { rotationY: 5, duration: 4.4, ease: 'none', transformPerspective: 1400 }, 31.25);
+      tl.to('#end .word, #end .kicker', { opacity: 0, duration: 0.8, ease: 'power2.in' }, 34.8);
+
+      // ── Grano: desplazamiento escalonado (12 fps de grano, secuencia fija)
+      let s = 7;
+      for (let t = 0; t < 36; t += 1 / 12) {
+        s = (s * 1103515245 + 12345) % 2147483648;
+        const gx = (s % 200) - 100, gy = ((s >> 8) % 200) - 100;
+        tl.set('#grain', { x: gx, y: gy }, t);
+      }
+      // ── Timecode (24 fps)
+      const p2 = n => String(n).padStart(2, '0');
+      for (let f = 0; f < 36 * 24; f += 1) {
+        const t = f / 24;
+        tl.set('#hud-tc', { textContent: `00:00:${p2(Math.floor(t))}:${p2(f % 24)}` }, t);
+      }
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines['main'] = tl;
       tl.seek(0);
     </script>
   </body>
