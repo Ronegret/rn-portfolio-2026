@@ -2714,6 +2714,24 @@ footer.fx-footer:hover .fx-wordmark span { transform: translateY(-6px); }
 @keyframes rv-scale { from { opacity: 0; transform: scale(.95); } }
 [data-d="1"] { --d: 1; } [data-d="2"] { --d: 2; } [data-d="3"] { --d: 3; } [data-d="4"] { --d: 4; } [data-d="5"] { --d: 5; }
 
+/* ═══ Encabezados 3D por sección — una animación distinta cada uno ═══ */
+/* Perspective en el bloque padre; usa el shorthand `animation` para sustituir el rv-up + sfx-wipe
+   que scroll-fx.css aplica a .sh.vis con especificidad (0,2,2); por eso aquí dos clases .h3d.h3d-*. */
+.h3d { perspective: 1200px; transform-style: preserve-3d; backface-visibility: hidden; will-change: transform, opacity; }
+html.rv-on .h3d.h3d-flip.vis  { animation: h3d-flip  1.1s cubic-bezier(.2,.9,.25,1.15) backwards; }
+html.rv-on .h3d.h3d-tilt.vis  { animation: h3d-tilt  1.1s cubic-bezier(.2,.9,.25,1.15) backwards; }
+html.rv-on .h3d.h3d-rise.vis  { animation: h3d-rise  1.1s cubic-bezier(.2,.9,.25,1.15) backwards; }
+html.rv-on .h3d.h3d-swing.vis { animation: h3d-swing 1.1s cubic-bezier(.2,.9,.25,1.15) backwards; }
+html.rv-on .h3d.h3d-zoom.vis  { animation: h3d-zoom  1.3s cubic-bezier(.2,.9,.25,1.15) backwards; }
+@keyframes h3d-flip  { from { opacity: 0; transform: perspective(1200px) rotateY(-85deg) translateX(-40px); } }
+@keyframes h3d-tilt  { from { opacity: 0; transform: perspective(1200px) rotateX(-75deg) translateY(40px); transform-origin: 50% 100%; } }
+@keyframes h3d-rise  { from { opacity: 0; transform: perspective(1200px) rotateX(55deg) translateY(80px); transform-origin: 50% 0%; } }
+@keyframes h3d-swing { from { opacity: 0; transform: perspective(1200px) rotateY(70deg) translateX(60px); transform-origin: 100% 50%; } }
+@keyframes h3d-zoom  { from { opacity: 0; transform: perspective(1200px) translateZ(-420px) rotateX(20deg); } }
+@media (prefers-reduced-motion: reduce) {
+  html.rv-on .h3d.vis { animation: none; }
+}
+
 /* Imágenes de tarjeta: zoom lento al pasar el cursor (solo con puntero fino) */
 @media (hover: hover) and (pointer: fine) {
   .bc:hover .bc-img img, .lab-card:hover .lab-card-img img { transform: scale(1.05); }

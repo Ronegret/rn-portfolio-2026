@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><style>@view-transition{navigation:auto}</style>
+  <script>document.documentElement.classList.add('js')</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Caso de estudio: TorreZ, juego móvil (PWA) de apilar bloques con duelos y salas de hasta 8 jugadores. Estudio UX/UI mobile-first sobre 390×844: qué funciona, qué corregir y por qué.">
+  <title>TorreZ | Case Study — Juego móvil UX/UI</title>
+  <link rel="canonical" href="https://rodrigonegrete.es/torre-z/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="TorreZ | Case Study — Juego móvil UX/UI">
+  <meta property="og:description" content="Estudio UX/UI mobile-first de TorreZ, mi juego PWA de apilar bloques con duelos y salas de hasta 8 jugadores.">
+  <meta property="og:image" content="https://rodrigonegrete.es/assets/og/torre-z.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="TorreZ, juego móvil de puzles con alma Dragon Ball: logotipo y portada del estudio UX/UI">
+  <meta property="og:url" content="https://rodrigonegrete.es/torre-z/">
+  <meta property="og:site_name" content="Rodrigo Negrete">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TorreZ | Case Study — Juego móvil UX/UI">
+  <meta name="twitter:description" content="Estudio UX/UI mobile-first de TorreZ, mi juego PWA de apilar bloques.">
+  <meta name="twitter:image" content="https://rodrigonegrete.es/assets/og/torre-z.jpg">
+  <link rel="icon" type="image/png" href="/assets/torre-z/icon-192.png">
+  <link rel="apple-touch-icon" href="/assets/torre-z/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/dedicalo-play.css">
+  <link rel="stylesheet" href="/src/torre-z.css">
+  <link rel="stylesheet" href="/src/case-type.css">
+  <link rel="stylesheet" href="/src/case-fold.css">
+  <link rel="stylesheet" href="/src/case-bar.css">
+  <link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
+</head>
+<body>
+
+<!-- Capas de efectos (decorativas) -->
+<div class="tz-ki" aria-hidden="true"><b></b></div>
+<div class="tz-aura" aria-hidden="true"></div>
+<canvas class="tz-sparks" aria-hidden="true"></canvas>
+<div class="tz-balls" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="tz-head">
+  <picture class="tz-art" aria-hidden="true">
+    <source media="(min-width:900px)" srcset="/assets/torre-z/splash-h.webp" width="1024" height="572">
+    <img src="/assets/torre-z/splash-v.webp" width="506" height="1024" alt="" decoding="async">
+  </picture>
+  <div class="wrap">
+    <nav class="dp-nav">
+      <a href="/#proyectos" class="back-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Portfolio
+      </a>
+      <a href="https://torre-z.vercel.app/" target="_blank" rel="noopener" class="live-link">Jugar ahora →</a>
+    </nav>
+
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <img class="tz-logo tz-pop" style="--i:0" src="/assets/torre-z/logo.webp" width="900" height="385" fetchpriority="high" alt="Logotipo de TorreZ: letras doradas y granate con una bola de dragón de cuatro estrellas y una espiral de energía">
+        <p class="eyebrow tz-pop" style="--i:0">Juego móvil · PWA · UX/UI · Multijugador</p>
+        <div class="hero-badges tz-pop" style="--i:1">
+          <span class="hero-badge hb-live">● En producción</span>
+          <span class="hero-badge hb-new">✦ Estudio UX móvil 2026</span>
+        </div>
+        <h1>
+          <span class="w" style="--i:0">Apila.</span>
+          <span class="w tz-ki-word" style="--i:1">Carga</span>
+          <span class="w tz-ki-word" style="--i:2">el</span>
+          <span class="w tz-ki-word" style="--i:3">ki.</span><br>
+          <span class="w" style="--i:4">Reta</span>
+          <span class="w" style="--i:5">a</span>
+          <span class="w" style="--i:6">tu</span>
+          <span class="w" style="--i:7">grupo.</span>
+        </h1>
+        <p class="lead tz-pop" style="--i:6">TorreZ es un juego móvil de apilar bloques con duelos y salas de hasta 8 jugadores, que se instala como app (PWA). Lo diseñé y construí yo; aquí analizo su experiencia <strong>desde el móvil</strong> (390×844): lo que funciona y lo que corregiría.</p>
+        <div class="hero-actions tz-pop" style="--i:7">
+          <a href="#hallazgos" class="btn primary">Ver el estudio UX/UI</a>
+          <a href="#pantallas" class="btn secondary">Pantallas</a>
+        </div>
+      </div>
+
+      <div class="tz-hero-shot tz-hero">
+        <div class="tz-speed" aria-hidden="true"></div>
+        <div class="tz-flame f1" aria-hidden="true"></div>
+        <div class="tz-flame f2" aria-hidden="true"></div>
+        <div class="tz-flame f3" aria-hidden="true"></div>
+        <span class="tz-chip c1" aria-hidden="true">8 jugadores</span>
+        <span class="tz-chip c2" aria-hidden="true">PWA</span>
+        <span class="tz-chip c3" aria-hidden="true">390×844</span>
+        <div class="tz-tilt"><div class="tz-phone"><img src="/assets/torre-z/menu.png" width="390" height="844" fetchpriority="high" alt="Menú principal de TorreZ en móvil: perfil, reto del día, botón JUGAR y cuadrícula con Duelo, Amigos, Sala, Ranking, Tienda y Misiones"></div></div>
+      </div>
+    </div>
+
+    <figure class="tz-splash rv">
+      <picture>
+        <source media="(min-width:700px)" srcset="/assets/torre-z/splash-h.webp" width="1024" height="572">
+        <img src="/assets/torre-z/splash-v.webp" width="506" height="1024" loading="lazy" decoding="async" alt="Pantalla de carga de TorreZ: una torre sobre una isla flotante con espirales de energía dorada, bolas de dragón y el logotipo">
+      </picture>
+      <figcaption>Pantalla de carga y arte del juego, mostrados enteros (sin recortar).</figcaption>
+    </figure>
+
+    <div class="metric-strip tz-stag">
+      <div class="metric-card"><strong><span data-count="8">8</span></strong><span>jugadores por sala</span></div>
+      <div class="metric-card"><strong>1 pulgar</strong><span>un toque suelta el bloque</span></div>
+      <div class="metric-card"><strong><span data-count="44" data-prefix="≥" data-suffix=" px">≥44 px</span></strong><span>zonas táctiles medidas</span></div>
+      <div class="metric-card"><strong>PWA</strong><span>se instala, sin tienda</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="tz-marq-wrap" aria-hidden="true"><div class="tz-marq"><div class="tz-marq-in">
+  <span>Apila ✦ Carga el ki ✦ Reta a tu grupo ✦ Apila ✦ Carga el ki ✦ Reta a tu grupo ✦ </span>
+  <span>Apila ✦ Carga el ki ✦ Reta a tu grupo ✦ Apila ✦ Carga el ki ✦ Reta a tu grupo ✦ </span>
+</div></div></div>
+
+<main>
+
+  <section id="contexto">
+    <div class="wrap">
+      <span class="tz-ghost" aria-hidden="true">気</span>
+      <div class="section-head rv">
+        <p class="eyebrow">Contexto y método</p>
+        <h2 class="h3d h3d-tilt">Un juego de sesiones cortas, en la mano y a menudo con amigos.</h2>
+        <p class="section-sub">TorreZ se juega de pie, en el metro o en el sofá: una mano, sesiones de uno o dos minutos y, si hay amigos, una sala con PIN. Por eso el estudio se hizo solo en formato móvil.</p>
+      </div>
+      <div class="grid-3 tz-stag">
+        <div class="dp-card"><span class="card-num">01</span><div class="card-icon">📱</div><h4>Dispositivo de referencia</h4><p>Viewport 390×844 (móvil actual). Los hallazgos de escritorio se descartaron: no es el uso real.</p><span class="card-tag">Alcance</span></div>
+        <div class="dp-card"><span class="card-num">02</span><div class="card-icon">🧭</div><h4>Recorrido completo</h4><p>Splash, intro, cápsula diaria, menú, partida, fin de partida, ranking, tienda, misiones y salas/duelos.</p><span class="card-tag">Método</span></div>
+        <div class="dp-card"><span class="card-num">03</span><div class="card-icon">⚖️</div><h4>Evaluación heurística</h4><p>Revisión experta sobre el producto en vivo: jerarquía, tacto, claridad, accesibilidad y compartir. No sustituye al test con usuarios.</p><span class="card-tag">Honestidad</span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tz-beam" aria-hidden="true"><i></i></div>
+
+  <section id="pantallas" class="band">
+    <div class="wrap">
+      <span class="tz-ghost" aria-hidden="true">戦</span>
+      <div class="section-head rv">
+        <p class="eyebrow">Pantallas</p>
+        <h2 class="h3d h3d-flip">Seis momentos del recorrido, capturados en 390×844.</h2>
+        <p class="section-sub">Baja despacio: el móvil cambia de pantalla y la energía cambia de color. Son capturas reales del juego en producción.</p>
+      </div>
+
+      <div class="tz-story">
+        <div class="tz-stage" style="--aura:#ff8a1f">
+          <div class="tz-ring r1" aria-hidden="true"></div>
+          <div class="tz-ring r2" aria-hidden="true"></div>
+          <div class="tz-phone">
+            <div class="tz-screens">
+              <img class="on" src="/assets/torre-z/menu.png" width="390" height="844" loading="lazy" alt="Menú principal con reto del día y cuadrícula de modos">
+              <img src="/assets/torre-z/partida.png" width="390" height="844" loading="lazy" alt="Partida en curso: torre de bloques con marcador de puntos, piso y ki">
+              <img src="/assets/torre-z/fin.png" width="390" height="844" loading="lazy" alt="Fin de partida con puntuación, estadísticas, barra de experiencia y botones Reintentar y Compartir reto">
+              <img src="/assets/torre-z/ranking.png" width="390" height="844" loading="lazy" alt="Clasificación con pestañas, torneo semanal y filas de jugadores">
+              <img src="/assets/torre-z/tienda.png" width="390" height="844" loading="lazy" alt="Tienda de avatares con precios en semillas">
+              <img src="/assets/torre-z/misiones.png" width="390" height="844" loading="lazy" alt="Misiones diarias con recompensas y botón Ver logros">
+            </div>
+          </div>
+          <div class="tz-dots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+
+        <ol class="tz-steps">
+          <li class="tz-step on" data-aura="#ff8a1f"><span class="n" aria-hidden="true">01</span><h3>Menú</h3><p>Un botón dominante (JUGAR) y seis accesos con color por función.</p></li>
+          <li class="tz-step" data-aura="#3b6cff"><span class="n" aria-hidden="true">02</span><h3>Partida</h3><p>Un toque suelta el bloque; el marcador no tapa la torre.</p></li>
+          <li class="tz-step" data-aura="#e0283a"><span class="n" aria-hidden="true">03</span><h3>Fin de partida</h3><p>Reintentar manda; compartir reto es el segundo paso.</p></li>
+          <li class="tz-step" data-aura="#ffd84a"><span class="n" aria-hidden="true">04</span><h3>Ranking</h3><p>Torneo semanal con cuenta atrás y premios en semillas.</p></li>
+          <li class="tz-step" data-aura="#2bd17a"><span class="n" aria-hidden="true">05</span><h3>Tienda</h3><p>Avatares por semillas: se ganan jugando.</p></li>
+          <li class="tz-step" data-aura="#a85cff"><span class="n" aria-hidden="true">06</span><h3>Misiones</h3><p>Tres objetivos diarios con recompensa visible.</p></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <div class="tz-beam" aria-hidden="true"><i></i></div>
+
+  <section id="como" class="band-soft">
+    <div class="wrap">
+      <span class="tz-ghost" aria-hidden="true">道</span>
+      <div class="section-head rv">
+        <p class="eyebrow">Cómo se juega</p>
+        <h2 class="h3d h3d-zoom">Toca, apila, carga el ki y transfórmate.</h2>
+        <p class="section-sub">Reglas reales del juego: tomadas de la build en producción, no inventadas.</p>
+      </div>
+      <div class="tz-rules">
+        <div class="tz-rule rv"><div class="tz-rule-ic">🎯</div><h4>Apila y afina</h4><p>Toca la pantalla para soltar el bloque. Lo que sobresale se corta; si no toca la torre, se acaba la partida.</p></div>
+        <div class="tz-rule rv"><div class="tz-rule-ic">✨</div><h4>Perfectos y combo</h4><p>Encaje exacto. Cada 3 perfectos seguidos el bloque recupera anchura y sube el combo.</p></div>
+        <div class="tz-rule rv"><div class="tz-rule-ic">🔥</div><h4>Carga el ki, transfórmate</h4><p>Cada bloque llena la barra. Al llenarla: aura dorada y puntos ×2 durante 8 bloques.</p></div>
+        <div class="tz-rule rv"><div class="tz-rule-ic">☁️</div><h4>Nubes y báculo</h4><p>Empiezas con 1 nube; ganas más a los 10, 20 y 30 perfectos. El báculo sagrado te salva del siguiente fallo.</p></div>
+        <div class="tz-rule rv"><div class="tz-rule-ic">🌐</div><h4>Sala y duelos</h4><p>PIN de 4 cifras, hasta 8 jugadores. Duelos 1vs1 con apuesta en semillas y cola en vivo.</p></div>
+        <div class="tz-rule rv"><div class="tz-rule-ic">🌀</div><h4>Escenarios y teletransporte</h4><p>Cada 12 pisos, la torre salta al siguiente escenario: columna de luz, sonido y cambio de fondo.</p></div>
+      </div>
+      <aside class="tz-kibar" aria-hidden="true"><span></span></aside>
+    </div>
+  </section>
+
+  <div class="tz-beam" aria-hidden="true"><i></i></div>
+
+  <section id="hallazgos">
+    <div class="wrap">
+      <span class="tz-ghost" aria-hidden="true">力</span>
+      <div class="section-head rv">
+        <p class="eyebrow">Hallazgos UX/UI</p>
+        <h2 class="h3d h3d-rise">Lo que funciona en el móvil y lo que corregiría primero.</h2>
+        <p class="section-sub">Medido sobre el producto en producción. Prioridad 1 = afecta a todos los usuarios de ese tamaño; prioridad 2 = mejora clara que no bloquea.</p>
+      </div>
+
+      <h3 class="tz-h3 rv">Lo que funciona</h3>
+      <div class="tz-grid-2 tz-stag">
+        <div class="dp-card"><span class="tz-sev ok">Funciona</span><h4>Una mano, un gesto</h4><p>Soltar el bloque es un toque en cualquier punto. JUGAR mide 330×54 px y los accesos de la cuadrícula 106×60 px: todo supera los 44 px de zona táctil.</p></div>
+        <div class="dp-card"><span class="tz-sev ok">Funciona</span><h4>Se aprende jugando</h4><p>No hay manual obligatorio: un aviso contextual aparece en la primera partida y desaparece. El manual existe aparte (icono «?»).</p></div>
+        <div class="dp-card"><span class="tz-sev ok">Funciona</span><h4>Bucle de retorno claro</h4><p>Cápsula diaria con racha de 7 días, reto del día, tres misiones y barra de experiencia: cada visita tiene un motivo para volver.</p></div>
+        <div class="dp-card"><span class="tz-sev ok">Funciona</span><h4>Fin de partida con jerarquía</h4><p>Puntuación enorme, tres estadísticas, REINTENTAR como acción primaria y COMPARTIR RETO como secundaria diferenciada por color.</p></div>
+      </div>
+
+      <h3 class="tz-h3 tz-h3-2 rv">Lo que corregiría</h3>
+      <div class="tz-grid-2 tz-stag">
+        <div class="dp-card"><span class="tz-sev p1">Prioridad 1</span><h4>La cabecera se sale en 390 px</h4><p>En el menú, el botón «Ajustes» termina en x=423 con una pantalla de 390: queda recortado fuera de vista. Solución: reducir huecos o iconos, o mover Ajustes dentro del perfil.</p></div>
+        <div class="dp-card"><span class="tz-sev p1">Prioridad 1</span><h4>Texto de escritorio en una app móvil</h4><p>La pista de partida dice «CLIC O ESPACIO PARA SOLTAR EL BLOQUE». En móvil no hay clic ni espacio: debería decir «TOCA PARA SOLTAR» según el dispositivo.</p></div>
+        <div class="dp-card"><span class="tz-sev p2">Prioridad 2</span><h4>Es un juego social y no se previsualiza</h4><p>No tiene metadatos Open Graph: al compartir el enlace por WhatsApp o redes no sale imagen ni título. Para un juego que vive de invitar, es una pérdida directa.</p></div>
+        <div class="dp-card"><span class="tz-sev p2">Prioridad 2</span><h4>Tres pasos antes de jugar</h4><p>Splash, intro cinemática (con SALTAR) y cápsula diaria preceden a la primera partida. Conviene mostrar la intro solo la primera vez y dejar la cápsula para después de jugar.</p></div>
+        <div class="dp-card"><span class="tz-sev p2">Prioridad 2</span><h4>Accesibilidad básica</h4><p>Los iconos tienen aria-label, bien. Pero hay 6 imágenes sin texto alternativo, que un lector de pantalla leería sin sentido.</p></div>
+      </div>
+      <p class="tz-note">Alcance: evaluación heurística propia, sin test con usuarios ni métricas de uso. Las cifras (tamaños y posiciones) se midieron en el navegador sobre la versión en producción.</p>
+    </div>
+  </section>
+
+  <div class="tz-marq-wrap rev tz-marq-perfect" aria-hidden="true"><div class="tz-marq"><div class="tz-marq-in">
+    <span>¡PERFECTO! ✦ COMBO ×3 ✦ KI AL MÁXIMO ✦ ¡TRANSFORMACIÓN! ✦ ¡PERFECTO! ✦ COMBO ×3 ✦ KI AL MÁXIMO ✦ ¡TRANSFORMACIÓN! ✦ </span>
+    <span>¡PERFECTO! ✦ COMBO ×3 ✦ KI AL MÁXIMO ✦ ¡TRANSFORMACIÓN! ✦ ¡PERFECTO! ✦ COMBO ×3 ✦ KI AL MÁXIMO ✦ ¡TRANSFORMACIÓN! ✦ </span>
+  </div></div></div>
+
+  <section id="producto" class="band">
+    <div class="wrap">
+      <span class="tz-ghost" aria-hidden="true">龍</span>
+      <div class="split rv">
+        <div>
+          <p class="eyebrow">Producto</p>
+          <h2 class="h3d h3d-swing">Juego instalable, con salas en vivo.</h2>
+          <ul class="check-list">
+            <li><strong>PWA</strong> — se instala desde el navegador (botón «Instalar app» en el menú), sin pasar por una tienda.</li>
+            <li><strong>Salas y duelos</strong> — salas con PIN de hasta 8 jugadores, rondas (1, mejor de 3, mejor de 5), revancha y búsqueda de rival.</li>
+            <li><strong>Backend</strong> — Supabase para cuentas, ranking y salas.</li>
+            <li><strong>Identidad</strong> — estética de anime de acción: naranja, azul noche y dorado, con botones gruesos.</li>
+          </ul>
+        </div>
+        <div class="tz-hero-shot tz-prod"><div class="tz-flame f1" aria-hidden="true"></div><div class="tz-phone"><img src="/assets/torre-z/ranking.png" width="390" height="844" loading="lazy" alt="Ranking semanal de TorreZ con torneo y premios en semillas"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tz-beam" aria-hidden="true"><i></i></div>
+
+  <section id="paleta" class="band">
+    <div class="wrap">
+      <span class="tz-ghost" aria-hidden="true">色</span>
+      <div class="section-head rv">
+        <p class="eyebrow">Paleta y estudio cromático</p>
+        <h2 class="h3d h3d-flip">La paleta sigue la lógica del juego.</h2>
+        <p class="section-sub">Cuanto más luz y más oro, más cerca estás de transformarte. Ocho tokens que viven directamente en el CSS del juego.</p>
+      </div>
+      <div class="pal-grid tz-stag">
+        <div class="pal-chip rv" style="--swatch:#070620"><div class="pal-sw"></div><b>Fondo profundo</b><code>#070620</code><em>Espacio exterior</em><div class="pal-lum"><i style="--l:4%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#17164d"><div class="pal-sw"></div><b>Panel</b><code>#17164d</code><em>Superficies y cards</em><div class="pal-lum"><i style="--l:16%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#ff8a1f"><div class="pal-sw"></div><b>Ki naranja</b><code>#ff8a1f</code><em>Acento primario · combo</em><div class="pal-lum"><i style="--l:70%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#ffd84a"><div class="pal-sw"></div><b>Oro transformación</b><code>#ffd84a</code><em>Logo · recompensas · aura</em><div class="pal-lum"><i style="--l:86%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#6cc4ff"><div class="pal-sw"></div><b>Ki azul</b><code>#6cc4ff</code><em>Barra cargando</em><div class="pal-lum"><i style="--l:74%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#c0172a"><div class="pal-sw"></div><b>Granate</b><code>#c0172a</code><em>Peligro · duelos</em><div class="pal-lum"><i style="--l:28%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#2a4bc4"><div class="pal-sw"></div><b>Azul noche</b><code>#2a4bc4</code><em>Social · sala</em><div class="pal-lum"><i style="--l:34%"></i></div></div>
+        <div class="pal-chip rv" style="--swatch:#1c8a48"><div class="pal-sw"></div><b>Verde esfera</b><code>#1c8a48</code><em>Progreso · misiones</em><div class="pal-lum"><i style="--l:46%"></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tz-beam" aria-hidden="true"><i></i></div>
+
+  <section>
+    <div class="wrap rv">
+      <div class="final-cta tz-kame">
+        <i class="tz-orb" aria-hidden="true"></i>
+        <i class="tz-blast" aria-hidden="true"></i>
+        <div class="tz-cta-copy">
+          <h3>¿Te animas a una partida?</h3>
+          <p>TorreZ está en producción en <strong style="color:var(--orange)">torre-z.vercel.app</strong>. Ábrelo desde el móvil, instálalo y reta a un amigo.</p>
+        </div>
+        <a href="https://torre-z.vercel.app/" target="_blank" rel="noopener" class="btn primary tz-cta-btn">Jugar ahora →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="dp-footer">
+      <span>© 2026 Rodrigo Negrete — TorreZ</span>
+      <div class="dp-footer-links">
+        <a href="/#proyectos" class="footer-link">← Portfolio</a>
+        <a href="/dedicalo-play/" class="footer-link accent">Dedícalo Play →</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="/src/torre-z-fx.js" defer></script>
+<script type="module" src="/src/case-fold.js"></script>
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>
