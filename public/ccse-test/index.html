@@ -1,284 +1,257 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Test CCSE 2025</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#fbf7ef">
+<title>Test CCSE · Simulador gratis del examen de nacionalidad</title>
+<meta name="description" content="Simulador gratuito del examen CCSE para la nacionalidad española: 330 preguntas del cuestionario oficial, tests de 25 preguntas, repaso de fallos y ranking. Pensado para el móvil.">
+<link rel="canonical" href="https://rodrigonegrete.es/ccse-test/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238B1A24'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='24' font-weight='800' text-anchor='middle' fill='%23D4AF37'%3ECCSE%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Rodrigo Negrete">
+<meta property="og:locale" content="es_ES">
+<meta property="og:title" content="Test CCSE · Simulador gratis del examen de nacionalidad">
+<meta property="og:description" content="Simulador gratuito del examen CCSE para la nacionalidad española: 330 preguntas del cuestionario oficial, tests de 25 preguntas, repaso de fallos y ranking. Pensado para el móvil.">
+<meta property="og:url" content="https://rodrigonegrete.es/ccse-test/">
+<meta property="og:image" content="https://rodrigonegrete.es/assets/ccse/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Test CCSE: simulador gratis con las preguntas del cuestionario oficial, 15 de 25 para aprobar">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Test CCSE · Simulador gratis del examen de nacionalidad">
+<meta name="twitter:description" content="Simulador gratuito del examen CCSE para la nacionalidad española: 330 preguntas del cuestionario oficial, tests de 25 preguntas, repaso de fallos y ranking. Pensado para el móvil.">
+<meta name="twitter:image" content="https://rodrigonegrete.es/assets/ccse/og.jpg">
+<meta name="twitter:image:alt" content="Test CCSE: simulador gratis con las preguntas del cuestionario oficial">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
 <style>
-  /* Importar Fuente Inter */
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+:root{
+  --burgundy:#8B1A24; --burgundy-d:#5c1119; --gold:#D4AF37; --cream:#fbf7ef; --cream-d:#eadfce;
+  --ink:#2b2527; --muted:#667085; --ok:#15803D; --ok-bg:#dcfce7; --warn:#C2410C; --warn-bg:#ffedd5;
+  --line:rgba(139,26,36,.14); --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;
+  background:linear-gradient(180deg,#fbfaf7,#f4efe7);font-family:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;color:var(--ink)}
 
-  /* Base para tipografía fluida */
-  :root {
-    font-size: 16px; /* Base (1rem = 16px) */
-  }
-  
-  /* Reset básico para el 'body' cuando se ve directo */
-  body {
-    background: linear-gradient(180deg, #fbfaf7, #f4efe7);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
+.quiz-body{position:relative;overflow:hidden;width:100%;max-width:700px;margin:12px auto;padding:24px;text-align:center;
+  background:linear-gradient(145deg,#fff,#fbf7ef);border:1px solid var(--line);border-radius:22px;
+  box-shadow:0 26px 70px rgba(36,31,33,.12);touch-action:manipulation}
+.quiz-body::before,.quiz-body::after{content:'';position:absolute;pointer-events:none;border-radius:50%;filter:blur(8px)}
+.quiz-body::before{width:340px;height:340px;left:-120px;top:-150px;background:radial-gradient(circle,rgba(212,175,55,.26),transparent 65%);animation:drift 14s ease-in-out infinite alternate}
+.quiz-body::after{width:320px;height:320px;right:-140px;top:-90px;background:radial-gradient(circle,rgba(139,26,36,.13),transparent 65%);animation:drift 18s ease-in-out infinite alternate-reverse}
+@keyframes drift{to{transform:translate(40px,30px) scale(1.15)}}
+section{position:relative;z-index:1}
 
-  /* Estilos Generales - DARK MODE */
-  .quiz-body {
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(145deg, #ffffff, #fbf7ef);
-    color: #2b2527;
-    text-align: center;
-    padding: 24px;
-    border-radius: 22px;
-    /* Diseño adaptativo PC/Móvil */
-    width: 100%; /* Ocupa el 100% del 'body' o 'embed' */
-    max-width: 700px; 
-    margin: 5px auto;   
-    border: 1px solid rgba(139, 26, 36, 0.14);
-    box-shadow: 0 26px 70px rgba(36, 31, 33, 0.12);
-    box-sizing: border-box; /* Importante para el padding */
-    touch-action: manipulation;
-    position: relative;
-    overflow: hidden;
-  }
+/* ---------- Inicio ---------- */
+.badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;background:#fff;border:1px solid var(--line);
+  color:var(--burgundy);font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase}
+#start-screen h1{margin:14px 0 8px;font-size:clamp(1.9rem,8vw,2.4rem);line-height:1.1;font-weight:800;color:var(--burgundy-d)}
+#start-screen .lead{margin:0 auto 18px;max-width:34ch;font-size:1.05rem;line-height:1.5;color:var(--muted)}
+.chips{display:flex;gap:8px;justify-content:center;margin:0 0 20px;padding:0;list-style:none}
+.chips li{flex:1;max-width:130px;padding:10px 6px;border-radius:14px;background:#fff;border:1px solid var(--line)}
+.chips b{display:block;font-size:1.5rem;font-weight:800;color:var(--burgundy)}
+.chips span{font-size:.75rem;color:var(--muted);font-weight:600}
+.field{display:block;width:100%;max-width:360px;margin:0 auto 14px;padding:14px;font:inherit;font-size:1rem;text-align:center;
+  color:var(--burgundy-d);background:#fff;border:2px solid var(--line);border-radius:14px}
+.field::placeholder{color:#7a7a7a}
+.field:focus{outline:none;border-color:var(--burgundy);box-shadow:0 0 0 4px rgba(139,26,36,.14)}
+.btn{display:block;width:100%;max-width:360px;margin:10px auto 0;min-height:56px;padding:14px 24px;border:0;border-radius:16px;cursor:pointer;
+  font:inherit;font-weight:800;font-size:1.1rem;color:#fff;background:linear-gradient(135deg,var(--burgundy),var(--burgundy-d));
+  box-shadow:0 14px 30px rgba(139,26,36,.24);transition:transform .2s var(--ease),box-shadow .2s var(--ease)}
+.btn:active{transform:scale(.97)}
+.btn.ghost{background:#fff;color:var(--burgundy);border:2px solid var(--line);box-shadow:none}
+.btn.gold{background:var(--gold);color:#241f21;box-shadow:0 12px 26px rgba(212,175,55,.3)}
+.btn:focus-visible,.opcion-btn:focus-visible,.seg-tabs button:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.fine{margin:16px 0 0;font-size:.8rem;color:var(--muted)}
 
-  /* --- Pantalla de Inicio --- */
-  #start-screen { animation: fadeIn 0.5s ease; }
-  .quiz-body::before { content:''; position:absolute; inset:0; pointer-events:none; background: radial-gradient(circle at 18% 0%, rgba(212,175,55,.2), transparent 32%), radial-gradient(circle at 92% 12%, rgba(139,26,36,.1), transparent 34%); }
-  #start-screen, #quiz-screen, #result-screen { position: relative; z-index: 1; }
-  
-  /* --- TIPOGRAFÍA FLUIDA --- */
-  #start-screen h2 {
-    font-weight: 700;
-    /* Mín: 1.8rem (Móvil), Pref: 5vw, Máx: 2.2rem (PC) */
-    font-size: clamp(1.8rem, 5vw, 2.2rem); 
-    color: #5c1119;
-  }
-  #start-screen p {
-    /* Mín: 1rem (Móvil), Pref: 2.5vw, Máx: 1.1rem (PC) */
-    font-size: clamp(1rem, 2.5vw, 1.1rem);
-    color: #667085; 
-    margin-bottom: 24px; 
-    line-height: 1.5;
-  }
-  
-  #nombre-input {
-    display: block; width: 80%; margin: 20px auto; padding: 12px;
-    font-size: clamp(0.9rem, 2.5vw, 1rem); /* Fluido */
-    border-radius: 12px; border: 2px solid rgba(139, 26, 36, 0.14); background-color: #ffffff;
-    color: #5c1119; text-align: center;
-  }
-  #nombre-input::placeholder { color: #777; }
-  #nombre-input:focus { border-color: #8B1A24; outline: none; box-shadow: 0 0 10px rgba(0, 176, 255, 0.3); }
-  
-  .start-btn {
-    background: linear-gradient(135deg, #8B1A24, #5c1119); color: #ffffff; font-weight: 800;
-    font-size: clamp(1rem, 3vw, 1.2rem); /* Fluido */
-    padding: 14px 28px; border: none; border-radius: 14px; cursor: pointer; transition: all 0.3s ease;
-  }
-  .start-btn:hover { background-color: #5c1119; transform: translateY(-3px); box-shadow: 0 4px 15px rgba(0, 176, 255, 0.4); }
+/* ---------- Test ---------- */
+#quiz-screen{text-align:left}
+#quiz-header{display:flex;align-items:center;gap:10px;padding:0 2px;font-weight:700}
+#progreso-texto{font-size:.95rem;color:var(--muted);margin-right:auto}
+.pill{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:.9rem;background:#fff;border:1px solid var(--line);color:var(--ok);font-variant-numeric:tabular-nums}
+.pill.gold{background:var(--gold);color:#241f21;border-color:var(--gold)}
+#cronometro{font-size:1rem;color:var(--burgundy);font-variant-numeric:tabular-nums}
+.segmentos{display:flex;gap:3px;margin:10px 0 18px}
+.seg{flex:1;height:7px;border-radius:4px;background:var(--cream-d);transform-origin:center bottom;transition:background-color .35s,transform .35s var(--ease)}
+.seg.now{background:var(--burgundy);animation:pulse 1.6s ease-in-out infinite;transform:scaleY(1.5)}
+.seg.ok{background:var(--ok)}.seg.ko{background:var(--warn)}
+@keyframes pulse{50%{opacity:.55}}
+.pregunta-titulo{margin:0 0 20px;font-size:clamp(1.25rem,5.4vw,1.55rem);line-height:1.35;font-weight:800;color:var(--burgundy-d);text-align:center;outline:none}
+.opciones-container{display:grid;grid-template-columns:1fr;gap:12px}
+.opcion-btn{position:relative;display:flex;align-items:center;gap:12px;width:100%;min-height:60px;padding:12px 44px 12px 12px;text-align:left;
+  font:inherit;font-size:1.06rem;line-height:1.35;font-weight:600;color:var(--ink);background:#fff;border:2px solid var(--line);border-radius:16px;cursor:pointer;
+  transition:transform .2s var(--ease),border-color .2s,background-color .25s,box-shadow .25s,opacity .3s}
+.opcion-btn .letra{flex:none;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--cream);border:1px solid var(--line);
+  font-weight:800;font-size:.9rem;color:var(--burgundy);transition:background-color .25s,color .25s}
+.opcion-btn:active:not(.locked){transform:scale(.98)}
+.opcion-btn.locked{cursor:default}
+.opcion-btn::after{position:absolute;right:14px;top:50%;font-size:1.3rem;font-weight:800;transform:translateY(-50%) scale(0)}
+.opcion-btn.correct{border-color:var(--ok);background:var(--ok-bg);color:#14532d}
+.opcion-btn.correct .letra{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opcion-btn.correct::after{content:'✓';color:var(--ok);transform:translateY(-50%) scale(1);animation:pop .45s var(--ease)}
+.opcion-btn.incorrect{border-color:var(--warn);background:var(--warn-bg);color:#7c2d12}
+.opcion-btn.incorrect .letra{background:var(--warn);color:#fff;border-color:var(--warn)}
+.opcion-btn.incorrect::after{content:'✕';color:var(--warn);transform:translateY(-50%) scale(1);animation:pop .45s var(--ease)}
+.opcion-btn.show-correct{border-color:var(--ok);background:#f0fdf4}
+.opcion-btn.show-correct .letra{background:var(--ok);color:#fff;border-color:var(--ok)}
+.opcion-btn.show-correct::after{content:'✓';color:var(--ok);transform:translateY(-50%) scale(1);animation:pop .45s var(--ease) .25s backwards}
+.opcion-btn.dim{opacity:.5}
+@keyframes pop{from{transform:translateY(-50%) scale(0)}60%{transform:translateY(-50%) scale(1.35)}to{transform:translateY(-50%) scale(1)}}
+@media (hover:hover){.opcion-btn:hover:not(.locked){border-color:var(--burgundy);background:#fff7ed;box-shadow:0 10px 24px rgba(139,26,36,.1);transform:translateY(-2px)}.btn:hover{transform:translateY(-2px)}}
 
-  /* --- Pantalla del Quiz --- */
-  #quiz-screen { display: none; text-align: left; }
-  #quiz-header { display: flex; justify-content: space-between; align-items: center; padding: 0 5px; }
-  #progreso-texto { font-size: 0.9em; color: #667085; text-align: left; font-weight: 700; }
-  #cronometro { font-size: 1.1em; color: #8B1A24; font-weight: 700; }
-  .progreso-barra { width: 100%; height: 10px; background-color: #eadfce; border-radius: 5px; margin: 8px 0 20px 0; }
-  #progreso-fill { width: 0%; height: 100%; background-color: #8B1A24; border-radius: 5px; transition: width 0.4s ease; }
-  
-  .pregunta-titulo {
-    font-weight: 700; color: #5c1119; margin-bottom: 24px; text-align: center; line-height: 1.4;
-    /* Mín: 1.25rem (Móvil), Pref: 4vw, Máx: 1.5rem (PC) */
-    font-size: clamp(1.25rem, 4vw, 1.5rem); 
-  }
+#feedback-container{margin-top:16px}
+.fb{padding:14px;border-radius:16px;border:1px solid var(--line);background:#fff;animation:rise .4s var(--ease)}
+.fb.ok{border-color:rgba(21,128,61,.35);background:#f0fdf4}.fb.ko{border-color:rgba(194,65,12,.35);background:#fff8f1}
+.fb-title{margin:0 0 6px;font-weight:800;font-size:1.1rem}
+.fb.ok .fb-title{color:var(--ok)}.fb.ko .fb-title{color:var(--warn)}
+.fb p{margin:6px 0 0;font-size:.98rem;line-height:1.45}
+.fb strong{color:var(--burgundy)}
+.btn-next{position:relative;overflow:hidden;margin-top:14px;max-width:none}
+.btn-next.auto::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.22);transform-origin:left;transform:scaleX(0);animation:fill var(--auto,1.4s) linear forwards}
+.btn-next span{position:relative}
+@keyframes fill{to{transform:scaleX(1)}}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#toast{position:fixed;left:50%;top:14px;z-index:20;transform:translate(-50%,-90px);padding:10px 16px;border-radius:99px;background:var(--burgundy-d);color:#fff;
+  font-weight:700;font-size:.95rem;box-shadow:0 12px 30px rgba(0,0,0,.25);transition:transform .5s var(--ease);white-space:nowrap;max-width:94vw}
+#toast.show{transform:translate(-50%,0)}
 
-  .opciones-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .opcion-btn {
-    border: 2px solid rgba(139, 26, 36, 0.14); color: #2b2527; background-color: #ffffff;
-    /* Mín: 0.9rem (Móvil), Pref: 2.5vw, Máx: 1rem (PC) */
-    font-size: clamp(0.9rem, 2.5vw, 1rem); 
-    /* Padding fluido también */
-    padding: clamp(12px, 3vw, 16px); 
-    border-radius: 14px; cursor: pointer; transition: all 0.3s ease;
-    text-align: left; width: 100%; position: relative;
-    box-sizing: border-box; /* Asegura que el padding no rompa el layout */
-  }
-  .opcion-btn:nth-child(3) { grid-column: 1 / 3; }
-  .opcion-btn:hover:not(:disabled) { border-color: #8B1A24; background-color: #fff7ed; transform: translateY(-2px); box-shadow: 0 12px 28px rgba(139,26,36,.1); }
-  
-  /* Estilos de Feedback Instantáneo */
-  .opcion-btn.correct { border-color: #15803D; background-color: #dcfce7; color: #5c1119; }
-  .opcion-btn.incorrect { border-color: #C2410C; background-color: #ffedd5; color: #5c1119; }
-  .opcion-btn.show-correct { border-color: #15803D; box-shadow: 0 0 10px rgba(0, 230, 118, 0.7); }
-  .opcion-btn:disabled { cursor: not-allowed; opacity: 0.8; }
-  
-  /* Contenedor de Feedback */
-  #feedback-container { display: none; margin-top: 20px; text-align: center; animation: fadeIn 0.3s ease; }
-  .feedback-text {
-    font-weight: 700; margin-bottom: 10px;
-    font-size: clamp(1rem, 3vw, 1.2rem); /* Fluido */
-  }
-  .feedback-text.correct { color: #15803D; }
-  .feedback-text.incorrect { color: #C2410C; }
-  
-  .pista-estudio {
-    margin-top: 10px; padding: 10px; background-color: #f8f2e8; border-radius: 12px;
-    border: 1px dashed #8B1A24; text-align: left;
-    font-size: clamp(0.85rem, 2.2vw, 0.95rem); /* Fluido */
-  }
-  .pista-estudio strong { color: #8B1A24; }
+/* ---------- Resultado ---------- */
+#result-screen{text-align:center}
+.gauge{position:relative;width:min(220px,62vw);margin:0 auto 6px}
+.gauge svg{display:block;width:100%;transform:rotate(-90deg)}
+.gauge .track{stroke:var(--cream-d)}
+.gauge .bar{stroke:var(--burgundy);stroke-linecap:round;transition:stroke .3s}
+.gauge.pass .bar{stroke:var(--ok)}
+.gauge-center{position:absolute;inset:0;display:grid;place-content:center;line-height:1}
+.gauge-center b{font-size:clamp(2.6rem,12vw,3.4rem);font-weight:800;color:var(--burgundy-d);font-variant-numeric:tabular-nums}
+.gauge-center small{margin-top:4px;font-size:.85rem;font-weight:700;color:var(--muted)}
+#emoji-resultado{font-size:3.4rem;line-height:1;margin:4px 0}
+#resultado-titulo{margin:6px 0;font-size:clamp(1.8rem,8vw,2.3rem);font-weight:800;color:var(--burgundy-d)}
+#result-screen p{margin:4px 0;color:var(--muted);font-size:1.02rem}
+#resultado-tiempo{font-weight:700;color:var(--burgundy)!important}
+.final-actions{margin-top:18px}
+.seg-tabs{display:flex;gap:6px;margin:22px 0 12px;padding:4px;border-radius:14px;background:var(--cream-d)}
+.seg-tabs button{flex:1;min-height:44px;border:0;border-radius:11px;background:transparent;font:inherit;font-weight:700;color:var(--muted);cursor:pointer;transition:background-color .25s,color .25s}
+.seg-tabs button[aria-selected=true]{background:#fff;color:var(--burgundy);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+#desglose-respuestas{text-align:left}
+#desglose-respuestas.solo-fallos .desglose-item.correcta{display:none}
+.desglose-item{margin-bottom:10px;padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line);border-left:5px solid;animation:rise .4s var(--ease) backwards;animation-delay:calc(var(--i,0)*30ms)}
+.desglose-item.correcta{border-left-color:var(--ok)}.desglose-item.incorrecta{border-left-color:var(--warn)}
+.desglose-item p{margin:4px 0;font-size:.98rem;line-height:1.4}
+.desglose-pregunta{font-weight:700;color:var(--burgundy-d)}
+.desglose-respuesta-correcta{color:var(--ok);font-weight:700}
+.pista-estudio{margin-top:8px;padding:10px;border-radius:12px;background:#f8f2e8;border:1px dashed var(--burgundy);font-size:.92rem;line-height:1.4}
+.pista-estudio strong{color:var(--burgundy)}
+.empty-ok{padding:16px;text-align:center;font-weight:700;color:var(--ok)}
+#desglose-respuestas:not(.solo-fallos) .empty-ok{display:none}
+#ranking-local{margin-top:26px;padding-top:18px;border-top:1px solid var(--line);text-align:left}
+#ranking-local h3{margin:0 0 8px;text-align:center;color:var(--burgundy-d);font-size:1.1rem}
+.ranking-table{width:100%;border-collapse:collapse;font-size:.95rem;font-variant-numeric:tabular-nums}
+.ranking-table th,.ranking-table td{padding:10px 6px;border-bottom:1px solid var(--line);text-align:left}
+.ranking-table th{color:var(--burgundy);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+.ranking-table td:nth-child(2){max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ranking-table .rank-1{color:#8a6d00;font-weight:700}
+.ranking-table .me{background:rgba(212,175,55,.2);font-weight:700}
 
-  /* --- Pantalla de Resultados --- */
-  #result-screen { display: none; animation: fadeIn 0.5s ease; }
-  .emoji-resultado { font-size: 5em; margin-bottom: 16px; }
-  #resultado-titulo {
-    font-weight: 700; color: #5c1119; margin-bottom: 8px;
-    font-size: clamp(1.8rem, 5vw, 2.2rem); /* Fluido */
-  }
-  #resultado-puntaje { font-size: 1.2em; color: #2b2527; margin-bottom: 24px; }
-  #resultado-tiempo { font-size: 1.1em; color: #8B1A24; margin-bottom: 24px; font-weight: 700; }
-  #resultado-texto {
-    font-size: clamp(1rem, 2.5vw, 1.1rem); /* Fluido */
-    color: #667085; margin-bottom: 30px; 
-  }
+/* ---------- Confeti ---------- */
+#fx{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden}
+#fx i{position:absolute;left:0;top:0;width:9px;height:14px;border-radius:2px;will-change:transform,opacity}
 
-  /* Desglose */
-  #desglose-respuestas { text-align: left; margin-top: 30px; border-top: 1px solid rgba(139, 26, 36, 0.14); padding-top: 20px; }
-  .desglose-item { background-color: #ffffff; padding: 16px; border-radius: 14px; margin-bottom: 12px; border-left: 5px solid; }
-  .desglose-item.correcta { border-color: #15803D; }
-  .desglose-item.incorrecta { border-color: #C2410C; }
-  .desglose-pregunta { font-weight: 700; font-size: clamp(1rem, 2.5vw, 1.1rem); color: #5c1119; }
-  .desglose-respuesta-user { color: #667085; }
-  .desglose-respuesta-correcta { color: #15803D; font-weight: 700; }
-
-  /* Botones de acción final */
-  .final-actions { margin-top: 20px; }
-  .mail-btn, .restart-btn {
-    display: inline-block; color: #ffffff; font-weight: 700;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Fluido */
-    padding: 14px 28px; border: none; border-radius: 14px; cursor: pointer;
-    text-decoration: none; transition: all 0.3s ease; margin: 5px;
-  }
-  .mail-btn { background-color: #8B1A24; }
-  .restart-btn { background-color: #667085; }
-  .mail-btn:hover, .restart-btn:hover { background-color: #5c1119; transform: translateY(-3px); }
-  
-  /* Tabla de Ranking */
-  #ranking-local { margin-top: 30px; border-top: 1px solid rgba(139, 26, 36, 0.14); padding-top: 20px; text-align: left; }
-  #ranking-local h3 { color: #5c1119; text-align: center; }
-  .ranking-table {
-    width: 100%; margin-top: 15px; border-collapse: collapse;
-    font-size: clamp(0.85rem, 2.2vw, 0.95rem); /* Fluido */
-  }
-  .ranking-table th, .ranking-table td { padding: 10px; border-bottom: 1px solid rgba(139, 26, 36, 0.14); }
-  .ranking-table th { background-color: #ffffff; color: #8B1A24; }
-  .ranking-table td { color: #2b2527; }
-  .ranking-table .rank-1 { color: #D4AF37; font-weight: 700; } /* Oro */
-
-  /* Animación */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* --- RESPUESTA A "MOVIL" --- */
-  @media (max-width: 600px) {
-    /* En móvil, las opciones de respuesta pasan a 1 columna */
-    .opciones-container { 
-      grid-template-columns: 1fr; 
-    }
-    .opcion-btn:nth-child(3) { 
-      grid-column: 1; /* Se resetea */
-    }
-    .quiz-body {
-      padding: 15px; /* Menos padding en móvil */
-    }
-  }
-</style>
-<style id="ccse-theme-override">
-.quiz-body{border:1px solid rgba(139,26,36,.14)!important}
-.start-btn,.mail-btn{background:linear-gradient(135deg,#8B1A24,#5c1119)!important;color:#fff!important;box-shadow:0 16px 34px rgba(139,26,36,.22)!important}
-.start-btn:hover,.mail-btn:hover{background:#5c1119!important;color:#fff!important}
-.restart-btn{background:#D4AF37!important;color:#241f21!important}
-.opcion-btn.correct{color:#14532d!important}.opcion-btn.incorrect{color:#7c2d12!important}.feedback-text.correct{color:#15803D!important}.feedback-text.incorrect{color:#C2410C!important}
+@media (max-width:600px){
+  body{align-items:stretch}
+  .quiz-body{margin:0;min-height:100vh;min-height:100dvh;border-radius:0;border:0;box-shadow:none;
+    padding:16px 14px calc(24px + env(safe-area-inset-bottom))}
+  .ranking-table td:nth-child(2){max-width:90px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  #fx{display:none}
+}
 </style>
 </head>
 <body>
+<main id="quiz-container" class="quiz-body">
 
-<div id="quiz-container" class="quiz-body">
-  
-  <div id="start-screen">
-    <h2>Test CCSE 2025</h2>
-    <p>
-      Bienvenido al simulador del test de nacionalidad.
-      <br>
-      Responderás a <strong>25 preguntas aleatorias</strong> (de un banco de 300) y necesitarás 
-      <strong>15 aciertos</strong> para aprobar.
-    </p>
-    <input type="text" id="nombre-input" placeholder="Escribe tu nombre para el ranking" />
-    <button id="start-btn" class="start-btn">¡Empezar Test!</button>
-  </div>
+  <section id="start-screen" aria-labelledby="start-title">
+    <span class="badge">🇪🇸 Nacionalidad española</span>
+    <h1 id="start-title">Test CCSE</h1>
+    <p class="lead">Simulador del examen de conocimientos constitucionales y socioculturales de España.</p>
+    <ul class="chips" aria-label="Reglas del test">
+      <li><b>25</b><span>preguntas al azar</span></li>
+      <li><b>15</b><span>aciertos para aprobar</span></li>
+      <li><b>330</b><span>en el banco</span></li>
+    </ul>
+    <label for="nombre-input" class="sr" style="position:absolute;left:-9999px">Tu nombre para el ranking</label>
+    <input type="text" id="nombre-input" class="field" placeholder="Tu nombre para el ranking" maxlength="24" autocomplete="nickname" enterkeyhint="go">
+    <button id="resume-btn" class="btn ghost" type="button" hidden></button>
+    <button id="start-btn" class="btn" type="button">¡Empezar test!</button>
+    <p class="fine">Tus resultados se guardan solo en este dispositivo.</p>
+  </section>
 
-  <div id="quiz-screen">
+  <section id="quiz-screen" aria-label="Test en curso" hidden>
     <div id="quiz-header">
       <div id="progreso-texto">Pregunta 1 de 25</div>
-      <div id="cronometro">Tiempo: 00:00</div>
+      <div id="aciertos-pill" class="pill" aria-label="Aciertos">✓ <span id="aciertos-n">0</span></div>
+      <div id="cronometro" aria-hidden="true">00:00</div>
     </div>
-    <div class="progreso-barra"><div id="progreso-fill"></div></div>
-    <p id="pregunta-titulo" class="pregunta-titulo">Cargando pregunta...</p>
-    <div id="opciones-container" class="opciones-container"></div>
-    <div id="feedback-container"></div>
-  </div>
+    <div id="segmentos" class="segmentos" role="progressbar" aria-label="Progreso del test" aria-valuemin="1" aria-valuemax="25" aria-valuenow="1"></div>
+    <div id="q-stage">
+      <h2 id="pregunta-titulo" class="pregunta-titulo" tabindex="-1">Cargando pregunta…</h2>
+      <div id="opciones-container" class="opciones-container" role="group" aria-labelledby="pregunta-titulo"></div>
+    </div>
+    <div id="feedback-container" role="status" aria-live="polite"></div>
+  </section>
 
-  <div id="result-screen">
-    <div id="emoji-resultado" class="emoji-resultado"></div>
+  <section id="result-screen" aria-labelledby="resultado-titulo" hidden>
+    <div id="gauge" class="gauge">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/>
+        <circle id="gauge-bar" class="bar" cx="60" cy="60" r="52" fill="none" stroke-width="10"/>
+      </svg>
+      <div class="gauge-center"><b id="gauge-n">0</b><small id="gauge-of">de 25</small></div>
+    </div>
+    <div id="emoji-resultado" aria-hidden="true"></div>
     <h2 id="resultado-titulo"></h2>
     <p id="resultado-puntaje"></p>
     <p id="resultado-tiempo"></p>
     <p id="resultado-texto"></p>
     <div class="final-actions">
-      <button id="restart-btn" class="restart-btn">Volver a Intentar</button>
+      <button id="repaso-btn" class="btn gold" type="button" hidden></button>
+      <button id="share-btn" class="btn ghost" type="button" hidden>Compartir resultado</button>
+      <button id="restart-btn" class="btn" type="button">Volver a intentar</button>
     </div>
+    <div class="seg-tabs" role="tablist" aria-label="Repaso de respuestas">
+      <button type="button" role="tab" id="tab-fallos" aria-selected="true">Fallos</button>
+      <button type="button" role="tab" id="tab-todas" aria-selected="false">Todas</button>
+    </div>
+    <div id="desglose-respuestas" class="solo-fallos"></div>
     <div id="ranking-local">
-      <h3>Mejores Puntuaciones (en este navegador)</h3>
+      <h3>Mejores puntuaciones (en este dispositivo)</h3>
       <table class="ranking-table">
-        <thead>
-          <tr><th>Pos.</th><th>Nombre</th><th>Aciertos</th><th>Tiempo</th></tr>
-        </thead>
+        <thead><tr><th>Pos.</th><th>Nombre</th><th>Aciertos</th><th>Tiempo</th></tr></thead>
         <tbody id="ranking-tbody"></tbody>
       </table>
     </div>
-    <div id="desglose-respuestas"></div>
-  </div>
+  </section>
 
-</div>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="fx" aria-hidden="true"></div>
 
 <script>
-  // --- Constantes del Quiz (¡VALORES FINALES!) ---
+  // --- Constantes del Quiz ---
   const NUM_PREGUNTAS_TEST = 25;
   const MIN_ACERTOS_APROBAR = 15;
   const RANKING_KEY = 'ccseQuizRanking';
-  const TIEMPO_ESPERA_ERROR = 6000; // 6 segundos para leer el error
-  const TIEMPO_ESPERA_ACIERTO = 2000; // 2 segundos si acierta
-
-  // --- Variables de Estado ---
-  let testQuestions = []; 
-  let userAnswers = [];
-  let aciertos = 0; 
-  let currentQuestionIndex = 0;
-  let timerInterval;
-  let startTime;
-  let userName = "Usuario";
-
-  // --- Selectores de DOM (se definirán cuando el DOM esté cargado) ---
-  let startScreen, quizScreen, resultScreen, feedbackContainer, opcionesContainer;
-  let nombreInput, startBtn, restartBtn, cronometro, progresoFill, progresoTexto;
-  let preguntaTitulo, emojiResultado, resultadoTitulo, resultadoPuntaje, resultadoTiempo, resultadoTexto;
-  let mailBtn, rankingTbody, desgloseRespuestas;
-
-  
+  const STATE_KEY = 'ccseQuizState';
+  const NAME_KEY = 'ccseQuizName';
+  const TIEMPO_AUTO_ACIERTO = 1400; // ms hasta pasar sola tras un acierto
   // --- BANCO DE PREGUNTAS (INICIO) ---
   const fullQuestionBank = [
   // BLOQUE 1 de 10 (Preguntas 1-30)
@@ -2274,292 +2247,436 @@
       explicacion: "Las comunidades con mayor PIB por habitante son Madrid, País Vasco, Navarra y Cataluña..."
     }
   ]; // <-- ¡¡IMPORTANTE!! ESTE ES EL CIERRE DEL BANCO DE PREGUNTAS
-  
-  // --- Lógica del Quiz ---
 
-  function startQuiz() {
-    userName = nombreInput.value || "Anónimo";
-    startScreen.style.display = 'none';
-    resultScreen.style.display = 'none';
-    quizScreen.style.display = 'block';
-    
-    selectRandomQuestions();
-    userAnswers = new Array(testQuestions.length).fill(null);
-    currentQuestionIndex = 0;
-    aciertos = 0; // Resetear aciertos
-    
-    startTimer();
-    renderQuestion(0);
+  // ======================= LÓGICA DEL TEST =======================
+  const $ = id => document.getElementById(id);
+  const startScreen = $('start-screen'), quizScreen = $('quiz-screen'), resultScreen = $('result-screen');
+  const nombreInput = $('nombre-input'), startBtn = $('start-btn'), resumeBtn = $('resume-btn'), restartBtn = $('restart-btn');
+  const repasoBtn = $('repaso-btn'), shareBtn = $('share-btn');
+  const cronometro = $('cronometro'), progresoTexto = $('progreso-texto'), segmentos = $('segmentos');
+  const preguntaTitulo = $('pregunta-titulo'), opciones = $('opciones-container'), feedback = $('feedback-container'), stage = $('q-stage');
+  const aciertosPill = $('aciertos-pill'), aciertosN = $('aciertos-n');
+  const desglose = $('desglose-respuestas'), rankingTbody = $('ranking-tbody');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  let testIds = [], testQuestions = [], userAnswers = [];
+  let aciertos = 0, currentIndex = 0, streak = 0, mode = 'full'; // 'full' | 'practice'
+  let timerInterval = null, startTime = 0, userName = 'Anónimo';
+  let answered = true, busy = false, advanceTimer = null, milestone = false, lastEntryTs = 0;
+
+  // ---------- utilidades ----------
+  const ls = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+    del(k) { try { localStorage.removeItem(k); } catch (e) {} }
+  };
+  const pad = n => String(n).padStart(2, '0');
+  const formatTime = t => `${pad(Math.floor(t / 60))}:${pad(t % 60)}`;
+  const clean = s => s.replace(/^[a-d]\)\s*/i, '');
+  const LETRAS = ['A', 'B', 'C', 'D'];
+  const vibrate = p => { try { navigator.vibrate && navigator.vibrate(p); } catch (e) {} };
+  function h(tag, cls, text) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  // Animación Web Animations; con "reducir movimiento" se omite
+  function anim(el, kf, opt) {
+    if (reduce.matches || !el.animate) return Promise.resolve();
+    const o = Object.assign({ duration: 300, easing: 'cubic-bezier(.22,1,.36,1)' }, opt);
+    // tope de espera: si el navegador congela las animaciones (pestaña en segundo plano), el test no se bloquea
+    return Promise.race([el.animate(kf, o).finished.catch(() => {}), new Promise(r => setTimeout(r, o.duration + (o.delay || 0) + 150))]);
+  }
+  function ensureVisible(el) { // no usa scrollIntoView: dentro de un iframe movería la página padre
+    const over = el.getBoundingClientRect().bottom - window.innerHeight + 16;
+    if (over > 0) window.scrollBy({ top: over, behavior: reduce.matches ? 'auto' : 'smooth' });
+  }
+  function toast(msg) {
+    const t = $('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2600);
+  }
+  function countUp(el, to, delay, dur) {
+    if (reduce.matches || to === 0) { el.textContent = to; return; }
+    el.textContent = 0;
+    const t0 = performance.now() + delay;
+    (function step(now) {
+      const p = Math.min(Math.max((now - t0) / dur, 0), 1);
+      el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3)));
+      if (p < 1) requestAnimationFrame(step);
+    })(performance.now());
   }
 
-  function selectRandomQuestions() {
-    // Lógica final para las 300
-    const shuffled = [...fullQuestionBank].sort(() => 0.5 - Math.random());
-    testQuestions = shuffled.slice(0, NUM_PREGUNTAS_TEST);
+  // ---------- confeti ----------
+  const COLORS = ['#D4AF37', '#8B1A24', '#15803D', '#f4c542', '#e8a0a6', '#5c1119'];
+  function confetti(x, y, count, power) {
+    if (reduce.matches) return;
+    const fx = $('fx');
+    for (let k = 0; k < count; k++) {
+      const p = document.createElement('i');
+      p.style.background = COLORS[k % COLORS.length];
+      const ang = Math.random() * Math.PI * 2, v = (70 + Math.random() * 170) * power;
+      const dx = Math.cos(ang) * v, dy = Math.sin(ang) * v - 70 * power, rot = (Math.random() - .5) * 900;
+      fx.appendChild(p);
+      p.animate([
+        { transform: `translate(${x}px,${y}px) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${x + dx}px,${y + dy}px) rotate(${rot / 2}deg)`, opacity: 1, offset: .55 },
+        { transform: `translate(${x + dx * 1.15}px,${y + dy + 240}px) rotate(${rot}deg)`, opacity: 0 }
+      ], { duration: 900 + Math.random() * 700, easing: 'cubic-bezier(.2,.7,.4,1)' }).onfinish = () => p.remove();
+    }
   }
-  
-  function startTimer() {
-    startTime = Date.now();
-    timerInterval = setInterval(() => {
-      const elapsed = Date.now() - startTime;
-      const minutes = Math.floor(elapsed / 60000);
-      const seconds = Math.floor((elapsed % 60000) / 1000);
-      cronometro.textContent = `Tiempo: ${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }, 1000);
+  function confettiRain(count) {
+    if (reduce.matches) return;
+    const fx = $('fx'), w = window.innerWidth, hgt = window.innerHeight;
+    for (let k = 0; k < count; k++) {
+      const p = document.createElement('i'), x = Math.random() * w, sway = (Math.random() - .5) * 140;
+      p.style.background = COLORS[k % COLORS.length];
+      fx.appendChild(p);
+      p.animate([
+        { transform: `translate(${x}px,-20px) rotate(0deg)`, opacity: 1 },
+        { transform: `translate(${x + sway}px,${hgt * .55}px) rotate(300deg)`, opacity: 1, offset: .7 },
+        { transform: `translate(${x - sway}px,${hgt + 30}px) rotate(640deg)`, opacity: 0 }
+      ], { duration: 1800 + Math.random() * 1400, delay: Math.random() * 700, easing: 'linear', fill: 'backwards' }).onfinish = () => p.remove();
+    }
   }
-  
-  function stopTimer() {
+  function burstAt(el, count, power) {
+    const r = el.getBoundingClientRect();
+    confetti(r.right - 28, r.top + r.height / 2, count, power);
+  }
+
+  // ---------- cambio de pantalla ----------
+  async function showScreen(next) {
+    const cur = [startScreen, quizScreen, resultScreen].find(s => !s.hidden);
+    if (cur === next) return;
+    if (cur) {
+      await anim(cur, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-10px) scale(.98)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
+      cur.getAnimations().forEach(a => a.cancel());
+      cur.hidden = true;
+    }
+    next.hidden = false;
+    window.scrollTo(0, 0);
+    anim(next, [{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'none' }], { duration: 420, fill: 'backwards' });
+  }
+  function staggerIn(parent) {
+    Array.from(parent.children).filter(c => !c.hidden && c.tagName !== 'LABEL').forEach((el, i) =>
+      anim(el, [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], { duration: 520, delay: 70 * i, fill: 'backwards' }));
+  }
+
+  // ---------- cronómetro ----------
+  const elapsedSec = () => Math.floor((Date.now() - startTime) / 1000);
+  const tick = () => { cronometro.textContent = formatTime(elapsedSec()); };
+  function startTimer(elapsed) {
     clearInterval(timerInterval);
-    const endTime = Date.now();
-    return Math.floor((endTime - startTime) / 1000); // en segundos
+    startTime = Date.now() - (elapsed || 0) * 1000;
+    tick();
+    timerInterval = setInterval(tick, 1000);
   }
-  
-  function formatTime(totalSeconds) {
-    const minutes = Math.floor(totalSeconds / 60);
-    const seconds = totalSeconds % 60;
-    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  function stopTimer() { clearInterval(timerInterval); return elapsedSec(); }
+
+  // ---------- progreso guardado (por si el móvil recarga la pestaña) ----------
+  function saveState() {
+    if (mode !== 'full') return;
+    ls.set(STATE_KEY, JSON.stringify({ ids: testIds, answers: userAnswers, elapsed: elapsedSec(), name: userName, at: Date.now() }));
   }
-
-  function renderQuestion(index) {
-    if (index < 0 || index >= testQuestions.length) return;
-
-    currentQuestionIndex = index;
-    const pregunta = testQuestions[index];
-    
-    feedbackContainer.style.display = 'none';
-    feedbackContainer.innerHTML = '';
-    
-    preguntaTitulo.textContent = pregunta.pregunta;
-    opcionesContainer.innerHTML = '';
-
-    pregunta.opciones.forEach((opcion, i) => {
-      const btn = document.createElement('button');
-      btn.className = 'opcion-btn';
-      btn.textContent = opcion;
-      btn.onclick = () => checkAnswer(i, pregunta.respuestaCorrecta, pregunta.explicacion);
-      opcionesContainer.appendChild(btn);
-    });
-
-    const progreso = ((index + 1) / testQuestions.length) * 100;
-    progresoFill.style.width = progreso + '%';
-    progresoTexto.textContent = `Pregunta ${index + 1} de ${NUM_PREGUNTAS_TEST}`;
+  function readState() {
+    try {
+      const s = JSON.parse(ls.get(STATE_KEY));
+      const okIds = Array.isArray(s.ids) && s.ids.length === NUM_PREGUNTAS_TEST && s.ids.every(i => Number.isInteger(i) && i >= 0 && i < fullQuestionBank.length);
+      const okAns = Array.isArray(s.answers) && s.answers.length === s.ids.length && s.answers.every(a => a === null || (Number.isInteger(a) && a >= 0 && a < 4));
+      if (!okIds || !okAns || Date.now() - s.at > 7 * 864e5 || s.answers.every(a => a !== null)) return null;
+      return s;
+    } catch (e) { return null; }
+  }
+  function refreshResume() {
+    const s = readState();
+    resumeBtn.hidden = !s;
+    if (!s) return;
+    const done = s.answers.filter(a => a !== null).length;
+    resumeBtn.textContent = `Continuar test · pregunta ${done + 1} de ${s.ids.length}`;
   }
 
-  function checkAnswer(selectedIndex, correctIndex, explicacion) {
-    userAnswers[currentQuestionIndex] = selectedIndex;
-    
-    const allButtons = opcionesContainer.querySelectorAll('.opcion-btn');
-    allButtons.forEach(btn => {
-      btn.disabled = true;
-      btn.style.pointerEvents = 'none';
-    });
-    
-    let tiempoEsperaIndividual = TIEMPO_ESPERA_ERROR; // 6 segundos por defecto
-
-    if (selectedIndex === correctIndex) {
-      aciertos++;
-      allButtons[selectedIndex].classList.add('correct');
-      feedbackContainer.innerHTML = `<p class="feedback-text correct">✅ ¡Correcto!</p>`;
-      tiempoEsperaIndividual = TIEMPO_ESPERA_ACIERTO; // 2 segundos si acierta
-    } else {
-      allButtons[selectedIndex].classList.add('incorrect');
-      allButtons[correctIndex].classList.add('show-correct');
-      feedbackContainer.innerHTML = `
-        <p class="feedback-text incorrect">❌ Incorrecto</p>
-        <div class="pista-estudio">
-          <strong>Respuesta correcta:</strong> ${allButtons[correctIndex].textContent}
-          <br>
-          <strong>Motivo:</strong> ${explicacion}
-        </div>
-      `;
+  // ---------- inicio del test ----------
+  function pickRandomIds() { // Fisher–Yates
+    const a = fullQuestionBank.map((_, i) => i);
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
     }
-    
-    feedbackContainer.style.display = 'block';
-    
-    setTimeout(() => {
-      const nextIndex = currentQuestionIndex + 1;
-      if (nextIndex < testQuestions.length) {
-        renderQuestion(nextIndex);
-      } else {
-        finishQuiz();
-      }
-    }, tiempoEsperaIndividual); // Usa el tiempo de espera variable
+    return a.slice(0, NUM_PREGUNTAS_TEST);
   }
-  
+  function beginRun(o) {
+    clearTimeout(advanceTimer);
+    mode = o.practice ? 'practice' : 'full';
+    testIds = o.ids;
+    testQuestions = o.ids.map(i => fullQuestionBank[i]);
+    userAnswers = o.answers || new Array(o.ids.length).fill(null);
+    userName = o.name;
+    aciertos = userAnswers.reduce((n, a, i) => n + (a === testQuestions[i].respuestaCorrecta ? 1 : 0), 0);
+    streak = 0;
+    milestone = mode === 'full' && aciertos >= MIN_ACERTOS_APROBAR;
+    segmentos.innerHTML = '';
+    userAnswers.forEach((a, i) => {
+      const s = h('span', 'seg' + (a === null ? '' : a === testQuestions[i].respuestaCorrecta ? ' ok' : ' ko'));
+      segmentos.appendChild(s);
+    });
+    segmentos.setAttribute('aria-valuemax', testQuestions.length);
+    updatePill();
+    startTimer(o.elapsed);
+    const first = userAnswers.findIndex(a => a === null);
+    renderQuestion(first < 0 ? 0 : first, false);
+    showScreen(quizScreen);
+  }
+  function startQuiz() {
+    const name = nombreInput.value.trim().slice(0, 24) || 'Anónimo';
+    if (nombreInput.value.trim()) ls.set(NAME_KEY, name);
+    beginRun({ ids: pickRandomIds(), name });
+  }
+  function updatePill() {
+    aciertosN.textContent = aciertos;
+    aciertosPill.classList.toggle('gold', milestone);
+  }
+
+  // ---------- pregunta ----------
+  async function renderQuestion(index, transition) {
+    busy = true;
+    answered = true;
+    clearTimeout(advanceTimer);
+    if (transition) {
+      await anim(stage, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(-28px)' }], { duration: 180, easing: 'ease-in', fill: 'forwards' });
+      stage.getAnimations().forEach(a => a.cancel());
+      await anim(feedback, [{ opacity: 1 }, { opacity: 0 }], { duration: 120, fill: 'forwards' });
+      feedback.getAnimations().forEach(a => a.cancel());
+    }
+    currentIndex = index;
+    const q = testQuestions[index];
+    feedback.innerHTML = '';
+    preguntaTitulo.textContent = q.pregunta;
+    opciones.innerHTML = '';
+    q.opciones.forEach((o, i) => {
+      const b = h('button', 'opcion-btn');
+      b.type = 'button';
+      b.append(h('span', 'letra', LETRAS[i]), h('span', null, clean(o)));
+      b.addEventListener('click', () => choose(i));
+      opciones.appendChild(b);
+    });
+    Array.from(segmentos.children).forEach((s, i) => s.classList.toggle('now', i === index));
+    segmentos.setAttribute('aria-valuenow', index + 1);
+    progresoTexto.textContent = `${mode === 'practice' ? 'Repaso · ' : ''}Pregunta ${index + 1} de ${testQuestions.length}`;
+    if (transition) {
+      window.scrollTo(0, 0);
+      anim(stage, [{ opacity: 0, transform: 'translateX(28px)' }, { opacity: 1, transform: 'none' }], { duration: 320, fill: 'backwards' });
+      preguntaTitulo.focus({ preventScroll: true });
+    }
+    Array.from(opciones.children).forEach((b, i) =>
+      anim(b, [{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 380, delay: 120 + i * 70, fill: 'backwards' }));
+    busy = false;
+    answered = false;
+    saveState();
+  }
+
+  function choose(i) {
+    if (answered || busy) return;
+    answered = true;
+    const q = testQuestions[currentIndex], btns = Array.from(opciones.children);
+    const ok = i === q.respuestaCorrecta;
+    userAnswers[currentIndex] = i;
+    btns.forEach((b, k) => {
+      b.classList.add('locked');
+      b.setAttribute('aria-disabled', 'true');
+      if (k !== i && k !== q.respuestaCorrecta) b.classList.add('dim');
+    });
+    const seg = segmentos.children[currentIndex];
+    seg.classList.remove('now');
+    seg.classList.add(ok ? 'ok' : 'ko');
+
+    const fb = h('div', 'fb ' + (ok ? 'ok' : 'ko'));
+    const last = currentIndex === testQuestions.length - 1;
+    let wait = 0;
+    if (ok) {
+      aciertos++; streak++;
+      btns[i].classList.add('correct');
+      anim(btns[i], [{ transform: 'scale(1)' }, { transform: 'scale(1.04)' }, { transform: 'scale(1)' }], { duration: 400 });
+      burstAt(btns[i], 12, .6);
+      vibrate(18);
+      fb.append(h('p', 'fb-title', '✅ ¡Correcto!' + (streak >= 3 ? ` · Racha de ${streak} 🔥` : '')));
+      wait = TIEMPO_AUTO_ACIERTO;
+      if (mode === 'full' && !milestone && aciertos >= MIN_ACERTOS_APROBAR) {
+        milestone = true;
+        toast(`¡${MIN_ACERTOS_APROBAR} aciertos! Ya tienes el aprobado ✨`);
+        confetti(window.innerWidth / 2, window.innerHeight * .35, 60, 1.3);
+        wait = 2200;
+      }
+    } else {
+      streak = 0;
+      btns[i].classList.add('incorrect');
+      btns[q.respuestaCorrecta].classList.add('show-correct');
+      anim(btns[i], [{ transform: 'translateX(0)' }, { transform: 'translateX(-9px)' }, { transform: 'translateX(8px)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(0)' }], { duration: 420 });
+      vibrate([40, 50, 40]);
+      fb.append(h('p', 'fb-title', '❌ Incorrecto'));
+      const p1 = h('p'); p1.append(h('strong', null, 'Respuesta correcta: '), document.createTextNode(clean(q.opciones[q.respuestaCorrecta])));
+      const p2 = h('p'); p2.append(h('strong', null, 'Motivo: '), document.createTextNode(q.explicacion));
+      fb.append(p1, p2);
+    }
+    const nextBtn = h('button', 'btn btn-next' + (wait && !reduce.matches ? ' auto' : ''));
+    nextBtn.type = 'button';
+    nextBtn.append(h('span', null, last ? 'Ver resultado' : (ok ? 'Siguiente →' : 'Entendido, siguiente →')));
+    if (wait) nextBtn.style.setProperty('--auto', wait + 'ms');
+    nextBtn.addEventListener('click', next);
+    fb.append(nextBtn);
+    feedback.appendChild(fb);
+    updatePill();
+    saveState();
+    requestAnimationFrame(() => { ensureVisible(fb); nextBtn.focus({ preventScroll: true }); });
+    if (wait) advanceTimer = setTimeout(next, wait);
+  }
+
+  function next() {
+    if (!answered || busy) return;
+    clearTimeout(advanceTimer);
+    const n = currentIndex + 1;
+    if (n < testQuestions.length) renderQuestion(n, true);
+    else finishQuiz();
+  }
+
+  // ---------- resultado ----------
   function finishQuiz() {
-    const totalTime = stopTimer();
-    quizScreen.style.display = 'none';
-    resultScreen.style.display = 'block';
-    calculateScore(totalTime);
+    clearTimeout(advanceTimer);
+    const total = stopTimer();
+    ls.del(STATE_KEY);
+    renderResult(total);
+    showScreen(resultScreen).then(playResultFx);
   }
-  
-  function restartQuiz() {
-    resultScreen.style.display = 'none';
-    startScreen.style.display = 'block';
-    cronometro.textContent = 'Tiempo: 00:00';
-    // Limpiar el desglose y el ranking de la vista (se recargarán al jugar)
-    desgloseRespuestas.innerHTML = '';
-    rankingTbody.innerHTML = '';
-  }
-
-  function calculateScore(totalTime) {
-    let desgloseHTML = '<h3>Desglose de Respuestas:</h3>';
-    // let desgloseParaEmail = ""; // <-- BORRADO
-
-    testQuestions.forEach((pregunta, i) => {
-      const respuestaUsuario = userAnswers[i];
-      const respuestaCorrecta = pregunta.respuestaCorrecta;
-      
-      if (respuestaUsuario === respuestaCorrecta) {
-        desgloseHTML += `
-          <div class="desglose-item correcta">
-            <p class="desglose-pregunta">✔ ${pregunta.pregunta}</p>
-            <p class="desglose-respuesta-user">Tu respuesta: ${pregunta.opciones[respuestaUsuario]}</p>
-          </div>`;
-        // desgloseParaEmail += ...; // <-- BORRADO
-      } else {
-        desgloseHTML += `
-          <div class="desglose-item incorrecta">
-            <p class="desglose-pregunta">❌ ${pregunta.pregunta}</p>
-            <p class="desglose-respuesta-user">Tu respuesta: ${respuestaUsuario !== null ? pregunta.opciones[respuestaUsuario] : 'No contestada'}</p>
-            <p class="desglose-respuesta-correcta">Respuesta correcta: ${pregunta.opciones[respuestaCorrecta]}</p>
-            <div class="pista-estudio">
-              <strong>Motivo:</strong> ${pregunta.explicacion}
-            </div>
-          </div>`;
-        // desgloseParaEmail += ...; // <-- BORRADO
-      }
-    });
-
-    const aprobado = aciertos >= MIN_ACERTOS_APROBAR;
-    const puntajeTexto = `(${aciertos} de ${NUM_PREGUNTAS_TEST} aciertos)`;
-    const tiempoTexto = `Tiempo Total: ${formatTime(totalTime)}`;
-
-    if (aprobado) {
-      emojiResultado.textContent = '🏆';
-      resultadoTitulo.textContent = '¡APROBADO!';
-      resultadoTexto.textContent = '¡Enhorabuena, lo has conseguido! 😊';
-    } else {
-      emojiResultado.textContent = '🙈';
-      resultadoTitulo.textContent = 'SUSPENSO';
-      resultadoTexto.textContent = '¡Lo intentaremos nuevamente!';
-    }
-    
-    resultadoPuntaje.textContent = puntajeTexto;
-    resultadoTiempo.textContent = tiempoTexto;
-    desgloseRespuestas.innerHTML = desgloseHTML;
-    
-    // setupMailtoButton(aprobado, aciertos, totalTime, desgloseParaEmail); // <-- BORRADO
-    
-    saveScoreToRanking(userName, aciertos, totalTime);
+  let resultFx = null;
+  function renderResult(totalTime) {
+    const n = testQuestions.length, practice = mode === 'practice';
+    const aprobado = !practice && aciertos >= MIN_ACERTOS_APROBAR;
+    const fallos = buildDesglose();
+    $('emoji-resultado').textContent = practice ? '📚' : aprobado ? '🏆' : '🙈';
+    $('resultado-titulo').textContent = practice ? 'Repaso completado' : aprobado ? '¡APROBADO!' : 'SUSPENSO';
+    $('resultado-puntaje').textContent = `${aciertos} de ${n} aciertos`;
+    $('resultado-tiempo').textContent = `Tiempo total: ${formatTime(totalTime)}`;
+    $('resultado-texto').textContent = practice
+      ? (fallos ? 'Aún te quedan fallos: repásalos otra vez.' : '¡Has acertado todo el repaso!')
+      : aprobado ? '¡Enhorabuena, lo has conseguido! 😊'
+        : `Te faltaron ${MIN_ACERTOS_APROBAR - aciertos} aciertos. Repasa los fallos y vuelve a intentarlo.`;
+    $('gauge').classList.toggle('pass', aprobado || (practice && !fallos));
+    $('gauge-of').textContent = `de ${n}`;
+    $('tab-fallos').textContent = `Fallos (${fallos})`;
+    $('tab-todas').textContent = `Todas (${n})`;
+    setTab(true);
+    const missed = testIds.filter((_, i) => userAnswers[i] !== testQuestions[i].respuestaCorrecta);
+    repasoBtn.hidden = missed.length === 0;
+    repasoBtn.textContent = `Repasar mis ${missed.length} ${missed.length === 1 ? 'fallo' : 'fallos'}`;
+    repasoBtn.onclick = () => beginRun({ ids: missed, practice: true, name: userName });
+    shareBtn.hidden = practice || !navigator.share;
+    shareBtn.onclick = () => navigator.share({ title: 'Test CCSE', text: `He sacado ${aciertos}/${n} en el simulador del test CCSE 🇪🇸`, url: location.href }).catch(() => {});
+    if (!practice) saveScoreToRanking(userName, aciertos, totalTime);
     loadRanking();
+    resultFx = { aciertos, n, aprobado };
   }
-
-  // function setupMailtoButton(...) { ... } // <-- FUNCIÓN ENTERA BORRADA
-
-  // --- Lógica de Ranking (localStorage) ---
-  function saveScoreToRanking(name, score, time) {
-    const newScore = { name, score, time };
-    const ranking = getRanking();
-    ranking.push(newScore);
-    ranking.sort((a, b) => {
-      if (a.score !== b.score) return b.score - a.score;
-      return a.time - b.time;
+  function playResultFx() {
+    const f = resultFx;
+    if (!f) return;
+    const bar = $('gauge-bar'), C = 2 * Math.PI * 52, end = C * (1 - f.aciertos / f.n);
+    bar.style.strokeDasharray = C;
+    bar.style.strokeDashoffset = end;
+    anim(bar, [{ strokeDashoffset: C }, { strokeDashoffset: end }], { duration: 1300, delay: 250, fill: 'backwards', easing: 'cubic-bezier(.3,.7,.2,1)' });
+    countUp($('gauge-n'), f.aciertos, 250, 1100);
+    $('gauge-n').textContent = reduce.matches ? f.aciertos : $('gauge-n').textContent;
+    const emoji = $('emoji-resultado');
+    anim(emoji, [{ transform: 'scale(0) rotate(-25deg)' }, { transform: 'scale(1.25) rotate(8deg)', offset: .6 }, { transform: 'scale(1) rotate(0)' }], { duration: 700, delay: 900, fill: 'backwards' });
+    if (f.aprobado) { setTimeout(() => { confettiRain(70); vibrate([30, 40, 30, 40, 80]); }, 700); }
+    resultFx = null;
+  }
+  function buildDesglose() {
+    desglose.innerHTML = '';
+    let fallos = 0;
+    testQuestions.forEach((q, i) => {
+      const u = userAnswers[i], ok = u === q.respuestaCorrecta;
+      if (!ok) fallos++;
+      const it = h('div', 'desglose-item ' + (ok ? 'correcta' : 'incorrecta'));
+      it.style.setProperty('--i', i);
+      it.append(h('p', 'desglose-pregunta', (ok ? '✔ ' : '✕ ') + q.pregunta));
+      it.append(h('p', 'desglose-respuesta-user', 'Tu respuesta: ' + (u !== null ? clean(q.opciones[u]) : 'No contestada')));
+      if (!ok) {
+        it.append(h('p', 'desglose-respuesta-correcta', 'Respuesta correcta: ' + clean(q.opciones[q.respuestaCorrecta])));
+        const pe = h('div', 'pista-estudio');
+        pe.append(h('strong', null, 'Motivo: '), document.createTextNode(q.explicacion));
+        it.append(pe);
+      }
+      desglose.appendChild(it);
     });
-    const top20 = ranking.slice(0, 20);
-    localStorage.setItem(RANKING_KEY, JSON.stringify(top20));
+    if (!fallos) desglose.appendChild(h('div', 'empty-ok', '¡Sin fallos! Perfecto 🎉'));
+    return fallos;
+  }
+  function setTab(soloFallos) {
+    desglose.classList.toggle('solo-fallos', soloFallos);
+    $('tab-fallos').setAttribute('aria-selected', soloFallos);
+    $('tab-todas').setAttribute('aria-selected', !soloFallos);
   }
 
+  function restartQuiz() {
+    clearTimeout(advanceTimer);
+    refreshResume();
+    showScreen(startScreen).then(() => staggerIn(startScreen));
+  }
+
+  // ---------- ranking (localStorage) ----------
   function getRanking() {
-    const rankingJSON = localStorage.getItem(RANKING_KEY);
-    return rankingJSON ? JSON.parse(rankingJSON) : [];
+    try {
+      const r = JSON.parse(ls.get(RANKING_KEY));
+      return Array.isArray(r) ? r.filter(e => e && typeof e.score === 'number' && typeof e.time === 'number') : [];
+    } catch (e) { return []; }
   }
-
+  function saveScoreToRanking(name, score, time) {
+    lastEntryTs = Date.now();
+    const r = getRanking();
+    r.push({ name, score, time, ts: lastEntryTs });
+    r.sort((a, b) => b.score - a.score || a.time - b.time);
+    ls.set(RANKING_KEY, JSON.stringify(r.slice(0, 20)));
+  }
   function loadRanking() {
-    const ranking = getRanking();
-    if (!rankingTbody) return; // Seguridad
     rankingTbody.innerHTML = '';
-    
-    if (ranking.length === 0) {
-      rankingTbody.innerHTML = '<tr><td colspan="4">Aún no hay puntuaciones. ¡Sé el primero!</td></tr>';
+    const r = getRanking();
+    if (!r.length) {
+      const td = h('td', null, 'Aún no hay puntuaciones. ¡Sé el primero!');
+      td.colSpan = 4;
+      rankingTbody.appendChild(h('tr')).appendChild(td);
       return;
     }
-    
-    ranking.forEach((entry, index) => {
-      const tr = document.createElement('tr');
-      if (index === 0) tr.classList.add('rank-1'); // Resaltar al ganador
-      tr.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${entry.name}</td>
-        <td>${entry.score} / ${NUM_PREGUNTAS_TEST}</td>
-        <td>${formatTime(entry.time)}</td>
-      `;
+    r.forEach((e, i) => {
+      const tr = h('tr', (i === 0 ? 'rank-1 ' : '') + (e.ts && e.ts === lastEntryTs ? 'me' : ''));
+      tr.append(h('td', null, i + 1), h('td', null, String(e.name || 'Anónimo')), h('td', null, `${e.score} / ${NUM_PREGUNTAS_TEST}`), h('td', null, formatTime(e.time)));
       rankingTbody.appendChild(tr);
     });
   }
-  
- // **** ¡EL CÓDIGO CORREGIDO PARA LOS BOTONES (INCLUYE FIX MÓVIL)! ****
-  // Esta función se asegura de que todo el HTML esté cargado antes de conectar los botones.
- document.addEventListener('DOMContentLoaded', function() {
-    
-    // Conectar todas las variables de DOM
-    startScreen = document.getElementById('start-screen');
-    quizScreen = document.getElementById('quiz-screen');
-    resultScreen = document.getElementById('result-screen');
-    feedbackContainer = document.getElementById('feedback-container');
-    opcionesContainer = document.getElementById('opciones-container');
-    nombreInput = document.getElementById('nombre-input');
-    startBtn = document.getElementById('start-btn');
-    restartBtn = document.getElementById('restart-btn');
-    cronometro = document.getElementById('cronometro');
-    progresoFill = document.getElementById('progreso-fill');
-    progresoTexto = document.getElementById('progreso-texto');
-    preguntaTitulo = document.getElementById('pregunta-titulo');
-    emojiResultado = document.getElementById('emoji-resultado');
-    resultadoTitulo = document.getElementById('resultado-titulo');
-    resultadoPuntaje = document.getElementById('resultado-puntaje');
-    resultadoTiempo = document.getElementById('resultado-tiempo');
-    resultadoTexto = document.getElementById('resultado-texto');
-    rankingTbody = document.getElementById('ranking-tbody');
-    desgloseRespuestas = document.getElementById('desglose-respuestas');
 
-    // --- Conexión de eventos para PC (click) y MÓVIL (touchend) ---
-    // 'touchend' es el "clic" en pantallas táctiles.
-    
-    if (startBtn) {
-      // Previene que se active el 'click' si ya se usó el 'touch'
-      let startClicked = false;
-      startBtn.addEventListener('click', function() {
-        if (!startClicked) startQuiz();
-        startClicked = false;
-      });
-      // Este es el evento para móviles
-      startBtn.addEventListener('touchend', function(e) {
-        e.preventDefault(); // Previene el "clic fantasma"
-        startClicked = true;
-        startQuiz();
-      });
-    }
-    
-    if (restartBtn) {
-      // Previene que se active el 'click' si ya se usó el 'touch'
-      let restartClicked = false;
-      restartBtn.addEventListener('click', function() {
-        if (!restartClicked) restartQuiz();
-        restartClicked = false;
-      });
-      // Este es el evento para móviles
-      restartBtn.addEventListener('touchend', function(e) {
-        e.preventDefault(); // Previene el "clic fantasma"
-        restartClicked = true;
-        restartQuiz();
-      });
-    }
-    
-    // Cargar el ranking en cuanto se cargue la página
-    loadRanking();
+  // ---------- eventos ----------
+  startBtn.addEventListener('click', startQuiz);
+  restartBtn.addEventListener('click', restartQuiz);
+  nombreInput.addEventListener('keydown', e => { if (e.key === 'Enter') startQuiz(); });
+  resumeBtn.addEventListener('click', () => {
+    const s = readState();
+    if (s) beginRun({ ids: s.ids, answers: s.answers, elapsed: s.elapsed, name: s.name || 'Anónimo' });
+  });
+  $('tab-fallos').addEventListener('click', () => setTab(true));
+  $('tab-todas').addEventListener('click', () => setTab(false));
+  document.addEventListener('keydown', e => { // 1/2/3 o A/B/C para responder · → para seguir
+    if (quizScreen.hidden || e.ctrlKey || e.metaKey || e.altKey || e.key.length > 1 && e.key !== 'ArrowRight') return;
+    if (!answered && !busy) {
+      let i = 'abc'.indexOf(e.key.toLowerCase());
+      if (i < 0) i = '123'.indexOf(e.key);
+      if (i >= 0 && i < opciones.children.length) { e.preventDefault(); choose(i); }
+    } else if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
   });
 
+  // ---------- arranque ----------
+  nombreInput.value = ls.get(NAME_KEY) || '';
+  refreshResume();
+  loadRanking();
+  staggerIn(startScreen);
 </script>
 </body>
 </html>
