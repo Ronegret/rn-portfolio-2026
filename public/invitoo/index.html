@@ -3,309 +3,322 @@
 <head>
   <meta charset="UTF-8"><style>@view-transition{navigation:auto}</style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Case study de Invitoo: marca fundada por Rodrigo Negrete para invitaciones digitales interactivas con UX, automatización, música generativa con IA y experiencias personalizadas.">
-  <title>Invitoo | UX, IA & Invitaciones Digitales</title>
+  <title>Invitoo | Invitaciones de boda que se abren como una escena</title>
+  <meta name="description" content="Caso de estudio de Invitoo, la empresa de Rodrigo Negrete: invitaciones de boda animadas que se abren con un gesto, montadas en cinco días, con confirmaciones, panel para la pareja y fotos en directo el día de la boda.">
   <link rel="canonical" href="https://rodrigonegrete.es/invitoo/">
   <meta property="og:type" content="article">
-  <meta property="og:title" content="Invitoo | UX, IA &amp; Invitaciones Digitales">
-  <meta property="og:description" content="Case study de Invitoo: marca fundada por Rodrigo Negrete para invitaciones digitales interactivas con UX, automatización, música generativa con IA y experiencias personalizadas.">
+  <meta property="og:title" content="Invitoo | Invitaciones de boda que se abren como una escena">
+  <meta property="og:description" content="Fundador, producto, marca y desarrollo: 47 aperturas que responden al dedo, un servicio sin editor en cinco días y un precio único entre las plataformas de 29 € y los estudios de 450 €.">
   <meta property="og:image" content="https://rodrigonegrete.es/assets/og/invitoo.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Invitoo: móvil con una invitación de boda animada junto a un centro de rosas blancas y el lema Vuestra boda contada como merece">
   <meta property="og:url" content="https://rodrigonegrete.es/invitoo/">
+  <meta property="og:site_name" content="Rodrigo Negrete">
+  <meta property="og:locale" content="es_ES">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Invitoo | Invitaciones de boda que se abren como una escena">
+  <meta name="twitter:description" content="Fundador, producto, marca y desarrollo: 47 aperturas que responden al dedo, un servicio sin editor en cinco días y un precio único.">
   <meta name="twitter:image" content="https://rodrigonegrete.es/assets/og/invitoo.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/assets/invitoo/invitoo-banner.webp" fetchpriority="high">
   <link rel="stylesheet" href="/src/invitoo.css">
 <link rel="stylesheet" href="/src/case-type.css">
 <link rel="stylesheet" href="/src/case-fold.css">
 <link rel="stylesheet" href="/src/case-bar.css">
 <link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
-  <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Portada: Invitoo | UX, IA &amp; Invitaciones Digitales">
-  <meta property="og:site_name" content="Rodrigo Negrete">
-  <meta property="og:locale" content="es_ES">
-  <meta name="twitter:title" content="Invitoo | UX, IA &amp; Invitaciones Digitales">
-  <meta name="twitter:description" content="Case study de Invitoo: marca fundada por Rodrigo Negrete para invitaciones digitales interactivas con UX, automatización, música generativa con IA y experiencias personalizadas.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' text-anchor='middle' fill='%23fff'%3ERN%3C/text%3E%3Ccircle cx='51' cy='13' r='5' fill='%23ff2d2d'/%3E%3C/svg%3E">
 </head>
 <body>
-  <div class="paper-texture" aria-hidden="true"></div>
-
-  <header class="inv-hero">
-    <nav class="inv-nav">
+  <header class="iv-hero">
+    <nav class="iv-nav">
       <a href="/#proyectos" class="ghost-link">Volver al portfolio</a>
-      <a href="https://invitoo.es/" target="_blank" rel="noopener" class="solid-link">Visitar Invitoo</a>
+      <a href="https://www.invitoo.es/" target="_blank" rel="noopener" class="solid-link">Visitar invitoo.es ↗</a>
     </nav>
 
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <img class="brand-logo" src="/assets/invitoo/invitoo-png-e1741309569943.avif" alt="Logo de Invitoo">
-        <p class="eyebrow">Founder · UX/UI · IA aplicada · Wedding tech</p>
-        <h1>Invitoo: de una invitación bonita a un producto digital para eventos.</h1>
-        <p class="hero-lead">Soy fundador único de Invitoo. Antes de diseñar pantallas, trabajé la oportunidad de negocio, el posicionamiento, el flujo de servicio, los módulos de producto, la experiencia de invitado y el uso de IA para música, copy, animaciones e interacciones.</p>
-        <div class="hero-actions">
-          <a href="#estrategia" class="btn-primary">Ver estrategia UX</a>
-          <a href="https://invitoo.es/" target="_blank" rel="noopener" class="btn-secondary">Ver marca activa</a>
+    <div class="wrap iv-hero-grid">
+      <div class="iv-hero-copy">
+        <h1>Invitaciones de boda que se abren <em>como una escena.</em></h1>
+        <p class="iv-lead">Invitoo es mi empresa. Cada pareja nos cuenta su historia y, en cinco días, recibe una invitación animada lista para mandar por WhatsApp: se abre con un gesto, responde a quien la abre y resuelve todo lo que los invitados preguntarían después.</p>
+        <dl class="iv-role">
+          <div><dt>Rol</dt><dd>Fundador único: producto, marca, UX/UI y desarrollo</dd></div>
+          <div><dt>Hoy</dt><dd>En producción en invitoo.es</dd></div>
+          <div><dt>Base</dt><dd>Next.js · pagos con Stripe · IA generativa</dd></div>
+        </dl>
+        <div class="iv-actions">
+          <a href="#aperturas" class="btn-primary">Ver seis aperturas</a>
+          <a href="https://www.invitoo.es/" target="_blank" rel="noopener" class="btn-secondary">invitoo.es ↗</a>
         </div>
       </div>
-
-      <div class="hero-visual">
-        <figure class="browser-card large invitation-shot">
-          <img src="/assets/invitoo/invitoo-invitacion-01.avif" alt="Invitación real publicada en Invitoo">
-        </figure>
-        <div class="system-preview floating">
-          <article><span>01</span><strong>Briefing</strong></article>
-          <article><span>02</span><strong>Diseño</strong></article>
-          <article><span>03</span><strong>IA + música</strong></article>
-          <article><span>04</span><strong>Publicación</strong></article>
-        </div>
-      </div>
+      <figure class="iv-hero-media">
+        <img src="/assets/invitoo/invitoo-banner.webp" width="1600" height="894" fetchpriority="high" alt="Pieza de marca de Invitoo: un móvil muestra la invitación «¡Nos casamos! Noe & Rodrigo, 30 de marzo de 2027, Barcelona» junto a un centro de rosas blancas, el logotipo con dos anillos dorados y el lema Vuestra boda contada como merece">
+      </figure>
     </div>
 
-    <div class="metric-strip">
-      <article><strong>Fundador</strong><span>marca propia de cero</span></article>
-      <article><strong>IA</strong><span>canciones personalizadas</span></article>
-      <article><strong>Sistema</strong><span>módulos reutilizables</span></article>
-      <article><strong>UX</strong><span>servicio + experiencia</span></article>
-    </div>
+    <ul class="wrap iv-facts" aria-label="Invitoo en cifras">
+      <li><strong>47</strong><span>aperturas en el catálogo, ninguna se abre igual</span></li>
+      <li><strong>5</strong><span>días laborables de la videollamada al enlace</span></li>
+      <li><strong>14</strong><span>dudas de invitado resueltas dentro de la invitación</span></li>
+      <li><strong>149&nbsp;€</strong><span>pago único, sin cuota ni comisión por invitado</span></li>
+    </ul>
   </header>
 
   <main>
-    <section data-thread="problema" class="section intro" id="estrategia">
-      <div class="section-head">
-        <p class="eyebrow">Evaluación estratégica</p>
-        <h2>El punto de partida no era hacer webs de boda, sino rediseñar la forma en que una pareja comunica y gestiona su evento.</h2>
-      </div>
-      <div class="intro-grid">
-        <p>El problema detectado era claro: las invitaciones impresas o plantillas simples emocionan poco y resuelven menos. Las parejas terminan respondiendo las mismas preguntas por WhatsApp: dónde es, cómo llegar, qué vestir, dónde alojarse, cómo confirmar, qué regalar y qué canciones poner.</p>
-        <p>Invitoo se planteó como una experiencia digital de evento: una pieza emocional para el invitado y, al mismo tiempo, un sistema operativo ligero para la pareja. El objetivo era reducir fricción logística sin perder elegancia, personalización ni sensación artesanal.</p>
-      </div>
-    </section>
-
-    <section data-thread="problema" class="section">
-      <div class="section-head centered">
-        <p class="eyebrow">Brainstorming inicial</p>
-        <h2>Antes del proyecto: hipótesis, oportunidades y decisiones de producto.</h2>
-        <p>El brainstorming se enfocó en encontrar una propuesta que no compitiera solo por estética, sino por experiencia completa.</p>
-      </div>
-      <div class="brainstorm-grid">
-        <article><span>Problema</span><strong>La información del evento vive dispersa.</strong><p>WhatsApp, PDFs, llamadas, listas y mensajes repetidos generan ansiedad y pérdida de control.</p></article>
-        <article><span>Oportunidad</span><strong>Centralizar todo en un enlace memorable.</strong><p>Un link puede convertirse en invitación, guía, agenda, formulario y recuerdo digital.</p></article>
-        <article><span>Diferenciador</span><strong>Personalización real, no plantilla.</strong><p>Videollamada, historia, estilo, música y módulos según necesidades de cada pareja.</p></article>
-        <article><span>IA</span><strong>Usar IA para crear emoción propia.</strong><p>Canciones con Suno, textos, assets visuales, ideas de microinteracción y recursos animados.</p></article>
-        <article><span>Negocio</span><strong>Un servicio premium escalable.</strong><p>Diseño boutique con componentes reutilizables para acelerar producción sin perder calidad.</p></article>
-        <article><span>UX</span><strong>Invitados primero, pareja tranquila.</strong><p>El invitado debe entender todo rápido; la pareja debe recibir menos preguntas y más confirmaciones.</p></article>
-      </div>
-    </section>
-
-    <section data-thread="problema" class="section band">
-      <div class="section-head centered">
-        <p class="eyebrow">Análisis del sector boda</p>
-        <h2>El mercado de bodas mezcla emoción, presión logística y decisiones de alto detalle.</h2>
-        <p>Diseñar Invitoo implicó entender que una boda no es solo un evento: es un proceso largo, sensible y lleno de microdecisiones donde los novios buscan control sin perder magia.</p>
-      </div>
-      <div class="analysis-grid">
-        <article><strong>Necesidad emocional</strong><span>La invitación debe transmitir estilo, historia y tono de la boda desde el primer segundo.</span></article>
-        <article><strong>Necesidad operativa</strong><span>Confirmaciones, horarios, mapas, transporte, regalos y dudas deben estar centralizados.</span></article>
-        <article><strong>Necesidad social</strong><span>Debe compartirse fácil por WhatsApp y verse impecable en móvil, que es el canal principal.</span></article>
-        <article><strong>Necesidad premium</strong><span>La pareja quiere sentir que no está comprando una plantilla, sino una experiencia diseñada para ellos.</span></article>
-      </div>
-    </section>
-
-    <section data-thread="decision" class="section">
-      <div class="split">
-        <div>
-          <p class="eyebrow">Identidad de marca</p>
-          <h2>El logo y la paleta buscan calma, elegancia y confianza.</h2>
-          <p>La identidad visual se diseñó para alejarse de lo tecnológico frío. Invitoo debía sentirse humano, romántico y premium, pero seguir siendo digital y funcional.</p>
-          <ul class="check-list">
-            <li><strong>Verde eucalipto:</strong> calma, naturaleza, ceremonia y equilibrio.</li>
-            <li><strong>Crema:</strong> fondo editorial, calidez y lectura amable en móvil.</li>
-            <li><strong>Dorado suave:</strong> celebración, detalle premium y acento emocional sin ostentación.</li>
-            <li><strong>Tipografía editorial:</strong> personalidad romántica combinada con legibilidad moderna.</li>
-          </ul>
+    <section data-thread="problema" class="sec" id="problema">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Ochenta personas en un grupo de WhatsApp preguntando <em>a qué hora es la ceremonia.</em></h2>
+          <p class="sec-lead">La invitación es lo primero que todo el mundo ve de una boda y casi siempre falla en una de las dos cosas. La de papel emociona pero cuenta poco; la plantilla informa pero no emociona a nadie. Lo que falta acaba en el móvil de los novios: dónde aparcar, si hay autobús, qué se pone uno, a qué cuenta va el regalo.</p>
         </div>
-        <div class="brand-board">
-          <img src="/assets/invitoo/invitoo-png-e1741309569943.avif" alt="Logo de Invitoo">
-          <div class="swatches">
-            <span style="--sw:#1e2f23">Bosque</span>
-            <span style="--sw:#8da290">Eucalipto</span>
-            <span style="--sw:#fdfbf7">Crema</span>
-            <span style="--sw:#c5a47e">Dorado</span>
-          </div>
+        <div class="iv-market">
+          <p class="iv-market-t">El mercado estaba partido en dos extremos</p>
+          <ol>
+            <li><span class="iv-price">desde 29&nbsp;€</span><strong>Plataformas con editor</strong><span>Baratas, pero el trabajo de diseño lo hacen los novios, en plena organización de la boda.</span></li>
+            <li class="is-us"><span class="iv-price">149 – 449&nbsp;€</span><strong>Invitoo, en medio a propósito</strong><span>Una persona la monta de principio a fin. La pareja no toca ningún editor.</span></li>
+            <li><span class="iv-price">450&nbsp;€ o más</span><strong>Estudios a medida</strong><span>Piezas preciosas, con un precio que deja fuera a la mayoría.</span></li>
+          </ol>
         </div>
       </div>
     </section>
 
-    <section data-thread="decision" class="section band">
-      <div class="section-head centered">
-        <p class="eyebrow">Benchmark</p>
-        <h2>El benchmark ayudó a detectar dónde Invitoo podía diferenciarse.</h2>
-        <p>La revisión de invitaciones digitales, plantillas y soluciones de eventos mostró tres caminos habituales: diseños bonitos pero rígidos, herramientas útiles pero poco emocionales, o servicios personalizados difíciles de escalar.</p>
-      </div>
-      <div class="benchmark-grid">
-        <article><span>Plantillas digitales</span><strong>Rápidas, pero impersonales.</strong><p>Sirven para informar, pero suelen perder historia, tono y dirección artística.</p></article>
-        <article><span>Webs de boda genéricas</span><strong>Funcionales, pero frías.</strong><p>Resuelven logística, aunque muchas no crean una primera impresión memorable.</p></article>
-        <article><span>Diseño artesanal</span><strong>Bonito, pero poco escalable.</strong><p>Alta personalización, pero sin sistema modular ni automatizaciones reutilizables.</p></article>
-        <article><span>Invitoo</span><strong>Emoción + sistema.</strong><p>Combina experiencia personalizada, IA, módulos funcionales y entrega digital preparada para compartir.</p></article>
-      </div>
-    </section>
-
-    <section data-thread="decision" class="section band">
-      <div class="split">
-        <div>
-          <p class="eyebrow">UX service design</p>
-          <h2>Diseñé el servicio completo: desde la primera llamada hasta el link final compartido por WhatsApp.</h2>
-          <p>El proceso no se limita a diseñar una interfaz. Incluye venta consultiva, levantamiento de requisitos, definición de módulos, dirección visual, copy, música, automatizaciones, revisión con la pareja y entrega final.</p>
-          <ul class="check-list">
-            <li>Entrevista inicial para captar historia, estética y prioridades.</li>
-            <li>Definición de funcionalidades según tipo de evento e invitados.</li>
-            <li>Traducción de emociones en interfaz, copy, música e interacción.</li>
-          </ul>
+    <section data-thread="problema" class="sec sec-tint" id="primera-version">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>La primera versión validó la emoción. <em>No escalaba.</em></h2>
+          <p class="sec-lead">Invitoo nació en 2025 con WordPress y Elementor: cada invitación se construía a mano después de una videollamada, con una canción hecha con IA. Funcionó, y dejó tres pistas claras para la siguiente versión.</p>
         </div>
-        <div class="process-card">
-          <span>01</span><strong>Descubrimiento y briefing emocional</strong>
-          <span>02</span><strong>Mapa de módulos y contenido</strong>
-          <span>03</span><strong>Dirección visual y narrativa</strong>
-          <span>04</span><strong>IA, música y microinteracciones</strong>
-          <span>05</span><strong>Entrega, pruebas y publicación</strong>
+        <div class="iv-learn">
+          <article><span class="iv-n">i</span><h3>Lo que se comparte es la apertura</h3><p>El momento de abrirla era lo que los invitados comentaban. El resto de la invitación se consultaba; la entrada se recordaba.</p></article>
+          <article><span class="iv-n">ii</span><h3>Las parejas no quieren diseñar</h3><p>Querían contar su historia una vez y recibir algo terminado. Cada pantalla que les pedía decidir algo era trabajo extra en el peor momento.</p></article>
+          <article><span class="iv-n">iii</span><h3>Empezar de cero no escala</h3><p>Montar cada invitación desde una página en blanco limitaba cuántas bodas podía atender y hacía imposible un precio cerrado.</p></article>
         </div>
       </div>
     </section>
 
-    <section data-thread="decision" class="section">
-      <div class="section-head centered">
-        <p class="eyebrow">Sistema modular</p>
-        <h2>Invitoo funciona como un design system de eventos, no como páginas aisladas.</h2>
-        <p>Cada invitación puede combinar módulos según el evento. Esto permite personalizar sin empezar desde cero cada vez.</p>
-      </div>
-      <div class="feature-grid">
-        <article><strong>RSVP inteligente</strong><span>Lista de asistentes y confirmaciones en tiempo real.</span></article>
-        <article><strong>Mapas y GPS</strong><span>Ubicación e indicaciones directas para llegar sin fricción.</span></article>
-        <article><strong>Cuenta regresiva</strong><span>Anticipación emocional hasta el día del evento.</span></article>
-        <article><strong>Playlist colaborativa</strong><span>Invitados sugieren canciones para la fiesta.</span></article>
-        <article><strong>Lista de regalos</strong><span>Acceso digital a regalos, transferencias o tiendas.</span></article>
-        <article><strong>Fotos compartidas</strong><span>Galería colaborativa para revivir el evento.</span></article>
-        <article><strong>Alojamiento y transporte</strong><span>Hoteles, buses y horarios para invitados que viajan.</span></article>
-        <article><strong>Dress code y agenda</strong><span>Información visual, clara y fácil de consultar.</span></article>
-      </div>
-    </section>
-
-    <section data-thread="decision" class="section dark-section">
-      <div class="split reverse">
-        <figure class="media-frame ai-frame web-proof">
-          <img src="/assets/invitoo/invitoo-invitacion-02.avif" alt="Otra invitación real publicada en Invitoo">
-          <figcaption>
-            <span>Invitación real</span>
-            <strong>Experiencia publicada</strong>
-          </figcaption>
+    <section data-thread="decision" class="sec" id="la-apertura">
+      <div class="wrap iv-split">
+        <div class="sec-head">
+          <h2>La apertura es <em>el producto.</em></h2>
+          <p class="sec-lead">Una puerta de palacio, la ventanilla de un avión, un faro en la noche. Cada apertura es una escena viva que responde al dedo del invitado y termina dentro de la invitación, con los nombres de la pareja dentro, no encima.</p>
+          <p>El catálogo se ordena por cómo es la pareja, no por colores ni tipografías: <span class="iv-inline">De autor · Clásicos · De época · Viajeros · Fiesteros · De aficiones</span>. Y si ninguna encaja, se hace una: la furgoneta con la que cruzaron Islandia o el bar donde se conocieron.</p>
+        </div>
+        <figure class="iv-pair iv-pair-lg">
+          <div class="iv-phone"><img src="/assets/invitoo/plantillas/vino-y-vinas.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Apertura Vino y viñas: una copa vacía sobre una barrica frente a un viñedo al atardecer, con el texto sirven su mejor cosecha y el botón Servir el vino"></div>
+          <div class="iv-phone"><img src="/assets/invitoo/plantillas/vino-y-vinas-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Tras servir el vino, una etiqueta de Gran Reserva, cosecha 2027, con los nombres Carmen y Álvaro, la fecha en Bodega El Calado y una cuenta atrás"></div>
+          <figcaption><span>«Vino y viñas»: se sirve el vino</span><span>Y los nombres aparecen en la etiqueta</span></figcaption>
         </figure>
-        <div>
-          <p class="eyebrow">IA aplicada con intención</p>
-          <h2>La IA entra donde suma emoción, velocidad y diferenciación.</h2>
-          <p>Con Suno trabajo canciones personalizadas a partir de la historia, estilo y tono de cada pareja. No es música genérica: es una pieza emocional que convierte la apertura de la invitación en una experiencia memorable.</p>
-          <p>También uso IA para brainstorming de narrativas, copy, ideas de animación, assets visuales, variaciones de estilo e interacciones. La decisión UX es filtrar la IA: usarla para potenciar la experiencia, no para saturarla.</p>
-          <div class="tool-row">
-            <span>Suno</span>
-            <span>Riffusion</span>
-            <span>Gemini</span>
-            <span>ChatGPT</span>
-            <span>Photoshop</span>
-            <span>CapCut</span>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="aperturas">
+      <div class="wrap">
+        <div class="sec-head sec-head-c">
+          <h2>Seis aperturas, <em>seis rituales.</em></h2>
+          <p class="sec-lead">Las seis más nuevas del catálogo. Cada una pide un gesto para entrar y otro para confirmar: responder deja de ser un formulario y se convierte en el último gesto de la historia.</p>
+        </div>
+
+        <div class="iv-demos">
+          <article class="iv-demo">
+            <header><p class="iv-col">Colección Pueblo blanco</p><h3>La maceta número trece</h3></header>
+            <div class="iv-pair">
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/pueblo-blanco.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Una puerta azul de pueblo blanco entre macetas de geranios, con el rótulo Nos casamos y el botón Llamar a la puerta"></div>
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/pueblo-blanco-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Una calle encalada de Vejer con macetas azules y una placa con los nombres Rocío y Javier, 22 de mayo de 2027"></div>
+            </div>
+            <dl><div><dt>Para entrar</dt><dd>Llaman con la aldaba a una puerta azul y suben una calle de Vejer donde las macetas florecen con la historia de la pareja.</dd></div><div><dt>Para confirmar</dt><dd>Cuelgan su propia maceta en la calle.</dd></div></dl>
+            <a class="btn-demo" href="https://www.invitoo.es/muestras/pueblo-blanco/index.html" target="_blank" rel="noopener" aria-label="Abrir la demo de La maceta número trece (se abre en otra pestaña)">Abrir la demo ↗</a>
+          </article>
+
+          <article class="iv-demo">
+            <header><p class="iv-col">Colección Costa Brava</p><h3>Un sitio en nuestra mesa</h3></header>
+            <div class="iv-pair">
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/costa-brava.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Un sobre de acuarela con lacre dorado y el texto Tenemos algo que deciros, para vosotros, tocad el lacre para abrir"></div>
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/costa-brava-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Un boceto a lápiz de la pareja mirando al mar con la indicación Pasad el dedo y pintad vuestra invitación"></div>
+            </div>
+            <dl><div><dt>Para entrar</dt><dd>Cada invitado pinta la invitación con el dedo: el boceto se llena de acuarela, brotan las flores y solo se mueve el mar.</dd></div><div><dt>Para confirmar</dt><dd>Escribe su nombre en una tarjeta y la deja en la mesa de los novios.</dd></div></dl>
+            <a class="btn-demo" href="https://www.invitoo.es/muestras/costa-brava/index.html" target="_blank" rel="noopener" aria-label="Abrir la demo de Un sitio en nuestra mesa (se abre en otra pestaña)">Abrir la demo ↗</a>
+          </article>
+
+          <article class="iv-demo">
+            <header><p class="iv-col">Colección Mar</p><h3>Mensaje en botella</h3></header>
+            <div class="iv-pair">
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/mensaje-en-botella.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Una botella con una carta flotando en el mar y el botón Descorchar"></div>
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/mensaje-en-botella-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="El pergamino que sale de la botella con los nombres Lucía y Tomás"></div>
+            </div>
+            <dl><div><dt>Para entrar</dt><dd>Descorchan la botella, se sumergen en la historia de la pareja y descubren el mapa escrito con tinta invisible.</dd></div><div><dt>Para confirmar</dt><dd>Devuelven su respuesta al agua.</dd></div></dl>
+            <a class="btn-demo" href="https://www.invitoo.es/muestras/mensaje-en-botella/index.html" target="_blank" rel="noopener" aria-label="Abrir la demo de Mensaje en botella (se abre en otra pestaña)">Abrir la demo ↗</a>
+          </article>
+
+          <article class="iv-demo">
+            <header><p class="iv-col">Colección París</p><h3>La torre que se enciende</h3></header>
+            <div class="iv-pair">
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/paris.webp" width="600" height="1298" loading="lazy" decoding="async" alt="La Torre Eiffel de noche sobre el Sena con el título Tenéis una cita en París y el botón Encended la torre"></div>
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/paris-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Foto de la pareja frente a la torre iluminada y el texto Nos casamos en París, Clara y Hugo, sábado 12 de junio de 2027"></div>
+            </div>
+            <dl><div><dt>Para entrar</dt><dd>Encienden la Torre Eiffel, que centellea con los nombres de la pareja, y abren los cajones verdes de los libreros del Sena.</dd></div><div><dt>Para confirmar</dt><dd>Mandan una postal que cae en un buzón de La Poste.</dd></div></dl>
+            <a class="btn-demo" href="https://www.invitoo.es/muestras/paris/index.html" target="_blank" rel="noopener" aria-label="Abrir la demo de La torre que se enciende (se abre en otra pestaña)">Abrir la demo ↗</a>
+          </article>
+
+          <article class="iv-demo">
+            <header><p class="iv-col">Colección Latido</p><h3>Dos corazones, un mismo ritmo</h3></header>
+            <div class="iv-pair">
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/dos-corazones.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Dos electrocardiogramas a 72 y 88 latidos por minuto sobre papel milimetrado y un fonendo, con el botón Escuchar sus corazones"></div>
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/dos-corazones-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Foto de la pareja riendo y el texto Elena y Daniel, 19 de junio de 2027, Salamanca, queremos oíros latir con nosotros"></div>
+            </div>
+            <dl><div><dt>Para entrar</dt><dd>Posan el fonendo sobre el papel y oyen dos corazones que laten a destiempo hasta acompasarse en uno.</dd></div><div><dt>Para confirmar</dt><dd>Repasan la historia clínica de la pareja, encienden las placas del negatoscopio y responden.</dd></div></dl>
+            <a class="btn-demo" href="https://www.invitoo.es/muestras/dos-corazones/index.html" target="_blank" rel="noopener" aria-label="Abrir la demo de Dos corazones, un mismo ritmo (se abre en otra pestaña)">Abrir la demo ↗</a>
+          </article>
+
+          <article class="iv-demo">
+            <header><p class="iv-col">Colección Chocolate</p><h3>La caja de bombones</h3></header>
+            <div class="iv-pair">
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/caja-de-bombones.webp" width="600" height="1298" loading="lazy" decoding="async" alt="Una caja de bombones con lazo blanco y las iniciales M y P, con el botón Tirar del lazo"></div>
+              <div class="iv-phone"><img src="/assets/invitoo/plantillas/caja-de-bombones-in.webp" width="600" height="1298" loading="lazy" decoding="async" alt="La caja abierta con ocho bombones distintos y un hueco vacío con el texto Para vosotros"></div>
+            </div>
+            <dl><div><dt>Para entrar</dt><dd>Tiran del lazo: cada bombón abre un capítulo de la historia de la pareja.</dd></div><div><dt>Para confirmar</dt><dd>Ponen su bombón en el noveno hueco, el que estaba vacío.</dd></div></dl>
+            <a class="btn-demo" href="https://www.invitoo.es/muestras/caja-de-bombones/index.html" target="_blank" rel="noopener" aria-label="Abrir la demo de La caja de bombones (se abre en otra pestaña)">Abrir la demo ↗</a>
+          </article>
+        </div>
+
+        <div class="iv-catalog">
+          <p>Además, <strong>41 plantillas por estilo</strong>, de la boda de etiqueta a la de la pareja que se conoció jugando:</p>
+          <ul>
+            <li>Carta</li><li>Tinta</li><li>Constelación</li><li>Alta Sociedad</li><li>Riviera</li><li>Vino y viñas</li><li>Azulejo</li><li>Luna de Bachata</li><li>Neón de Medianoche</li><li>Cara A</li><li>Pasaporte</li><li>Noche de Estadio</li><li>Lúpulo y Cobre</li><li>Vikingos</li><li>Órbita</li><li>El Cerezo de la Estación</li><li>Pulsa Start</li>
+          </ul>
+          <a class="btn-demo btn-demo-ghost" href="https://www.invitoo.es/plantillas" target="_blank" rel="noopener">Ver las 41 plantillas ↗</a>
+          <p class="iv-note">Parejas y fotos de ejemplo creadas con IA, y así lo dice cada demo.</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec" id="sin-editor">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Sin editor: la pareja lo cuenta, <em>nosotros la montamos.</em></h2>
+          <p class="sec-lead">La decisión que más pesa del producto es lo que no tiene: ningún editor ni plantilla que rellenar. Los novios cuentan su boda una vez y unos días después les llega el enlace terminado.</p>
+        </div>
+        <ol class="iv-steps">
+          <li><span class="iv-seal">1</span><h3>Nos contáis vuestra boda</h3><p>Primero por correo y, al reservar, en una videollamada de diseño: la historia, la fecha, el sitio y alguna foto.</p></li>
+          <li><span class="iv-seal">2</span><h3>La diseñamos en cinco días</h3><p>La apertura, los textos, la canción y las confirmaciones. Se cambia lo que haga falta, sin límite, hasta publicarla.</p></li>
+          <li><span class="iv-seal">3</span><h3>La abren y confirman</h3><p>Llega por WhatsApp, un enlace por invitado que le saluda por su nombre. Los novios ven quién viene y qué menú quiere.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="precio">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Un precio en medio, <em>en un solo pago.</em></h2>
+          <p class="sec-lead">Lo que pone es lo que se paga, con el IVA dentro: sin suscripción, sin comisión por invitado y sin coste por confirmación. Las diez primeras bodas tienen precio de fundadores a cambio de permiso para enseñar su invitación y una opinión sincera.</p>
+        </div>
+        <div class="iv-plans">
+          <article><h3>Invitoo</h3><p class="iv-amount">149&nbsp;€</p><p>La invitación entera, montada por nosotros: apertura con sus nombres, todas las secciones, confirmación por persona y panel.</p><p class="iv-after">Después de las diez primeras bodas, 199&nbsp;€.</p></article>
+          <article class="is-pick"><p class="iv-pick">El recomendado</p><h3>Invitoo con canción</h3><p class="iv-amount">249&nbsp;€</p><p>Lo mismo, con una canción original compuesta para la pareja con <a href="/dedicalo/">Dedícalo</a>, mi otro producto. Suena en la invitación y se la quedan para la ceremonia.</p><p class="iv-after">Después, 299&nbsp;€.</p></article>
+          <article><h3>Estudio</h3><p class="iv-amount"><small>desde</small> 449&nbsp;€</p><p>Un diseño y una apertura que no existían, hechos para esa boda, con las fotos en directo del día incluidas.</p><p class="iv-after">Después, 590&nbsp;€.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec" id="catorce">
+      <div class="wrap iv-split iv-split-top">
+        <div class="sec-head">
+          <h2>Catorce cosas resueltas <em>antes de que alguien pregunte.</em></h2>
+          <p class="sec-lead">Todo lo que, si no está en la invitación, acaba en el grupo de WhatsApp. Cada plantilla ordena estas secciones a su manera, y solo enseña las que esa boda necesita: una de treinta personas no necesita autobús.</p>
+        </div>
+        <ol class="iv-fourteen">
+          <li>La apertura con sus nombres</li><li>Un enlace para cada invitado</li><li>Confirmación por persona</li><li>El Excel para el catering</li><li>El itinerario, hora a hora</li><li>El autobús, ida y vuelta</li><li>Dónde dormir</li><li>El dress code, con los colores</li><li>La historia de la pareja</li><li>Los regalos, sin incomodar</li><li>La playlist colaborativa</li><li>Los buenos deseos</li><li>El álbum de los invitados</li><li>La canción, en el plan que la incluye</li>
+        </ol>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="panel">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Un panel que no convierte a los novios <em>en wedding planners.</em></h2>
+          <p class="sec-lead">Solo lo que hace falta mientras llegan las respuestas. Nada de mesas ni horarios que mantener: eso ya lo lleva la finca o la planner.</p>
+        </div>
+        <div class="iv-trio">
+          <article><h3>Entrar sin contraseña</h3><p>Escriben su email, les llega un enlace y ya están dentro.</p></article>
+          <article><h3>Invitados</h3><p>Quién viene, quién no y quién falta, con su menú y sus alergias. La lista se imprime por grupos con un clic y se exporta en Excel para el catering.</p></article>
+          <article><h3>Libro de buenos deseos</h3><p>Un QR recoge lo que escriben los invitados. Eligen sus favoritos y, después de la boda, lo descargan en PDF para imprimirlo.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-night" id="en-directo">
+      <div class="wrap iv-split">
+        <div class="sec-head">
+          <h2>El día de la boda, las fotos de los invitados <em>en la pantalla del salón.</em></h2>
+          <p class="sec-lead">Un QR en cada mesa. Los invitados suben la foto sin app ni registro, con unas palabras si quieren, y en segundos aparece en la televisión y en el móvil de todos. Al día siguiente, los novios se lo descargan todo.</p>
+          <ul class="iv-styles" aria-label="Estilos de pantalla"><li>Revista</li><li>Polaroid</li><li>Cine</li><li>Mosaico</li></ul>
+        </div>
+        <div class="iv-privacy">
+          <h3>Las fotos, con cuidado</h3>
+          <ul>
+            <li><strong>Permiso</strong> Antes de subir, cada invitado marca que tiene el permiso de quien sale.</li>
+            <li><strong>Retirada</strong> Cualquiera quita una foto suya desde el móvil, al instante.</li>
+            <li><strong>Moderación</strong> Automática o manual, en plena fiesta, y la deciden los novios.</li>
+            <li><strong>Privado</strong> No sale en Google y la pantalla se abre con una clave de la pareja.</li>
+            <li><strong>Con fecha de borrado</strong> Online doce meses; después se borra todo.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec" id="marca">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Una marca de <em>papelería fina</em>, hecha para la pantalla.</h2>
+          <p class="sec-lead">Papel cálido en vez de blanco, tinta casi negra, un rojo de lacre para lo que importa y el oro solo en filetes. El sistema de movimiento también tiene nombres de papelería: la carta se desliza, el velo se descorre y el sello cae con un pequeño rebote.</p>
+        </div>
+        <div class="iv-brand">
+          <ul class="iv-swatches" aria-label="Paleta de Invitoo">
+            <li style="--sw:#fbf8f3"><span>Papel</span><code>#FBF8F3</code></li>
+            <li style="--sw:#f0e8dc"><span>Bruma</span><code>#F0E8DC</code></li>
+            <li style="--sw:#e3cfa6"><span>Champán</span><code>#E3CFA6</code></li>
+            <li style="--sw:#b08d57"><span>Oro</span><code>#B08D57</code></li>
+            <li style="--sw:#8c1d2c"><span>Lacre</span><code>#8C1D2C</code></li>
+            <li style="--sw:#5f7051"><span>Verde</span><code>#5F7051</code></li>
+            <li style="--sw:#1a1512"><span>Tinta</span><code>#1A1512</code></li>
+          </ul>
+          <div class="iv-type">
+            <p class="iv-type-d">Vuestra boda, contada como se merece.</p>
+            <p class="iv-type-m"><span>Bodoni Moda</span> para titulares, con el contraste de una invitación impresa. <span>Instrument Sans</span> para leer horarios y direcciones en un móvil, a pleno sol.</p>
           </div>
+          <ul class="iv-motion" aria-label="Curvas de movimiento">
+            <li><i class="m-carta" aria-hidden="true"></i><strong>carta</strong><span>entra y se asienta</span></li>
+            <li><i class="m-velo" aria-hidden="true"></i><strong>velo</strong><span>se descorre despacio</span></li>
+            <li><i class="m-sello" aria-hidden="true"></i><strong>sello</strong><span>cae con un rebote</span></li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <section data-thread="decision" class="section">
-      <div class="section-head centered">
-        <p class="eyebrow">Testing e iteración</p>
-        <h2>El testing se centró en claridad móvil, comprensión del flujo y carga emocional.</h2>
-        <p>Las invitaciones se revisan como experiencias reales: apertura, música, navegación, lectura, formularios, botones, mapas, tiempos de carga y comprensión por parte de invitados de distintas edades.</p>
-      </div>
-      <div class="testing-grid">
-        <article><strong>Prueba de apertura</strong><span>¿El usuario entiende si quiere entrar con música o sin música?</span></article>
-        <article><strong>Prueba de navegación</strong><span>¿Encuentra rápido ubicación, asistencia, regalos y agenda?</span></article>
-        <article><strong>Prueba mobile</strong><span>¿Textos, botones e imágenes se ven bien en pantallas pequeñas?</span></article>
-        <article><strong>Prueba emocional</strong><span>¿La experiencia se siente personalizada y no como una plantilla?</span></article>
-      </div>
-    </section>
-
-    <section data-thread="decision" class="section">
-      <div class="split">
-        <div>
-          <p class="eyebrow">Sistema de producción</p>
-          <h2>El producto se diseña para crear muchas invitaciones distintas con una metodología común.</h2>
-          <p>Invitoo no depende de un único caso. La marca funciona porque combina una estructura reutilizable con dirección creativa personalizada: briefing, módulos, narrativa, UI, música, automatización, revisión y publicación.</p>
-        </div>
-        <div class="module-board">
-          <article><strong>Storytelling</strong><span>Historia, tono, copy y emoción.</span></article>
-          <article><strong>Logística</strong><span>RSVP, mapas, agenda y alojamientos.</span></article>
-          <article><strong>Interacción</strong><span>Música, animaciones, playlist y fotos.</span></article>
-          <article><strong>Entrega</strong><span>Link privado, revisión y publicación.</span></article>
-        </div>
-      </div>
-    </section>
-
-    <section data-thread="decision" class="section band">
-      <div class="section-head centered">
-        <p class="eyebrow">Dirección visual</p>
-        <h2>El reto visual es diseñar muchas identidades sin perder consistencia de marca.</h2>
-        <p>Invitoo puede adaptarse a estilos románticos, editoriales, modernos, rústicos o minimalistas. La marca madre mantiene elegancia y confianza; cada invitación recibe su propio universo visual.</p>
-      </div>
-      <div class="showcase-grid">
-        <figure><img src="/assets/invitoo/3-8-768x960.avif" alt="Diseño de invitación digital Invitoo"></figure>
-        <figure><img src="/assets/invitoo/1-11-768x960.avif" alt="Diseño mobile de invitación Invitoo"></figure>
-        <figure><img src="/assets/invitoo/2-7-768x960.avif" alt="Ejemplo visual de invitación digital Invitoo"></figure>
-      </div>
-    </section>
-
-    <section data-thread="decision" class="section">
-      <div class="section-head centered">
-        <p class="eyebrow">Arquitectura técnica y operación</p>
-        <h2>Un ecosistema pensado para escalar sin perder personalización.</h2>
-      </div>
-      <div class="stack-grid">
-        <article><strong>Antes: WordPress + Elementor</strong><span>Primera base flexible para validar la marca, construir invitaciones personalizadas y entender necesidades reales de parejas e invitados.</span></article>
-        <article><strong>Ahora: React</strong><span>Evolución hacia una experiencia más escalable, modular y controlada, con componentes reutilizables, mejor rendimiento y más libertad para animaciones e interacciones.</span></article>
-        <article><strong>Make</strong><span>Automatizaciones para formularios, avisos, datos y flujos operativos.</span></article>
-        <article><strong>IA generativa</strong><span>Copy, canciones, recursos visuales e ideas de interacción.</span></article>
-        <article><strong>Diseño audiovisual</strong><span>Photoshop, Canva y CapCut para assets, edición y piezas sociales.</span></article>
-      </div>
-    </section>
-
-    <section data-thread="estado" class="section final-section">
-      <div class="final-card">
-        <p class="eyebrow">Resultado</p>
-        <h2>Invitoo es una marca propia que demuestra diseño, negocio, IA y producto real.</h2>
-        <p>Como fundador único, he construido una propuesta que combina UX/UI, diseño web, React, automatización, creatividad generativa y servicio personalizado. Es una marca que muestra criterio de producto completo: entender usuarios, crear experiencias memorables, resolver logística y convertir tecnología en emoción.</p>
-        <div class="final-actions">
-          <a href="/#proyectos" class="btn-secondary">Volver a proyectos</a>
-          <a href="https://invitoo.es/" target="_blank" rel="noopener" class="btn-primary">Visitar Invitoo</a>
+    <section data-thread="estado" class="sec sec-tint sec-final" id="estado">
+      <div class="wrap">
+        <div class="iv-final">
+          <h2>En producción, con precio de fundadores <em>para las diez primeras bodas.</em></h2>
+          <p class="sec-lead">Esas diez bodas son la prueba de verdad. Voy a medir cuántos invitados confirman desde la invitación, cuántas preguntas siguen llegando por WhatsApp y cuánto tarda de verdad cada montaje frente a los cinco días prometidos.</p>
+          <div class="iv-final-actions">
+            <a href="https://www.invitoo.es/" target="_blank" rel="noopener" class="btn-primary">Visitar invitoo.es ↗</a>
+            <a href="https://www.invitoo.es/plantillas" target="_blank" rel="noopener" class="btn-secondary">Ver las 41 plantillas ↗</a>
+            <a href="/#proyectos" class="btn-text">Volver a proyectos</a>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <script>
-    const revealTargets = document.querySelectorAll('.hero-copy > *, .hero-visual figure, .system-preview article, .metric-strip article, .section-head, .split > *, .intro-grid p, .brainstorm-grid article, .analysis-grid article, .brand-board, .benchmark-grid article, .feature-grid article, .module-board article, .testing-grid article, .stack-grid article, .showcase-grid figure, .final-card');
-    revealTargets.forEach((el, index) => {
-      el.classList.add('reveal');
-      el.style.transitionDelay = `${Math.min(index % 5, 4) * 65}ms`;
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('in-view');
-        observer.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-
-    revealTargets.forEach((el) => observer.observe(el));
+    (() => {
+      const els = document.querySelectorAll('.iv-hero-copy > *, .iv-hero-media, .iv-facts li, .sec-head, .iv-market li, .iv-learn article, .iv-pair-lg, .iv-demo, .iv-catalog, .iv-steps li, .iv-plans article, .iv-fourteen, .iv-trio article, .iv-privacy, .iv-brand > *, .iv-final');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+      els.forEach((el) => el.classList.add('reveal'));
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach((el) => io.observe(el));
+    })();
   </script>
 <script type="module" src="/src/case-fold.js"></script>
 <script type="module" src="/src/case-mobile.js"></script>
