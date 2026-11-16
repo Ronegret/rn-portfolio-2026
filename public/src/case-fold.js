@@ -108,8 +108,10 @@ function planFor(cont, minH) {
 }
 const containerOf = (s) => { const k = kids(s); return k.length === 1 && k[0].tagName === 'DIV' ? k[0] : s; };
 
+// Una sección con un botón que sale del sitio (web en vivo, demo, prototipo) no se pliega: la acción del caso queda siempre a la vista
+const ACTION = 'a[target="_blank"]:is([class*="btn"], [class*="cta"], [class*="prototype"])';
 function initFolds() {
-  const secs = [...d.querySelectorAll('section')].filter((s) => !s.parentElement.closest('section') && !s.closest('header,footer,nav') && !s.matches('.hero') && !s.querySelector('h1') && s.dataset.fold !== 'off');
+  const secs = [...d.querySelectorAll('section')].filter((s) => !s.parentElement.closest('section') && !s.closest('header,footer,nav') && !s.matches('.hero') && !s.querySelector('h1') && s.dataset.fold !== 'off' && !s.querySelector(ACTION));
   let n = 0;
   const plans = secs.map((s) => {
     const cont = containerOf(s), h = heading(s);

@@ -1626,8 +1626,7 @@ body[data-cursor="mira"]::after {
 }
 
 /* Capsule Corp: acción secundaria "Abrir la web" (la tarjeta principal enlaza al caso interno).
-   Escritorio: va en el flujo, solapada sobre el borde inferior de la tarjeta (margen negativo, altura neta 0) y, con el apilado sticky
-   (transitions.css), se queda pegada con ella: transitions.js escribe --bch (alto de la tarjeta). Móvil: absoluta arriba a la izquierda. */
+   Escritorio: va en el flujo, solapada sobre el borde inferior de la tarjeta (margen negativo, altura neta 0). Móvil: absoluta arriba a la izquierda. */
 .db-card .bc-ext {
   position: relative; display: flex; align-items: center; width: fit-content; min-height: 44px; padding: 0 18px; border-radius: 999px;
   margin: -44px clamp(14px, 2vw, 22px) 0 auto; translate: 0 -18px;
@@ -1637,9 +1636,6 @@ body[data-cursor="mira"]::after {
 }
 @media (hover:hover) and (pointer:fine) { .db-card .bc-ext:hover { background: #ffcf2e; color: #07050f; } }
 .db-card .bc-ext:focus-visible { outline: 3px solid #ffcf2e; outline-offset: 3px; }
-@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
-  .bento:not(:has(.fhid)) > .bfeat[data-stk] > .bc-ext { position: sticky; top: calc(84px + var(--k, 0) * 14px + var(--bch, 450px) - 44px); }
-}
 @media(max-width: 860px) { .db-card .bc-ext { position: absolute; z-index: 6; top: 10px; left: 10px; margin: 0; translate: none; } }
 .dedicalo-play-card .bc-img {
   background:
@@ -2875,13 +2871,12 @@ html.rv-on .h3d.h3d-zoom.vis  { animation: h3d-zoom  1.3s cubic-bezier(.2,.9,.25
 @media (max-width: 600px) { #dock { display: none; } }
 
 /* KETTELBRO — hero compuesto móvil (grafito + tinta bermellón). Chips sólidos: legibles en todos los temas */
-.kb-card .bc-img { position: relative; overflow: hidden; background: #0b0e14; min-height: 340px; border: 0 !important; display: block; }
+.kb-card .bc-img { position: relative; overflow: hidden; background: #0b0e14; border: 0 !important; display: block; }
 .kb-card .bc-img > img { position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; object-fit: cover !important; object-position: center top !important; filter: none !important; transition: transform 1s var(--ease); }
 .kb-card .bc:hover .bc-img > img { transform: scale(1.04) !important; filter: none !important; }
 .kb-card .bc-img::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #f2432d; z-index: 2; }
 .kb-tag-hi { background: #f2432d !important; color: #0b0e14 !important; border-color: #f2432d !important; }
 .kb-tag, .kb-card .bc-m { background: #0b0e14 !important; color: #ffc2b7 !important; border-color: #8f1d10 !important; }
-@media(max-width: 860px) { .kb-card .bc-img { min-height: 240px; aspect-ratio: 1200/900; } }
 @media (prefers-reduced-motion: reduce) { .kb-card .bc-img > img { transition: none; } }
 
 /* Este portfolio — hero compuesto (grafito + teal). Chips sólidos: legibles en todos los temas */
@@ -3001,6 +2996,9 @@ html.rv-on .h3d.h3d-zoom.vis  { animation: h3d-zoom  1.3s cubic-bezier(.2,.9,.25
 /* (3) Tarjeta "Este portfolio": el hero compuesto (4:3) entero sobre su propio fondo grafito */
 .pf-card .bc-img > img { object-fit: contain !important; animation: none !important; translate: none !important; scale: none !important; }
 .pf-card .bc:hover .bc-img > img { transform: none !important; }
+/* Tarjeta Invitoo: el banner lleva texto a la derecha, así que va entero sobre su mismo crema, sin recorte ni zoom */
+.invitoo-card .bc-img { display: block; position: relative; overflow: hidden; background: #f9efe0; }
+.invitoo-card .bc-img > img { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; object-fit: contain !important; filter: none !important; animation: none !important; translate: none !important; scale: none !important; transform: none !important; }
 
 /* (4) AIbueno (Laboratorio): captura entera (proporción real 1374:1272), centrada sobre panel oscuro, sin Ken Burns */
 .lab-feat .lab-img-web { align-items: center; justify-content: center; }

@@ -11,3 +11,7 @@
 }
 :is(nav, header) > a[href="/#proyectos"]:hover { background: rgba(10, 10, 12, .9); transform: none; filter: none; }
 :is(nav, header, .nav-inner):has(> a[href="/#proyectos"]) { justify-content: flex-end; }
+/* Móvil: las barras que apilan más enlaces (Visitar…, demo) los bajan para que no queden debajo de la píldora fija */
+@media (max-width: 640px) {
+  :is(nav, header, .nav-inner):has(> a[href="/#proyectos"]:not(.cf-btn)):has(> :not(a[href="/#proyectos"])) { padding-top: 64px; }
+}

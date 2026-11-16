@@ -194,3 +194,36 @@ html.tj-lock, html.tj-lock body { overflow: hidden; }
 
 }
 [data-theme="cyber"] .tj-seg button[aria-pressed="true"] { color: #fff; }
+
+/* ───────────── (8) Scroll de proyectos en móvil ─────────────
+   Lista: cada tarjeta sube en 3D desde un lado alterno, su imagen se abre como una ventana y al salir por arriba se aleja.
+   Baraja: se levanta de la mesa al llegar (luego fan() la abre en abanico). Solo scroll-driven: sin soporte o con movimiento reducido, como siempre. */
+@supports (animation-timeline: view()) {
+  @media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+    /* Solo longhands: el minificador funde `animation` + `animation-timeline` en un shorthand inválido y el navegador descarta la regla */
+    #proyectos:not(.tj-deck-on) .bento > * {
+      --tj-side: -1; transform-origin: 50% 100%;
+      animation-name: tj-rise, tj-away; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(), view(); animation-range: entry 0% entry 85%, exit 20% exit 100%;
+    }
+    #proyectos:not(.tj-deck-on) .bento > :nth-child(even) { --tj-side: 1; }
+    #proyectos:not(.tj-deck-on) .bento > * > .bc { animation-name: none; } /* el mo-in de motion.css lo sustituye la fila */
+    #proyectos:not(.tj-deck-on) .bento > * > .bc > .bc-img {
+      animation-name: tj-window; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(); animation-range: entry 15% cover 35%;
+    }
+    @keyframes tj-rise {
+      from { opacity: 0; transform: perspective(900px) translate3d(calc(var(--tj-side) * 30%), 90px, -220px) rotateX(30deg) rotateY(calc(var(--tj-side) * -24deg)); }
+      to { opacity: 1; transform: none; }
+    }
+    @keyframes tj-away { to { opacity: .35; transform: perspective(900px) translateY(-20px) scale(.88) rotateX(-12deg); } }
+    @keyframes tj-window { from { clip-path: inset(18% 16% 18% 16% round 22px); } to { clip-path: inset(0 round 0); } }
+
+    #proyectos.tj-deck-on .bento {
+      transform-origin: 50% 100%;
+      animation-name: tj-stand; animation-timing-function: linear; animation-fill-mode: both;
+      animation-timeline: view(); animation-range: entry 0% cover 40%;
+    }
+    @keyframes tj-stand { from { opacity: .15; transform: perspective(1000px) translateY(100px) rotateX(48deg) scale(.84); } to { opacity: 1; transform: none; } }
+  }
+}
