@@ -628,7 +628,8 @@ try {
   });
 })();
 
-document.querySelectorAll('.trigger-flash, .bc, .lab-card').forEach(el => {
+// Las tarjetas de proyecto no: su destello es el del color de cada caso (public/src/case-transitions.js)
+document.querySelectorAll('.trigger-flash:not(.bc), .lab-card').forEach(el => {
   el.addEventListener('click', () => { document.body.classList.add('flashing'); setTimeout(() => document.body.classList.remove('flashing'), 100); });
 });
 

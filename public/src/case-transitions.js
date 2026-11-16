@@ -11,6 +11,24 @@
   const cardOf = s => s && document.querySelector(`a.bc[href="/${s}/"]`);
   const inView = el => { const r = el.getBoundingClientRect(); return r.bottom > innerHeight * .1 && r.top < innerHeight * .95; };
   const BAD = /logo|brand|avatar|icon|mark|sprite/i, BADSRC = /logo|avatar|icon|sprite/i;
+  // Firma de entrada de cada caso: [efecto, color del destello]. Los efectos viven en case-transitions.css (rn-fx-*); los hermanos comparten efecto con otro color.
+  const FX = {
+    'capsule-corp': ['ki', '#ffcf2e'], aem: ['carta', '#d8b37a'], invitoo: ['velo', '#8c1d2c'], 'portfolio-2026': ['iris', '#5eead4'],
+    'rodd-es': ['scan', '#e0383b'], zodi: ['portal', '#b5ff3b'], 'dedicalo-play': ['vinilo', '#ff7a1a'], 'torre-z': ['bloque', '#ff8a1f'],
+    'just-enjoy': ['viaje', '#9b4dff'], kettelbro: ['impacto', '#f2432d'], iberdata: ['persiana', '#ff7a1f'], 'zodi-bto': ['portal', '#e83e9a'],
+    'pdf-rodd': ['pagina', '#6fdc2a'], ccse: ['sello', '#e2263c'], dedicalo: ['vinilo', '#1fc995'], paratumundo: ['viaje2', '#e8602c'],
+    'te-atiendo': ['persiana', '#d6f000'], aquae: ['onda', '#3b82f6'], 'travel-of-vapers': ['humo', '#d23ad8'], tomapoly: ['dado', '#e9b949'],
+  };
+  // Al pulsar en la portada: estallido del color del proyecto donde cae el dedo y la tarjeta se ilumina (respuesta inmediata mientras llega el caso)
+  let glow = null;
+  const burst = (a, x, y, c) => {
+    const r = document.createElement('i');
+    r.setAttribute('aria-hidden', 'true');
+    r.style.cssText = `position:fixed;left:${x}px;top:${y}px;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;pointer-events:none;z-index:2147483000;background:radial-gradient(circle,#fff 0,${c} 38%,${c}00 72%);box-shadow:0 0 0 2px ${c}`;
+    document.body.append(r);
+    r.animate([{ transform: 'scale(.2)', opacity: 1 }, { transform: 'scale(11)', opacity: 0 }], { duration: 560, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'forwards' }).finished.finally(() => r.remove());
+    glow = a.animate([{ boxShadow: `0 0 0 0 ${c}00` }, { boxShadow: `0 0 0 2px ${c}, 0 0 56px 8px ${c}88` }], { duration: 280, easing: 'ease-out', fill: 'forwards' });
+  };
   // Hero del caso: [data-vt-hero] si el caso lo declara; si no, la imagen/vídeo con más superficie visible en la primera pantalla (que no sea un logo).
   // Solo vale si se ve al menos la mitad: en móvil casi siempre queda bajo el texto y entonces se usa el recuadro de cabecera (proxy)
   const shown = el => { const r = el.getBoundingClientRect(); return r.width >= 160 && r.height >= 100 && (Math.min(r.bottom, innerHeight) - Math.max(r.top, 0)) >= r.height * .5; };
@@ -44,15 +62,19 @@
     if ((sessionStorage.getItem(KEY) || '').includes('"back"') || performance.getEntriesByType('navigation')[0]?.type === 'back_forward'
       || (document.referrer && new URL(document.referrer).origin === location.origin)) root.classList.add('rn-skip-intro');
   } catch {}
-  let click = 0, clickEl = null;
+  let click = 0, clickEl = null, cx = 0, cy = 0;
   addEventListener('click', e => {
     clickEl = e.target.closest?.('a[href]'); click = performance.now();
+    // Punto de origen del efecto: donde cae el dedo; con teclado (0,0) el centro del enlace
+    if (clickEl) { const r = clickEl.getBoundingClientRect(); [cx, cy] = e.clientX || e.clientY ? [e.clientX, e.clientY] : [r.left + r.width / 2, r.top + r.height / 2]; }
     // Feedback inmediato mientras llega la página (red/render del destino): barra fina arriba + tarjeta pulsada. pageswap la apaga para que no quede congelada en la instantánea
     const a = clickEl;
     if (a && !reduce.matches && !e.defaultPrevented && e.button === 0 && !(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) && !a.target && a.origin === location.origin && a.pathname !== location.pathname) {
       root.classList.add('rn-wait');
       a.classList.add('rn-going');
-      setTimeout(() => { root.classList.remove('rn-wait'); a.classList.remove('rn-going'); }, 6000);
+      const fx = FX[slugOf(a.pathname)];
+      if (fx) burst(a, cx, cy, fx[1]);
+      setTimeout(() => { root.classList.remove('rn-wait'); a.classList.remove('rn-going'); glow?.cancel(); }, 6000);
     }
   }, true);
 
@@ -80,9 +102,11 @@
     if (reduce.matches) return;
     const fresh = clickEl && performance.now() - click < 2000;
     let d = { d: 'nav' }, named;
-    if (isHome(location.pathname) && !isHome(dest.pathname)) {
-      const s = slugOf(dest.pathname), card = cardOf(s);
-      if (card && inView(card)) { d = { d: 'open', s, ...rectOf(card) }; named = card.querySelector('.bc-img'); }
+    const ds = slugOf(dest.pathname);
+    if (!isHome(dest.pathname) && FX[ds]) {
+      // Hacia un caso con firma propia (desde la tarjeta, la hoja rápida o otro caso): sin morph de imagen, el efecto nace donde se pulsó
+      const card = isHome(location.pathname) && cardOf(ds), from = card && inView(card) ? card : fresh ? clickEl : null;
+      d = { d: 'open', s: ds, ...(from ? rectOf(from) : {}), x: fresh ? cx : innerWidth / 2, y: fresh ? cy : innerHeight / 2 };
     } else if (!isHome(location.pathname) && isHome(dest.pathname)) {
       d = { d: 'back', s: slugOf(location.pathname) };
       named = heroOf() || proxy();
@@ -93,7 +117,7 @@
     vt.finished.catch(() => {}).then(() => drop(named));
   });
 
-  addEventListener('pageshow', () => { root.classList.remove('rn-leaving', 'rn-wait'); document.querySelector('.rn-going')?.classList.remove('rn-going'); }); // restauración desde bfcache
+  addEventListener('pageshow', () => { root.classList.remove('rn-leaving', 'rn-wait'); document.querySelector('.rn-going')?.classList.remove('rn-going'); glow?.cancel(); glow = null; }); // restauración desde bfcache
 
   // Entrada escalonada: el bloque de texto del hero (eyebrow, título, bajada, botones…) sube en cascada mientras la imagen se acomoda.
   // Empieza cuando la transición ya es visible (ready); fill:'backwards' => al acabar queda el estilo propio de la página, nunca oculto.
@@ -101,7 +125,16 @@
     const h = document.querySelector('h1'), g = h?.parentElement;
     if (!g || g === document.body || g.children.length > 9) return;
     [...g.children].filter(c => c !== named && !c.contains(named) && !named?.contains(c)).slice(0, 7).forEach((c, i) =>
-      c.animate({ opacity: [0, 1], transform: ['translateY(18px)', 'none'] }, { duration: 640, delay: 90 + i * 55, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' }));
+      c.animate({ opacity: [0, 1], transform: ['translateY(18px)', 'none'] }, { duration: 640, delay: 240 + i * 60, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' }));
+  };
+  // Destello del color del proyecto, por encima de las dos páginas. Capa viva (solo existe en la página nueva): se anima con su propio CSS y se quita al terminar
+  const flash = () => {
+    const f = document.createElement('div');
+    f.setAttribute('aria-hidden', 'true');
+    f.className = 'rn-flash';
+    f.style.viewTransitionName = 'rn-flash';
+    document.body.append(f);
+    return f;
   };
 
   addEventListener('pagereveal', e => {
@@ -112,7 +145,7 @@
     if (d && Date.now() - d.ts > 15000) d = null; // dato viejo: otra navegación sin esta lógica
     if (reduce.matches) return;
     const set = r => ['t', 'r', 'b', 'l', 'br'].forEach(k => root.style.setProperty('--rn-' + k, Math.round(r[k]) + 'px'));
-    let named, staged = false;
+    let named, staged = false, fl = null;
     if (isHome(location.pathname) && d?.d === 'back') {
       const card = cardOf(d.s);
       // Sin #proyectos en la URL el navegador no vuelve a mover el scroll tras la transición: aterriza donde está la tarjeta
@@ -127,11 +160,16 @@
         set(rectOf(card));
         vt.types.add('rn-back');
       } else vt.types.add('rn-nav');
-    } else if (!isHome(location.pathname) && d?.d === 'open' && slugOf(location.pathname) === d.s) {
-      named = heroOf() || proxy();
-      set(d);
+    } else if (!isHome(location.pathname) && d?.d === 'open' && slugOf(location.pathname) === d.s && FX[d.s]) {
+      const [fx, c] = FX[d.s];
+      if (d.br != null) set(d); // rectángulo de origen: lo usa el efecto iris
+      root.style.setProperty('--rn-x', Math.round(d.x) + 'px');
+      root.style.setProperty('--rn-y', Math.round(d.y) + 'px');
+      root.style.setProperty('--rn-c', c);
+      fl = flash();
       staged = true;
-      vt.types.add('rn-open');
+      vt.types.add('rn-fx');
+      vt.types.add('rn-fx-' + fx);
     } else {
       if (d?.d === 'nav' && d.br != null) set(d);
       staged = !isHome(location.pathname);
@@ -143,7 +181,8 @@
     if (staged) vt.ready.then(() => enter(named)).catch(() => {});
     vt.finished.catch(() => {}).then(() => {
       drop(named);
-      ['t', 'r', 'b', 'l', 'br', 'bg'].forEach(k => root.style.removeProperty('--rn-' + k));
+      fl?.remove();
+      ['t', 'r', 'b', 'l', 'br', 'bg', 'x', 'y', 'c'].forEach(k => root.style.removeProperty('--rn-' + k));
     });
   });
 })();

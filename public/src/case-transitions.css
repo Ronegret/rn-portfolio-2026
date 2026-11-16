@@ -29,6 +29,144 @@
   }
 }
 
+/* ───────── Firmas de entrada por caso ─────────
+   case-transitions.js añade los tipos rn-fx + rn-fx-<efecto> según el caso, y pone el origen (--rn-x/--rn-y: donde se pulsó) y el color (--rn-c).
+   Sin morph de imagen: un solo protagonista por proyecto, y el destello de su color por encima de las dos páginas (.rn-flash). */
+@property --rn-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+@property --rn-p { syntax: '<length>'; inherits: false; initial-value: 0px; }
+.rn-flash {
+  position: fixed; inset: 0; z-index: 2147483000; pointer-events: none; opacity: 0; transform-origin: var(--rn-x, 50%) var(--rn-y, 50%);
+  background: radial-gradient(circle at var(--rn-x, 50%) var(--rn-y, 50%), #fff 0, color-mix(in srgb, var(--rn-c, #fff) 78%, #fff) 5%, color-mix(in srgb, var(--rn-c, #fff) 42%, transparent) 24%, transparent 60%);
+}
+::view-transition-group(rn-flash), ::view-transition-new(rn-flash) { animation: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .rn-flash { animation: rn-flash .8s cubic-bezier(.2, .7, .2, 1) forwards; }
+  @keyframes rn-flash { 0% { opacity: 0; transform: scale(.5); } 15% { opacity: .92; } 100% { opacity: 0; transform: scale(1.8); } }
+
+  :root:active-view-transition-type(rn-fx)::view-transition-old(root), :root:active-view-transition-type(rn-fx)::view-transition-new(root) {
+    mix-blend-mode: normal; animation-duration: .8s; animation-timing-function: cubic-bezier(.16, 1, .3, 1); animation-fill-mode: both;
+    transform-origin: var(--rn-x, 50%) var(--rn-y, 50%);
+  }
+  :root:active-view-transition-type(rn-fx)::view-transition-old(root) { z-index: 1; animation-name: fx-sink; }
+  :root:active-view-transition-type(rn-fx)::view-transition-new(root) { z-index: 2; }
+  @keyframes fx-sink { to { transform: scale(.94); filter: brightness(.42); } }
+
+  /* ki · Capsule Corp: estalla la energía y la página se abre en un círculo desde el golpe */
+  :root:active-view-transition-type(rn-fx-ki)::view-transition-new(root) { animation-name: fx-ki; animation-timing-function: cubic-bezier(.7, 0, .2, 1); }
+  :root:active-view-transition-type(rn-fx-ki)::view-transition-old(root) { animation-name: fx-ki-out; }
+  @keyframes fx-ki { from { clip-path: circle(0 at var(--rn-x, 50%) var(--rn-y, 50%)); filter: brightness(2.6) saturate(.6); } 60% { filter: brightness(1.25); } to { clip-path: circle(160vmax at var(--rn-x, 50%) var(--rn-y, 50%)); filter: none; } }
+  @keyframes fx-ki-out { 18% { filter: brightness(1.9) saturate(1.4); transform: scale(1.01); } to { filter: brightness(.3); transform: scale(1.09); } }
+
+  /* carta · Events Planner: sube como una tarjeta que se posa en la mesa */
+  :root:active-view-transition-type(rn-fx-carta)::view-transition-new(root) { animation-name: fx-carta; transform-origin: 50% 100%; }
+  :root:active-view-transition-type(rn-fx-carta)::view-transition-old(root) { animation-name: fx-carta-out; }
+  @keyframes fx-carta { from { transform: perspective(1400px) translateY(85%) rotateX(22deg) scale(.9); filter: brightness(1.25); } to { transform: perspective(1400px); filter: none; } }
+  @keyframes fx-carta-out { to { transform: scale(.9) translateY(-3%); filter: brightness(.45) blur(3px); } }
+
+  /* velo · Invitoo: el velo se descorre desde el centro */
+  :root:active-view-transition-type(rn-fx-velo)::view-transition-new(root) { animation-name: fx-velo; animation-duration: .9s; animation-timing-function: cubic-bezier(.65, 0, .35, 1); }
+  @keyframes fx-velo { from { clip-path: inset(0 50% 0 50%); filter: brightness(1.12); } to { clip-path: inset(0 0 0 0); filter: none; } }
+
+  /* iris · Este portfolio: se abre desde la propia tarjeta pulsada */
+  :root:active-view-transition-type(rn-fx-iris)::view-transition-new(root) { animation-name: rn-open; }
+
+  /* scan · Rodd.es: un escáner en diagonal recorre la pantalla */
+  :root:active-view-transition-type(rn-fx-scan)::view-transition-new(root) { animation-name: fx-scan; animation-timing-function: cubic-bezier(.77, 0, .18, 1); }
+  :root:active-view-transition-type(rn-fx-scan)::view-transition-old(root) { animation-name: fx-scan-out; animation-timing-function: cubic-bezier(.77, 0, .18, 1); }
+  @keyframes fx-scan { from { clip-path: polygon(0 0, 0 0, -25% 100%, -25% 100%); filter: hue-rotate(50deg) brightness(1.7); } to { clip-path: polygon(0 0, 125% 0, 100% 100%, -25% 100%); filter: none; } }
+  @keyframes fx-scan-out { to { transform: translateX(-10%); filter: brightness(.35); } }
+
+  /* portal · ZODI y ZODI BTO: un portal que gira y se enfoca */
+  :root:active-view-transition-type(rn-fx-portal)::view-transition-new(root) { animation-name: fx-portal; animation-duration: .85s; }
+  :root:active-view-transition-type(rn-fx-portal)::view-transition-old(root) { animation-name: fx-portal-out; animation-duration: .85s; }
+  @keyframes fx-portal { from { opacity: 0; transform: scale(1.35) rotate(-9deg); filter: blur(16px) brightness(1.8); } 55% { opacity: 1; } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes fx-portal-out { to { opacity: 0; transform: scale(.78) rotate(9deg); filter: blur(10px) brightness(.6); } }
+
+  /* vinilo · Dedícalo Play y Dedícalo: una aguja recorre el disco desde el punto pulsado */
+  :root:active-view-transition-type(rn-fx-vinilo)::view-transition-new(root) {
+    animation-name: fx-vinilo; animation-duration: .9s; animation-timing-function: cubic-bezier(.45, 0, .2, 1);
+    -webkit-mask-image: conic-gradient(from -90deg at var(--rn-x, 50%) var(--rn-y, 50%), #000 var(--rn-a), #0000 calc(var(--rn-a) + .5deg));
+    mask-image: conic-gradient(from -90deg at var(--rn-x, 50%) var(--rn-y, 50%), #000 var(--rn-a), #0000 calc(var(--rn-a) + .5deg));
+  }
+  :root:active-view-transition-type(rn-fx-vinilo)::view-transition-old(root) { animation-name: fx-vinilo-out; animation-duration: .9s; }
+  @keyframes fx-vinilo { from { --rn-a: 0deg; filter: brightness(1.5); } to { --rn-a: 361deg; filter: none; } }
+  @keyframes fx-vinilo-out { to { transform: rotate(-6deg) scale(.9); filter: brightness(.4); } }
+
+  /* bloque · TorreZ: cae como una pieza, rebota y la página de debajo acusa el golpe */
+  :root:active-view-transition-type(rn-fx-bloque)::view-transition-new(root), :root:active-view-transition-type(rn-fx-bloque)::view-transition-old(root) { animation-timing-function: linear; }
+  :root:active-view-transition-type(rn-fx-bloque)::view-transition-new(root) { animation-name: fx-bloque; }
+  :root:active-view-transition-type(rn-fx-bloque)::view-transition-old(root) { animation-name: fx-bloque-out; }
+  @keyframes fx-bloque {
+    0% { transform: translateY(-104%); animation-timing-function: cubic-bezier(.55, 0, 1, .45); }
+    58% { transform: translateY(0); animation-timing-function: cubic-bezier(0, .55, .45, 1); }
+    74% { transform: translateY(-3.5%); animation-timing-function: cubic-bezier(.55, 0, 1, .45); }
+    86% { transform: translateY(0); animation-timing-function: cubic-bezier(0, .55, .45, 1); }
+    93% { transform: translateY(-.8%); }
+    100% { transform: none; }
+  }
+  @keyframes fx-bloque-out { 0%, 56% { transform: none; filter: brightness(.9); } 62% { transform: translateY(2%) scale(.98); filter: brightness(.55); } 70% { transform: translateY(-1%) scale(.97); } 100% { transform: scale(.96); filter: brightness(.3); } }
+
+  /* viaje · Just Enjoy (y viaje2 · ParaTuMundo, en sentido contrario): la página entra como un embarque */
+  :root:is(:active-view-transition-type(rn-fx-viaje), :active-view-transition-type(rn-fx-viaje2))::view-transition-new(root),
+  :root:is(:active-view-transition-type(rn-fx-viaje), :active-view-transition-type(rn-fx-viaje2))::view-transition-old(root) { animation-timing-function: cubic-bezier(.7, 0, .15, 1); }
+  :root:active-view-transition-type(rn-fx-viaje)::view-transition-new(root) { animation-name: fx-viaje; }
+  :root:active-view-transition-type(rn-fx-viaje)::view-transition-old(root) { animation-name: fx-viaje-out; }
+  :root:active-view-transition-type(rn-fx-viaje2)::view-transition-new(root) { animation-name: fx-viaje2; }
+  :root:active-view-transition-type(rn-fx-viaje2)::view-transition-old(root) { animation-name: fx-viaje2-out; }
+  @keyframes fx-viaje { from { transform: translateX(100%); box-shadow: -40px 0 90px rgb(0 0 0 / .5); } to { transform: none; } }
+  @keyframes fx-viaje-out { to { transform: translateX(-28%); filter: brightness(.4); } }
+  @keyframes fx-viaje2 { from { transform: translateX(-100%); box-shadow: 40px 0 90px rgb(0 0 0 / .5); } to { transform: none; } }
+  @keyframes fx-viaje2-out { to { transform: translateX(28%); filter: brightness(.4); } }
+
+  /* impacto · Kettelbro: golpe seco, la página anterior tiembla */
+  :root:active-view-transition-type(rn-fx-impacto)::view-transition-new(root) { animation-name: fx-impacto; animation-duration: .62s; animation-timing-function: cubic-bezier(.2, .9, .1, 1); }
+  :root:active-view-transition-type(rn-fx-impacto)::view-transition-old(root) { animation-name: fx-impacto-out; animation-duration: .62s; }
+  @keyframes fx-impacto { from { opacity: 0; transform: scale(1.45); filter: blur(12px) brightness(2.2); } 35% { opacity: 1; } to { opacity: 1; transform: none; filter: none; } }
+  @keyframes fx-impacto-out { 30% { transform: scale(.96) translateX(-.6%); } 40% { transform: scale(.95) translateX(.6%); } 100% { transform: scale(.9); filter: brightness(.25) blur(3px); } }
+
+  /* persiana · Iberdata y Te Atiendo: lamas que se abren */
+  :root:active-view-transition-type(rn-fx-persiana)::view-transition-new(root) {
+    animation-name: fx-persiana; animation-timing-function: cubic-bezier(.65, 0, .35, 1);
+    -webkit-mask-image: repeating-linear-gradient(180deg, #000 0 var(--rn-p), #0000 var(--rn-p) 64px);
+    mask-image: repeating-linear-gradient(180deg, #000 0 var(--rn-p), #0000 var(--rn-p) 64px);
+  }
+  @keyframes fx-persiana { from { --rn-p: 0px; filter: brightness(1.4); } to { --rn-p: 64.5px; filter: none; } }
+
+  /* pagina · PDF Rodd: pasa la página desde la esquina */
+  :root:active-view-transition-type(rn-fx-pagina)::view-transition-new(root) { animation-name: fx-pagina; animation-timing-function: cubic-bezier(.7, 0, .2, 1); }
+  :root:active-view-transition-type(rn-fx-pagina)::view-transition-old(root) { animation-name: fx-pagina-out; }
+  @keyframes fx-pagina { from { clip-path: polygon(100% 0, 100% 0, 100% 0); filter: brightness(1.3); } to { clip-path: polygon(100% 0, 100% 230%, -130% 0); filter: none; } }
+  @keyframes fx-pagina-out { to { transform: translateX(-5%) rotate(-1deg); filter: brightness(.45); } }
+
+  /* sello · Estudio CCSE: cae como un sello oficial */
+  :root:active-view-transition-type(rn-fx-sello)::view-transition-new(root), :root:active-view-transition-type(rn-fx-sello)::view-transition-old(root) { animation-duration: .7s; animation-timing-function: linear; }
+  :root:active-view-transition-type(rn-fx-sello)::view-transition-new(root) { animation-name: fx-sello; }
+  :root:active-view-transition-type(rn-fx-sello)::view-transition-old(root) { animation-name: fx-sello-out; }
+  @keyframes fx-sello {
+    0% { opacity: 0; transform: scale(1.9) rotate(-7deg); filter: brightness(1.6); animation-timing-function: cubic-bezier(.55, 0, 1, .45); }
+    55% { opacity: 1; transform: scale(.96) rotate(0); filter: none; animation-timing-function: cubic-bezier(0, .55, .45, 1); }
+    100% { opacity: 1; transform: none; }
+  }
+  @keyframes fx-sello-out { 0%, 50% { transform: none; } 56% { transform: scale(.985) translateY(.5%); } 100% { transform: scale(.95); filter: brightness(.35); } }
+
+  /* onda · Aquae: una gota abre una onda de agua */
+  :root:active-view-transition-type(rn-fx-onda)::view-transition-new(root) { animation-name: fx-onda; animation-duration: .9s; animation-timing-function: cubic-bezier(.22, 1, .36, 1); }
+  :root:active-view-transition-type(rn-fx-onda)::view-transition-old(root) { animation-name: fx-onda-out; animation-duration: .9s; }
+  @keyframes fx-onda { from { clip-path: circle(0 at var(--rn-x, 50%) var(--rn-y, 50%)); filter: blur(12px) saturate(1.5); transform: scale(1.08); } to { clip-path: circle(160vmax at var(--rn-x, 50%) var(--rn-y, 50%)); filter: none; transform: none; } }
+  @keyframes fx-onda-out { to { filter: blur(8px) brightness(.5); transform: scale(.96); } }
+
+  /* humo · Travel of Vapers: la página nueva se condensa desde el humo */
+  :root:active-view-transition-type(rn-fx-humo)::view-transition-new(root) { animation-name: fx-humo; animation-duration: 1s; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  :root:active-view-transition-type(rn-fx-humo)::view-transition-old(root) { animation-name: fx-humo-out; animation-duration: 1s; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+  @keyframes fx-humo { from { opacity: 0; filter: blur(30px) contrast(1.3) brightness(1.3); transform: scale(1.08) translateY(3%); } to { opacity: 1; filter: none; transform: none; } }
+  @keyframes fx-humo-out { to { opacity: 0; filter: blur(22px); transform: scale(1.05) translateY(-3%); } }
+
+  /* dado · Tomapoly: se lanza como un dado desde el punto pulsado */
+  :root:active-view-transition-type(rn-fx-dado)::view-transition-new(root) { animation-name: fx-dado; animation-duration: .85s; animation-timing-function: cubic-bezier(.2, .8, .3, 1); }
+  @keyframes fx-dado { 0% { opacity: 0; transform: scale(.25) rotate(-120deg); } 60% { opacity: 1; transform: scale(1.04) rotate(6deg); } 80% { transform: scale(.99) rotate(-2deg); } 100% { opacity: 1; transform: none; } }
+}
+
 /* Móvil: algo más corta; el hueco de red ya es más largo que en escritorio */
 @media (prefers-reduced-motion: no-preference) and (max-width: 700px) {
   ::view-transition-group(rn-hero), ::view-transition-image-pair(rn-hero),
