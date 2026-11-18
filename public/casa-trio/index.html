@@ -23,8 +23,8 @@
   <meta name="twitter:image" content="https://rodrigonegrete.es/assets/og/casa-trio.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="/assets/casa-trio/casa-trio-cover.webp" fetchpriority="high">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Shippori+Mincho:wght@500;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/assets/casa-trio/video/hub-desktop-poster.webp" fetchpriority="high">
   <link rel="stylesheet" href="/src/casa-trio.css">
 <link rel="stylesheet" href="/src/case-type.css">
 <link rel="stylesheet" href="/src/case-fold.css">
@@ -59,16 +59,17 @@
           <a href="https://casatrio.rodd.es" target="_blank" rel="noopener" class="btn-secondary">casatrio.rodd.es ↗</a>
         </div>
       </div>
-      <figure class="ct-hero-media" data-vt-hero>
-        <img src="/assets/casa-trio/casa-trio-cover.webp" width="1600" height="900" fetchpriority="high" alt="Pieza de portada de Casa Trío con el logotipo de la casa junto al título: un portátil muestra la portada en tres paneles con Nami, Smash Club y Fuoco, y tres móviles enseñan los ingredientes del sushi, la burger y la pizza flotando en el aire, con las cifras 3 identidades, 224 fotografías generadas con IA y 0 solapes">
+      <figure class="ct-hero-media ct-tilt" data-vt-hero>
+        <div class="ct-browser"><span class="ct-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>casatrio.rodd.es</span></span><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/hub-desktop-poster.webp" width="1280" height="800" aria-label="Grabación de la portada de Casa Trío: el tríptico de Nami, Smash Club y Fuoco; al elegir un panel se expande a pantalla completa y una cortina del color de la marca lleva al restaurante"><source src="/assets/casa-trio/video/hub-desktop.webm" type="video/webm"><source src="/assets/casa-trio/video/hub-desktop.mp4" type="video/mp4"></video></div>
+        <figcaption>La portada real: el panel elegido se expande y la cortina de su color abre el restaurante.</figcaption>
       </figure>
     </div>
 
     <ul class="wrap ct-facts" aria-label="Casa Trío en cifras">
-      <li><strong>3</strong><span>identidades visuales completas en un solo producto</span></li>
-      <li><strong>224</strong><span>fotografías generadas con IA en local, 0 € de imagen</span></li>
-      <li><strong>3</strong><span>formas de reservar: formulario, lenguaje natural y voz</span></li>
-      <li><strong>0</strong><span>solapes en 12 vistas auditadas por código</span></li>
+      <li><strong data-count="3">3</strong><span>identidades visuales completas en un solo producto</span></li>
+      <li><strong data-count="224">224</strong><span>fotografías generadas con IA en local, 0 € de imagen</span></li>
+      <li><strong data-count="3">3</strong><span>formas de reservar: formulario, lenguaje natural y voz</span></li>
+      <li><strong data-count="0">0</strong><span>solapes en 12 vistas auditadas por código</span></li>
     </ul>
   </header>
 
@@ -94,10 +95,10 @@
           <p class="sec-lead">La portada es un tríptico de fotografía cinematográfica a sangre y cada panel ya habla el idioma de su marca. Al entrar, el panel elegido se expande a pantalla completa y una cortina con el color de la marca continúa la transición dentro del restaurante.</p>
         </div>
         <div class="ct-hub">
-          <figure class="ct-shot ct-shot-desk">
+          <figure class="ct-shot ct-shot-desk ct-tilt" data-parallax="-0.06">
             <img src="/assets/casa-trio/hub-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Casa Trío en escritorio: tres paneles verticales con las manos del itamae cortando pescado para Nami, una burger humeante con el rótulo amarillo Smash Club y una pizza saliendo del horno de leña para Fuoco">
           </figure>
-          <figure class="ct-phone ct-hub-phone">
+          <figure class="ct-phone ct-hub-phone ct-tilt" data-parallax="0.1">
             <img src="/assets/casa-trio/hub-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="La misma portada en móvil: los tres paneles se apilan en vertical, Nami, Smash Club y Fuoco, cada uno con su barrio de Barcelona">
           </figure>
         </div>
@@ -118,11 +119,31 @@
           </table>
         </div>
 
-        <div class="ct-heroes">
-          <figure class="ct-shot"><img src="/assets/casa-trio/sushi-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Nami: fondo oscuro con las manos del itamae sobre la barra de hinoki, el nombre NAMI en una serif enorme con un punto bermellón y el kanji 波 en vertical"><figcaption><b class="is-nami">Nami</b> Lujo silencioso: tinta, washi y un solo bermellón.</figcaption></figure>
-          <figure class="ct-shot"><img src="/assets/casa-trio/burger-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Smash Club sobre amarillo mostaza: titular SMASH CLUB ¡APLASTA! en tipografía condensada negra y roja, y una doble smash burger con pegatinas de 100% vacuno y doble queso"><figcaption><b class="is-smash">Smash Club</b> Pop brutalista: mostaza, sombras duras y pegatinas.</figcaption></figure>
-          <figure class="ct-shot"><img src="/assets/casa-trio/pizza-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Fuoco sobre crema: titular en cursiva Masa paciente, fuego salvaje, una margherita vista desde arriba y la insignia giratoria Forno a legna 485 °C"><figcaption><b class="is-fuoco">Fuoco</b> Trattoria de los 70: crema, terracota y fuego.</figcaption></figure>
+      </div>
+    </section>
+
+
+    <section class="ct-pin" id="identidades" data-fold="off" aria-labelledby="ct-pin-h">
+      <div class="ct-pin-stage">
+        <div class="wrap ct-pin-head">
+          <h2 id="ct-pin-h">Tres restaurantes en una web, <em>cada uno con su voz.</em></h2>
+          <p class="ct-pin-hint" aria-hidden="true">Sigue bajando <span>→</span></p>
         </div>
+        <div class="ct-pin-track" tabindex="0" aria-label="Las tres portadas, una detrás de otra">
+          <article class="ct-pin-panel is-nami">
+            <figure class="ct-pin-media"><img src="/assets/casa-trio/sushi-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Nami: fondo oscuro con las manos del itamae sobre la barra de hinoki, el nombre NAMI en una serif enorme con un punto bermellón y el kanji 波 en vertical"></figure>
+            <div class="ct-pin-copy"><p class="ct-kicker">01 — Omakase · Sant Gervasi</p><h3>Nami</h3><p>Lujo silencioso: tinta, washi y un solo bermellón. Todo se mueve despacio, como una máscara de tinta.</p></div>
+          </article>
+          <article class="ct-pin-panel is-smash">
+            <figure class="ct-pin-media"><img src="/assets/casa-trio/burger-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Smash Club sobre amarillo mostaza: titular SMASH CLUB ¡APLASTA! en tipografía condensada negra y roja, y una doble smash burger con pegatinas de 100% vacuno y doble queso"></figure>
+            <div class="ct-pin-copy"><p class="ct-kicker">02 — Burgers · Gràcia</p><h3>Smash Club</h3><p>Pop brutalista: mostaza, sombras duras y pegatinas que se despegan con un rebote.</p></div>
+          </article>
+          <article class="ct-pin-panel is-fuoco">
+            <figure class="ct-pin-media"><img src="/assets/casa-trio/pizza-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Fuoco sobre crema: titular en cursiva Masa paciente, fuego salvaje, una margherita vista desde arriba y la insignia giratoria Forno a legna 485 °C"></figure>
+            <div class="ct-pin-copy"><p class="ct-kicker">03 — Pizzeria · El Born</p><h3>Fuoco</h3><p>Trattoria de los 70: crema, terracota y el calor del horno de leña a 485 °C.</p></div>
+          </article>
+        </div>
+        <div class="wrap ct-pin-prog" aria-hidden="true"><i></i></div>
       </div>
     </section>
 
@@ -133,22 +154,22 @@
           <p class="sec-lead">Cuatro logotipos en SVG con la misma geometría de base. Cada uno es el favicon de su ruta y vive en todas las cabeceras, así que se dibujaron para leerse hasta a 16&nbsp;px.</p>
         </div>
         <ul class="ct-logos">
-          <li class="is-casa">
+          <li class="is-casa ct-tilt">
             <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/casa-trio.svg" width="160" height="160" loading="lazy" alt="Logotipo de Casa Trío: el tejado de una casa sobre tres círculos en bermellón, mostaza y terracota"></div>
             <h3>Casa Trío</h3>
             <p>La casa formada por los tres colores de las marcas.</p>
           </li>
-          <li class="is-nami">
+          <li class="is-nami ct-tilt">
             <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/nami.svg" width="160" height="160" loading="lazy" alt="Logotipo de Nami: un sol bermellón sobre dos líneas de ola en crema, sobre fondo negro"></div>
             <h3>Nami</h3>
             <p>Sol bermellón sobre la ola (波, «nami»), como un sello de tinta.</p>
           </li>
-          <li class="is-smash">
+          <li class="is-smash ct-tilt">
             <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/smash-club.svg" width="160" height="160" loading="lazy" alt="Logotipo de Smash Club: una pegatina con una smash burger abstracta y sombra dura"></div>
             <h3>Smash Club</h3>
             <p>Pegatina brutalista con una smash burger abstracta y sombra dura.</p>
           </li>
-          <li class="is-fuoco">
+          <li class="is-fuoco ct-tilt">
             <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/fuoco.svg" width="160" height="160" loading="lazy" alt="Logotipo de Fuoco: la llama del horno de leña dentro de un horno circular"></div>
             <h3>Fuoco</h3>
             <p>La llama del horno de leña dentro del horno circular.</p>
@@ -162,44 +183,78 @@
       </div>
     </section>
 
-    <section data-thread="decision" class="sec" id="ingredientes" data-fold="off">
+
+    <section class="sec ct-show-sec" id="probar" data-fold="off">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Cambia de restaurante, <em>cambia todo.</em></h2>
+          <p class="sec-lead">La misma estructura con otra identidad. Elige un restaurante y mira cómo cambian el color, la tipografía, el movimiento y la carta, sin tocar una línea de la arquitectura.</p>
+        </div>
+        <div class="ct-show" data-brand="nami">
+          <div class="ct-switch" role="tablist" aria-label="Elige un restaurante">
+            <button type="button" role="tab" id="ct-tab-nami" data-brand="nami" aria-selected="true" aria-controls="ct-show-panel">Nami</button>
+            <button type="button" role="tab" id="ct-tab-smash" data-brand="smash" aria-selected="false" aria-controls="ct-show-panel" tabindex="-1">Smash Club</button>
+            <button type="button" role="tab" id="ct-tab-fuoco" data-brand="fuoco" aria-selected="false" aria-controls="ct-show-panel" tabindex="-1">Fuoco</button>
+            <span class="ct-switch-ink" aria-hidden="true"></span>
+          </div>
+          <div class="ct-show-panel" id="ct-show-panel" role="tabpanel" aria-labelledby="ct-tab-nami">
+            <div class="ct-show-copy">
+              <p class="ct-show-kicker" data-k="kicker">Omakase · Sant Gervasi</p>
+              <p class="ct-show-name" data-k="name">Nami</p>
+              <p class="ct-show-line" data-k="line">Lujo silencioso japonés. Dieciséis asientos frente a la barra de hinoki.</p>
+              <dl class="ct-show-spec">
+                <div><dt>Tipografía</dt><dd data-k="type">Shippori Mincho + Inter</dd></div>
+                <div><dt>Color</dt><dd data-k="color">Tinta, washi, un único bermellón</dd></div>
+                <div><dt>Movimiento</dt><dd data-k="motion">Lento y preciso: máscaras, tinta, expo ease</dd></div>
+              </dl>
+            </div>
+            <div class="ct-show-media">
+              <div class="ct-browser"><span class="ct-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>casatrio.rodd.es</span></span><video class="ct-vid" data-k="menu" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/sushi-menu-desktop-poster.webp" width="1280" height="800" aria-label="Grabación de la carta de Nami: pestañas por categoría y la ficha de un plato con sus ingredientes y su maridaje"><source src="/assets/casa-trio/video/sushi-menu-desktop.webm" type="video/webm"><source src="/assets/casa-trio/video/sushi-menu-desktop.mp4" type="video/mp4"></video></div>
+              <div class="ct-phone ct-show-phone"><video class="ct-vid" data-k="phone" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/sushi-exploded-phone-poster.webp" width="540" height="1168" aria-label="Grabación en móvil: las capas del maki de Nami flotan y se arman con el scroll"><source src="/assets/casa-trio/video/sushi-exploded-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/sushi-exploded-phone.mp4" type="video/mp4"></video></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="ingredientes" data-fold="off">
       <div class="wrap">
         <div class="sec-head sec-head-c">
           <h2>Ingredientes en el aire, <em>en los tres restaurantes.</em></h2>
           <p class="sec-lead">Una escena fijada al scroll despieza el plato estrella: cada capa flota con su etiqueta y, al bajar, cae y se arma. Es la respuesta directa al «quiero ver lo que tiene dentro»: la carta enseña antes de que el cliente pregunte. El mismo patrón, contado con la voz de cada marca.</p>
         </div>
-        <div class="ct-phones">
+        <div class="ct-phones ct-fan">
           <figure class="ct-phone-card">
-            <div class="ct-phone"><img src="/assets/casa-trio/sushi-exploded-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Nami en móvil: las capas del maki flotan sobre negro, de arriba abajo sésamo, tobiko, salmón, wasabi, aguacate, pepino, shari y nori, cada una con su nombre en kanji y en español"></div>
+            <div class="ct-phone ct-tilt"><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/sushi-exploded-phone-poster.webp" width="540" height="1168" aria-label="Nami en móvil: sésamo, tobiko, salmón, wasabi, aguacate, pepino, shari y nori flotan con su kanji y caen hasta formar el maki"><source src="/assets/casa-trio/video/sushi-exploded-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/sushi-exploded-phone.mp4" type="video/mp4"></video></div>
             <figcaption><b class="is-nami">Nami</b> Nori, shari, salmón… con su kanji al lado.</figcaption>
           </figure>
           <figure class="ct-phone-card">
-            <div class="ct-phone"><img src="/assets/casa-trio/burger-exploded-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Smash Club en móvil: la burger desarmada sobre mostaza, pan brioche, salsa, lechuga, tomate, pepinillos, cebolla morada, doble cheddar, dos smash de 90 gramos y pan base, con etiquetas como pegatinas"></div>
+            <div class="ct-phone ct-tilt"><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/burger-exploded-phone-poster.webp" width="540" height="1168" aria-label="Smash Club en móvil: pan brioche, salsa, lechuga, tomate, pepinillos, cebolla, cheddar y dos smash flotan con etiquetas de pegatina y se apilan en la burger"><source src="/assets/casa-trio/video/burger-exploded-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/burger-exploded-phone.mp4" type="video/mp4"></video></div>
             <figcaption><b class="is-smash">Smash Club</b> Pan, lechuga, cheddar, smash… en pegatinas.</figcaption>
           </figure>
           <figure class="ct-phone-card">
-            <div class="ct-phone"><img src="/assets/casa-trio/pizza-exploded-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Fuoco en móvil: Anatomia di una Diavola, ingredientes en el aire; salami picante, albahaca, fior di latte y San Marzano caen una a una sobre la masa"></div>
+            <div class="ct-phone ct-tilt"><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/pizza-exploded-phone-poster.webp" width="540" height="1168" aria-label="Fuoco en móvil: salami picante, albahaca, fior di latte y San Marzano caen una a una sobre la masa de la diavola"><source src="/assets/casa-trio/video/pizza-exploded-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/pizza-exploded-phone.mp4" type="video/mp4"></video></div>
             <figcaption><b class="is-fuoco">Fuoco</b> Masa, San Marzano, fior di latte… capa a capa.</figcaption>
           </figure>
         </div>
       </div>
     </section>
 
-    <section data-thread="decision" class="sec sec-tint" id="carta">
+    <section data-thread="decision" class="sec" id="carta">
       <div class="wrap">
         <div class="sec-head">
           <h2>La carta como producto, <em>no como PDF.</em></h2>
           <p class="sec-lead">Pestañas por categoría con transición sin saltos, tarjetas con foto real y sellos (<i>Lo más pedido</i>, <i>Nuevo</i>, <i>Del chef</i>, <i>Picante</i>). Cada plato abre una ficha: centrada en escritorio, <i>bottom sheet</i> en móvil, con el foco atrapado, Esc para cerrar y el foco de vuelta en la tarjeta.</p>
         </div>
         <div class="ct-dialogs">
-          <figure class="ct-shot"><img src="/assets/casa-trio/sushi-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha del Sake Nigiri en Nami: foto del nigiri sobre plato negro, ingredientes shari, wasabi y salmón, maridaje con Sake Junmai Daiginjo y precio de 8 euros"><figcaption><b class="is-nami">Nami</b> El maridaje salta a la bebida.</figcaption></figure>
-          <figure class="ct-shot"><img src="/assets/casa-trio/burger-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha del Brownie con helado en Smash Club: foto sobre amarillo, sello Lo más pedido, lo que lleva (chocolate negro, nueces, helado de vainilla), precio de 6,50 euros y botón ¡Desármala!"><figcaption><b class="is-smash">Smash Club</b> «¡Desármala!» y lo que lleva.</figcaption></figure>
-          <figure class="ct-shot"><img src="/assets/casa-trio/pizza-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha de la Margherita en Fuoco: pizza vista desde arriba, ingredientes fior di latte, albahaca y aceite de oliva, sello vegetariana, maridaje con Vino della Casa y botón Reservar mesa"><figcaption><b class="is-fuoco">Fuoco</b> Ingredientes que se lanzan otra vez.</figcaption></figure>
+          <figure class="ct-shot ct-tilt" data-parallax="-0.04"><img src="/assets/casa-trio/sushi-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha del Sake Nigiri en Nami: foto del nigiri sobre plato negro, ingredientes shari, wasabi y salmón, maridaje con Sake Junmai Daiginjo y precio de 8 euros"><figcaption><b class="is-nami">Nami</b> El maridaje salta a la bebida.</figcaption></figure>
+          <figure class="ct-shot ct-tilt" data-parallax="0.04"><img src="/assets/casa-trio/burger-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha del Brownie con helado en Smash Club: foto sobre amarillo, sello Lo más pedido, lo que lleva (chocolate negro, nueces, helado de vainilla), precio de 6,50 euros y botón ¡Desármala!"><figcaption><b class="is-smash">Smash Club</b> «¡Desármala!» y lo que lleva.</figcaption></figure>
+          <figure class="ct-shot ct-tilt" data-parallax="-0.04"><img src="/assets/casa-trio/pizza-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha de la Margherita en Fuoco: pizza vista desde arriba, ingredientes fior di latte, albahaca y aceite de oliva, sello vegetariana, maridaje con Vino della Casa y botón Reservar mesa"><figcaption><b class="is-fuoco">Fuoco</b> Ingredientes que se lanzan otra vez.</figcaption></figure>
         </div>
       </div>
     </section>
 
-    <section data-thread="decision" class="sec" id="vender">
+    <section data-thread="decision" class="sec sec-tint" id="vender">
       <div class="wrap ct-split">
         <div class="sec-head">
           <h2>Vender <em>sin empujar.</em></h2>
@@ -212,9 +267,9 @@
           </ul>
         </div>
         <div class="ct-phones ct-phones-sm">
-          <figure class="ct-phone-card"><div class="ct-phone"><img src="/assets/casa-trio/sushi-dessert-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Escena de postre de Nami: titular El último bocado también es memoria, con cheesecake, mochi helado y sorbete de yuzu, y el botón Reserva y guarda sitio para el postre"></div><figcaption><b class="is-nami">Nami</b> El postre</figcaption></figure>
-          <figure class="ct-phone-card"><div class="ct-phone"><img src="/assets/casa-trio/burger-dessert-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Escena de postre de Smash Club: copa de helado con galleta y el titular DEJA HUECO. con los botones Ver postres y Desde 5,50 euros"></div><figcaption><b class="is-smash">Smash Club</b> Deja hueco</figcaption></figure>
-          <figure class="ct-phone-card"><div class="ct-phone"><img src="/assets/casa-trio/pizza-aperitivo-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Escena de aperitivo de Fuoco sobre naranja: L'ora dello Spritz, Spritz o Negroni con montanarine por 9 euros el combo, botón Reservar para el aperitivo y un brindis Cin cin!"></div><figcaption><b class="is-fuoco">Fuoco</b> El aperitivo</figcaption></figure>
+          <figure class="ct-phone-card"><div class="ct-phone ct-tilt"><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/sushi-dessert-phone-poster.webp" width="540" height="1168" aria-label="Escena de postre de Nami en móvil: El último bocado también es memoria, con cheesecake, mochi helado y sorbete de yuzu"><source src="/assets/casa-trio/video/sushi-dessert-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/sushi-dessert-phone.mp4" type="video/mp4"></video></div><figcaption><b class="is-nami">Nami</b> El postre</figcaption></figure>
+          <figure class="ct-phone-card"><div class="ct-phone ct-tilt"><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/burger-dessert-phone-poster.webp" width="540" height="1168" aria-label="Escena de postre de Smash Club en móvil: DEJA HUECO. con brownie, cookie y churros"><source src="/assets/casa-trio/video/burger-dessert-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/burger-dessert-phone.mp4" type="video/mp4"></video></div><figcaption><b class="is-smash">Smash Club</b> Deja hueco</figcaption></figure>
+          <figure class="ct-phone-card"><div class="ct-phone ct-tilt"><video class="ct-vid" muted loop playsinline preload="none" disablepictureinpicture poster="/assets/casa-trio/video/pizza-aperitivo-phone-poster.webp" width="540" height="1168" aria-label="Escena de aperitivo de Fuoco en móvil: L'ora dello Spritz, Spritz o Negroni con montanarine y un brindis Cin cin!"><source src="/assets/casa-trio/video/pizza-aperitivo-phone.webm" type="video/webm"><source src="/assets/casa-trio/video/pizza-aperitivo-phone.mp4" type="video/mp4"></video></div><figcaption><b class="is-fuoco">Fuoco</b> El aperitivo</figcaption></figure>
         </div>
       </div>
     </section>
@@ -296,11 +351,11 @@
           <h2>Resultados</h2>
         </div>
         <ul class="ct-kpis">
-          <li><strong>3</strong><span>identidades completas en un solo producto, con 4 páginas y transiciones entre ellas</span></li>
-          <li><strong>224</strong><span>fotografías generadas en local, con coste de imagen de 0 €</span></li>
-          <li><strong>3</strong><span>cartas completas: platos, bebidas y postres con ingredientes, maridajes y sellos</span></li>
+          <li><strong data-count="3">3</strong><span>identidades completas en un solo producto, con 4 páginas y transiciones entre ellas</span></li>
+          <li><strong data-count="224">224</strong><span>fotografías generadas en local, con coste de imagen de 0 €</span></li>
+          <li><strong data-count="3">3</strong><span>cartas completas: platos, bebidas y postres con ingredientes, maridajes y sellos</span></li>
           <li><strong>≈175 kB</strong><span>de JS por página, con foco, teclado y <i>reduced motion</i></span></li>
-          <li><strong>0</strong><span>solapes en la auditoría visual de 12 vistas</span></li>
+          <li><strong data-count="0">0</strong><span>solapes en la auditoría visual de 12 vistas</span></li>
         </ul>
       </div>
     </section>
@@ -326,15 +381,7 @@
     </section>
   </main>
 
-  <script>
-    (() => {
-      const els = document.querySelectorAll('.ct-hero-copy > *, .ct-hero-media, .ct-facts li, .sec-head, .ct-brief li, .ct-hub > *, .ct-table-wrap, .ct-heroes figure, .ct-phone-card, .ct-dialogs figure, .ct-speeds li, .ct-logos li, .ct-sizes, .ct-ai article, .ct-eng article, .ct-kpis li, .ct-final');
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-      els.forEach((el) => el.classList.add('reveal'));
-      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-      els.forEach((el) => io.observe(el));
-    })();
-  </script>
+  <script type="module" src="/src/casa-trio.js"></script>
 <script type="module" src="/src/case-fold.js"></script>
 <script type="module" src="/src/case-mobile.js"></script>
 </body>
