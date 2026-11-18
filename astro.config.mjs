@@ -7,7 +7,7 @@ import sysCard from './scripts/sx-system-card.mjs';
 
 const site = 'https://rodrigonegrete.es';
 // Subpaginas estaticas servidas desde public/ (Astro no las conoce): se anaden a mano.
-const staticPages = ['zodi', 'dedicalo-play', 'pdf-rodd', 'rodd-es', 'aem', 'kettelbro', 'capsule-corp', 'portfolio-2026', 'aquae', 'ccse', 'cv', 'dedicalo', 'invitoo', 'paratumundo', 'te-atiendo', 'tomapoly', 'travel-of-vapers', 'just-enjoy', 'iberdata', 'zodi-bto'];
+const staticPages = ['zodi', 'dedicalo-play', 'pdf-rodd', 'rodd-es', 'aem', 'kettelbro', 'capsule-corp', 'portfolio-2026', 'aquae', 'ccse', 'cv', 'dedicalo', 'invitoo', 'casa-trio', 'paratumundo', 'te-atiendo', 'tomapoly', 'travel-of-vapers', 'just-enjoy', 'iberdata', 'zodi-bto'];
 
 // Primer pintado y LCP (Lighthouse movil): el HTML trae el CSS critico (tokens + intro + fuentes, Layout.astro) y, aqui, las hojas de la
 // portada incrustadas tambien en <style>. Asi no hay ningun <link rel=stylesheet> que bloquee el primer frame (Chrome movil lo retenia ~2 s

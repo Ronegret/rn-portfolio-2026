@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"><style>@view-transition{navigation:auto}</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Trío | Tres restaurantes, tres identidades, una sola web</title>
+  <meta name="description" content="Caso de estudio de Casa Trío: una sola web para tres restaurantes con identidad propia (omakase, smash burgers y pizza napolitana), ingredientes en el aire, carta interactiva y reserva por voz con IA. 224 fotos generadas en local.">
+  <link rel="canonical" href="https://rodrigonegrete.es/casa-trio/">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Casa Trío | Tres restaurantes, tres identidades, una sola web">
+  <meta property="og:description" content="Una web, tres restaurantes: Nami, Smash Club y Fuoco. Ingredientes en el aire, carta como producto, reserva hablando con una anfitriona de voz y 224 fotografías generadas con IA en local.">
+  <meta property="og:image" content="https://rodrigonegrete.es/assets/og/casa-trio.jpg">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Casa Trío: la portada de tres paneles con Nami, Smash Club y Fuoco en un portátil y tres móviles con los ingredientes en el aire">
+  <meta property="og:url" content="https://rodrigonegrete.es/casa-trio/">
+  <meta property="og:site_name" content="Rodrigo Negrete">
+  <meta property="og:locale" content="es_ES">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Casa Trío | Tres restaurantes, tres identidades, una sola web">
+  <meta name="twitter:description" content="Una web, tres restaurantes con identidad propia, ingredientes en el aire y reserva por voz con IA.">
+  <meta name="twitter:image" content="https://rodrigonegrete.es/assets/og/casa-trio.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="/assets/casa-trio/casa-trio-cover.webp" fetchpriority="high">
+  <link rel="stylesheet" href="/src/casa-trio.css">
+<link rel="stylesheet" href="/src/case-type.css">
+<link rel="stylesheet" href="/src/case-fold.css">
+<link rel="stylesheet" href="/src/case-bar.css">
+<link rel="stylesheet" href="/src/case-transitions.css"><script src="/src/case-transitions.js" async blocking="render"></script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0a'/%3E%3Ctext x='32' y='43' font-family='Arial,sans-serif' font-size='30' font-weight='800' text-anchor='middle' fill='%23fff'%3ERN%3C/text%3E%3Ccircle cx='51' cy='13' r='5' fill='%23ff2d2d'/%3E%3C/svg%3E">
+</head>
+<body>
+  <header class="ct-hero">
+    <nav class="ct-nav">
+      <a href="/#proyectos" class="ghost-link">Volver al portfolio</a>
+      <a href="https://casatrio.rodd.es" target="_blank" rel="noopener" class="solid-link">Visitar casatrio.rodd.es ↗</a>
+    </nav>
+
+    <div class="wrap ct-hero-grid">
+      <div class="ct-hero-copy">
+        <p class="ct-eyebrow">Caso de estudio · UX/UI · IA generativa</p>
+        <h1>Tres restaurantes, tres identidades, <em>una sola web.</em></h1>
+        <p class="ct-lead"><strong>Una sola web que se reserva hablando.</strong> Un omakase de sushi, una hamburguesería smash y una pizzería napolitana bajo un mismo techo digital. Cada uno con su tipografía, su color y su forma de moverse; los tres con la misma carta interactiva y la misma reserva, también por voz.</p>
+        <ul class="ct-trio-tags" aria-label="Los tres restaurantes">
+          <li class="is-nami">Nami · Omakase</li>
+          <li class="is-smash">Smash Club</li>
+          <li class="is-fuoco">Fuoco · Pizzeria</li>
+        </ul>
+        <dl class="ct-role">
+          <div><dt>Rol</dt><dd>AI Product Designer · UX/UI · Dirección de arte · Front-end</dd></div>
+          <div><dt>Cliente</dt><dd>Casa Trío, grupo gastronómico ficticio de Barcelona · 2026</dd></div>
+          <div><dt>Base</dt><dd>Next.js 15 · GSAP · Supabase · ElevenLabs · Vercel</dd></div>
+        </dl>
+        <div class="ct-actions">
+          <a href="#ingredientes" class="btn-primary">Ver los ingredientes en el aire</a>
+          <a href="https://casatrio.rodd.es" target="_blank" rel="noopener" class="btn-secondary">casatrio.rodd.es ↗</a>
+        </div>
+      </div>
+      <figure class="ct-hero-media" data-vt-hero>
+        <img src="/assets/casa-trio/casa-trio-cover.webp" width="1600" height="900" fetchpriority="high" alt="Pieza de portada de Casa Trío con el logotipo de la casa junto al título: un portátil muestra la portada en tres paneles con Nami, Smash Club y Fuoco, y tres móviles enseñan los ingredientes del sushi, la burger y la pizza flotando en el aire, con las cifras 3 identidades, 224 fotografías generadas con IA y 0 solapes">
+      </figure>
+    </div>
+
+    <ul class="wrap ct-facts" aria-label="Casa Trío en cifras">
+      <li><strong>3</strong><span>identidades visuales completas en un solo producto</span></li>
+      <li><strong>224</strong><span>fotografías generadas con IA en local, 0 € de imagen</span></li>
+      <li><strong>3</strong><span>formas de reservar: formulario, lenguaje natural y voz</span></li>
+      <li><strong>0</strong><span>solapes en 12 vistas auditadas por código</span></li>
+    </ul>
+  </header>
+
+  <main>
+    <section data-thread="problema" class="sec" id="reto">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Una web para tres restaurantes <em>que no se parecen en nada.</em></h2>
+          <p class="sec-lead">Un grupo con tres cocinas muy distintas quería una sola web. Las referencias de partida eran Diverxo, El Celler de Can Roca y Le Cotte Rôti, y ninguna resolvía a la vez las tres cosas que pedía el brief.</p>
+        </div>
+        <ol class="ct-brief">
+          <li><span class="ct-n">01</span><h3>Identidad propia</h3><p>Que cada restaurante tenga su carácter, sin parecer tres plantillas del mismo tema.</p></li>
+          <li><span class="ct-n">02</span><h3>Que se vea lo que lleva</h3><p>«Que se vean los ingredientes en el aire y luego se armen.» Una carta gráfica y divertida, igual de buena en móvil que en escritorio.</p></li>
+          <li><span class="ct-n">03</span><h3>Reservar con IA</h3><p>Sin fricción, incluso hablando.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="idea">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Una casa, <em>tres mundos.</em></h2>
+          <p class="sec-lead">La portada es un tríptico de fotografía cinematográfica a sangre y cada panel ya habla el idioma de su marca. Al entrar, el panel elegido se expande a pantalla completa y una cortina con el color de la marca continúa la transición dentro del restaurante.</p>
+        </div>
+        <div class="ct-hub">
+          <figure class="ct-shot ct-shot-desk">
+            <img src="/assets/casa-trio/hub-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Casa Trío en escritorio: tres paneles verticales con las manos del itamae cortando pescado para Nami, una burger humeante con el rótulo amarillo Smash Club y una pizza saliendo del horno de leña para Fuoco">
+          </figure>
+          <figure class="ct-phone ct-hub-phone">
+            <img src="/assets/casa-trio/hub-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="La misma portada en móvil: los tres paneles se apilan en vertical, Nami, Smash Club y Fuoco, cada uno con su barrio de Barcelona">
+          </figure>
+        </div>
+
+        <div class="ct-table-wrap" tabindex="0" role="region" aria-labelledby="ct-table-cap">
+          <table class="ct-table">
+            <caption id="ct-table-cap">Las tres identidades de Casa Trío</caption>
+            <thead>
+              <tr><th scope="col"><span class="sr-only">Aspecto</span></th><th scope="col" class="is-nami">Nami <small>omakase</small></th><th scope="col" class="is-smash">Smash Club <small>burgers</small></th><th scope="col" class="is-fuoco">Fuoco <small>pizza</small></th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Concepto</th><td>Lujo silencioso japonés</td><td>Pop brutalista callejero</td><td>Trattoria retro de los 70</td></tr>
+              <tr><th scope="row">Tipografía</th><td>Shippori Mincho + Inter</td><td>Anton + Space Grotesk</td><td>Fraunces (ejes SOFT/WONK) + Instrument Sans</td></tr>
+              <tr><th scope="row">Color</th><td>Tinta, washi, un único bermellón</td><td>Mostaza, kétchup, pepinillo, negro</td><td>Crema harina, terracota, albahaca</td></tr>
+              <tr><th scope="row">Movimiento</th><td>Lento y preciso: máscaras, tinta, <i>expo ease</i></td><td>Rebotón: <i>squash &amp; stretch</i>, pegatinas que se despegan</td><td>Orgánico: calor que sube, brasas, giros</td></tr>
+              <tr><th scope="row">Firma visual</th><td>Kanji en vertical, radar del barco al amanecer</td><td>Marquesinas, sombras duras, «¡DESÁRMALA!»</td><td>Insignia giratoria «Forno a legna · 485 °C», brindis «Cin cin!»</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="ct-heroes">
+          <figure class="ct-shot"><img src="/assets/casa-trio/sushi-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Nami: fondo oscuro con las manos del itamae sobre la barra de hinoki, el nombre NAMI en una serif enorme con un punto bermellón y el kanji 波 en vertical"><figcaption><b class="is-nami">Nami</b> Lujo silencioso: tinta, washi y un solo bermellón.</figcaption></figure>
+          <figure class="ct-shot"><img src="/assets/casa-trio/burger-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Smash Club sobre amarillo mostaza: titular SMASH CLUB ¡APLASTA! en tipografía condensada negra y roja, y una doble smash burger con pegatinas de 100% vacuno y doble queso"><figcaption><b class="is-smash">Smash Club</b> Pop brutalista: mostaza, sombras duras y pegatinas.</figcaption></figure>
+          <figure class="ct-shot"><img src="/assets/casa-trio/pizza-hero-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Portada de Fuoco sobre crema: titular en cursiva Masa paciente, fuego salvaje, una margherita vista desde arriba y la insignia giratoria Forno a legna 485 °C"><figcaption><b class="is-fuoco">Fuoco</b> Trattoria de los 70: crema, terracota y fuego.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-night" id="marca">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Sistema de marca: <em>una casa y tres sellos.</em></h2>
+          <p class="sec-lead">Cuatro logotipos en SVG con la misma geometría de base. Cada uno es el favicon de su ruta y vive en todas las cabeceras, así que se dibujaron para leerse hasta a 16&nbsp;px.</p>
+        </div>
+        <ul class="ct-logos">
+          <li class="is-casa">
+            <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/casa-trio.svg" width="160" height="160" loading="lazy" alt="Logotipo de Casa Trío: el tejado de una casa sobre tres círculos en bermellón, mostaza y terracota"></div>
+            <h3>Casa Trío</h3>
+            <p>La casa formada por los tres colores de las marcas.</p>
+          </li>
+          <li class="is-nami">
+            <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/nami.svg" width="160" height="160" loading="lazy" alt="Logotipo de Nami: un sol bermellón sobre dos líneas de ola en crema, sobre fondo negro"></div>
+            <h3>Nami</h3>
+            <p>Sol bermellón sobre la ola (波, «nami»), como un sello de tinta.</p>
+          </li>
+          <li class="is-smash">
+            <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/smash-club.svg" width="160" height="160" loading="lazy" alt="Logotipo de Smash Club: una pegatina con una smash burger abstracta y sombra dura"></div>
+            <h3>Smash Club</h3>
+            <p>Pegatina brutalista con una smash burger abstracta y sombra dura.</p>
+          </li>
+          <li class="is-fuoco">
+            <div class="ct-logo-tile"><img src="/assets/casa-trio/brand/fuoco.svg" width="160" height="160" loading="lazy" alt="Logotipo de Fuoco: la llama del horno de leña dentro de un horno circular"></div>
+            <h3>Fuoco</h3>
+            <p>La llama del horno de leña dentro del horno circular.</p>
+          </li>
+        </ul>
+        <div class="ct-sizes" role="img" aria-label="Los cuatro logotipos a 64, 32 y 16 píxeles: siguen siendo reconocibles al tamaño de un favicon">
+          <span>64</span><img src="/assets/casa-trio/brand/casa-trio.svg" width="64" height="64" alt=""><img src="/assets/casa-trio/brand/nami.svg" width="64" height="64" alt=""><img src="/assets/casa-trio/brand/smash-club.svg" width="64" height="64" alt=""><img src="/assets/casa-trio/brand/fuoco.svg" width="64" height="64" alt="">
+          <span>32</span><img src="/assets/casa-trio/brand/casa-trio.svg" width="32" height="32" alt=""><img src="/assets/casa-trio/brand/nami.svg" width="32" height="32" alt=""><img src="/assets/casa-trio/brand/smash-club.svg" width="32" height="32" alt=""><img src="/assets/casa-trio/brand/fuoco.svg" width="32" height="32" alt="">
+          <span>16</span><img src="/assets/casa-trio/brand/casa-trio.svg" width="16" height="16" alt=""><img src="/assets/casa-trio/brand/nami.svg" width="16" height="16" alt=""><img src="/assets/casa-trio/brand/smash-club.svg" width="16" height="16" alt=""><img src="/assets/casa-trio/brand/fuoco.svg" width="16" height="16" alt="">
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec" id="ingredientes" data-fold="off">
+      <div class="wrap">
+        <div class="sec-head sec-head-c">
+          <h2>Ingredientes en el aire, <em>en los tres restaurantes.</em></h2>
+          <p class="sec-lead">Una escena fijada al scroll despieza el plato estrella: cada capa flota con su etiqueta y, al bajar, cae y se arma. Es la respuesta directa al «quiero ver lo que tiene dentro»: la carta enseña antes de que el cliente pregunte. El mismo patrón, contado con la voz de cada marca.</p>
+        </div>
+        <div class="ct-phones">
+          <figure class="ct-phone-card">
+            <div class="ct-phone"><img src="/assets/casa-trio/sushi-exploded-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Nami en móvil: las capas del maki flotan sobre negro, de arriba abajo sésamo, tobiko, salmón, wasabi, aguacate, pepino, shari y nori, cada una con su nombre en kanji y en español"></div>
+            <figcaption><b class="is-nami">Nami</b> Nori, shari, salmón… con su kanji al lado.</figcaption>
+          </figure>
+          <figure class="ct-phone-card">
+            <div class="ct-phone"><img src="/assets/casa-trio/burger-exploded-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Smash Club en móvil: la burger desarmada sobre mostaza, pan brioche, salsa, lechuga, tomate, pepinillos, cebolla morada, doble cheddar, dos smash de 90 gramos y pan base, con etiquetas como pegatinas"></div>
+            <figcaption><b class="is-smash">Smash Club</b> Pan, lechuga, cheddar, smash… en pegatinas.</figcaption>
+          </figure>
+          <figure class="ct-phone-card">
+            <div class="ct-phone"><img src="/assets/casa-trio/pizza-exploded-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Fuoco en móvil: Anatomia di una Diavola, ingredientes en el aire; salami picante, albahaca, fior di latte y San Marzano caen una a una sobre la masa"></div>
+            <figcaption><b class="is-fuoco">Fuoco</b> Masa, San Marzano, fior di latte… capa a capa.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="carta">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>La carta como producto, <em>no como PDF.</em></h2>
+          <p class="sec-lead">Pestañas por categoría con transición sin saltos, tarjetas con foto real y sellos (<i>Lo más pedido</i>, <i>Nuevo</i>, <i>Del chef</i>, <i>Picante</i>). Cada plato abre una ficha: centrada en escritorio, <i>bottom sheet</i> en móvil, con el foco atrapado, Esc para cerrar y el foco de vuelta en la tarjeta.</p>
+        </div>
+        <div class="ct-dialogs">
+          <figure class="ct-shot"><img src="/assets/casa-trio/sushi-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha del Sake Nigiri en Nami: foto del nigiri sobre plato negro, ingredientes shari, wasabi y salmón, maridaje con Sake Junmai Daiginjo y precio de 8 euros"><figcaption><b class="is-nami">Nami</b> El maridaje salta a la bebida.</figcaption></figure>
+          <figure class="ct-shot"><img src="/assets/casa-trio/burger-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha del Brownie con helado en Smash Club: foto sobre amarillo, sello Lo más pedido, lo que lleva (chocolate negro, nueces, helado de vainilla), precio de 6,50 euros y botón ¡Desármala!"><figcaption><b class="is-smash">Smash Club</b> «¡Desármala!» y lo que lleva.</figcaption></figure>
+          <figure class="ct-shot"><img src="/assets/casa-trio/pizza-dialog-desktop.webp" width="1600" height="1000" loading="lazy" decoding="async" alt="Ficha de la Margherita en Fuoco: pizza vista desde arriba, ingredientes fior di latte, albahaca y aceite de oliva, sello vegetariana, maridaje con Vino della Casa y botón Reservar mesa"><figcaption><b class="is-fuoco">Fuoco</b> Ingredientes que se lanzan otra vez.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec" id="vender">
+      <div class="wrap ct-split">
+        <div class="sec-head">
+          <h2>Vender <em>sin empujar.</em></h2>
+          <p class="sec-lead">El marketing vive dentro de la interfaz, en el momento en que el cliente decide, no en un banner.</p>
+          <ul class="ct-list">
+            <li><strong>Maridajes</strong> que saltan a la bebida: «Marida con: Sake Junmai frío».</li>
+            <li><strong>Upsell</strong> «Hazlo combo +4 €», con las patatas y el refresco volando hacia la burger.</li>
+            <li><strong>Escenas de postre y aperitivo</strong>: «Deja hueco.», «El último bocado también es memoria», «L'ora dello Spritz».</li>
+            <li><strong>Escasez real</strong> donde se decide: «Solo 16 asientos por servicio», junto a la reserva.</li>
+          </ul>
+        </div>
+        <div class="ct-phones ct-phones-sm">
+          <figure class="ct-phone-card"><div class="ct-phone"><img src="/assets/casa-trio/sushi-dessert-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Escena de postre de Nami: titular El último bocado también es memoria, con cheesecake, mochi helado y sorbete de yuzu, y el botón Reserva y guarda sitio para el postre"></div><figcaption><b class="is-nami">Nami</b> El postre</figcaption></figure>
+          <figure class="ct-phone-card"><div class="ct-phone"><img src="/assets/casa-trio/burger-dessert-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Escena de postre de Smash Club: copa de helado con galleta y el titular DEJA HUECO. con los botones Ver postres y Desde 5,50 euros"></div><figcaption><b class="is-smash">Smash Club</b> Deja hueco</figcaption></figure>
+          <figure class="ct-phone-card"><div class="ct-phone"><img src="/assets/casa-trio/pizza-aperitivo-phone.webp" width="780" height="1688" loading="lazy" decoding="async" alt="Escena de aperitivo de Fuoco sobre naranja: L'ora dello Spritz, Spritz o Negroni con montanarine por 9 euros el combo, botón Reservar para el aperitivo y un brindis Cin cin!"></div><figcaption><b class="is-fuoco">Fuoco</b> El aperitivo</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-tint" id="reserva">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Reservar en tres velocidades, <em>también hablando.</em></h2>
+          <p class="sec-lead">Cada cliente elige cuánto quiere escribir. Y en móvil el botón de reserva fijo aparece tras el hero y se esconde donde estorba, con objetivos táctiles de 44 px o más y <i>bottom sheets</i>.</p>
+        </div>
+        <ol class="ct-speeds">
+          <li><span class="ct-n">01</span><h3>Formulario</h3><p>El clásico, con horarios disponibles en vivo.</p></li>
+          <li><span class="ct-n">02</span><h3>Lenguaje natural</h3><p>Un campo que entiende «mesa para 4 el viernes a las 9 y media» y lo convierte en fecha, hora y personas.</p></li>
+          <li class="is-voice"><span class="ct-n">03</span><h3>Marta, por voz</h3><p>Una anfitriona de voz con IA (ElevenLabs, voz castellana) que consulta disponibilidad real y crea la reserva en la base de datos desde el navegador. Restringida al dominio del proyecto.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec sec-night" id="ia">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Cómo usé la IA <em>(y dónde no).</em></h2>
+          <p class="sec-lead">La IA no sustituye el criterio de diseño: lo acelera y me permite llegar a un nivel de producción que antes requería un equipo.</p>
+        </div>
+        <div class="ct-ai">
+          <article>
+            <p class="ct-kicker">Fotografía generada en local</p>
+            <h3>224 imágenes, 0 € de imagen</h3>
+            <p>Sin presupuesto de créditos, monté <strong>Z-Image-Turbo en Pinokio</strong> sobre una RTX 5070 portátil de 8 GB. La instalación venía rota y el modelo no cabía en la VRAM: lo reparé y apliqué <i>group offloading</i> por capas de diffusers.</p>
+            <p class="ct-big">~10 min <span aria-hidden="true">→</span><span class="sr-only">a</span> ~45 s <small>por imagen</small></p>
+          </article>
+          <article>
+            <p class="ct-kicker">Pipeline propio</p>
+            <h3>Un estilo fotográfico por marca</h3>
+            <p>Un manifiesto con un prompt por foto: oscuro y editorial para Nami, estudio brillante para Smash, luz cálida de ventana para Fuoco. Generación incremental y recorte automático del fondo con <strong>rembg (BiRefNet)</strong>.</p>
+          </article>
+          <article>
+            <p class="ct-kicker">Dirección de arte iterativa</p>
+            <h3>78 prompts reescritos</h3>
+            <p>Los primeros ingredientes salían «como producto»: un queso entero, un tomate entero. Reescribí los 78 prompts para que cada uno aparezca <strong>como va en el plato</strong> —mozzarella desgarrada, cheddar fundiéndose, rodajas de tomate— y regeneré las tomas que no servían (pizzas enteras en lugar de aceite, nigiris en lugar de miso).</p>
+          </article>
+          <article>
+            <p class="ct-kicker">Un equipo de agentes, dirigido</p>
+            <h3>Tres agentes de front-end en paralelo</h3>
+            <p>Uno por restaurante, con propiedad de archivos estricta y un brief de dirección de arte por marca. Un agente de contenido localizó todo a Barcelona: barrios reales, euros, español de España, atún rojo de L'Ametlla de Mar.</p>
+            <p>Yo: arquitectura, sistema compartido (reservas, voz, portada), dirección de arte, revisión de cada entrega en navegador y control de calidad. Cuando un agente reintrodujo un fallo que solo aparecía en producción, lo detecté antes de publicar.</p>
+          </article>
+          <article>
+            <p class="ct-kicker">Voz con IA</p>
+            <h3>Marta, la anfitriona</h3>
+            <p>Agente de ElevenLabs con herramientas de cliente: consulta la disponibilidad y crea la reserva. Habla castellano y solo atiende desde el dominio del proyecto.</p>
+          </article>
+          <article>
+            <p class="ct-kicker">Efectos de la comunidad</p>
+            <h3>React Bits, adaptado a cada marca</h3>
+            <p>Radar como sonar del barco pesquero, ScrollReveal, StickerPeel, ImageTrail, GlareHover y ScrollFloat, incorporados desde su registro: la misma librería que documento en <a href="/rodd-es/">Rodd.es</a>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="decision" class="sec" id="ingenieria">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Ingeniería que <em>sostiene el diseño.</em></h2>
+        </div>
+        <div class="ct-eng">
+          <article><h3>Reservas atómicas</h3><p>Supabase con esquema privado y RLS: la web solo puede ejecutar cuatro funciones. La reserva comprueba aforo y guarda en una sola transacción con bloqueo por horario; dos personas nunca se quedan a la vez con la última plaza.</p></article>
+          <article><h3>Calendario</h3><p>Cada cliente se lleva su reserva en <code>.ics</code>; el equipo se suscribe a un calendario privado con token.</p></article>
+          <article><h3>Correo de confirmación</h3><p>Con diseño y <code>.ics</code> adjunto (Resend), listo para activarse con el dominio propio.</p></article>
+          <article><h3>Calidad auditada por código</h3><p>Una auditoría con Playwright recorre las cuatro páginas en móvil, tablet y escritorio, abre cada ficha de la carta y detecta textos que se pisan, fotos que tapan texto y secciones sin animación. Resultado: <strong>0 solapes en 12 vistas</strong>.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section data-thread="estado" class="sec sec-tint" id="resultados">
+      <div class="wrap">
+        <div class="sec-head">
+          <h2>Resultados</h2>
+        </div>
+        <ul class="ct-kpis">
+          <li><strong>3</strong><span>identidades completas en un solo producto, con 4 páginas y transiciones entre ellas</span></li>
+          <li><strong>224</strong><span>fotografías generadas en local, con coste de imagen de 0 €</span></li>
+          <li><strong>3</strong><span>cartas completas: platos, bebidas y postres con ingredientes, maridajes y sellos</span></li>
+          <li><strong>≈175 kB</strong><span>de JS por página, con foco, teclado y <i>reduced motion</i></span></li>
+          <li><strong>0</strong><span>solapes en la auditoría visual de 12 vistas</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section data-thread="estado" class="sec sec-final" id="demuestra">
+      <div class="wrap">
+        <div class="ct-final">
+          <h2>Qué demuestra: diseñar la experiencia, dirigir la imagen con IA <em>y llevarla a producción.</em></h2>
+          <ul class="ct-proves">
+            <li><strong>UX</strong> Convertir un requisito difuso («que se vean los ingredientes») en un patrón de interacción claro y medible.</li>
+            <li><strong>UI y dirección de arte</strong> Tres sistemas visuales coherentes y distintos, con tipografía, color y movimiento propios.</li>
+            <li><strong>IA aplicada con criterio</strong> Montar y optimizar la herramienta, escribir y corregir prompts como un director de fotografía y orquestar agentes sin perder el control de calidad.</li>
+            <li><strong>Producto</strong> Marketing integrado en la interfaz (maridajes, combos, escenas de postre) y reserva sin fricción.</li>
+            <li><strong>Ejecución</strong> De la idea a una web en producción, con base de datos, voz, despliegue y pruebas.</li>
+          </ul>
+          <div class="ct-final-actions">
+            <a href="https://casatrio.rodd.es" target="_blank" rel="noopener" class="btn-primary">Visitar casatrio.rodd.es ↗</a>
+            <a href="/#proyectos" class="btn-text">Volver a proyectos</a>
+          </div>
+          <p class="ct-note">Casa Trío es un grupo ficticio creado para este proyecto; las fotografías de comida están generadas con IA.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const els = document.querySelectorAll('.ct-hero-copy > *, .ct-hero-media, .ct-facts li, .sec-head, .ct-brief li, .ct-hub > *, .ct-table-wrap, .ct-heroes figure, .ct-phone-card, .ct-dialogs figure, .ct-speeds li, .ct-logos li, .ct-sizes, .ct-ai article, .ct-eng article, .ct-kpis li, .ct-final');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+      els.forEach((el) => el.classList.add('reveal'));
+      const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach((el) => io.observe(el));
+    })();
+  </script>
+<script type="module" src="/src/case-fold.js"></script>
+<script type="module" src="/src/case-mobile.js"></script>
+</body>
+</html>

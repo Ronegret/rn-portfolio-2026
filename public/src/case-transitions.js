@@ -13,7 +13,7 @@
   const BAD = /logo|brand|avatar|icon|mark|sprite/i, BADSRC = /logo|avatar|icon|sprite/i;
   // Firma de entrada de cada caso: [efecto, color del destello]. Los efectos viven en case-transitions.css (rn-fx-*); los hermanos comparten efecto con otro color.
   const FX = {
-    'capsule-corp': ['ki', '#ffcf2e'], aem: ['carta', '#d8b37a'], invitoo: ['velo', '#8c1d2c'], 'portfolio-2026': ['iris', '#5eead4'],
+    'capsule-corp': ['ki', '#ffcf2e'], aem: ['carta', '#d8b37a'], invitoo: ['velo', '#8c1d2c'], 'casa-trio': ['persiana', '#e5533c'], 'portfolio-2026': ['iris', '#5eead4'],
     'rodd-es': ['scan', '#e0383b'], zodi: ['portal', '#b5ff3b'], 'dedicalo-play': ['vinilo', '#ff7a1a'], 'torre-z': ['bloque', '#ff8a1f'],
     'just-enjoy': ['viaje', '#9b4dff'], kettelbro: ['impacto', '#f2432d'], iberdata: ['persiana', '#ff7a1f'], 'zodi-bto': ['portal', '#e83e9a'],
     'pdf-rodd': ['pagina', '#6fdc2a'], ccse: ['sello', '#e2263c'], dedicalo: ['vinilo', '#1fc995'], paratumundo: ['viaje2', '#e8602c'],

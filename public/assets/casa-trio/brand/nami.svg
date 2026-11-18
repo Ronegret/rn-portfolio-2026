@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Nami</title>
+  <rect width="64" height="64" rx="15" fill="#0b0b0c"/>
+  <circle cx="32" cy="27" r="13" fill="#e0452f"/>
+  <path d="M8 45q6-7 12 0t12 0 12 0 12 0" fill="none" stroke="#f3efe7" stroke-width="3.6" stroke-linecap="round"/>
+  <path d="M14 53q4.5-5 9 0t9 0 9 0 9 0" fill="none" stroke="#f3efe7" stroke-opacity=".45" stroke-width="2.6" stroke-linecap="round"/>
+</svg>

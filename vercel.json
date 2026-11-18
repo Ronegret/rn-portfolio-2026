@@ -91,6 +91,8 @@
     { "source": "/deep-detection-discovery/", "destination": "/deep-detection-discovery/index.html" },
     { "source": "/dedicalo", "destination": "/dedicalo/index.html" },
     { "source": "/dedicalo/", "destination": "/dedicalo/index.html" },
+    { "source": "/casa-trio", "destination": "/casa-trio/index.html" },
+    { "source": "/casa-trio/", "destination": "/casa-trio/index.html" },
     { "source": "/invitoo", "destination": "/invitoo/index.html" },
     { "source": "/invitoo/", "destination": "/invitoo/index.html" },
     { "source": "/Invitoo", "destination": "/invitoo/index.html" },

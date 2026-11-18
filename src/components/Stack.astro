@@ -5,7 +5,7 @@ import '../sx-stack.css';
 const PJ = {
   'capsule-corp': 'Capsule Corp', 'portfolio-2026': 'Portfolio 2026', 'rodd-es': 'Rodd.es', kettelbro: 'KETTELBRO',
   aem: 'Events Planner', zodi: 'ZODI', 'dedicalo-play': 'Dedícalo Play', 'torre-z': 'TorreZ', 'just-enjoy': 'Just Enjoy', iberdata: 'Iberdata',
-  'zodi-bto': 'ZODI BTO', invitoo: 'Invitoo', 'pdf-rodd': 'PDF Rodd', ccse: 'Estudio CCSE', dedicalo: 'Dedícalo',
+  'zodi-bto': 'ZODI BTO', invitoo: 'Invitoo', 'casa-trio': 'Casa Trío', 'pdf-rodd': 'PDF Rodd', ccse: 'Estudio CCSE', dedicalo: 'Dedícalo',
   paratumundo: 'ParaTuMundo', 'te-atiendo': 'Te Atiendo', aquae: 'Aquae',
 };
 const G = [
@@ -16,7 +16,7 @@ const G = [
   ] },
   { k: 'ia', n: 'IA y agentes', v: 'razonar', t: [
     { id: 'claude', s: 'Claude', n: 'Claude (Opus, Sonnet, Haiku)', p: ['aem', 'zodi', 'rodd-es'], u: 'Pensar, redactar y revisar: mi copiloto diario de producto.' },
-    { id: 'claudecode', s: 'Claude Code', n: 'Claude Code · Agent SDK', p: ['portfolio-2026', 'zodi'], u: 'Dirijo agentes que implementan y revisan código en ramas aisladas.' },
+    { id: 'claudecode', s: 'Claude Code', n: 'Claude Code · Agent SDK', p: ['casa-trio', 'portfolio-2026', 'zodi'], u: 'Dirijo agentes que implementan y revisan código en ramas aisladas.' },
     { id: 'openai', s: 'OpenAI', n: 'OpenAI (GPT-4o · GPT-5 · o3)', p: ['just-enjoy', 'iberdata', 'zodi'], u: 'Modelos para agentes y planificadores que usan herramientas.' },
     { id: 'gemini', s: 'Gemini', n: 'Google AI Studio · Gemini', p: ['ccse', 'aem', 'invitoo'], u: 'Procesar material y generar imágenes para demos y contenidos.' },
   ] },
@@ -27,13 +27,13 @@ const G = [
     { id: 'vapi', s: 'Vapi', n: 'Vapi (Voice AI)', p: [], u: 'Agentes de voz con IA.' },
   ] },
   { k: 'fe', n: 'Front-end', v: 'entregar', t: [
-    { id: 'react', s: 'React', n: 'React · Vite · Next.js', p: ['capsule-corp', 'kettelbro', 'rodd-es', 'dedicalo-play'], u: 'Producto real: componentes, estado y apps desplegadas.' },
+    { id: 'react', s: 'React', n: 'React · Vite · Next.js', p: ['capsule-corp', 'casa-trio', 'kettelbro', 'rodd-es', 'dedicalo-play'], u: 'Producto real: componentes, estado y apps desplegadas.' },
     { id: 'tailwind', s: 'Tailwind', n: 'Tailwind CSS · shadcn/ui', p: ['kettelbro', 'pdf-rodd', 'rodd-es'], u: 'Estilos con tokens para iterar rápido sin perder consistencia.' },
     { id: 'three', s: 'Three.js', n: 'Three.js · Spline · WebGL', p: ['rodd-es'], u: 'Escenas 3D interactivas en el navegador.' },
-    { id: 'vercel', s: 'Vercel', n: 'Vercel · GitHub · CI/CD', p: ['portfolio-2026', 'dedicalo-play', 'torre-z', 'rodd-es'], u: 'Ramas, revisiones y despliegue continuo de cada proyecto.' },
+    { id: 'vercel', s: 'Vercel', n: 'Vercel · GitHub · CI/CD', p: ['casa-trio', 'portfolio-2026', 'dedicalo-play', 'torre-z', 'rodd-es'], u: 'Ramas, revisiones y despliegue continuo de cada proyecto.' },
   ] },
   { k: 'dat', n: 'Datos', v: 'medir', t: [
-    { id: 'supabase', s: 'Supabase', n: 'Supabase · Firebase', p: ['just-enjoy', 'dedicalo-play', 'torre-z', 'iberdata', 'aem', 'kettelbro'], u: 'Estado persistente, tiempo real y autenticación.' },
+    { id: 'supabase', s: 'Supabase', n: 'Supabase · Firebase', p: ['casa-trio', 'just-enjoy', 'dedicalo-play', 'torre-z', 'iberdata', 'aem', 'kettelbro'], u: 'Estado persistente, tiempo real y autenticación.' },
     { id: 'ga4', s: 'GA4', n: 'Google Analytics 4', p: [], u: 'Medir embudos y comportamiento para decidir qué cambiar.' },
     { id: 'posthog', s: 'PostHog', n: 'PostHog · Vercel Analytics', p: ['rodd-es'], u: 'Ver qué se usa de verdad en un producto publicado.' },
     { id: 'powerbi', s: 'Power BI', n: 'Excel avanzado · Power BI', p: [], u: 'Informes y análisis de negocio.' },

@@ -19,6 +19,7 @@ const aliases = {
   "/CCSE": "/ccse/index.html",
   "/cv": "/cv/index.html",
   "/dedicalo": "/dedicalo/index.html",
+  "/casa-trio": "/casa-trio/index.html",
   "/invitoo": "/invitoo/index.html",
   "/Invitoo": "/invitoo/index.html",
   "/paratumundo": "/paratumundo/index.html",

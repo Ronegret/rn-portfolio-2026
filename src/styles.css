@@ -3000,6 +3000,31 @@ html.rv-on .h3d.h3d-zoom.vis  { animation: h3d-zoom  1.3s cubic-bezier(.2,.9,.25
 .invitoo-card .bc-img { display: block; position: relative; overflow: hidden; background: #f9efe0; }
 .invitoo-card .bc-img > img { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; object-fit: contain !important; filter: none !important; animation: none !important; translate: none !important; scale: none !important; transform: none !important; }
 
+/* Tarjeta Casa Trío: visual sin texto (tres móviles centrados, esquinas libres para los botones), entero sobre su mismo carbón; filete con los tres acentos */
+.ct-card .bc-img { display: block; position: relative; overflow: hidden; background: #121110; }
+.ct-card .bc-img > picture { position: absolute !important; inset: 0; animation: none !important; translate: none !important; }
+.ct-card .bc-img img { position: absolute !important; inset: 0; width: 100% !important; height: 100% !important; max-width: none !important; max-height: none !important; object-fit: contain !important; filter: none !important; animation: none !important; translate: none !important; scale: none !important; transform: none !important; }
+.ct-card .bc-img::after { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #e5533c 0 33.3%, #ffd21f 33.3% 66.6%, #e07a45 66.6%); z-index: 2; }
+.ct-tag-hi { background: #e5533c !important; color: #fff !important; border-color: #e5533c !important; }
+/* Acción secundaria "Abrir la web", como en Capsule Corp */
+.ct-card .bc-ext {
+  position: relative; display: flex; align-items: center; width: fit-content; min-height: 44px; padding: 0 18px; border-radius: 999px;
+  margin: -44px clamp(14px, 2vw, 22px) 0 auto; translate: 0 -18px;
+  border: 1.5px solid rgba(243,236,224,.5); background: rgba(18,17,16,.88); color: #f3ece0;
+  font-size: 12px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; white-space: nowrap;
+  transition: background .2s, color .2s;
+}
+@media (hover:hover) and (pointer:fine) { .ct-card .bc-ext:hover { background: #f3ece0; color: #121110; } }
+.ct-card .bc-ext:focus-visible { outline: 3px solid #ffd21f; outline-offset: 3px; }
+/* Móvil: visual vertical 4:5 a sangre; el alto sobrante de la baraja queda al pie, no entre imagen y texto; la píldora baja a la zona de los móviles de la portada, lejos del título */
+@media(max-width: 860px) {
+  .ct-card { container-type: inline-size; }
+  .ct-card .bc { height: 100%; justify-content: flex-start; }
+  .ct-card .bc-img, #proyectos.tj-deck-on .ct-card .bc-img { flex: none; aspect-ratio: 4 / 5; min-height: 0; }
+  .ct-card .bc-img img { object-fit: cover !important; object-position: 50% 0 !important; }
+  .ct-card .bc-ext { position: absolute; z-index: 6; top: calc(125cqw - 58px); right: 12px; left: auto; margin: 0; translate: none; }
+}
+
 /* (4) AIbueno (Laboratorio): captura entera (proporción real 1374:1272), centrada sobre panel oscuro, sin Ken Burns */
 .lab-feat .lab-img-web { align-items: center; justify-content: center; }
 .lab-feat .lab-img-web img { width: 100%; height: auto; object-fit: contain; transform: none !important; animation: none !important; translate: none !important; }

@@ -7,6 +7,12 @@ import '../pulse-line.css';
 import '../sx-proyectos.css';
 import portfolioHero from '../assets/cards/portfolio-2026-hero.webp';
 import invitooHero from '../assets/cards/invitoo-hero.webp';
+import casaTrioHero from '../assets/cards/casa-trio-card.webp';
+import casaTrioPortrait from '../assets/cards/casa-trio-card-portrait.webp';
+import { getImage } from 'astro:assets';
+// Casa Trío: visual sin texto (el título va en la tarjeta) con las esquinas libres para los botones superpuestos; versión 4:5 en móvil
+const ctPortrait = await Promise.all([480, 800].map((width) => getImage({ src: casaTrioPortrait, width, format: 'webp' })));
+const ctHero = await Promise.all([480, 800, 1200].map((width) => getImage({ src: casaTrioHero, width, format: 'webp' })));
 ---
 <section class="sec" id="proyectos">
   <div class="wrap">
@@ -16,6 +22,25 @@ import invitooHero from '../assets/cards/invitoo-hero.webp';
     <p class="sb rv" data-i="proj_sub">Proyectos propios, trabajos del máster y productos lanzados donde muestro research, arquitectura, UI, automatización, validación y criterio de negocio.</p>
     <ProjectFilter client:load>
     <div class="bento">
+      <div class="bfeat rv ct-card" data-cats="ux ia">
+        <a href="/casa-trio/" class="bc trigger-flash">
+          <div class="bc-img ct-img">
+            <picture>
+              <source media="(max-width: 860px)" srcset={ctPortrait.map((v, i) => `${v.src} ${[480, 800][i]}w`).join(', ')} sizes="80vw" width="800" height="1000" />
+              <img src={ctHero[1].src} srcset={ctHero.map((v, i) => `${v.src} ${[480, 800, 1200][i]}w`).join(', ')} sizes="540px" width="800" height="500" loading="lazy" decoding="async" alt="Tres móviles de Casa Trío, uno por restaurante, con los ingredientes en el aire: las capas del maki de Nami, la smash burger desarmada de Smash Club y la diavola de Fuoco cayendo sobre la masa" />
+            </picture>
+          </div>
+          <div class="bc-bd">
+            <div class="bc-tags"><span class="bc-tag bc-tag-hi ct-tag-hi" data-i="ct_t1">★ Proyecto destacado · 2026</span><span class="bc-tag" data-i="ct_t2">UX/UI · IA generativa · Next.js · GSAP · Supabase · Voz IA</span></div>
+            <h3 class="bc-h" data-i="ct_h">Casa Trío — Tres restaurantes, tres identidades, una sola web</h3>
+            <p class="bc-d" data-i="ct_d">Tres restaurantes, tres identidades, una sola web que se reserva hablando. Un omakase, una hamburguesería smash y una pizzería napolitana con tipografía, color y movimiento propios; los ingredientes de cada plato flotan en el aire y se arman con el scroll, y Marta, una anfitriona de voz con IA, crea la reserva.</p>
+            <div class="bc-m" data-i="ct_m">3 identidades · 224 fotos IA en local · reserva por voz · 0 solapes · casatrio.rodd.es</div>
+            <PlanTrace k="ct" />
+            <span class="bc-link" data-i="see_case">Ver caso completo →</span>
+          </div>
+        </a>
+        <a href="https://casatrio.rodd.es" target="_blank" rel="noopener" class="bc-ext" data-cursor="web" data-i="ct_web">Abrir la web ↗</a>
+      </div>
       <div class="bfeat rv db-card" data-cats="ux ia">
         <a href="/capsule-corp/" class="bc trigger-flash">
           <div class="bc-img pv-host db-img">
