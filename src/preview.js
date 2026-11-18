@@ -36,7 +36,8 @@ const idle = window.requestIdleCallback || ((f) => setTimeout(f, 300));
 document.querySelectorAll('.pv[data-live]').forEach((pv) => {
   const scr = pv.querySelector('.pv-screen'), vid = pv.querySelector('video'), card = pv.closest('.bfeat') || pv;
   const play = pv.querySelector('.pv-play'), exit = pv.querySelector('.pv-exit'), load = pv.querySelector('.pv-load');
-  let fr = null, timer = 0, gone = 0, inView = false, wanted = !still, failed = !allowed;
+  // En móvil y tablet, el clip: la web entera dentro de la portada duplica la memoria de la pestaña y Chrome móvil la cerraba
+  let fr = null, timer = 0, gone = 0, inView = false, wanted = !still, failed = !allowed || matchMedia('(pointer: coarse), (max-width: 900px)').matches;
   const held = () => !!pv.closest('[data-tj-hold]');
   if (still) pv.classList.add('is-still');
   new ResizeObserver(() => pv.style.setProperty('--s', (scr.clientWidth / W).toFixed(4))).observe(scr);
